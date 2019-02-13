@@ -1,0 +1,7 @@
+.has-icon {
+  @apply inline-flex items-center;
+  
+  i {
+    @apply ml-1 relative;
+  }
+}

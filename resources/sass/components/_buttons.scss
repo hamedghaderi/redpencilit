@@ -1,0 +1,59 @@
+.button {
+ @apply text-white px-16 py-3 rounded-full relative z-10 inline-flex .no-underline;
+ transition: all .3s;
+
+ &:hover {
+   transform: translateY(-2px);
+ }
+
+ &--primary {
+   box-shadow: 0 3px 24px rgba(#FF66BC, .3);
+   background-image: linear-gradient(to bottom left, #FFBAA5, #FF66BC);
+
+   &:hover {
+     box-shadow: 0 5px 24px rgba(#FF66BC, .4);
+   }
+ }
+
+ &--success {
+   background-image: linear-gradient(to bottom left, #51d88a, #1f9d55);
+   box-shadow: 0 3px 24px rgba(#51d88a, .3);
+
+   &:hover {
+     box-shadow: 0 5px 24px rgba(#51d88a, .4);
+   }
+ }
+
+ &--outline {
+   @apply bg-transparent border border-white;
+
+   &:hover {
+     @apply bg-white text-grey-darker shadow;
+     transform: translate(0px);
+   }
+ }
+
+ &--simple {
+   @apply bg-white text-grey-darker shadow;
+ }
+
+ &--thin {
+   @apply px-6 py-2 text-xs;
+ }
+
+ &--default {
+   @apply .bg-grey-lighter .text-blue-darker rounded text-sm px-6;
+
+   &:hover {
+     transform: translate(0px);
+     @apply bg-grey-light;
+   }
+ }
+
+
+
+ &:active {
+   transform: translateY(0px);
+   box-shadow: none;
+ }
+}

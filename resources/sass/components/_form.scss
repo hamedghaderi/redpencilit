@@ -1,0 +1,11 @@
+.input {
+  @apply p-3 border text-sm;
+
+  &:focus {
+    border-color: #3490dc;
+  }
+
+  &-icon {
+    @apply absolute pin-l h-full border bg-white rounded-tl rounded-bl flex items-center px-3 text-grey;
+  }
+}
