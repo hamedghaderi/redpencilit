@@ -1,0 +1,15 @@
+::-webkit-input-placeholder { color: #8795a1 !important; }
+::-moz-placeholder { color: #8795a1 !important; }
+:-ms-input-placeholder { color: #8795a1 !important; }
+:-moz-placeholder { color: #8795a1 !important; }
+
+body {
+  @apply bg-grey-lightest text-right font-normal;
+  direction: rtl;
+  font-family: Sahel;
+}
+
+
+a {
+  @apply .text-blue;
+}

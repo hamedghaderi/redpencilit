@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('orders', 'OrdersController');
+Route::get('orders/create', 'OrdersController@create');
 
 Auth::routes();
 

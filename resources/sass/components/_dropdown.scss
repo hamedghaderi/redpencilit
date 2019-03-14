@@ -1,0 +1,41 @@
+.dropdown {
+  @apply relative;
+  min-width: 300px;
+
+  ul {
+    @apply list-reset shadow rounded py-6;
+  }
+
+  li {
+    @apply w-full block py-3 text-right px-6 py-3;
+
+    &:hover {
+      @apply bg-red;
+
+      a {
+        @apply text-white;
+      }
+    }
+  }
+
+  a {
+    @apply flex items-center text-grey-darker no-underline;
+
+    i {
+      @apply text-grey ml-3;
+    }
+  }
+
+  &__content {
+    @apply absolute;
+
+    &--left {
+      @apply pin-l;
+      top: 100%;
+    }
+  }
+
+  &_toggler {
+    @apply cursor-pointer;
+  }
+}

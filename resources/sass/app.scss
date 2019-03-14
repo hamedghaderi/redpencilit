@@ -2,12 +2,7 @@
 @import 'variables';
 
 
-body {
-  direction: rtl;
-  text-align: right;
-  font-family: Sahel;
-  font-weight: normal;
-}
+
 
 
 /**
@@ -32,11 +27,18 @@ body {
  */
 @tailwind components;
 
+/* Base */
+@import 'global/base';
+@import 'global/grid';
+
+/* Components */
 @import 'components/buttons';
 @import 'components/form';
 @import 'components/icon';
 @import 'components/card';
 @import 'components/feedback';
+@import 'components/navbar';
+@import 'components/dropdown';
 
 
 /**
@@ -54,14 +56,6 @@ body {
  * @import "components/buttons";
  * @import "components/forms";
  */
- ::-webkit-input-placeholder { color: #8795a1 !important; }
- ::-moz-placeholder { color: #8795a1 !important; }
- :-ms-input-placeholder { color: #8795a1 !important; }
- :-moz-placeholder { color: #8795a1 !important; }
-
- a {
-   @apply .text-blue;
- }
 
  .bg-gradient-primary {
    @apply .bg-indigo-darkest;

@@ -1,0 +1,19 @@
+.navbar {
+  @apply py-4;
+
+  &__nav {
+    @apply flex list-reset;
+
+    li {
+      @apply ml-8;
+    }
+
+    a {
+      @apply no-underline text-grey-dark;
+
+      &.active {
+        @apply text-red;
+      }
+    }
+  }
+}
