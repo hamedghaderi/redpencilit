@@ -3,17 +3,17 @@
   min-width: 300px;
 
   ul {
-    @apply list-reset shadow rounded py-6;
+    @apply list-reset shadow-md rounded py-6 text-sm;
   }
 
   li {
-    @apply w-full block py-3 text-right px-6 py-3;
+    @apply w-full block py-3 text-right px-8 py-3;
 
     &:hover {
-      @apply bg-red;
+      @apply bg-grey-lighter;
 
       a {
-        @apply text-white;
+        @apply text-red;
       }
     }
   }
@@ -22,7 +22,7 @@
     @apply flex items-center text-grey-darker no-underline;
 
     i {
-      @apply text-grey ml-3;
+      @apply ml-3;
     }
   }
 

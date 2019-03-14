@@ -1,6 +1,6 @@
 <nav class="navbar">
     <div class="container">
-        <div class="flex items-center">
+        <div class="flex items-center content-center">
             <h1 class="xl:ml-16">
                 <a href="{{ url('/') }}">
                     <img src="{{ asset('images/logo.svg') }}" alt="redpencilit">

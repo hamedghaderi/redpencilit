@@ -1,5 +1,5 @@
 <template>
-    <button class="button button--outline button--outline--danger dropdown-toggler" @click="click">
+    <button class="button button--outline button--outline--danger dropdown-toggler" @click="click" id="dropdown">
         <slot></slot>
         <i class="fas fa-caret-down"></i>
     </button>

@@ -101,7 +101,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.element = this.$el;
+  },
+  data: function data() {
+    return {
+      element: null
+    };
+  },
+  methods: {
+    hide: function hide() {
+      this.$emit('hideDropdown');
+    }
+  }
+});
 
 /***/ }),
 
@@ -267,6 +281,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     toggleDropdown: function toggleDropdown() {
       this.show = !this.show;
+    },
+    closeDropdown: function closeDropdown() {
+      this.show = false;
     }
   }
 });
@@ -756,7 +773,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("ul", [_vm._t("default")], 2)
+  return _c(
+    "ul",
+    {
+      directives: [
+        {
+          name: "dropdown-outside-click",
+          rawName: "v-dropdown-outside-click",
+          value: { ref: "dropdown", method: "hide" },
+          expression: "{ ref: 'dropdown', method: 'hide' }"
+        }
+      ],
+      staticClass: "mt-3"
+    },
+    [_vm._t("default")],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -811,6 +843,7 @@ var render = function() {
     {
       staticClass:
         "button button--outline button--outline--danger dropdown-toggler",
+      attrs: { id: "dropdown" },
       on: { click: _vm.click }
     },
     [
@@ -896,11 +929,7 @@ var render = function() {
     [
       _c(
         "dropdown-toggler",
-        {
-          staticClass: "mb-3",
-          attrs: { visibile: "show" },
-          on: { toggle: _vm.toggleDropdown }
-        },
+        { attrs: { visibile: "show" }, on: { toggle: _vm.toggleDropdown } },
         [
           _vm._v(
             "\n        " +
@@ -927,6 +956,7 @@ var render = function() {
           !_vm.signedIn
             ? _c(
                 "dropdown-content",
+                { on: { hideDropdown: _vm.closeDropdown } },
                 [
                   _c("dropdown-item", { attrs: { href: "/login" } }, [
                     _c("i", { staticClass: "fas fa-sign-out-alt" }),
@@ -12906,6 +12936,17 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
+Vue.directive('dropdown-outside-click', {
+  bind: function bind(el, binding, vnode) {
+    document.body.addEventListener('click', function (event) {
+      if (event.target !== el && // element which clicked on is not the current element
+      event.target.id !== binding.value.ref // and it's not event the toggler button
+      ) {
+          vnode.context[binding.value.method](event); // then run hide event on the content
+        }
+    });
+  }
+});
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
 Vue.component('navbar-dropdown', __webpack_require__(/*! ./components/NavbarDropdown.vue */ "./resources/js/components/NavbarDropdown.vue").default);
 /**
@@ -13062,15 +13103,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*****************************************************!*\
   !*** ./resources/js/components/DropdownToggler.vue ***!
   \*****************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _DropdownToggler_vue_vue_type_template_id_a708c79c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DropdownToggler.vue?vue&type=template&id=a708c79c& */ "./resources/js/components/DropdownToggler.vue?vue&type=template&id=a708c79c&");
 /* harmony import */ var _DropdownToggler_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DropdownToggler.vue?vue&type=script&lang=js& */ "./resources/js/components/DropdownToggler.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _DropdownToggler_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _DropdownToggler_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -13100,7 +13140,7 @@ component.options.__file = "resources/js/components/DropdownToggler.vue"
 /*!******************************************************************************!*\
   !*** ./resources/js/components/DropdownToggler.vue?vue&type=script&lang=js& ***!
   \******************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13201,15 +13241,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************!*\
   !*** ./resources/js/components/NavbarDropdown.vue ***!
   \****************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NavbarDropdown_vue_vue_type_template_id_5fabd228___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavbarDropdown.vue?vue&type=template&id=5fabd228& */ "./resources/js/components/NavbarDropdown.vue?vue&type=template&id=5fabd228&");
 /* harmony import */ var _NavbarDropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavbarDropdown.vue?vue&type=script&lang=js& */ "./resources/js/components/NavbarDropdown.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _NavbarDropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _NavbarDropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -13239,7 +13278,7 @@ component.options.__file = "resources/js/components/NavbarDropdown.vue"
 /*!*****************************************************************************!*\
   !*** ./resources/js/components/NavbarDropdown.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

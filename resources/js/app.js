@@ -11,6 +11,18 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+Vue.directive('dropdown-outside-click', {
+  bind: function(el, binding, vnode) {
+    document.body.addEventListener('click', function(event) {
+      if (
+          event.target !== el && // element which clicked on is not the current element
+          event.target.id !== binding.value.ref // and it's not event the toggler button
+      ) {
+        vnode.context[binding.value.method](event); // then run hide event on the content
+      }
+    });
+  }
+});
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navbar-dropdown', require('./components/NavbarDropdown.vue').default);
@@ -21,5 +33,5 @@ Vue.component('navbar-dropdown', require('./components/NavbarDropdown.vue').defa
  */
 
 const app = new Vue({
-  el: '#app'
+  el: '#app',
 });

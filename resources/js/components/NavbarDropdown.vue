@@ -1,11 +1,11 @@
 <template>
     <div class="text-left dropdown">
-        <dropdown-toggler @toggle="toggleDropdown" class="mb-3" visibile="show">
+        <dropdown-toggler @toggle="toggleDropdown" visibile="show">
             {{ user ? user.name : 'حساب کاربری' }}
         </dropdown-toggler>
 
         <div v-show="show" class="dropdown__content dropdown__content--left">
-            <dropdown-content v-if="!signedIn">
+            <dropdown-content v-if="!signedIn" @hideDropdown="closeDropdown">
                 <dropdown-item href="/login">
                     <i class="fas fa-sign-out-alt"></i>
                     ورود به حساب کاربری
@@ -67,6 +67,10 @@
        methods: {
            toggleDropdown() {
                this.show = !this.show;
+           },
+
+           closeDropdown() {
+               this.show = false;
            }
        }
    }
