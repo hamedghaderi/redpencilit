@@ -1,0 +1,105 @@
+.upload-levels {
+  @apply flex w-3/4 mx-auto items-center;
+
+  &__title {
+    @apply ml-8;
+  }
+
+  &__list {
+    @apply flex list-reset flex-1 justify-between w-full relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      @apply bg-grey-dark;
+      left: 0;
+      top: 50%;
+      transform: translate(0, -50%);
+      height: 1px;
+    }
+  }
+  
+  &__item {
+    position: relative;
+  }
+
+  &__item:nth-child(2) &__marker {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  &__item:last-child &__marker {
+    left: 0;
+    right: auto;
+  }
+
+  &__item--active &__marker {
+    @apply bg-white border-none shadow-md;
+
+    &::after {
+      content: '';
+      @apply absolute bg-red rounded-full;
+      width: 8px;
+      height: 8px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__marker {
+    @apply absolute rounded-full border border-grey-dark z-0 bg-grey-lightest;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  
+  &__item--active &__content {
+    display: flex;
+  }
+
+  &__content {
+    @apply bg-white absolute border text-center flex flex-col py-3 text-sm rounded shadow;
+    width: 135px;
+    left: 50%;
+    bottom: calc(100% + 20px);
+    transform: translate(-50%, 0);
+    display: none;
+
+    &::before {
+      content: '';
+      @apply absolute z-20;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid white;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    &::after {
+      content: '';
+      @apply absolute z-10;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-top: 7px solid #adb5bd;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%, 0);
+    }
+
+    span {
+      @apply text-grey-dark;
+    }
+  }
+
+  &__item:first-child &__content {
+    left: calc(50% - 10px);
+  }
+
+  &__item:last-child &__content {
+    left: calc(50% + 10px);
+  }
+}

@@ -1,13 +1,13 @@
 .dropdown {
-  @apply relative;
+  @apply relative z-20;
   min-width: 300px;
 
   ul {
-    @apply list-reset shadow-md rounded py-6 text-sm;
+    @apply list-reset shadow-md rounded py-6 text-sm bg-white;
   }
 
   li {
-    @apply w-full block py-3 text-right px-8 py-3;
+    @apply w-full block py-3 text-right px-8 py-3 relative;
 
     &:hover {
       @apply bg-grey-lighter;
@@ -27,7 +27,7 @@
   }
 
   &__content {
-    @apply absolute;
+    @apply absolute z-50;
 
     &--left {
       @apply pin-l;

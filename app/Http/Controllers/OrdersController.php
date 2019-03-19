@@ -35,12 +35,11 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         Validator::make($request->all(), [
             'document' => 'mimes:jpeg,bmp,png'
         ]);
 
-        request()->file('document')->store('docs', 'public');
+        request()->file('document')->store('documents', 'default');
 
         return 'hamed';
     }
