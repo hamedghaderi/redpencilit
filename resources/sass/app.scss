@@ -1,8 +1,9 @@
+// Vendors
+@import "~@uppy/core/dist/style.css";
+@import "~@uppy/dashboard/dist/style.css";
+
 // Variables
 @import 'variables';
-
-
-
 
 
 /**
@@ -30,6 +31,7 @@
 /* Base */
 @import 'global/base';
 @import 'global/grid';
+@import 'global/overrides';
 
 /* Components */
 @import 'components/buttons';

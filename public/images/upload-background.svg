@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="380.692" height="357.23" viewBox="0 0 380.692 357.23">
+  <defs>
+    <filter id="Path_21" x="180.359" y="19.836" width="153.716" height="163.906" filterUnits="userSpaceOnUse">
+      <feOffset dy="7" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#a4d5f7" flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Path_22" x="0" y="0" width="380.692" height="357.23" filterUnits="userSpaceOnUse">
+      <feOffset dy="7" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="32" result="blur-2"/>
+      <feFlood flood-color="#49acef" flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_12" data-name="Group 12" transform="translate(-714.5 -577.531)">
+    <g id="Group_11" data-name="Group 11" transform="translate(962.542 600.05) rotate(30)">
+      <g transform="matrix(0.87, -0.5, 0.5, 0.87, -226.07, 104.52)" filter="url(#Path_21)">
+        <path id="Path_21-2" data-name="Path 21" d="M47.27,23.2V0H9.28A9.307,9.307,0,0,0,0,9.28v97.441A9.307,9.307,0,0,0,9.28,116h69.6a9.307,9.307,0,0,0,9.28-9.28V36.25H60.32A13.07,13.07,0,0,1,47.27,23.2Z" transform="translate(248.04 22.52) rotate(30)" fill="#fff" stroke="#ced4da" stroke-width="1"/>
+      </g>
+      <text id="W" transform="translate(42.444 65.881)" fill="#0986bc" stroke="#21252a" stroke-width="1" font-size="27" font-family="Sahel-Bold, Sahel" font-weight="700"><tspan x="-13.052" y="0">W</tspan></text>
+    </g>
+    <g id="Group_19" data-name="Group 19" transform="translate(969.601 646.712) rotate(30)">
+      <text id="W-2" data-name="W" transform="translate(13 29)" fill="#0986bc" font-size="27" font-family="Sahel-Bold, Sahel" font-weight="700"><tspan x="-13.052" y="0">W</tspan></text>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 714.5, 577.53)" filter="url(#Path_22)">
+      <path id="Path_22-2" data-name="Path 22" d="M160.234,81.049A54.986,54.986,0,0,0,60.34,55.718a25.985,25.985,0,0,0-9.861-1.943c-14.333,0-25.954,12.611-26.174,26.907C9.678,85.338,0,99.635,0,114.665c0,18.4,14.92,34.642,33.323,34.642H89.08V97.289l-17.559,17.3a4.77,4.77,0,1,1-6.709-6.782L90.473,82.515a4.662,4.662,0,0,1,1.5-.99,4.548,4.548,0,0,1,1.833-.367,4.778,4.778,0,0,1,3.336,1.356l25.661,25.294a4.77,4.77,0,1,1-6.709,6.782l-17.486-17.3v52.018h55.758c18.4,0,33.323-16.24,33.323-34.642C187.692,98.279,175.851,83.835,160.234,81.049ZM89.08,191.465a4.766,4.766,0,0,0,9.531,0V149.307H89.08Z" transform="translate(96.5 57.5)" fill="#fff" stroke="#ced4da" stroke-width="1"/>
+    </g>
+  </g>
+</svg>

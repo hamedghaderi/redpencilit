@@ -32,6 +32,14 @@ Vue.component('navbar-dropdown', require('./components/NavbarDropdown.vue').defa
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const Uppy = require('@uppy/core');
+const Dashboard = require('@uppy/dashboard');
+const XHRUpload = require('@uppy/xhr-upload');
+
+window.Uppy = Uppy;
+window.Dashboard = Dashboard;
+window.XHRUpload = XHRUpload;
+
 const app = new Vue({
   el: '#app',
 });

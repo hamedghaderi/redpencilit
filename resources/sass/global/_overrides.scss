@@ -1,0 +1,45 @@
+.uppy-Root {
+  font-family: 'Sahel' !important;
+}
+
+.uppy-Dashboard-inner {
+  border: 1px dashed #ced4da !important;
+}
+
+.uppy-DashboarAddFiles {
+  background-image: url("../images/upload-background.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  justify-content: flex-end !important;
+  padding-bottom: 4rem;
+  text-align: right;
+}
+
+.uppy-size--md .uppy-Dashboard-dropFilesTitle {
+  font-size: 14px !important;
+  max-width: 600px !important;
+}
+
+.uppy-DashboardItem-statusSize {
+  direction: ltr;
+}
+
+.uppy-DashboardContent-bar {
+  flex-direction: row-reverse !important;
+  border-bottom: 1px dashed #ced4da !important;
+}
+
+.uppy-size--md .uppy-DashboardItem {
+  float: right !important;
+}
+
+
+.uppy-size--md .uppy-DashboardItem-action {
+  right: auto !important;
+  left: -8px !important;
+}
+
+.uppy-DashboardItem-action {
+  right: auto !important;
+  left: 10px !important;
+}
