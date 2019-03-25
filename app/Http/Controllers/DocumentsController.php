@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Illuminate\Support\Facades\Cache;
+use App\Rules\CountingWords;
 
 class DocumentsController extends Controller
 {
-    public function store(User $user)
+    public function store()
     {
-        request()->validate([
-            'articles' => ['required'],
-            'articles.*' => ['required', 'file', 'mimes:docx,doc', 'distinct']
-        ]);
+        try {
+            request()->validate([
+                'articles' => ['required', new CountingWords],
+                'articles.*' => ['required', 'file', 'mimes:docx,doc', 'distinct']
+            ]);
+        } catch (\Exception $e) {
+            return response('بارگذاری فایل انجام نشد!', 400);
+        }
 
         $uploadedFilePathes = [];
 
         foreach (request()->file('articles') as $file)  {
-            $uploadedFilePathes[] = $file->store('documents/');
+            $uploadedFilePathes[] = $file->store('documents');
         }
 
-        Cache::remember('upload_file_paths', 600, function() use ($uploadedFilePathes) {
-            return $uploadedFilePathes;
-        });
+        return response('Your documents uploaded', 200);
     }
 }

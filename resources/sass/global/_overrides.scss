@@ -43,3 +43,138 @@
   right: auto !important;
   left: 10px !important;
 }
+
+
+
+
+// Uppy Status Bar
+.uppy-size--md .uppy-StatusBar {
+  height: 60px !important;
+}
+
+.uppy-StatusBar {
+  &.is-uploading {
+    background-color: #E3F5FD !important;
+
+    &::before {
+      background-color: #A3DFF8 !important;
+    }
+
+    .uppy-StatusBar-progress {
+      background-color: #0CAAEE;
+    }
+
+    .uppy-StatusBar-content {
+      color: #055070 !important;
+      position: relative;
+      padding-right: 50px;
+
+      &::before {
+        position: absolute;
+        content: '';
+        background-image: url("../images/alert-document.svg");
+        width: 34px;
+        height: 45px;
+        background-repeat: no-repeat;
+        background-position: right center;
+        right: 10px;
+      }
+
+
+      svg {
+        display: none !important;
+      }
+    }
+  }
+
+  &.is-error {
+    background-color: #ffeded !important;
+
+    &::before {
+      background-color: #ff5a5d !important;
+    }
+
+    .uppy-StatusBar-progress {
+      background-color: #ff5a5d !important;
+    }
+
+    .uppy-StatusBar-content {
+      color: #782a2b !important;
+      position: relative;
+      padding-right: 50px;
+
+      svg {
+        display: none !important;
+      }
+
+      &::before {
+        position: absolute;
+        content: '';
+        background-image: url("../images/alert-document-error.svg");
+        width: 34px;
+        height: 45px;
+        background-repeat: no-repeat;
+        background-position: right center;
+        right: 10px;
+      }
+    }
+  }
+
+  &.is-complete {
+    background-color: #e8fffe !important;
+
+    &::before {
+      background-color: #00B38F !important;
+    }
+
+    .uppy-StatusBar-progress {
+      background-color: #00B38F !important;
+    }
+
+    .uppy-StatusBar-content {
+      color: #20504f !important;
+      position: relative;
+      padding-right: 50px;
+
+      svg {
+        display: none !important;
+      }
+
+      &::before {
+        position: absolute;
+        content: '';
+        background-image: url("../images/alert-document-success.svg");
+        width: 34px;
+        height: 45px;
+        background-repeat: no-repeat;
+        background-position: right center;
+        right: 10px;
+      }
+    }
+  }
+}
+
+
+
+// Uppy Button
+.uppy-size--md .uppy-StatusBar.is-waiting .uppy-StatusBar-actionBtn--upload {
+  box-shadow: 0 3px 24px rgba(#5A5DFF, .3) !important;
+  background-image: linear-gradient(to left, #5A5DFF, #A9AAFF) !important;
+  border-radius: 50px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  text-align: center !important;
+}
+
+
+
+
+// Uppy Informer
+.uppy.uppy-Informer p {
+  @apply bg-white shadow;
+  border-top: 3px solid #ff5a5d;
+  border-radius: 4px !important;
+  color: #ff5a5d !important;
+}

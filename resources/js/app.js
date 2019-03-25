@@ -26,19 +26,16 @@ Vue.directive('dropdown-outside-click', {
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navbar-dropdown', require('./components/NavbarDropdown.vue').default);
+Vue.component('upload-view', require('./pages/UploadView.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const Uppy = require('@uppy/core');
-const Dashboard = require('@uppy/dashboard');
-const XHRUpload = require('@uppy/xhr-upload');
 
-window.Uppy = Uppy;
-window.Dashboard = Dashboard;
-window.XHRUpload = XHRUpload;
+
+
 
 const app = new Vue({
   el: '#app',

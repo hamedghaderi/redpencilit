@@ -1,5 +1,5 @@
 .button {
- @apply text-white px-4 py-3 rounded-full relative z-10 inline-flex .no-underline items-center;
+ @apply text-white px-6 py-3 rounded-full relative z-10 inline-flex .no-underline items-center;
  transition: all .3s;
 
  &:hover {
@@ -7,11 +7,11 @@
  }
 
  &--primary {
-   box-shadow: 0 3px 24px rgba(#FF66BC, .3);
-   background-image: linear-gradient(to bottom left, #FFBAA5, #FF66BC);
+   box-shadow: 0 3px 24px rgba(#5A5DFF, .3);
+   background-image: linear-gradient(to left, #5A5DFF, #A9AAFF);
 
    &:hover {
-     box-shadow: 0 5px 24px rgba(#FF66BC, .4);
+     box-shadow: 0 5px 24px rgba(#5A5DFF, .4);
    }
  }
 

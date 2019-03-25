@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('orders/create', 'OrdersController@create');
-Route::post('api/users/{user}/documents', 'DocumentsController@store');
+Route::post('api/documents', 'DocumentsController@store');
 
 Auth::routes();
 
