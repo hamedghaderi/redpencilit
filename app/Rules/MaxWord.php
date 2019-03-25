@@ -5,13 +5,12 @@ namespace App\Rules;
 use App\DocumentWordCount;
 use Illuminate\Contracts\Validation\Rule;
 
-class CountingWords implements Rule
+class MaxWord implements Rule
 {
     /**
      * Determine if the validation rule passes.
      *
      * @param  string  $attribute
-     * @param  mixed  $documents
      * @return bool
      */
     public function passes($attribute, $documents)
@@ -23,8 +22,6 @@ class CountingWords implements Rule
         foreach ($documents as $document) {
             $sum += $doc->countWords($document);
         }
-
-        dd($sum);
 
         return $sum <= 20000;
     }

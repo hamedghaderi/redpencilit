@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Rules\CountingWords;
+use App\Rules\MaxWord;
 
 class DocumentsController extends Controller
 {
@@ -10,8 +10,8 @@ class DocumentsController extends Controller
     {
         try {
             request()->validate([
-                'articles' => ['required', new CountingWords],
-                'articles.*' => ['required', 'file', 'mimes:docx,doc', 'distinct']
+                'articles' => ['required', new MaxWord],
+                'articles.*' => ['required', 'file', 'mimes:docx', 'distinct']
             ]);
         } catch (\Exception $e) {
             return response('بارگذاری فایل انجام نشد!', 400);
