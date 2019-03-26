@@ -1,0 +1,11 @@
+.tag {
+  @apply border rounded text-xs px-3 py-1;
+
+  &--danger {
+    @apply bg-red-lightest border-red text-red-darker;
+  }
+
+  &--info {
+    @apply bg-blue-lightest border-blue text-blue-darker;
+  }
+}

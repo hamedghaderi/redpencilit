@@ -7016,9 +7016,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      user: this.signedInUser || null,
-      show: false
+      user: window.Redpencilit.user,
+      show: false,
+      token: null
     };
+  },
+  created: function created() {
+    this.token = document.querySelector('meta[name="csrf-token"]').content;
   },
   computed: {
     signedIn: function signedIn() {
@@ -7034,6 +7038,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     closeDropdown: function closeDropdown() {
       this.show = false;
+    },
+    logout: function logout() {
+      document.getElementById('logout-form').submit();
     }
   }
 });
@@ -7078,6 +7085,8 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     var csrf = document.getElementById('csrf').getAttribute('content');
     var uppy = _uppy_core__WEBPACK_IMPORTED_MODULE_0___default()(_settings_uppy__WEBPACK_IMPORTED_MODULE_4__["uppy_settings"]).use(_uppy_dashboard__WEBPACK_IMPORTED_MODULE_1___default.a, _settings_uppy_dashboard__WEBPACK_IMPORTED_MODULE_3__["dashboard_settings"]).use(_uppy_xhr_upload__WEBPACK_IMPORTED_MODULE_2___default.a, {
       endpoint: '/api/documents',
@@ -7091,7 +7100,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
     this.uppy = uppy;
-    uppy.on('upload-success', function (file, body) {//    TODO
+    uppy.on('upload-success', function (file, response) {
+      _this.$emit('fileUploaded', response.body.words);
     });
   }
 });
@@ -7147,10 +7157,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     UploaderFile: _components_UploaderFile_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      words: 0
+    };
+  },
+  methods: {
+    setWords: function setWords(words) {
+      this.words = words;
+    }
   }
 });
 
@@ -11286,63 +11331,43 @@ var render = function() {
               )
             : _c(
                 "dropdown-content",
+                { on: { hideDropdown: _vm.closeDropdown } },
                 [
-                  _c("dropdown-item", [
-                    _c(
-                      "a",
-                      {
-                        pre: true,
-                        attrs: {
-                          id: "navbarDropdown",
-                          class: "nav-link dropdown-toggle",
-                          href: "#",
-                          role: "button",
-                          "data-toggle": "dropdown",
-                          "aria-haspopup": "true",
-                          "aria-expanded": "false"
-                        }
-                      },
-                      [
-                        _vm._v("\n                    {{ user }} "),
-                        _c("span", { pre: true, attrs: { class: "caret" } })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "dropdown-menu dropdown-menu-right",
-                        attrs: { "aria-labelledby": "navbarDropdown" }
-                      },
-                      [
+                  _c("dropdown-item", { attrs: { href: "/dashboard" } }, [
+                    _c("i", { staticClass: "fas fa-tachometer-alt" }),
+                    _vm._v("\n               داشبورد\n            ")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { on: { click: _vm.logout } },
+                    [
+                      _c("dropdown-item", { attrs: { href: "#" } }, [
+                        _c("i", { staticClass: "fas fa-sign-out-alt" }),
+                        _vm._v(
+                          "\n                    خروج از حساب کاربری\n\n                    "
+                        ),
                         _c(
-                          "a",
+                          "form",
                           {
-                            staticClass: "dropdown-item",
+                            staticStyle: { display: "none" },
                             attrs: {
-                              href: "/logout",
-                              onclick:
-                                "event.preventDefault(); document.getElementById('logout-form').submit();"
+                              id: "logout-form",
+                              action: "/logout",
+                              method: "POST"
                             }
                           },
                           [
-                            _vm._v(
-                              "\n                        خروج از حساب کاربری\n                    "
-                            )
+                            _c("input", {
+                              attrs: { type: "hidden", name: "_token" },
+                              domProps: { value: _vm.token }
+                            })
                           ]
-                        ),
-                        _vm._v(" "),
-                        _c("form", {
-                          staticStyle: { display: "none" },
-                          attrs: {
-                            id: "logout-form",
-                            action: "/logout",
-                            method: "POST"
-                          }
-                        })
-                      ]
-                    )
-                  ])
+                        )
+                      ])
+                    ],
+                    1
+                  )
                 ],
                 1
               )
@@ -11415,7 +11440,52 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container" },
-    [_vm._m(0), _vm._v(" "), _c("uploader-file")],
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("uploader-file", {
+        staticClass: "mb-12",
+        on: { fileUploaded: _vm.setWords }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "w-3/4 mx-auto flex" }, [
+        _c("h3", { staticClass: "w-2/5" }, [
+          _vm._v("سرویس مورد نظر خود را انتخاب کنید")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-3/5" }, [
+          _c("div", { staticClass: "flex shadow p-5 mb-6 text-sm" }, [
+            _c("span", [_vm._v("تعداد کلمات مقاله (ها)")]),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.words,
+                    expression: "words"
+                  }
+                ],
+                staticClass: "mr-auto tag tag--info"
+              },
+              [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.words + " کلمه") +
+                    "\n                "
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2)
+        ])
+      ])
+    ],
     1
   )
 }
@@ -11461,6 +11531,38 @@ var staticRenderFns = [
           ])
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mb-6" }, [
+      _c("select", { attrs: { name: "service", id: "service" } }, [
+        _c("option", { attrs: { value: "" } }, [
+          _vm._v("لطفا سرویس مورد نظر خود را انتخاب کنید")
+        ]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "مقاله" } }, [_vm._v("مقاله")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "کتاب" } }, [_vm._v("کتاب")]),
+        _vm._v(" "),
+        _c("option", { attrs: { value: "رزومه" } }, [_vm._v("رزومه")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mb-6" }, [
+      _c("input", {
+        attrs: {
+          type: "text",
+          name: "delivery-date",
+          placeholder: "تاریخ تحویل"
+        }
+      })
     ])
   }
 ]

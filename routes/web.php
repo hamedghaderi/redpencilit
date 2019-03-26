@@ -15,9 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware('auth')->group(function() {
+    Route::get('dashboard/services', 'ServicesController@index');
+    Route::post('dashboard/services', 'ServicesController@store');
+    Route::get('dashboard/services/create', 'ServicesController@create');
+    Route::get('/dashboard', 'DashboardController@index');
+});
+
 Route::get('orders/create', 'OrdersController@create');
 Route::post('api/documents', 'DocumentsController@store');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+

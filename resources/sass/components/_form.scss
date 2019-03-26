@@ -9,3 +9,15 @@
     @apply absolute pin-l h-full border bg-white rounded-tl rounded-bl flex items-center px-3 text-grey;
   }
 }
+
+.form-group  {
+  @apply mb-6;
+}
+
+.form-group label {
+  @apply block text-grey-darker mb-3;
+}
+
+.form-group input {
+  @apply block p-3 w-full;
+}

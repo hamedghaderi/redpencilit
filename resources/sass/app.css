@@ -1,0 +1,556 @@
+@import "~@uppy/core/dist/style.css";
+@import "~@uppy/dashboard/dist/style.css";
+/**
+* This injects Tailwind's base styles, which is a combination of
+* Normalize.css and some additional base styles.
+*
+* You can see the styles here:
+* https://github.com/tailwindcss/tailwindcss/blob/master/css/preflight.css
+*
+* If using `postcss-import`, use this import instead:
+*
+* @import "tailwindcss/preflight";
+*/
+@tailwind preflight;
+/**
+ * This injects any component classes registered by plugins.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/components";
+ */
+@tailwind components;
+/* Base */
+::-webkit-input-placeholder {
+  color: #8795a1 !important;
+}
+
+::-moz-placeholder {
+  color: #8795a1 !important;
+}
+
+:-ms-input-placeholder {
+  color: #8795a1 !important;
+}
+
+:-moz-placeholder {
+  color: #8795a1 !important;
+}
+
+body {
+  @apply bg-grey-lightest text-right font-normal pb-16;
+  direction: rtl;
+  font-family: Sahel;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply text-black;
+}
+
+a {
+  @apply .text-blue;
+}
+
+.container {
+  @apply w-full mx-auto;
+}
+
+@screen sm {
+  .container {
+    max-width: 576px;
+  }
+}
+@screen md {
+  .container {
+    max-width: 768px;
+  }
+}
+@screen lg {
+  .container {
+    max-width: 992px;
+  }
+}
+@screen xl {
+  .container {
+    max-width: 1200px;
+  }
+}
+.uppy-Root {
+  font-family: "Sahel" !important;
+}
+
+.uppy-Dashboard-inner {
+  border: 1px dashed #ced4da !important;
+}
+
+.uppy-DashboarAddFiles {
+  background-image: url("../images/upload-background.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  justify-content: flex-end !important;
+  padding-bottom: 4rem;
+  text-align: right;
+}
+
+.uppy-size--md .uppy-Dashboard-dropFilesTitle {
+  font-size: 14px !important;
+  max-width: 600px !important;
+}
+
+.uppy-DashboardItem-statusSize {
+  direction: ltr;
+}
+
+.uppy-DashboardContent-bar {
+  flex-direction: row-reverse !important;
+  border-bottom: 1px dashed #ced4da !important;
+}
+
+.uppy-size--md .uppy-DashboardItem {
+  float: right !important;
+}
+
+.uppy-size--md .uppy-DashboardItem-action {
+  right: auto !important;
+  left: -8px !important;
+}
+
+.uppy-DashboardItem-action {
+  right: auto !important;
+  left: 10px !important;
+}
+
+.uppy-size--md .uppy-StatusBar {
+  height: 60px !important;
+}
+
+.uppy-StatusBar.is-uploading {
+  background-color: #E3F5FD !important;
+}
+.uppy-StatusBar.is-uploading::before {
+  background-color: #A3DFF8 !important;
+}
+.uppy-StatusBar.is-uploading .uppy-StatusBar-progress {
+  background-color: #0CAAEE;
+}
+.uppy-StatusBar.is-uploading .uppy-StatusBar-content {
+  color: #055070 !important;
+  position: relative;
+  padding-right: 50px;
+}
+.uppy-StatusBar.is-uploading .uppy-StatusBar-content::before {
+  position: absolute;
+  content: "";
+  background-image: url("../images/alert-document.svg");
+  width: 34px;
+  height: 45px;
+  background-repeat: no-repeat;
+  background-position: right center;
+  right: 10px;
+}
+.uppy-StatusBar.is-uploading .uppy-StatusBar-content svg {
+  display: none !important;
+}
+.uppy-StatusBar.is-error {
+  background-color: #ffeded !important;
+}
+.uppy-StatusBar.is-error::before {
+  background-color: #ff5a5d !important;
+}
+.uppy-StatusBar.is-error .uppy-StatusBar-progress {
+  background-color: #ff5a5d !important;
+}
+.uppy-StatusBar.is-error .uppy-StatusBar-content {
+  color: #782a2b !important;
+  position: relative;
+  padding-right: 50px;
+}
+.uppy-StatusBar.is-error .uppy-StatusBar-content svg {
+  display: none !important;
+}
+.uppy-StatusBar.is-error .uppy-StatusBar-content::before {
+  position: absolute;
+  content: "";
+  background-image: url("../images/alert-document-error.svg");
+  width: 34px;
+  height: 45px;
+  background-repeat: no-repeat;
+  background-position: right center;
+  right: 10px;
+}
+.uppy-StatusBar.is-complete {
+  background-color: #e8fffe !important;
+}
+.uppy-StatusBar.is-complete::before {
+  background-color: #00B38F !important;
+}
+.uppy-StatusBar.is-complete .uppy-StatusBar-progress {
+  background-color: #00B38F !important;
+}
+.uppy-StatusBar.is-complete .uppy-StatusBar-content {
+  color: #20504f !important;
+  position: relative;
+  padding-right: 50px;
+}
+.uppy-StatusBar.is-complete .uppy-StatusBar-content svg {
+  display: none !important;
+}
+.uppy-StatusBar.is-complete .uppy-StatusBar-content::before {
+  position: absolute;
+  content: "";
+  background-image: url("../images/alert-document-success.svg");
+  width: 34px;
+  height: 45px;
+  background-repeat: no-repeat;
+  background-position: right center;
+  right: 10px;
+}
+
+.uppy-size--md .uppy-StatusBar.is-waiting .uppy-StatusBar-actionBtn--upload {
+  box-shadow: 0 3px 24px rgba(90, 93, 255, 0.3) !important;
+  background-image: linear-gradient(to left, #5A5DFF, #A9AAFF) !important;
+  border-radius: 50px !important;
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
+  text-align: center !important;
+}
+
+.uppy.uppy-Informer p {
+  @apply bg-white shadow;
+  border-top: 3px solid #ff5a5d;
+  border-radius: 4px !important;
+  color: #ff5a5d !important;
+}
+
+/* Components */
+.button {
+  @apply text-white px-6 py-3 rounded-full relative z-10 inline-flex .no-underline items-center;
+  transition: all 0.3s;
+}
+.button:hover {
+  transform: translateY(-2px);
+}
+.button--primary {
+  box-shadow: 0 3px 24px rgba(90, 93, 255, 0.3);
+  background-image: linear-gradient(to left, #5A5DFF, #A9AAFF);
+}
+.button--primary:hover {
+  box-shadow: 0 5px 24px rgba(90, 93, 255, 0.4);
+}
+.button--success {
+  background-image: linear-gradient(to bottom left, #51d88a, #1f9d55);
+  box-shadow: 0 3px 24px rgba(81, 216, 138, 0.3);
+}
+.button--success:hover {
+  box-shadow: 0 5px 24px rgba(81, 216, 138, 0.4);
+}
+.button--outline {
+  @apply bg-transparent rounded text-grey-dark;
+  transition: none;
+}
+.button--outline:hover {
+  transform: none;
+}
+.button--outline i {
+  @apply mr-2;
+}
+.button--outline--danger {
+  @apply border border-red;
+}
+.button--outline--danger i {
+  @apply text-red;
+}
+.button--simple {
+  @apply bg-white text-grey-darker shadow;
+}
+.button--thin {
+  @apply px-6 py-2 text-xs;
+}
+.button--default {
+  @apply .bg-grey-lighter .text-blue-darker rounded text-sm px-6;
+}
+.button--default:hover {
+  transform: translate(0px);
+  @apply bg-grey-light;
+}
+.button:active {
+  transform: translateY(0px);
+  box-shadow: none;
+}
+
+.input {
+  @apply p-3 border text-sm;
+}
+.input:focus {
+  border-color: #3490dc;
+}
+.input-icon {
+  @apply absolute pin-l h-full border bg-white rounded-tl rounded-bl flex items-center px-3 text-grey;
+}
+
+.form-group {
+  @apply mb-6;
+}
+
+.form-group label {
+  @apply block text-grey-darker mb-3;
+}
+
+.form-group input {
+  @apply block p-3 w-full;
+}
+
+.has-icon {
+  @apply inline-flex items-center;
+}
+.has-icon i {
+  @apply ml-1 relative;
+}
+
+.card {
+  @apply bg-white p-8 shadow rounded;
+}
+
+.feedback__invalid {
+  @apply .bg-red-lightest px-3 .py-2 .text-red-dark rounded .border-r-4 .border-red text-xs .leading-normal;
+}
+
+.navbar {
+  @apply py-4 mb-24 relative;
+}
+.navbar__nav {
+  @apply flex list-reset;
+}
+.navbar__nav li {
+  @apply ml-6;
+}
+.navbar__nav a {
+  @apply no-underline text-grey-dark;
+}
+.navbar__nav a.active {
+  @apply text-red;
+}
+
+.dashboard-nav {
+  @apply fixed pin-r pin-t bg-white h-full shadow;
+  width: 250px;
+  max-width: 250px;
+}
+.dashboard-nav__user {
+  @apply text-center pb-12 mb-12 border-b border-grey-lighter;
+}
+.dashboard-nav__user span {
+  @apply text-grey-dark text-sm;
+}
+.dashboard-nav__avatar {
+  @apply rounded-full mx-auto mb-3 shadow-lg;
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+.dashboard-nav__list {
+  @apply list-reset px-6;
+}
+.dashboard-nav__list li {
+  @apply mb-12;
+}
+.dashboard-nav__list a {
+  @apply no-underline text-grey-darkest text-sm;
+}
+.dashboard-nav__list a:hover i {
+  @apply text-indigo;
+}
+.dashboard-nav__list a i {
+  @apply text-grey text-base;
+}
+.dashboard-nav__back {
+  @apply absolute pin-b p-6 border-t border-grey-lighter w-full text-center;
+}
+.dashboard-nav__back a {
+  @apply no-underline text-xs;
+}
+.dashboard-nav__back a i {
+  @apply text-sm;
+}
+
+.dropdown {
+  @apply relative z-20;
+  min-width: 300px;
+}
+.dropdown ul {
+  @apply list-reset shadow-md rounded py-6 text-sm bg-white;
+}
+.dropdown li {
+  @apply w-full block py-3 text-right px-8 py-3 relative;
+}
+.dropdown li:hover {
+  @apply bg-grey-lighter;
+}
+.dropdown li:hover a {
+  @apply text-red;
+}
+.dropdown a {
+  @apply flex items-center text-grey-darker no-underline;
+}
+.dropdown a i {
+  @apply ml-3;
+}
+.dropdown__content {
+  @apply absolute z-50;
+}
+.dropdown__content--left {
+  @apply pin-l;
+  top: 100%;
+}
+.dropdown_toggler {
+  @apply cursor-pointer;
+}
+
+.upload-levels {
+  @apply flex w-3/4 mx-auto items-center mb-8;
+}
+.upload-levels__title {
+  @apply ml-8;
+}
+.upload-levels__list {
+  @apply flex list-reset flex-1 justify-between w-full relative;
+}
+.upload-levels__list::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  @apply bg-grey-dark;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  height: 1px;
+}
+.upload-levels__item {
+  position: relative;
+}
+.upload-levels__item:nth-child(2) .upload-levels__marker {
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.upload-levels__item:last-child .upload-levels__marker {
+  left: 0;
+  right: auto;
+}
+.upload-levels__item--active .upload-levels__marker {
+  @apply bg-white border-none shadow-md;
+}
+.upload-levels__item--active .upload-levels__marker::after {
+  content: "";
+  @apply absolute bg-red rounded-full;
+  width: 8px;
+  height: 8px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.upload-levels__marker {
+  @apply absolute rounded-full border border-grey-dark z-0 bg-grey-lightest;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.upload-levels__item--active .upload-levels__content {
+  display: flex;
+}
+.upload-levels__content {
+  @apply bg-white absolute border text-center flex flex-col py-3 text-sm rounded shadow;
+  width: 135px;
+  left: 50%;
+  bottom: calc(100% + 20px);
+  transform: translate(-50%, 0);
+  display: none;
+}
+.upload-levels__content::before {
+  content: "";
+  @apply absolute z-20;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid white;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.upload-levels__content::after {
+  content: "";
+  @apply absolute z-10;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #adb5bd;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.upload-levels__content span {
+  @apply text-grey-dark;
+}
+.upload-levels__item:first-child .upload-levels__content {
+  left: calc(50% - 10px);
+}
+.upload-levels__item:last-child .upload-levels__content {
+  left: calc(50% + 10px);
+}
+
+.tag {
+  @apply border rounded text-xs px-3 py-1;
+}
+.tag--danger {
+  @apply bg-red-lightest border-red text-red-darker;
+}
+.tag--info {
+  @apply bg-blue-lightest border-blue text-blue-darker;
+}
+
+/**
+ * Here you would add any of your custom component classes; stuff that you'd
+ * want loaded *before* the utilities so that the utilities could still
+ * override them.
+ *
+ * Example:
+ *
+ * .btn { ... }
+ * .form-input { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "components/buttons";
+ * @import "components/forms";
+ */
+.bg-gradient-primary {
+  @apply .bg-indigo-darkest;
+}
+
+/**
+ * This injects all of Tailwind's utility classes, generated based on your
+ * config file.
+ *
+ * If using `postcss-import`, use this import instead:
+ *
+ * @import "tailwindcss/utilities";
+ */
+@tailwind utilities;
+/**
+ * Here you would add any custom utilities you need that don't come out of the
+ * box with Tailwind.
+ *
+ * Example :
+ *
+ * .bg-pattern-graph-paper { ... }
+ * .skew-45 { ... }
+ *
+ * Or if using a preprocessor or `postcss-import`:
+ *
+ * @import "utilities/background-patterns";
+ * @import "utilities/skew-transforms";
+ */
+
+/*# sourceMappingURL=app.css.map */

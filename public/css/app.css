@@ -3674,6 +3674,22 @@ a {
   color: #b8c2cc;
 }
 
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  color: #606f7b;
+  margin-bottom: .75rem;
+}
+
+.form-group input {
+  display: block;
+  padding: .75rem;
+  width: 100%;
+}
+
 .has-icon {
   display: inline-flex;
   align-items: center;
@@ -3709,6 +3725,7 @@ a {
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-bottom: 6rem;
+  position: relative;
 }
 
 .navbar__nav {
@@ -3728,6 +3745,88 @@ a {
 
 .navbar__nav a.active {
   color: #ff5a5d;
+}
+
+.dashboard-nav {
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: #fff;
+  height: 100%;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+  width: 250px;
+  max-width: 250px;
+}
+
+.dashboard-nav__user {
+  text-align: center;
+  padding-bottom: 3rem;
+  margin-bottom: 3rem;
+  border-bottom-width: 1px;
+  border-color: #f1f5f8;
+}
+
+.dashboard-nav__user span {
+  color: #adb5bd;
+  font-size: .875rem;
+}
+
+.dashboard-nav__avatar {
+  border-radius: 9999px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: .75rem;
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+  width: 100px;
+  height: 100px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
+.dashboard-nav__list {
+  list-style: none;
+  padding: 0;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.dashboard-nav__list li {
+  margin-bottom: 3rem;
+}
+
+.dashboard-nav__list a {
+  text-decoration: none;
+  color: #3d4852;
+  font-size: .875rem;
+}
+
+.dashboard-nav__list a:hover i {
+  color: #5a5dff;
+}
+
+.dashboard-nav__list a i {
+  color: #b8c2cc;
+  font-size: 1rem;
+}
+
+.dashboard-nav__back {
+  position: absolute;
+  bottom: 0;
+  padding: 1.5rem;
+  border-top-width: 1px;
+  border-color: #f1f5f8;
+  width: 100%;
+  text-align: center;
+}
+
+.dashboard-nav__back a {
+  text-decoration: none;
+  font-size: .75rem;
+}
+
+.dashboard-nav__back a i {
+  font-size: .875rem;
 }
 
 .dropdown {
@@ -3938,6 +4037,28 @@ a {
   left: calc(50% + 10px);
 }
 
+.tag {
+  border-width: 1px;
+  border-radius: .25rem;
+  font-size: .75rem;
+  padding-left: .75rem;
+  padding-right: .75rem;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+}
+
+.tag--danger {
+  background-color: #ffeded;
+  border-color: #ff5a5d;
+  color: #a73b3d;
+}
+
+.tag--info {
+  background-color: #e3f5fd;
+  border-color: #0caaee;
+  color: #055070;
+}
+
 /**
  * Here you would add any of your custom component classes; stuff that you'd
  * want loaded *before* the utilities so that the utilities could still
@@ -4035,7 +4156,7 @@ a {
 }
 
 .bg-red-darker {
-  background-color: #782a2b;
+  background-color: #a73b3d;
 }
 
 .bg-red-dark {
@@ -4327,7 +4448,7 @@ a {
 }
 
 .hover\:bg-red-darker:hover {
-  background-color: #782a2b;
+  background-color: #a73b3d;
 }
 
 .hover\:bg-red-dark:hover {
@@ -4619,7 +4740,7 @@ a {
 }
 
 .focus\:bg-red-darker:focus {
-  background-color: #782a2b;
+  background-color: #a73b3d;
 }
 
 .focus\:bg-red-dark:focus {
@@ -4983,7 +5104,7 @@ a {
 }
 
 .border-red-darker {
-  border-color: #782a2b;
+  border-color: #a73b3d;
 }
 
 .border-red-dark {
@@ -5275,7 +5396,7 @@ a {
 }
 
 .hover\:border-red-darker:hover {
-  border-color: #782a2b;
+  border-color: #a73b3d;
 }
 
 .hover\:border-red-dark:hover {
@@ -5567,7 +5688,7 @@ a {
 }
 
 .focus\:border-red-darker:focus {
-  border-color: #782a2b;
+  border-color: #a73b3d;
 }
 
 .focus\:border-red-dark:focus {
@@ -8322,7 +8443,7 @@ a {
 }
 
 .text-red-darker {
-  color: #782a2b;
+  color: #a73b3d;
 }
 
 .text-red-dark {
@@ -8614,7 +8735,7 @@ a {
 }
 
 .hover\:text-red-darker:hover {
-  color: #782a2b;
+  color: #a73b3d;
 }
 
 .hover\:text-red-dark:hover {
@@ -8906,7 +9027,7 @@ a {
 }
 
 .focus\:text-red-darker:focus {
-  color: #782a2b;
+  color: #a73b3d;
 }
 
 .focus\:text-red-dark:focus {
@@ -9647,7 +9768,7 @@ a {
   }
 
   .sm\:bg-red-darker {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .sm\:bg-red-dark {
@@ -9939,7 +10060,7 @@ a {
   }
 
   .sm\:hover\:bg-red-darker:hover {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .sm\:hover\:bg-red-dark:hover {
@@ -10231,7 +10352,7 @@ a {
   }
 
   .sm\:focus\:bg-red-darker:focus {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .sm\:focus\:bg-red-dark:focus {
@@ -10587,7 +10708,7 @@ a {
   }
 
   .sm\:border-red-darker {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .sm\:border-red-dark {
@@ -10879,7 +11000,7 @@ a {
   }
 
   .sm\:hover\:border-red-darker:hover {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .sm\:hover\:border-red-dark:hover {
@@ -11171,7 +11292,7 @@ a {
   }
 
   .sm\:focus\:border-red-darker:focus {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .sm\:focus\:border-red-dark:focus {
@@ -13910,7 +14031,7 @@ a {
   }
 
   .sm\:text-red-darker {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .sm\:text-red-dark {
@@ -14202,7 +14323,7 @@ a {
   }
 
   .sm\:hover\:text-red-darker:hover {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .sm\:hover\:text-red-dark:hover {
@@ -14494,7 +14615,7 @@ a {
   }
 
   .sm\:focus\:text-red-darker:focus {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .sm\:focus\:text-red-dark:focus {
@@ -15221,7 +15342,7 @@ a {
   }
 
   .md\:bg-red-darker {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .md\:bg-red-dark {
@@ -15513,7 +15634,7 @@ a {
   }
 
   .md\:hover\:bg-red-darker:hover {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .md\:hover\:bg-red-dark:hover {
@@ -15805,7 +15926,7 @@ a {
   }
 
   .md\:focus\:bg-red-darker:focus {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .md\:focus\:bg-red-dark:focus {
@@ -16161,7 +16282,7 @@ a {
   }
 
   .md\:border-red-darker {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .md\:border-red-dark {
@@ -16453,7 +16574,7 @@ a {
   }
 
   .md\:hover\:border-red-darker:hover {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .md\:hover\:border-red-dark:hover {
@@ -16745,7 +16866,7 @@ a {
   }
 
   .md\:focus\:border-red-darker:focus {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .md\:focus\:border-red-dark:focus {
@@ -19484,7 +19605,7 @@ a {
   }
 
   .md\:text-red-darker {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .md\:text-red-dark {
@@ -19776,7 +19897,7 @@ a {
   }
 
   .md\:hover\:text-red-darker:hover {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .md\:hover\:text-red-dark:hover {
@@ -20068,7 +20189,7 @@ a {
   }
 
   .md\:focus\:text-red-darker:focus {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .md\:focus\:text-red-dark:focus {
@@ -20795,7 +20916,7 @@ a {
   }
 
   .lg\:bg-red-darker {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .lg\:bg-red-dark {
@@ -21087,7 +21208,7 @@ a {
   }
 
   .lg\:hover\:bg-red-darker:hover {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .lg\:hover\:bg-red-dark:hover {
@@ -21379,7 +21500,7 @@ a {
   }
 
   .lg\:focus\:bg-red-darker:focus {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .lg\:focus\:bg-red-dark:focus {
@@ -21735,7 +21856,7 @@ a {
   }
 
   .lg\:border-red-darker {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .lg\:border-red-dark {
@@ -22027,7 +22148,7 @@ a {
   }
 
   .lg\:hover\:border-red-darker:hover {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .lg\:hover\:border-red-dark:hover {
@@ -22319,7 +22440,7 @@ a {
   }
 
   .lg\:focus\:border-red-darker:focus {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .lg\:focus\:border-red-dark:focus {
@@ -25058,7 +25179,7 @@ a {
   }
 
   .lg\:text-red-darker {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .lg\:text-red-dark {
@@ -25350,7 +25471,7 @@ a {
   }
 
   .lg\:hover\:text-red-darker:hover {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .lg\:hover\:text-red-dark:hover {
@@ -25642,7 +25763,7 @@ a {
   }
 
   .lg\:focus\:text-red-darker:focus {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .lg\:focus\:text-red-dark:focus {
@@ -26369,7 +26490,7 @@ a {
   }
 
   .xl\:bg-red-darker {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .xl\:bg-red-dark {
@@ -26661,7 +26782,7 @@ a {
   }
 
   .xl\:hover\:bg-red-darker:hover {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .xl\:hover\:bg-red-dark:hover {
@@ -26953,7 +27074,7 @@ a {
   }
 
   .xl\:focus\:bg-red-darker:focus {
-    background-color: #782a2b;
+    background-color: #a73b3d;
   }
 
   .xl\:focus\:bg-red-dark:focus {
@@ -27309,7 +27430,7 @@ a {
   }
 
   .xl\:border-red-darker {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .xl\:border-red-dark {
@@ -27601,7 +27722,7 @@ a {
   }
 
   .xl\:hover\:border-red-darker:hover {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .xl\:hover\:border-red-dark:hover {
@@ -27893,7 +28014,7 @@ a {
   }
 
   .xl\:focus\:border-red-darker:focus {
-    border-color: #782a2b;
+    border-color: #a73b3d;
   }
 
   .xl\:focus\:border-red-dark:focus {
@@ -30632,7 +30753,7 @@ a {
   }
 
   .xl\:text-red-darker {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .xl\:text-red-dark {
@@ -30924,7 +31045,7 @@ a {
   }
 
   .xl\:hover\:text-red-darker:hover {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .xl\:hover\:text-red-dark:hover {
@@ -31216,7 +31337,7 @@ a {
   }
 
   .xl\:focus\:text-red-darker:focus {
-    color: #782a2b;
+    color: #a73b3d;
   }
 
   .xl\:focus\:text-red-dark:focus {

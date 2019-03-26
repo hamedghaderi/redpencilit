@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\User;
-use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -16,6 +14,7 @@ class OrderTest extends TestCase
    /** @test **/
    public function a_user_can_upload_multiple_documents()
    {
+       $this->withoutExceptionHandling();
        Storage::fake('local');
 
         $files = [
@@ -28,11 +27,19 @@ class OrderTest extends TestCase
         ]);
 
 
-        Storage::disk('local')
+       Storage::disk('local')
             ->assertExists('documents/' . $files[0]->hashName())
             ->assertExists('documents/' . $files[1]->hashName());
 
-        $response->assertStatus(200);
+       $response->assertStatus(200);
+
+       $this->assertDatabaseHas('document_drafts', [
+            'path' => 'documents/' . $files[0]->hashName(),
+        ]);
+
+       $this->assertDatabaseHas('document_drafts', [
+            'path' => 'documents/' . $files[1]->hashName(),
+        ]);
    }
 
     /** @test **/

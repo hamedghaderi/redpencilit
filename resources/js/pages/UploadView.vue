@@ -32,8 +32,33 @@
         </div><!-- upload-levels -->
 
 
-        <uploader-file></uploader-file>
+        <uploader-file class="mb-12" @fileUploaded="setWords"></uploader-file>
 
+        <div class="w-3/4 mx-auto flex">
+            <h3 class="w-2/5">سرویس مورد نظر خود را انتخاب کنید</h3>
+
+            <div class="w-3/5">
+                <div class="flex shadow p-5 mb-6 text-sm">
+                    <span>تعداد کلمات مقاله (ها)</span>
+                    <span class="mr-auto tag tag--info" v-show="words">
+                        {{ words + ' کلمه' }}
+                    </span>
+                </div>
+
+                <div class="mb-6">
+                    <select name="service" id="service">
+                        <option value="">لطفا سرویس مورد نظر خود را انتخاب کنید</option>
+                        <option value="مقاله">مقاله</option>
+                        <option value="کتاب">کتاب</option>
+                        <option value="رزومه">رزومه</option>
+                    </select>
+                </div>
+
+                <div class="mb-6">
+                    <input type="text" name="delivery-date" placeholder="تاریخ تحویل">
+                </div>
+            </div>
+        </div>
     </div><!-- container -->
 </template>
 
@@ -41,6 +66,18 @@
     import UploaderFile from '../components/UploaderFile.vue';
 
     export default {
-        components: {UploaderFile}
+        components: {UploaderFile},
+
+        data() {
+            return {
+                words: 0
+            }
+        },
+
+        methods: {
+            setWords(words) {
+                this.words = words;
+            }
+        }
     }
 </script>

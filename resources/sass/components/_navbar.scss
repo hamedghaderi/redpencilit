@@ -1,5 +1,5 @@
 .navbar {
-  @apply py-4 mb-24;
+  @apply py-4 mb-24 relative;
 
   &__nav {
     @apply flex list-reset;
@@ -13,6 +13,61 @@
 
       &.active {
         @apply text-red;
+      }
+    }
+  }
+}
+
+.dashboard-nav {
+  @apply fixed pin-r pin-t bg-white h-full shadow;
+  width: 250px;
+  max-width: 250px;
+
+  &__user {
+    @apply text-center pb-12 mb-12 border-b border-grey-lighter;
+
+    span {
+      @apply text-grey-dark text-sm;
+    }
+  }
+
+  &__avatar {
+    @apply rounded-full mx-auto mb-3 shadow-lg;
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  &__list {
+    @apply list-reset px-6;
+
+    li {
+      @apply mb-12;
+    }
+
+    a {
+      @apply no-underline text-grey-darkest text-sm;
+
+      &:hover i {
+        @apply text-indigo;
+      }
+
+      i {
+        @apply text-grey text-base;
+      }
+    }
+  }
+
+  &__back {
+    @apply absolute pin-b p-6 border-t border-grey-lighter w-full text-center;
+
+    a {
+      @apply no-underline text-xs;
+
+      i {
+        @apply text-sm;
       }
     }
   }

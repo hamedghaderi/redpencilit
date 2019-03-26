@@ -6,7 +6,7 @@
         <h2 class="text-white mb-3 text-center font-normal">ورود به حساب کاربری</h2>
         <p class="text-white text-center mb-12">خوش آمدید</p>
         <div class="card py-16">
-            <form method="POST" action="{{ route('login') }}" class="text-md" novalidate>
+            <form method="POST" action="/login" class="text-md" novalidate>
                 @csrf
 
                 <div class="form-group mb-4">

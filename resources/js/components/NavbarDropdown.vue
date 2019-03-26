@@ -17,23 +17,23 @@
                 </dropdown-item>
             </dropdown-content>
 
-            <dropdown-content v-else>
-                <dropdown-item>
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                        {{ user }} <span class="caret"></span>
-                    </a>
+            <dropdown-content v-else @hideDropdown="closeDropdown">
+                <dropdown-item href="/dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                   داشبورد
+                </dropdown-item>
 
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item"
-                           href="/logout"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            خروج از حساب کاربری
-                        </a>
+                <div @click="logout">
+                    <dropdown-item href="#">
+                        <i class="fas fa-sign-out-alt"></i>
+                        خروج از حساب کاربری
 
                         <form id="logout-form" action="/logout" method="POST" style="display: none;">
+                            <input type="hidden" :value="token" name="_token">
                         </form>
-                    </div>
-                </dropdown-item>
+                    </dropdown-item>
+                </div>
+
             </dropdown-content>
         </div>
     </div>
@@ -49,9 +49,14 @@
 
        data() {
            return {
-               user: this.signedInUser || null,
+               user: window.Redpencilit.user,
                show: false,
+               token: null,
            }
+       },
+
+       created() {
+            this.token = document.querySelector('meta[name="csrf-token"]').content;
        },
 
        computed: {
@@ -71,6 +76,10 @@
 
            closeDropdown() {
                this.show = false;
+           },
+
+           logout() {
+                document.getElementById('logout-form').submit();
            }
        }
    }

@@ -55,12 +55,14 @@ let colors = {
   'white': '#ffffff',
 
   'red-darkest': '#3b0d0c',
-  'red-darker': '#782a2b',
+  'red-darker': '#A73B3D',
+  // 'red-darker': '#782a2b',
   'red-dark': '#cc1f1a',
   'red': '#ff5a5d',
   'red-light': '#ef5753',
   'red-lighter': '#f9acaa',
   'red-lightest': '#ffeded',
+
 
   'orange-darkest': '#462a16',
   'orange-darker': '#613b1f',
