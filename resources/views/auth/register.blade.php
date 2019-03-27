@@ -5,7 +5,7 @@
     <div class="w-1/3 mx-auto">
         <h2 class="text-white mb-5 text-center font-normal">ایجاد حساب کاربری</h2>
         <div class="card py-16">
-            <form method="POST" action="{{ route('register') }}" class="text-md" novalidate>
+            <form method="POST" action="/register" class="text-md" novalidate>
                 @csrf
 
                 <div class="form-group mb-4">

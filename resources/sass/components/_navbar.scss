@@ -32,12 +32,24 @@
   }
 
   &__avatar {
-    @apply rounded-full mx-auto mb-3 shadow-lg;
+    @apply rounded-full mx-auto mb-3 shadow-lg relative;
     width: 100px;
     height: 100px;
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+  }
+
+  &__avatar-gear {
+    @apply bg-indigo inline-flex text-white items-center justify-center rounded-full absolute cursor-pointer shadow-md;
+    width: 25px;
+    height: 25px;
+    bottom: 5px;
+    left: 5px;
+
+    i {
+      @apply text-white;
+    }
   }
 
   &__list {

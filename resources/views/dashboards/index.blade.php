@@ -1,7 +1,5 @@
 @extends('layouts.dashboard')
 
 @section('content')
-    <div class="container">
-        <h1>خوش آمدید جناب {{ auth()->user()->name }}</h1>
-    </div>
+        <h4 class="text-xs font-normal mb-12"> به حساب کاربری خود خوش ‌آمدید</h4>
 @endsection

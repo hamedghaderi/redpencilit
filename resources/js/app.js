@@ -1,4 +1,6 @@
 
+import './bootstrap.js';
+
 window.Vue = require('vue');
 
 /**
@@ -26,6 +28,7 @@ Vue.directive('dropdown-outside-click', {
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('navbar-dropdown', require('./components/NavbarDropdown.vue').default);
+Vue.component('avatar', require('./components/Avatar.vue').default);
 Vue.component('upload-view', require('./pages/UploadView.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to

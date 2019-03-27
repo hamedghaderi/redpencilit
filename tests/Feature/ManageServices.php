@@ -15,11 +15,12 @@ class ManageServices extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->signIn();
+        $user = $this->signIn();
 
         $service = factory(Service::class)->raw();
 
-        $this->post('/dashboard/services', $service)->assertRedirect('/dashboard/services');
+        $this->post('/dashboard/' . $user->name . '/services', $service)
+            ->assertRedirect('/dashboard/' . $user->name . '/services');
 
         $this->assertDatabaseHas('services', ['name' => $service['name']]);
     }
@@ -29,7 +30,7 @@ class ManageServices extends TestCase
     {
        $service = factory(Service::class)->raw();
 
-       $this->post('/services', $service)->assertRedirect('login');
+       $this->post('/dashboard/1/services', $service)->assertRedirect('login');
     }
 
     /** @test **/
@@ -37,10 +38,10 @@ class ManageServices extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->signIn();
+        $user = $this->signIn();
 
        $services = factory(Service::class)->create();
 
-       $this->get('/dashboard/services')->assertSee($services->name);
+       $this->get('/dashboard/' . $user->name . '/services')->assertSee($services->name);
     }
 }

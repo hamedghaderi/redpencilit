@@ -4,10 +4,12 @@
     </div>
 
     <div class="dashboard-nav__user">
-        <div
-            class="dashboard-nav__avatar"
-            style="background-image: url({{ asset('images/avatar.svg') }});">
-        </div>
+        <avatar
+                user="{{ auth()->id() }}"
+                image="{{ auth()->user()->avatar ?
+                    '/' . auth()->user()->avatar :
+                    asset('images/avatar.svg')
+                }}"></avatar>
 
         <h3>{{ auth()->user()->name }}</h3>
         <span>کاربر عادی</span>

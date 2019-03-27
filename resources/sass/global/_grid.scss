@@ -2,6 +2,7 @@
   @apply w-full mx-auto;
 }
 
+
 @screen sm {
   .container {
     max-width: 576px;
@@ -24,6 +25,11 @@
  .container {
    max-width: 1200px;
  }
+
+  .dashboard-container {
+    max-width: calc(1200px - 300px);
+    @apply mx-auto;
+  }
 }
 
 

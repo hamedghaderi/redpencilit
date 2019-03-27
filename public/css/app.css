@@ -3345,7 +3345,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: #21252a;
+  color: #3d4852;
 }
 
 a {
@@ -3379,6 +3379,12 @@ a {
 @media (min-width: 1200px) {
   .container {
     max-width: 1200px;
+  }
+
+  .dashboard-container {
+    max-width: calc(1200px - 300px);
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -3777,11 +3783,32 @@ a {
   margin-right: auto;
   margin-bottom: .75rem;
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+  position: relative;
   width: 100px;
   height: 100px;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
+}
+
+.dashboard-nav__avatar-gear {
+  background-color: #5a5dff;
+  display: inline-flex;
+  color: #fff;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  position: absolute;
+  cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .12), 0 2px 4px 0 rgba(0, 0, 0, .08);
+  width: 25px;
+  height: 25px;
+  bottom: 5px;
+  left: 5px;
+}
+
+.dashboard-nav__avatar-gear i {
+  color: #fff;
 }
 
 .dashboard-nav__list {

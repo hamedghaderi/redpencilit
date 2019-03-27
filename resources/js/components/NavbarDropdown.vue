@@ -18,7 +18,7 @@
             </dropdown-content>
 
             <dropdown-content v-else @hideDropdown="closeDropdown">
-                <dropdown-item href="/dashboard">
+                <dropdown-item :href="dashboard">
                     <i class="fas fa-tachometer-alt"></i>
                    داشبورد
                 </dropdown-item>
@@ -66,6 +66,10 @@
 
            signedInUser() {
                return window.Redpencilit.user;
+           },
+
+           dashboard() {
+               return '/dashboard/' + this.user.name;
            }
        },
 
