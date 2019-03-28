@@ -51,8 +51,12 @@ a {
   @apply .text-blue;
 }
 
+hr {
+  @apply border-t-2 border-grey-lighter mb-8;
+}
+
 .container {
-  @apply w-full mx-auto;
+  @apply w-full mx-auto px-4;
 }
 
 @screen sm {
@@ -73,11 +77,6 @@ a {
 @screen xl {
   .container {
     max-width: 1200px;
-  }
-
-  .dashboard-container {
-    max-width: calc(1200px - 300px);
-    @apply mx-auto;
   }
 }
 .uppy-Root {
@@ -229,6 +228,14 @@ a {
   color: #ff5a5d !important;
 }
 
+.dashboard-title {
+  @apply mb-3;
+}
+
+.dashboard-text {
+  @apply text-grey-dark leading-normal text-sm;
+}
+
 /* Components */
 .button {
   @apply text-white px-6 py-3 rounded-full relative z-10 inline-flex .no-underline items-center;
@@ -236,6 +243,9 @@ a {
 }
 .button:hover {
   transform: translateY(-2px);
+}
+.button--sm {
+  @apply text-sm px-3 py-2;
 }
 .button--primary {
   box-shadow: 0 3px 24px rgba(90, 93, 255, 0.3);
@@ -255,17 +265,28 @@ a {
   @apply bg-transparent rounded text-grey-dark;
   transition: none;
 }
-.button--outline:hover {
-  transform: none;
-}
 .button--outline i {
   @apply mr-2;
 }
 .button--outline--danger {
-  @apply border border-red;
+  @apply border border-red text-red;
+}
+.button--outline--danger:hover {
+  @apply bg-red text-white;
+  transform: none;
+}
+.button--outline--danger:hover i {
+  @apply text-white;
 }
 .button--outline--danger i {
   @apply text-red;
+}
+.button--outline--primary {
+  @apply border border-indigo text-indigo text-sm;
+}
+.button--outline--primary:hover {
+  @apply bg-indigo text-white;
+  transform: none;
 }
 .button--simple {
   @apply bg-white text-grey-darker shadow;
@@ -295,16 +316,36 @@ a {
   @apply absolute pin-l h-full border bg-white rounded-tl rounded-bl flex items-center px-3 text-grey;
 }
 
-.form-group {
-  @apply mb-6;
+.dashboard-input {
+  @apply border rounded text-sm;
+}
+.dashboard-input:focus {
+  @apply border-indigo;
+}
+
+.focusable-input {
+  @apply w-full border-none text-grey-darker;
+}
+.focusable-input:focus {
+  @apply absolute w-full z-20 pin-r pin-t h-full px-6 py-3 shadow-outline rounded;
+  box-shadow: 0 0 0 3px rgba(89, 86, 255, 0.5);
+  transition: box-shadow 0.2s;
+}
+
+.form-group input {
+  @apply block p-3 w-full;
 }
 
 .form-group label {
   @apply block text-grey-darker mb-3;
 }
 
-.form-group input {
-  @apply block p-3 w-full;
+.dashboard-label {
+  @apply text-sm;
+}
+
+.form-group {
+  @apply mb-6;
 }
 
 .has-icon {

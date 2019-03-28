@@ -28,7 +28,7 @@
     @include('partials.right-nav')
 
     <main class="pt-6" style="padding-right: 250px;">
-        <div class="dashboard-container">
+        <div class="container">
             @yield('content')
         </div>
     </main>

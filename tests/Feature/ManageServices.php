@@ -44,4 +44,41 @@ class ManageServices extends TestCase
 
        $this->get('/dashboard/' . $user->name . '/services')->assertSee($services->name);
     }
+
+    /** @test **/
+    public function a_service_requires_a_name()
+    {
+        $user = $this->signIn();
+
+        $service = factory(Service::class)->raw(['name' => null]);
+
+        $this->post('/dashboard/' . $user->name . '/services', $service)
+            ->assertSessionHasErrors('name');
+    }
+
+    /** @test  **/
+    public function a_user_can_update_a_service()
+    {
+       $user = $this->signIn() ;
+
+       $service = factory(Service::class)->create();
+
+       $this->patch('/dashboard/' . $user->name . '/services/' .  $service->id, ['name' => 'Changed']);
+
+       $this->assertDatabaseHas('services', ['name' => 'Changed']);
+    }
+
+    /** @test **/
+    public function a_user_can_delete_a_service()
+    {
+        $user = $this->signIn() ;
+
+        $service = factory(Service::class)->create(['name' => 'My Service']);
+
+        $this->assertDatabaseHas('services', ['name' => 'My Service']);
+
+        $this->delete('/dashboard/' . $user->name . '/services/' .  $service->id);
+
+        $this->assertDatabaseMissing('services', ['name' => 'My Service']);
+    }
 }

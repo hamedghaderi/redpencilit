@@ -48,9 +48,10 @@
                 <div class="mb-6">
                     <select name="service" id="service">
                         <option value="">لطفا سرویس مورد نظر خود را انتخاب کنید</option>
-                        <option value="مقاله">مقاله</option>
-                        <option value="کتاب">کتاب</option>
-                        <option value="رزومه">رزومه</option>
+                        <!--<option v-for="service in services" value="service.id">service.name</option>-->
+                        <option v-for="service in allServices" :value="service.id">
+                            {{ service.name }}
+                        </option>
                     </select>
                 </div>
 
@@ -66,11 +67,19 @@
     import UploaderFile from '../components/UploaderFile.vue';
 
     export default {
+        props: ['services'],
+
         components: {UploaderFile},
+
+        created() {
+         this.allServices = JSON.parse(this.services);
+        },
+
 
         data() {
             return {
-                words: 0
+                words: 0,
+                allServices: null,
             }
         },
 

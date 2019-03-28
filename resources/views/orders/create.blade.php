@@ -1,5 +1,5 @@
 @extends('layouts.master')
 
 @section('content')
-    <upload-view></upload-view>
+    <upload-view services="{{ $services }}"></upload-view>
 @endsection

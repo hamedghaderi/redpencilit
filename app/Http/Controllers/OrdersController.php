@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +25,9 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        return view('orders.create');
+        return view('orders.create', [
+            'services' => Service::latest()->get()
+        ]);
     }
 
     /**

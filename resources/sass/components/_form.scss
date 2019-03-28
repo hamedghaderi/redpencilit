@@ -1,3 +1,4 @@
+// INPUTS
 .input {
   @apply p-3 border text-sm;
 
@@ -10,14 +11,47 @@
   }
 }
 
-.form-group  {
-  @apply mb-6;
+.dashboard-input {
+  @apply border rounded text-sm;
+
+  &:focus {
+    @apply border-indigo;
+  }
 }
 
-.form-group label {
-  @apply block text-grey-darker mb-3;
+.focusable-input {
+  @apply w-full border-none text-grey-darker;
+
+
+  &:focus {
+    @apply absolute w-full z-20 pin-r pin-t h-full px-6 py-3 shadow-outline rounded;
+    box-shadow: 0 0 0 3px rgba(89, 86, 255, .5);
+    transition: box-shadow .2s;
+  }
 }
+
+
 
 .form-group input {
   @apply block p-3 w-full;
 }
+
+
+
+
+// LABELS
+.form-group label {
+  @apply block text-grey-darker mb-3;
+}
+
+.dashboard-label {
+  @apply text-sm;
+}
+
+
+
+// FORM GROUPS
+.form-group  {
+  @apply mb-6;
+}
+

@@ -24,14 +24,14 @@
         </li>
 
         <li>
-            <a href="/dashboard/services" class="has-icon">
+            <a href="#" class="has-icon">
                 <i class="fas fa-newspaper pl-3"></i>
                 مقالات آپلود شده
             </a>
         </li>
 
         <li>
-            <a href="/dashboard/services" class="has-icon">
+            <a href="{{ route('services', auth()->user()->name) }}" class="has-icon">
                 <i class="fas fa-stream pl-3"></i>
                 سرویس‌ها
             </a>

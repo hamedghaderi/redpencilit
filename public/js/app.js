@@ -8907,14 +8907,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['services'],
   components: {
     UploaderFile: _components_UploaderFile_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  created: function created() {
+    this.allServices = JSON.parse(this.services);
+  },
   data: function data() {
     return {
-      words: 0
+      words: 0,
+      allServices: null
     };
   },
   methods: {
@@ -30391,9 +30397,30 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(1),
+          _c("div", { staticClass: "mb-6" }, [
+            _c(
+              "select",
+              { attrs: { name: "service", id: "service" } },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("لطفا سرویس مورد نظر خود را انتخاب کنید")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.allServices, function(service) {
+                  return _c("option", { domProps: { value: service.id } }, [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(service.name) +
+                        "\n                    "
+                    )
+                  ])
+                })
+              ],
+              2
+            )
+          ]),
           _vm._v(" "),
-          _vm._m(2)
+          _vm._m(1)
         ])
       ])
     ],
@@ -30441,24 +30468,6 @@ var staticRenderFns = [
             _vm._v("\n                    نهایی کردن اطلاعات\n                ")
           ])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mb-6" }, [
-      _c("select", { attrs: { name: "service", id: "service" } }, [
-        _c("option", { attrs: { value: "" } }, [
-          _vm._v("لطفا سرویس مورد نظر خود را انتخاب کنید")
-        ]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "مقاله" } }, [_vm._v("مقاله")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "کتاب" } }, [_vm._v("کتاب")]),
-        _vm._v(" "),
-        _c("option", { attrs: { value: "رزومه" } }, [_vm._v("رزومه")])
       ])
     ])
   },

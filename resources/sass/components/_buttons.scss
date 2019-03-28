@@ -6,6 +6,10 @@
    transform: translateY(-2px);
  }
 
+  &--sm {
+    @apply text-sm px-3 py-2;
+  }
+
  &--primary {
    box-shadow: 0 3px 24px rgba(#5A5DFF, .3);
    background-image: linear-gradient(to left, #5A5DFF, #A9AAFF);
@@ -28,19 +32,33 @@
    @apply bg-transparent rounded text-grey-dark;
    transition: none;
 
-   &:hover {
-     transform: none;
-   }
-   
    i {
      @apply mr-2;
    }
 
    &--danger {
-     @apply border border-red;
+     @apply border border-red text-red;
+
+     &:hover {
+       @apply bg-red text-white;
+       transform: none;
+
+       i {
+         @apply text-white;
+       }
+     }
 
      i {
        @apply text-red;
+     }
+   }
+
+   &--primary {
+     @apply border border-indigo text-indigo text-sm;
+
+     &:hover {
+       @apply bg-indigo text-white;
+       transform: none;
      }
    }
  }

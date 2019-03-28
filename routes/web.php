@@ -16,9 +16,12 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth')->group(function() {
-    Route::get('dashboard/{user}/services', 'ServicesController@index');
+    // Services
+    Route::get('dashboard/{user}/services', 'ServicesController@index')->name('services');
     Route::post('dashboard/{user}/services', 'ServicesController@store');
-    Route::get('dashboard/{user}/services/create', 'ServicesController@create');
+    Route::patch('dashboard/{user}/services/{service}', 'ServicesController@update');
+    Route::delete('dashboard/{user}/services/{service}', 'ServicesController@destroy');
+
     Route::get('/dashboard/{user}', 'DashboardController@index')->name('dashboard');
     Route::post('/api/users/{user}/avatar', 'AvatarsController@store');
 });
