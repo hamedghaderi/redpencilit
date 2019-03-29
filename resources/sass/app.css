@@ -236,6 +236,17 @@ hr {
   @apply text-grey-dark leading-normal text-sm;
 }
 
+.form-excerpt {
+  @apply text-grey-dark text-xs leading-normal;
+}
+
+.title-custom-bg {
+  background-image: url("../images/custom-title-bg.svg");
+  background-size: 250px 250px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
 /* Components */
 .button {
   @apply text-white px-6 py-3 rounded-full relative z-10 inline-flex .no-underline items-center;
@@ -346,6 +357,81 @@ hr {
 
 .form-group {
   @apply mb-6;
+}
+
+::selection {
+  @apply bg-indigo text-white;
+}
+
+.select, select {
+  @apply appearance-none shadow-none h-12 leading-normal py-3 relative align-top;
+}
+
+.select::after {
+  border-width: 2px;
+  border: 3px solid transparent;
+  border-radius: 2px;
+  @apply border-r-0 border-t-0 border-grey-dark block mt-3 pointer-events-none absolute z-10;
+  height: 0.625em;
+  width: 0.625em;
+  margin-top: 0.5em;
+  content: "";
+  left: 1.125em;
+  top: 50%;
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+.select select {
+  @apply px-3 bg-white border border-grey-light rounded outline-none text-grey-darkest block text-sm max-w-full cursor-pointer m-0 w-full;
+}
+.select select::placeholder {
+  @apply text-grey;
+}
+.select .pdatepicker {
+  @apply w-full rounded;
+}
+.select .pdatepicker .pdatepicker-dialog[data-v-fd75016c] {
+  @apply border-none rounded shadow-md;
+}
+.select .pdatepicker .pdatepicker-dialog .day-view .day-box .hover-effect[data-v-fd75016c] {
+  @apply text-white;
+}
+.select .pdatepicker .pdatepicker-dialog .chosen-day span[data-v-fd75016c] {
+  @apply text-white;
+}
+.select .pdatepicker .pdatepicker-dialog .day-view .day-box[data-v-fd75016c]:hover {
+  @apply text-indigo-darker;
+}
+.select .pdatepicker .pdatepicker-dialog .day-view .pdatepicker-dialog-month .monthName[data-v-fd75016c]:hover {
+  @apply bg-indigo-lightest;
+}
+.select .pdatepicker .pdatepicker-dialog .day-view .pdatepicker-dialog-month .preMonth[data-v-fd75016c]:hover,
+.select .pdatepicker .pdatepicker-dialog .day-view .pdatepicker-dialog-month .nextMonth[data-v-fd75016c]:hover {
+  @apply bg-indigo-lightest;
+}
+.select .pdatepicker .pdatepicker-dialog .day-view .day-name[data-v-fd75016c] {
+  @apply border-none text-grey-dark;
+}
+.select .pdatepicker .pdatepicker-dialog .day-view .day-name[data-v-fd75016c]:hover {
+  @apply border-none;
+}
+.select .pdatepicker .pdatepicker-dialog .day-view .day-box.disabled-day[data-v-fd75016c] {
+  @apply bg-transparent text-grey;
+}
+.select .pdatepicker .pdatepicker-dialog .pdatepicker-dialog-header[data-v-fd75016c] {
+  @apply shadow-none rounded rounded-b-none bg-transparent;
+}
+.select .date-picker {
+  @apply appearance-none shadow-none h-12 leading-normal py-3 relative align-top border border-grey-light rounded;
+  width: 100% !important;
+  text-align: right !important;
+  padding-right: 1rem !important;
+  padding-left: 1rem !important;
+}
+.select .date-picker::placeholder, .select .date-picker::placeholder {
+  @apply text-sm;
+  color: #3d4852 !important;
+  opacity: 1 !important;
 }
 
 .has-icon {

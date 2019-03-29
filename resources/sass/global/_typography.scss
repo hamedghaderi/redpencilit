@@ -5,3 +5,14 @@
 .dashboard-text {
   @apply text-grey-dark leading-normal text-sm;
 }
+
+.form-excerpt {
+  @apply text-grey-dark text-xs leading-normal;
+}
+
+.title-custom-bg {
+  background-image: url("../images/custom-title-bg.svg");
+  background-size: 250px 250px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}

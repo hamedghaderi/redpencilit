@@ -35,28 +35,50 @@
         <uploader-file class="mb-12" @fileUploaded="setWords"></uploader-file>
 
         <div class="w-3/4 mx-auto flex">
-            <h3 class="w-2/5">سرویس مورد نظر خود را انتخاب کنید</h3>
+            <div class="title-custom-bg w-2/5">
+                <h3 class="w-1/2 leading-normal pt-24">سرویس مورد نظر خود را انتخاب کنید</h3>
+            </div>
 
             <div class="w-3/5">
-                <div class="flex shadow p-5 mb-6 text-sm">
+                <div class="flex shadow p-5 mb-6 text-sm bg-white">
                     <span>تعداد کلمات مقاله (ها)</span>
-                    <span class="mr-auto tag tag--info" v-show="words">
+                    <span class="mr-auto tag tag--info" v-show="words && !contract">
                         {{ words + ' کلمه' }}
                     </span>
                 </div>
 
                 <div class="mb-6">
-                    <select name="service" id="service">
-                        <option value="">لطفا سرویس مورد نظر خود را انتخاب کنید</option>
-                        <!--<option v-for="service in services" value="service.id">service.name</option>-->
-                        <option v-for="service in allServices" :value="service.id">
-                            {{ service.name }}
-                        </option>
-                    </select>
+                    <div class="select mb-6">
+                        <select name="service" id="service" @change="onSelect" v-model="selected">
+                            <option value="">لطفا سرویس مورد نظر خود را انتخاب کنید</option>
+                            <option v-for="service in options" v-bind:value="service.id">
+                                {{ service.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <p class="form-excerpt" v-show="contract">برای کتاب، محاسبه قیمت و زمان به صورت توافقی می‌باشد. لطفا
+                        در مرحله‌ بعد
+                        آدرس ایمیل و
+                        شماره
+                        تماس خود را وارد کنید تا در اسرع وقت برای هماهنگی‌های لازم با شما ارتباط برقرار شود. پبشاپیش
+                    از شکیبایی شما متشکریم.</p>
                 </div>
 
                 <div class="mb-6">
-                    <input type="text" name="delivery-date" placeholder="تاریخ تحویل">
+                    <div class="select" v-show="!contract">
+                      <p-date-picker input-class="date-picker"
+                                     header-color="#3d4852"
+                                     header-background-color="transparent"
+                                     hover-day-back-color="#b2b7ff"
+                                     chosen-day-back-color="#5A5DFF"
+                                     name="deliveryDate"
+                                     :disableDatesBeforeToday="true"
+                                     :available-dates="true"
+                                     @input="onInputChange"
+                                     open-transition-animation="left-slide-fade"
+                                    placeholder="تاریخ تحویل: روز / ماه / سال"></p-date-picker>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,28 +87,47 @@
 
 <script>
     import UploaderFile from '../components/UploaderFile.vue';
+    import PDatePicker from 'vue2-persian-datepicker';
 
     export default {
         props: ['services'],
 
-        components: {UploaderFile},
+        components: {
+            UploaderFile,
+            PDatePicker
+        },
+
 
         created() {
-         this.allServices = JSON.parse(this.services);
+         this.options = JSON.parse(this.services);
         },
 
 
         data() {
             return {
+                selected: '',
                 words: 0,
-                allServices: null,
+                options: null,
+                contract: false,
             }
         },
 
         methods: {
             setWords(words) {
                 this.words = words;
+            },
+
+            onSelect() {
+                if (this.selected == 1) {
+                    this.contract = true;
+                } else {
+                    this.contract = false;
+                }
+            },
+
+            onInputChange(e) {
+                console.log(e);
             }
-        }
+        },
     }
 </script>

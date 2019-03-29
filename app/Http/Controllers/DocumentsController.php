@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DocumentDraft;
 use App\DocumentWordCount;
 use App\Rules\MaxWord;
+use Illuminate\Http\UploadedFile as UploadedFileAlias;
 
 class DocumentsController extends Controller
 {
@@ -30,10 +31,10 @@ class DocumentsController extends Controller
 
 
     /**
-     * @param \Illuminate\Http\UploadedFile $file
+     * @param UploadedFileAlias $file
      * @return int
      */
-    protected function createDraftFrom(\Illuminate\Http\UploadedFile $file)
+    protected function createDraftFrom(UploadedFileAlias $file)
     {
         $file->store('documents');
 
