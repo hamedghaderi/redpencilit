@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Delivery;
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +16,6 @@ class OrderTest extends TestCase
    /** @test **/
    public function a_user_can_upload_multiple_documents()
    {
-       $this->withoutExceptionHandling();
        Storage::fake('local');
 
         $files = [
@@ -85,5 +86,57 @@ class OrderTest extends TestCase
         ]);
 
         $response->assertStatus(400);
+    }
+
+    /** @test **/
+    public function a_delivery_date_has_been_registered_for_user_per_order()
+    {
+        $this->withoutExceptionHandling();
+
+        Storage::fake('local');
+
+        $files = [
+            UploadedFile::fake()->create('document1.docx'),
+            UploadedFile::fake()->create('document2.docx'),
+        ];
+
+        $this->json('POST', '/api/documents', [
+            'articles' => $files
+        ]);
+
+        $deliveries = Delivery::first();
+
+        $this->assertEquals(
+            Carbon::now()->addWeeks(1)->toDateTimeString(),
+            $deliveries->deliver_date
+        );
+
+        $this->assertEquals(2, $deliveries->limit);
+
+        $files = [
+            UploadedFile::fake()->create('document3.docx'),
+            UploadedFile::fake()->create('document4.docx'),
+        ];
+
+        $this->json('POST', '/api/documents', [
+            'articles' => $files
+        ]);
+
+        $deliveries = Delivery::first();
+
+        $this->assertEquals(4, $deliveries->limit);
+
+        $files = [
+            UploadedFile::fake()->create('document5.docx'),
+            UploadedFile::fake()->create('document6.docx'),
+        ];
+
+        $this->json('POST', '/api/documents', [
+            'articles' => $files
+        ]);
+
+        $deliveries = Delivery::all()[1];
+
+        $this->assertEquals(2, $deliveries->limit);
     }
 }

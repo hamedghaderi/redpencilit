@@ -12,7 +12,12 @@
                 <li><a href="#">درباره</a></li>
                 <li><a href="#">تماس با ما</a></li>
                 <li><a href="#">خدمات</a></li>
-                <li><a class="active" href="#">سفارش جدید</a></li>
+                <li>
+                    <a class="{{ request()->route()->getName() === 'new-order' ? 'active' : ''  }}"
+                       href="{{ route ('new-order') }}">
+                        سفارش جدید
+                    </a>
+                </li>
                 <li><a href="#">لیست سفارشات</a></li>
             </ul>
 

@@ -26,7 +26,7 @@ Route::middleware('auth')->group(function() {
     Route::post('/api/users/{user}/avatar', 'AvatarsController@store');
 });
 
-Route::get('orders/create', 'OrdersController@create');
+Route::get('orders/create', 'OrdersController@create')->name('new-order');
 Route::post('api/documents', 'DocumentsController@store');
 
 Auth::routes();

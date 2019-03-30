@@ -3,6 +3,10 @@
         <div id="upload" class="w-3/4 mx-auto mb-3">
             <div id="file-uploader"></div>
         </div>
+
+        <div class="test" v-if="test">
+            <h1>Hello</h1>
+        </div>
     </div>
 </template>
 
@@ -17,7 +21,8 @@
         data() {
             return {
                 uppy: null,
-                articles: []
+                articles: [],
+                test: false
             }
         },
         mounted() {

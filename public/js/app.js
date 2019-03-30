@@ -8797,6 +8797,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -8806,7 +8810,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       uppy: null,
-      articles: []
+      articles: [],
+      test: false
     };
   },
   mounted: function mounted() {
@@ -8844,7 +8849,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_UploaderFile_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/UploaderFile.vue */ "./resources/js/components/UploaderFile.vue");
 /* harmony import */ var vue2_persian_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-persian-datepicker */ "./node_modules/vue2-persian-datepicker/src/index.js");
-//
 //
 //
 //
@@ -32045,20 +32049,24 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _vm.test
+      ? _c("div", { staticClass: "test" }, [_c("h1", [_vm._v("Hello")])])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "div",
-        { staticClass: "w-3/4 mx-auto mb-3", attrs: { id: "upload" } },
-        [_c("div", { attrs: { id: "file-uploader" } })]
-      )
-    ])
+    return _c(
+      "div",
+      { staticClass: "w-3/4 mx-auto mb-3", attrs: { id: "upload" } },
+      [_c("div", { attrs: { id: "file-uploader" } })]
+    )
   }
 ]
 render._withStripped = true
@@ -32093,110 +32101,124 @@ var render = function() {
         on: { fileUploaded: _vm.setWords }
       }),
       _vm._v(" "),
-      _c("div", { staticClass: "w-3/4 mx-auto flex" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "w-3/5" }, [
-          _c("div", { staticClass: "flex shadow p-5 mb-6 text-sm bg-white" }, [
-            _c("span", [_vm._v("تعداد کلمات مقاله (ها)")]),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.words && !_vm.contract,
-                    expression: "words && !contract"
-                  }
-                ],
-                staticClass: "mr-auto tag tag--info"
-              },
-              [
-                _vm._v(
-                  "\n                    " +
-                    _vm._s(_vm.words + " کلمه") +
-                    "\n                "
-                )
-              ]
-            )
-          ]),
+      _c(
+        "div",
+        {
+          staticClass: "w-3/4 mx-auto flex",
+          staticStyle: { "min-height": "240px" }
+        },
+        [
+          _vm._m(1),
           _vm._v(" "),
-          _c("div", { staticClass: "mb-6" }, [
-            _c("div", { staticClass: "select mb-6" }, [
+          _c("div", { staticClass: "w-3/5" }, [
+            _c("div", { staticClass: "mb-6" }, [
+              _c("div", { staticClass: "select mb-6" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.selected,
+                        expression: "selected"
+                      }
+                    ],
+                    attrs: { name: "service", id: "service" },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.selected = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        _vm.onSelect
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [
+                      _vm._v("لطفا سرویس مورد نظر خود را انتخاب کنید")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.options, function(service) {
+                      return _c("option", { domProps: { value: service.id } }, [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(service.name) +
+                            "\n                        "
+                        )
+                      ])
+                    })
+                  ],
+                  2
+                )
+              ]),
+              _vm._v(" "),
               _c(
-                "select",
+                "p",
                 {
                   directives: [
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.selected,
-                      expression: "selected"
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.contract,
+                      expression: "contract"
                     }
                   ],
-                  attrs: { name: "service", id: "service" },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.selected = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
-                      _vm.onSelect
-                    ]
-                  }
+                  staticClass: "form-excerpt"
                 },
                 [
-                  _c("option", { attrs: { value: "" } }, [
-                    _vm._v("لطفا سرویس مورد نظر خود را انتخاب کنید")
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(_vm.options, function(service) {
-                    return _c("option", { domProps: { value: service.id } }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(service.name) +
-                          "\n                        "
-                      )
-                    ])
-                  })
-                ],
-                2
+                  _vm._v(
+                    "برای کتاب، محاسبه قیمت و زمان به صورت توافقی می‌باشد. لطفا\n                    در مرحله‌ بعد\n                    آدرس ایمیل و\n                    شماره\n                    تماس خود را وارد کنید تا در اسرع وقت برای هماهنگی‌های لازم با شما ارتباط برقرار شود. پبشاپیش\n                از شکیبایی شما متشکریم."
+                  )
+                ]
               )
             ]),
             _vm._v(" "),
-            _c(
-              "p",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.contract,
-                    expression: "contract"
-                  }
+            _c("div", { staticClass: "mb-8" }, [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.contract,
+                      expression: "!contract"
+                    }
+                  ],
+                  staticClass: "select"
+                },
+                [
+                  _c("p-date-picker", {
+                    attrs: {
+                      "input-class": "date-picker",
+                      "header-color": "#3d4852",
+                      "header-background-color": "transparent",
+                      "hover-day-back-color": "#b2b7ff",
+                      "chosen-day-back-color": "#5A5DFF",
+                      name: "deliveryDate",
+                      disableDatesBeforeToday: true,
+                      "available-dates": true,
+                      "open-transition-animation": "left-slide-fade",
+                      placeholder: "تاریخ تحویل: روز / ماه / سال"
+                    },
+                    on: { input: _vm.onInputChange }
+                  })
                 ],
-                staticClass: "form-excerpt"
-              },
-              [
-                _vm._v(
-                  "برای کتاب، محاسبه قیمت و زمان به صورت توافقی می‌باشد. لطفا\n                    در مرحله‌ بعد\n                    آدرس ایمیل و\n                    شماره\n                    تماس خود را وارد کنید تا در اسرع وقت برای هماهنگی‌های لازم با شما ارتباط برقرار شود. پبشاپیش\n                از شکیبایی شما متشکریم."
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mb-6" }, [
+                1
+              )
+            ]),
+            _vm._v(" "),
             _c(
               "div",
               {
@@ -32208,30 +32230,37 @@ var render = function() {
                     expression: "!contract"
                   }
                 ],
-                staticClass: "select"
+                staticClass: "flex shadow p-4 mb-6 text-sm bg-white"
               },
               [
-                _c("p-date-picker", {
-                  attrs: {
-                    "input-class": "date-picker",
-                    "header-color": "#3d4852",
-                    "header-background-color": "transparent",
-                    "hover-day-back-color": "#b2b7ff",
-                    "chosen-day-back-color": "#5A5DFF",
-                    name: "deliveryDate",
-                    disableDatesBeforeToday: true,
-                    "available-dates": true,
-                    "open-transition-animation": "left-slide-fade",
-                    placeholder: "تاریخ تحویل: روز / ماه / سال"
+                _c("span", [_vm._v("تعداد کلمات مقاله (ها)")]),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.words,
+                        expression: "words"
+                      }
+                    ],
+                    staticClass: "mr-auto tag tag--info"
                   },
-                  on: { input: _vm.onInputChange }
-                })
-              ],
-              1
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.words + " کلمه") +
+                        "\n                "
+                    )
+                  ]
+                )
+              ]
             )
           ])
-        ])
-      ])
+        ]
+      )
     ],
     1
   )
@@ -44424,6 +44453,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap_js__WEBPACK_IMPORTED_MODULE_0__);
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
+if (false) {}
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -44433,6 +44464,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+
 
 Vue.directive('dropdown-outside-click', {
   bind: function bind(el, binding, vnode) {

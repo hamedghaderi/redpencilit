@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Delivery;
 use App\DocumentDraft;
 use App\DocumentWordCount;
 use App\Rules\MaxWord;
+use Carbon\Carbon;
 use Illuminate\Http\UploadedFile as UploadedFileAlias;
 
 class DocumentsController extends Controller
@@ -13,7 +15,7 @@ class DocumentsController extends Controller
     {
         try {
             request()->validate([
-                'articles' => ['required', new MaxWord],
+                'articles' => ['required', new MaxWord, 'max:4'],
                 'articles.*' => ['required', 'file', 'mimes:docx', 'distinct']
             ]);
         } catch (\Exception $e) {
@@ -25,6 +27,8 @@ class DocumentsController extends Controller
         foreach (request()->file('articles') as $file)  {
             $words += $this->createDraftFrom($file);
         }
+
+        Delivery::addDoc($words, Carbon::now()->addWeeks(1), count(request()->file('articles')));
 
         return response(['words' => $words], 200);
     }

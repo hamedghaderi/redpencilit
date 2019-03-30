@@ -31,22 +31,14 @@
             </ul>
         </div><!-- upload-levels -->
 
-
         <uploader-file class="mb-12" @fileUploaded="setWords"></uploader-file>
 
-        <div class="w-3/4 mx-auto flex">
+        <div class="w-3/4 mx-auto flex" style="min-height: 240px;">
             <div class="title-custom-bg w-2/5">
                 <h3 class="w-1/2 leading-normal pt-24">سرویس مورد نظر خود را انتخاب کنید</h3>
             </div>
 
             <div class="w-3/5">
-                <div class="flex shadow p-5 mb-6 text-sm bg-white">
-                    <span>تعداد کلمات مقاله (ها)</span>
-                    <span class="mr-auto tag tag--info" v-show="words && !contract">
-                        {{ words + ' کلمه' }}
-                    </span>
-                </div>
-
                 <div class="mb-6">
                     <div class="select mb-6">
                         <select name="service" id="service" @change="onSelect" v-model="selected">
@@ -64,7 +56,7 @@
                     از شکیبایی شما متشکریم.</p>
                 </div>
 
-                <div class="mb-6">
+                <div class="mb-8">
                     <div class="select" v-show="!contract">
                       <p-date-picker input-class="date-picker"
                                      header-color="#3d4852"
@@ -79,6 +71,13 @@
                                     placeholder="تاریخ تحویل: روز / ماه / سال"></p-date-picker>
 
                     </div>
+                </div>
+
+                <div class="flex shadow p-4 mb-6 text-sm bg-white" v-show="!contract">
+                    <span>تعداد کلمات مقاله (ها)</span>
+                    <span class="mr-auto tag tag--info" v-show="words">
+                        {{ words + ' کلمه' }}
+                    </span>
                 </div>
             </div>
         </div>
