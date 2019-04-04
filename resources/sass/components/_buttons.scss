@@ -10,6 +10,10 @@
     @apply text-sm px-3 py-2;
   }
 
+  &--block {
+    @apply w-full justify-center;
+  }
+
  &--primary {
    box-shadow: 0 3px 24px rgba(#5A5DFF, .3);
    background-image: linear-gradient(to left, #5A5DFF, #A9AAFF);
@@ -27,6 +31,24 @@
      box-shadow: 0 5px 24px rgba(#51d88a, .4);
    }
  }
+
+  &--smooth {
+    &--danger {
+      @apply bg-red-lightest text-red;
+
+      &:hover {
+        transform: none;
+      }
+    }
+
+    &--primary {
+      @apply bg-indigo-lightest text-indigo;
+
+      &:hover {
+        transform: none;
+      }
+    }
+  }
 
  &--outline {
    @apply bg-transparent rounded text-grey-dark;
@@ -86,4 +108,9 @@
    transform: translateY(0px);
    box-shadow: none;
  }
+}
+
+.card-button  {
+  @apply absolute pin-l text-2xl bg-green-lightest text-green rounded rounded-r-none pin-t h-full;
+  width: 60px;
 }

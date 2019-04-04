@@ -45,7 +45,7 @@
                     @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{ route('dashboard',
-                            Auth::user()->name) }}"
+                            Auth::user()->username) }}"
                                role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 {{ Auth::user()->name }} <span class="caret"></span>
@@ -71,6 +71,8 @@
         <main>
             @yield('content')
         </main>
+
+        <flash message="{{ session('flash') }}"></flash>
     </div>
 
     @yield('script') 

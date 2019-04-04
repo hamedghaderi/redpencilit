@@ -3,14 +3,46 @@
   <component name="ChangeListManager">
     <list default="true" id="1b36ddba-05a9-4468-b24a-714051e3f2d5" name="Default Changelist" comment="k">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Delivery.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Delivery.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/DocumentDraft.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/DocumentDraft.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ServicesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ServicesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/ServiceFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ServiceFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_03_26_121649_create_document_drafts_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_03_26_121649_create_document_drafts_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/NavbarDropdown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/NavbarDropdown.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/UploaderFile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UploaderFile.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/UploadView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/UploadView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/settings/uppy.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/settings/uppy.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/fa/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/fa/validation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/components/_buttons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_buttons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/components/_feedback.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_feedback.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/components/_form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_form.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/components/_navbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_navbar.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/components/_upload-levels.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_upload-levels.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboards/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboards/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/master.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/services/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/services/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/OrderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/OrderTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/ManageServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ManageServices.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/OrderTest.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,10 +56,10 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tests/Feature/OrderTest.php">
+        <entry file="file://$PROJECT_DIR$/resources/sass/components/_upload-levels.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="120" column="8" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+            <state relative-caret-position="294">
+              <caret line="62" column="31" lean-forward="true" selection-start-line="62" selection-start-column="31" selection-end-line="62" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -52,71 +84,76 @@
       <find>w-</find>
       <find>font size</find>
       <find>decoration</find>
-      <find>text</find>
       <find>z-inde</find>
       <find>min-hei</find>
+      <find>text</find>
+      <find>format is</find>
+      <find>with</find>
+      <find>form</find>
+      <find>dhhh</find>
+      <find>بخقپشف</find>
+      <find>format is n</find>
+      <find>has al</find>
+      <find>userLogg</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.txt" root0="SKIP_INSPECTION" />
-  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/resources/js/settings/xhrupload.js" />
-        <option value="$PROJECT_DIR$/resources/js/settings/uppy.js" />
-        <option value="$PROJECT_DIR$/resources/js/settings/uppy-dashboard.js" />
-        <option value="$PROJECT_DIR$/resources/sass/components/_tag.scss" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_03_26_132150_create_services_table.php" />
+        <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/SettingsController.php" />
+        <option value="$PROJECT_DIR$/database/migrations/2019_04_01_162143_create_settings_table.php" />
+        <option value="$PROJECT_DIR$/app/Setting.php" />
+        <option value="$PROJECT_DIR$/tests/Unit/UserTest.php" />
+        <option value="$PROJECT_DIR$/app/DocumentDelivery.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/UploaderFile.vue" />
+        <option value="$PROJECT_DIR$/tests/Feature/UploadDocument.php" />
+        <option value="$PROJECT_DIR$/app/Observers/DocumentDraftObserver.php" />
         <option value="$PROJECT_DIR$/database/migrations/2019_03_26_121649_create_document_drafts_table.php" />
         <option value="$PROJECT_DIR$/app/DocumentDraft.php" />
-        <option value="$PROJECT_DIR$/app/Service.php" />
-        <option value="$PROJECT_DIR$/tests/TestCase.php" />
-        <option value="$PROJECT_DIR$/resources/views/auth/login.blade.php" />
-        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php" />
-        <option value="$PROJECT_DIR$/resources/views/services/create.blade.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2019_03_26_132150_create_services_table.php" />
-        <option value="$PROJECT_DIR$/database/factories/ServiceFactory.php" />
-        <option value="$PROJECT_DIR$/resources/views/partials/dashboard-nav.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" />
-        <option value="$PROJECT_DIR$/resources/views/auth/register.blade.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/NavbarDropdown.vue" />
-        <option value="$PROJECT_DIR$/tests/Feature/ManageDashboard.php" />
-        <option value="$PROJECT_DIR$/phpunit.xml" />
-        <option value="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
-        <option value="$PROJECT_DIR$/app/User.php" />
-        <option value="$PROJECT_DIR$/resources/js/components/Avatar.vue" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/AvatarsController.php" />
-        <option value="$PROJECT_DIR$/tests/Feature/UploadAvatarTest.php" />
-        <option value="$PROJECT_DIR$/resources/sass/components/_navbar.scss" />
-        <option value="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" />
-        <option value="$PROJECT_DIR$/resources/sass/global/_grid.scss" />
-        <option value="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" />
-        <option value="$PROJECT_DIR$/resources/sass/app.scss" />
-        <option value="$PROJECT_DIR$/tests/Feature/ManageServices.php" />
-        <option value="$PROJECT_DIR$/resources/sass/global/_base.scss" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ServicesController.php" />
-        <option value="$PROJECT_DIR$/resources/views/services/index.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" />
-        <option value="$PROJECT_DIR$/resources/views/orders/create.blade.php" />
-        <option value="$PROJECT_DIR$/resources/sass/components/_buttons.scss" />
-        <option value="$PROJECT_DIR$/resources/views/dashboards/index.blade.php" />
-        <option value="$PROJECT_DIR$/tailwind.js" />
-        <option value="$PROJECT_DIR$/resources/sass/components/_form.scss" />
-        <option value="$PROJECT_DIR$/resources/sass/global/_typography.scss" />
-        <option value="$PROJECT_DIR$/resources/js/components/UploaderFile.vue" />
-        <option value="$PROJECT_DIR$/resources/js/app.js" />
-        <option value="$PROJECT_DIR$/resources/js/pages/UploadView.vue" />
-        <option value="$PROJECT_DIR$/routes/web.php" />
-        <option value="$PROJECT_DIR$/resources/views/partials/nav.blade.php" />
-        <option value="$PROJECT_DIR$/app/Notifications/DocumentUploaded.php" />
+        <option value="$PROJECT_DIR$/tests/Feature/UploadDocumentTest.php" />
+        <option value="$PROJECT_DIR$/public/index.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" />
-        <option value="$PROJECT_DIR$/database/migrations/2019_03_30_170441_create_deliveries_table.php" />
-        <option value="$PROJECT_DIR$/app/Delivery.php" />
-        <option value="$PROJECT_DIR$/tests/Feature/OrderTest.php" />
+        <option value="$PROJECT_DIR$/resources/sass/components/_form.scss" />
+        <option value="$PROJECT_DIR$/resources/js/components/Tab.vue" />
+        <option value="$PROJECT_DIR$/resources/sass/components/_tab.scss" />
+        <option value="$PROJECT_DIR$/resources/sass/components/_buttons.scss" />
+        <option value="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" />
+        <option value="$PROJECT_DIR$/resources/views/orders/create.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" />
+        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php" />
+        <option value="$PROJECT_DIR$/resources/sass/components/_feedback.scss" />
+        <option value="$PROJECT_DIR$/resources/js/Errors.js" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" />
+        <option value="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" />
+        <option value="$PROJECT_DIR$/resources/js/app.js" />
+        <option value="$PROJECT_DIR$/resources/views/layouts/master.blade.php" />
+        <option value="$PROJECT_DIR$/resources/sass/app.scss" />
+        <option value="$PROJECT_DIR$/resources/js/components/Flash.vue" />
+        <option value="$PROJECT_DIR$/resources/sass/components/_alert.scss" />
+        <option value="$PROJECT_DIR$/app/User.php" />
+        <option value="$PROJECT_DIR$/database/factories/UserFactory.php" />
+        <option value="$PROJECT_DIR$/tests/Feature/ManageSettingsTest.php" />
+        <option value="$PROJECT_DIR$/tests/Feature/UserProfileTest.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/UploadRegisterForm.vue" />
+        <option value="$PROJECT_DIR$/resources/lang/fa/validation.php" />
+        <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php" />
+        <option value="$PROJECT_DIR$/resources/js/components/UploadLoginForm.vue" />
+        <option value="$PROJECT_DIR$/resources/js/components/NavbarDropdown.vue" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" />
+        <option value="$PROJECT_DIR$/resources/js/pages/UploadView.vue" />
+        <option value="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/services/index.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/layouts/app.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ServicesController.php" />
+        <option value="$PROJECT_DIR$/resources/views/dashboards/settings/index.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/dashboards/index.blade.php" />
+        <option value="$PROJECT_DIR$/resources/js/pages/UserAccountForm.vue" />
+        <option value="$PROJECT_DIR$/resources/sass/components/_upload-levels.scss" />
       </list>
     </option>
   </component>
@@ -223,7 +260,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -234,12 +270,52 @@
             <path>
               <item name="redpencilit" type="b2602c69:ProjectViewProjectNode" />
               <item name="redpencilit" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="redpencilit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="redpencilit" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="redpencilit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="redpencilit" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="dashboards" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="redpencilit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="redpencilit" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="dashboards" type="462c0819:PsiDirectoryNode" />
+              <item name="settings" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="redpencilit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="redpencilit" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="redpencilit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="redpencilit" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="redpencilit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="redpencilit" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+              <item name="Feature" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -268,36 +344,38 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="PHPUnit.OrderTest.a_delivery_date_has_been_registered_for_user_per_order">
-    <configuration name="Delivery.php" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/redpencilit/Delivery.php" useBuiltInWebServerPort="true">
+  <component name="RunManager" selected="PHPUnit.UploadDocumentTest.a_user_can_upload_a_single_document">
+    <configuration name="UploadDocumentTest.a_user_can_upload_a_single_document" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UploadDocumentTest" file="$PROJECT_DIR$/tests/Feature/UploadDocumentTest.php" method="a_user_can_upload_a_single_document" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="ManageServices.a_user_can_delete_a_service" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\ManageServices" file="$PROJECT_DIR$/tests/Feature/ManageServices.php" method="a_user_can_delete_a_service" scope="Method" />
+    <configuration name="UploadDocumentTest.a_user_can_upload_multiple_documents" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UploadDocumentTest" file="$PROJECT_DIR$/tests/Feature/UploadDocumentTest.php" method="a_user_can_upload_multiple_documents" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="ManageServices.a_user_can_update_a_service" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\ManageServices" file="$PROJECT_DIR$/tests/Feature/ManageServices.php" method="a_user_can_update_a_service" scope="Method" />
+    <configuration name="UserProfileTest.update_user_account_requires_valid_email_address" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UserProfileTest" file="$PROJECT_DIR$/tests/Feature/UserProfileTest.php" method="update_user_account_requires_valid_email_address" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\OrderTest" file="$PROJECT_DIR$/tests/Feature/OrderTest.php" method="a_delivery_date_has_been_registered_for_user_per_order" scope="Method" />
+    <configuration name="UserProfileTest.update_user_account_requires_valid_name" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UserProfileTest" file="$PROJECT_DIR$/tests/Feature/UserProfileTest.php" method="update_user_account_requires_valid_name" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="UserProfileTest.update_user_account_requires_valid_phone_number" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UserProfileTest" file="$PROJECT_DIR$/tests/Feature/UserProfileTest.php" method="update_user_account_requires_valid_phone_number" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
     </configuration>
-    <configuration name="2019_03_30_170441_create_deliveries_table.php" type="PhpLocalRunConfigurationType" factoryName="PHP Console" temporary="true" path="$PROJECT_DIR$/database/migrations/2019_03_30_170441_create_deliveries_table.php">
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.OrderTest.a_delivery_date_has_been_registered_for_user_per_order" />
-        <item itemvalue="PHP Script.2019_03_30_170441_create_deliveries_table.php" />
-        <item itemvalue="JavaScript Debug.Delivery.php" />
-        <item itemvalue="PHPUnit.ManageServices.a_user_can_delete_a_service" />
-        <item itemvalue="PHPUnit.ManageServices.a_user_can_update_a_service" />
+        <item itemvalue="PHPUnit.UploadDocumentTest.a_user_can_upload_a_single_document" />
+        <item itemvalue="PHPUnit.UploadDocumentTest.a_user_can_upload_multiple_documents" />
+        <item itemvalue="PHPUnit.UserProfileTest.update_user_account_requires_valid_name" />
+        <item itemvalue="PHPUnit.UserProfileTest.update_user_account_requires_valid_email_address" />
+        <item itemvalue="PHPUnit.UserProfileTest.update_user_account_requires_valid_phone_number" />
       </list>
     </recent_temporary>
   </component>
@@ -331,56 +409,61 @@
       <workItem from="1553843507840" duration="12570000" />
       <workItem from="1553930894134" duration="2190000" />
       <workItem from="1553945092410" duration="8170000" />
-      <workItem from="1553983744199" duration="1911000" />
+      <workItem from="1553983744199" duration="1990000" />
+      <workItem from="1554020056897" duration="11000" />
+      <workItem from="1554020122868" duration="36602000" />
+      <workItem from="1554185650253" duration="16000" />
+      <workItem from="1554185687751" duration="12524000" />
+      <workItem from="1554328769609" duration="37794000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="OrderTest_a_delivery_date_has_been_registered_for_user_per_order - 2019.03.31 at 02h 58m 36s.xml">
-      <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserProfileTest_users_can_update_their_profile - 2019.04.05 at 01h 51m 01s.xml">
+      <configuration name="UserProfileTest.users_can_update_their_profile" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="OrderTest_a_delivery_date_has_been_registered_for_user_per_order - 2019.03.31 at 03h 06m 07s.xml">
-      <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserProfileTest_guests_cannot_update_user_information - 2019.04.05 at 01h 51m 07s.xml">
+      <configuration name="UserProfileTest.guests_cannot_update_user_information" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="OrderTest_a_delivery_date_has_been_registered_for_user_per_order - 2019.03.31 at 03h 09m 12s.xml">
-      <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserProfileTest_update_user_account_requires_valid_phone_number - 2019.04.05 at 01h 51m 09s.xml">
+      <configuration name="UserProfileTest.update_user_account_requires_valid_phone_number" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="OrderTest_a_delivery_date_has_been_registered_for_user_per_order - 2019.03.31 at 03h 09m 26s.xml">
-      <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserProfileTest_update_user_account_requires_valid_phone_number - 2019.04.05 at 01h 51m 14s.xml">
+      <configuration name="UserProfileTest.update_user_account_requires_valid_phone_number" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="OrderTest_a_delivery_date_has_been_registered_for_user_per_order - 2019.03.31 at 03h 09m 36s.xml">
-      <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserProfileTest_update_user_account_requires_valid_phone_number - 2019.04.05 at 01h 51m 18s.xml">
+      <configuration name="UserProfileTest.update_user_account_requires_valid_phone_number" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="OrderTest_a_delivery_date_has_been_registered_for_user_per_order - 2019.03.31 at 03h 09m 55s.xml">
-      <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserProfileTest_update_user_account_requires_valid_email_address - 2019.04.05 at 01h 51m 25s.xml">
+      <configuration name="UserProfileTest.update_user_account_requires_valid_email_address" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="OrderTest_a_delivery_date_has_been_registered_for_user_per_order - 2019.03.31 at 03h 10m 18s.xml">
-      <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserProfileTest_update_user_account_requires_valid_email_address - 2019.04.05 at 01h 51m 29s.xml">
+      <configuration name="UserProfileTest.update_user_account_requires_valid_email_address" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="OrderTest_a_delivery_date_has_been_registered_for_user_per_order - 2019.03.31 at 03h 10m 34s.xml">
-      <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UserProfileTest_update_user_account_requires_valid_name - 2019.04.05 at 01h 51m 37s.xml">
+      <configuration name="UserProfileTest.update_user_account_requires_valid_name" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="OrderTest_a_delivery_date_has_been_registered_for_user_per_order - 2019.03.31 at 03h 10m 46s.xml">
-      <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UploadDocumentTest_a_user_can_upload_multiple_documents - 2019.04.05 at 01h 52m 13s.xml">
+      <configuration name="UploadDocumentTest.a_user_can_upload_multiple_documents" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
-    <history-entry file="OrderTest_a_delivery_date_has_been_registered_for_user_per_order - 2019.03.31 at 03h 11m 13s.xml">
-      <configuration name="OrderTest.a_delivery_date_has_been_registered_for_user_per_order" configurationId="PHPUnitRunConfigurationType" />
+    <history-entry file="UploadDocumentTest_a_user_can_upload_a_single_document - 2019.04.05 at 01h 52m 17s.xml">
+      <configuration name="UploadDocumentTest.a_user_can_upload_a_single_document" configurationId="PHPUnitRunConfigurationType" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170938000" />
+    <option name="totallyTimeSpent" value="257964000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.19618745" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19618745" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32991013" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.40564826" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.35301667" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -400,360 +483,337 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DashboardController.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/TrimStrings.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="10" column="5" lean-forward="true" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
+        <state relative-caret-position="174">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/auth/register.blade.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/EncryptCookies.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="7" column="49" selection-start-line="7" selection-start-column="49" selection-end-line="7" selection-end-column="49" />
+        <state relative-caret-position="174">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/CheckForMaintenanceMode.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        <state relative-caret-position="174">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/phpunit.xml">
+    <entry file="file://$PROJECT_DIR$/app/Http/Kernel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="32" column="47" selection-start-line="32" selection-start-column="47" selection-end-line="32" selection-end-column="47" />
+        <state relative-caret-position="-1135">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/home.blade.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="20" selection-start-column="20" selection-end-column="20" />
+        <state relative-caret-position="402">
+          <caret line="19" column="3" selection-start-line="19" selection-start-column="3" selection-end-line="19" selection-end-column="3" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/NavbarDropdown.vue">
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/Authenticate.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="653">
-          <caret line="71" column="37" selection-start-line="71" selection-start-column="37" selection-end-line="71" selection-end-column="37" />
-          <folding>
-            <element signature="n#style#0;n#form#0;n#dropdown-item#0;n#div#0;n#dropdown-content#1;n#div#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="170">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/partials/rtl-input.blade.php">
+    <entry file="file://$PROJECT_DIR$/config/auth.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AvatarsController.php">
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="244">
-          <caret line="17" column="8" selection-start-line="17" selection-start-column="8" selection-end-line="17" selection-end-column="8" />
+        <state relative-caret-position="525">
+          <caret line="37" column="57" selection-start-line="37" selection-start-column="57" selection-end-line="37" selection-end-column="57" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/UploadAvatarTest.php">
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/RedirectsUsers.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="10" column="15" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        <state relative-caret-position="348">
+          <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/sass/components/_navbar.scss">
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/RegistersUsers.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="43" column="118" selection-start-line="43" selection-start-column="118" selection-end-line="43" selection-end-column="118" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/ManageDashboard.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/partials/right-nav.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-83">
-          <caret line="34" column="50" lean-forward="true" selection-start-line="34" selection-start-column="50" selection-end-line="34" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/sass/global/_grid.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/sass/app.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="34" column="28" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/ManageServices.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="43">
-          <caret line="73" selection-start-line="73" selection-end-line="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/sass/global/_base.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="21" column="44" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ServicesController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="16" column="49" selection-start-line="16" selection-start-column="49" selection-end-line="16" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/services/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="84" column="4" selection-start-line="84" selection-start-column="4" selection-end-line="84" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/Avatar.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="826">
-          <caret line="45" column="23" selection-start-line="45" selection-start-column="23" selection-end-line="45" selection-end-column="23" />
-          <folding>
-            <element signature="n#style#0;n#input#0;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/sass/components/_buttons.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1058">
-          <caret line="46" column="27" selection-start-line="46" selection-start-column="27" selection-end-line="46" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/dashboards/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/partials/form.blade.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/sass/components/_form.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2318">
-          <caret line="91" column="25" selection-start-line="91" selection-start-column="25" selection-end-line="91" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/sass/global/_typography.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/DocumentWordCount.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-666">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Rules/MaxWord.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-417">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/components/UploaderFile.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="24" column="27" selection-start-line="24" selection-start-column="27" selection-end-line="24" selection-end-column="27" />
-          <folding>
-            <element signature="e#168#198#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="8" column="35" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/app.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/bootstrap.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/auth.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-54" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="693">
-          <caret line="21" column="14" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
+        <state relative-caret-position="118">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/orders/create.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="99">
-          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        <state relative-caret-position="145">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tailwind.js">
+    <entry file="file://$PROJECT_DIR$/resources/views/auth/register.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-79">
-          <caret line="560" column="76" selection-start-line="560" selection-start-column="69" selection-end-line="560" selection-end-column="76" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state relative-caret-position="513">
+          <caret line="46" column="73" selection-start-line="46" selection-start-column="73" selection-end-line="46" selection-end-column="73" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/pages/UploadView.vue">
+    <entry file="file://$PROJECT_DIR$/resources/sass/components/_feedback.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="75" column="43" selection-start-line="75" selection-start-column="43" selection-end-line="75" selection-end-column="43" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="29">
+          <caret line="1" column="5" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/js/Errors.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-217">
-          <caret line="47" column="46" selection-start-line="47" selection-start-column="46" selection-end-line="47" selection-end-column="46" />
+        <state relative-caret-position="510">
+          <caret line="15" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="28" column="71" selection-start-line="28" selection-start-column="71" selection-end-line="28" selection-end-column="71" />
-          <folding>
-            <element signature="e#7#389#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="291">
+          <caret line="54" column="91" selection-start-line="54" selection-start-column="91" selection-end-line="54" selection-end-column="91" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/partials/nav.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/lang/fa/auth.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="19" column="21" selection-start-line="19" selection-start-column="21" selection-end-line="19" selection-end-column="21" />
+        <state relative-caret-position="-93" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/lang/fa/pagination.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/lang/fa/passwords.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-195" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="35" column="37" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Notifications/RoutesNotifications.php">
+    <entry file="file://$PROJECT_DIR$/resources/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        <state relative-caret-position="132">
+          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Notifications/Notifiable.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/layouts/master.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
+        <state relative-caret-position="394">
+          <caret line="33" column="37" selection-start-line="33" selection-start-column="37" selection-end-line="33" selection-end-column="37" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Notifications/HasDatabaseNotifications.php">
+    <entry file="file://$PROJECT_DIR$/resources/sass/app.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
+        <state relative-caret-position="416">
+          <caret line="47" column="25" selection-start-line="47" selection-start-column="25" selection-end-line="47" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Notifications/DocumentUploaded.php">
+    <entry file="file://$PROJECT_DIR$/resources/sass/components/_alert.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="563">
-          <caret line="63" lean-forward="true" selection-start-line="63" selection-end-line="63" />
+        <state relative-caret-position="660">
+          <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/Flash.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-187">
+          <caret line="6" column="41" selection-start-line="6" selection-start-column="41" selection-end-line="6" selection-end-column="41" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="5" column="45" selection-start-line="5" selection-start-column="45" selection-end-line="5" selection-end-column="45" />
+        <state relative-caret-position="262">
+          <caret line="32" column="24" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php">
+    <entry file="file://$PROJECT_DIR$/database/factories/UserFactory.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="21" column="49" selection-start-line="21" selection-start-column="49" selection-end-line="21" selection-end-column="49" />
+        <state relative-caret-position="249">
+          <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/migrations/2019_03_30_170441_create_deliveries_table.php">
+    <entry file="file://$PROJECT_DIR$/tests/Unit/UserTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="17" column="30" lean-forward="true" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+        <state relative-caret-position="223">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php">
+    <entry file="file://$PROJECT_DIR$/tests/Feature/ManageSettingsTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="32" column="48" selection-start-line="32" selection-start-column="48" selection-end-line="32" selection-end-column="48" />
+        <state relative-caret-position="-4402">
+          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/scratches/scratch.php">
+    <entry file="file://$PROJECT_DIR$/tests/Feature/UserProfileTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="427">
+          <caret line="98" column="52" selection-start-line="98" selection-start-column="52" selection-end-line="98" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Delivery.php">
+    <entry file="file://$PROJECT_DIR$/tests/Feature/UploadDocumentTest.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="149">
-          <caret line="26" column="7" selection-start-line="26" selection-start-column="7" selection-end-line="26" selection-end-column="7" />
+        <state relative-caret-position="-872">
+          <caret line="49" column="38" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/OrdersController.php">
+    <entry file="file://$PROJECT_DIR$/resources/lang/fa/validation.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="33">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="1550">
+          <caret line="134" column="52" selection-start-line="134" selection-start-column="52" selection-end-line="134" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tests/Feature/OrderTest.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="120" column="8" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+        <state relative-caret-position="240">
+          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="120" column="5" lean-forward="true" selection-start-line="120" selection-start-column="5" selection-end-line="120" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/UploadLoginForm.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="485">
+          <caret line="63" column="70" selection-start-line="63" selection-start-column="70" selection-end-line="63" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/UploadRegisterForm.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="128" column="25" selection-start-line="128" selection-start-column="25" selection-end-line="128" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AvatarsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-106" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/Avatar.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UsersController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="21" column="54" selection-start-line="21" selection-start-column="54" selection-end-line="21" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/components/NavbarDropdown.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2442">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/sass/components/_navbar.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2260" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/partials/right-nav.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="16" column="27" lean-forward="true" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/UploadService.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/services/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2046">
+          <caret line="62" column="28" selection-start-line="62" selection-start-column="28" selection-end-line="62" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/layouts/app.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="50" column="53" selection-start-line="50" selection-start-column="53" selection-end-line="50" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ServicesController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-120">
+          <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/dashboards/settings/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="15" column="60" selection-start-line="15" selection-start-column="60" selection-end-line="15" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/SettingsController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-821" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/dashboards/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="495">
+          <caret line="15" column="73" lean-forward="true" selection-start-line="15" selection-start-column="73" selection-end-line="15" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/UserAccountForm.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="61" column="65" selection-start-line="61" selection-start-column="65" selection-end-line="61" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/js/pages/UploadView.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6194">
+          <caret line="207" lean-forward="true" selection-start-line="207" selection-end-line="207" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/sass/components/_upload-levels.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="294">
+          <caret line="62" column="31" lean-forward="true" selection-start-line="62" selection-start-column="31" selection-end-line="62" selection-end-column="31" />
         </state>
       </provider>
     </entry>

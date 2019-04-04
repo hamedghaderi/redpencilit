@@ -2,20 +2,21 @@
 
 namespace Tests\Feature;
 
-use App\Delivery;
-use Carbon\Carbon;
+use App\DocumentDraft;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 
-class OrderTest extends TestCase
+class UploadDocumentTest extends TestCase
 {
     use RefreshDatabase;
 
    /** @test **/
    public function a_user_can_upload_multiple_documents()
    {
+       $this->withoutMiddleware();
+
        Storage::fake('local');
 
         $files = [
@@ -23,38 +24,49 @@ class OrderTest extends TestCase
             UploadedFile::fake()->create('document2.docx'),
         ];
 
-       $response = $this->json('POST', '/api/documents', [
-            'articles' => $files
-        ]);
-
+        $this->call('POST',
+            '/api/documents',
+            [],
+            ['temporary_user' => 'afdsfadf'],
+            ['articles' => $files],
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_ACCEPT' => 'application/json',
+            ]
+        );
 
        Storage::disk('local')
             ->assertExists('documents/' . $files[0]->hashName())
             ->assertExists('documents/' . $files[1]->hashName());
 
-       $response->assertStatus(200);
-
        $this->assertDatabaseHas('document_drafts', [
             'path' => 'documents/' . $files[0]->hashName(),
-        ]);
-
-       $this->assertDatabaseHas('document_drafts', [
             'path' => 'documents/' . $files[1]->hashName(),
         ]);
    }
 
+
     /** @test **/
     public function a_user_can_upload_a_single_document()
     {
+        $this->withoutMiddleware();
+
         Storage::fake('local');
 
         $files = [
             UploadedFile::fake()->create('document1.docx')
         ];
 
-        $response = $this->json('POST', '/api/documents', [
-            'articles' => $files
-        ]);
+        $response = $this->call('POST',
+            '/api/documents',
+            [],
+            ['temporary_user' => 'afdsfadf'],
+            ['articles' => $files],
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_ACCEPT' => 'application/json',
+            ]
+        );
 
         Storage::disk('local')
             ->assertExists('documents/' . $files[0]->hashName());
@@ -89,54 +101,53 @@ class OrderTest extends TestCase
     }
 
     /** @test **/
-    public function a_delivery_date_has_been_registered_for_user_per_order()
+    public function when_uploading_new_documents_previous_ones_recent_becomes_false()
     {
-        $this->withoutExceptionHandling();
+        $this->withoutMiddleware();
 
         Storage::fake('local');
 
         $files = [
             UploadedFile::fake()->create('document1.docx'),
-            UploadedFile::fake()->create('document2.docx'),
+            UploadedFile::fake()->create('document2.docx')
         ];
 
-        $this->json('POST', '/api/documents', [
-            'articles' => $files
-        ]);
-
-        $deliveries = Delivery::first();
-
-        $this->assertEquals(
-            Carbon::now()->addWeeks(1)->toDateTimeString(),
-            $deliveries->deliver_date
+        $response = $this->call('POST',
+            '/api/documents',
+            [],
+            ['temporary_user' => 'afdsfadf'],
+            ['articles' => $files],
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_ACCEPT' => 'application/json',
+            ]
         );
 
-        $this->assertEquals(2, $deliveries->limit);
+        $documents = DocumentDraft::all();
+
+        $this->assertTrue($documents[0]->recent);
+        $this->assertTrue($documents[1]->recent);
 
         $files = [
-            UploadedFile::fake()->create('document3.docx'),
-            UploadedFile::fake()->create('document4.docx'),
+            UploadedFile::fake()->create('document2.docx')
         ];
 
-        $this->json('POST', '/api/documents', [
-            'articles' => $files
-        ]);
+        $response = $this->call('POST',
+            '/api/documents',
+            [],
+            ['temporary_user' => 'afdsfadf'],
+            ['articles' => $files],
+            [
+                'CONTENT_TYPE' => 'application/json',
+                'HTTP_ACCEPT' => 'application/json',
+            ]
+        );
 
-        $deliveries = Delivery::first();
+        $documents = DocumentDraft::all();
 
-        $this->assertEquals(4, $deliveries->limit);
 
-        $files = [
-            UploadedFile::fake()->create('document5.docx'),
-            UploadedFile::fake()->create('document6.docx'),
-        ];
-
-        $this->json('POST', '/api/documents', [
-            'articles' => $files
-        ]);
-
-        $deliveries = Delivery::all()[1];
-
-        $this->assertEquals(2, $deliveries->limit);
+        $this->assertFalse($documents[0]->recent);
+        $this->assertFalse($documents[1]->recent);
+        $this->assertTrue($documents[2]->recent);
     }
 }

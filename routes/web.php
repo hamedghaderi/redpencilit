@@ -24,6 +24,10 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/dashboard/{user}', 'DashboardController@index')->name('dashboard');
     Route::post('/api/users/{user}/avatar', 'AvatarsController@store');
+    Route::patch('/dashboard/{user}', 'UsersController@update');
+    Route::get('/dashboard/{user}/general_settings', 'SettingsController@index');
+    Route::post('/dashboard/{user}/settings', 'SettingsController@store');
+    Route::patch('/dashboard/{user}/settings/{setting}', 'SettingsController@update');
 });
 
 Route::get('orders/create', 'OrdersController@create')->name('new-order');

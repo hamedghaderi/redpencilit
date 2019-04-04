@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Delivery;
+use Facades\App\DocumentDelivery;
 use App\DocumentDraft;
 use App\DocumentWordCount;
 use App\Rules\MaxWord;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile as UploadedFileAlias;
+use Illuminate\Support\Facades\Cookie;
 
 class DocumentsController extends Controller
 {
@@ -22,15 +23,33 @@ class DocumentsController extends Controller
             return response('بارگذاری فایل انجام نشد!', 400);
         }
 
+        $temp_user_id = uniqid();
+
+        if ( !Cookie::has('temporary_user') ) {
+           $cookie =  cookie()->forever('temporary_user', $temp_user_id);
+        }
+
+
+        DocumentDraft::where('temporary_user', Cookie::get('temporary_user'))
+            ->update(['recent' => false]);
+
+
         $words = 0;
 
         foreach (request()->file('articles') as $file)  {
-            $words += $this->createDraftFrom($file);
+            $words += $this->createDraftFrom($file, $temp_user_id);
         }
 
-        Delivery::addDoc($words, Carbon::now()->addWeeks(1), count(request()->file('articles')));
+        $delivery = DocumentDelivery::addDoc(
+            $words, Carbon::now()->addWeeks(1),
+            count( request()->file('articles') )
+        );
 
-        return response(['words' => $words], 200);
+
+        return response([
+            'words' => $words,
+            'date_available' => $delivery['deliver_date']->toDateString(),
+        ], 200)->withCookie($cookie);
     }
 
 
@@ -38,7 +57,7 @@ class DocumentsController extends Controller
      * @param UploadedFileAlias $file
      * @return int
      */
-    protected function createDraftFrom(UploadedFileAlias $file)
+    protected function createDraftFrom(UploadedFileAlias $file, $temp_user_id)
     {
         $file->store('documents');
 
@@ -46,7 +65,9 @@ class DocumentsController extends Controller
 
         DocumentDraft::create([
             'path' => 'documents/' . $file->hashName(),
-            'words' => $words->countWords($file)
+            'words' => $words->countWords($file),
+            'recent' => true,
+            'temporary_user' => Cookie::get('temporary_user') ?: $temp_user_id
         ]);
 
         return $words->countWords($file);

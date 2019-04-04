@@ -1,39 +1,34 @@
 <nav class="dashboard-nav">
-    <div class="dashboard-logo mb-8 pt-6 text-center">
-        <img src="{{ asset('images/logo.svg') }}" alt="redpencilit">
-    </div>
-
-    <div class="dashboard-nav__user">
-        <avatar
-                user="{{ auth()->id() }}"
-                image="{{ auth()->user()->avatar ?
-                    '/' . auth()->user()->avatar :
-                    asset('images/avatar.svg')
-                }}"></avatar>
-
-        <h3>{{ auth()->user()->name }}</h3>
-        <span>کاربر عادی</span>
+    <div class="dashboard-logo mb-8 pt-6 px-6 pb-3 text-right border-b border-grey-lighter">
+        <img src="{{ asset('images/logo.svg') }}" alt="redpencilit" style="width:50px">
     </div>
 
     <ul class="dashboard-nav__list">
         <li>
-            <a href="/dashboard/services" class="has-icon">
-                <i class="fas fa-user-cog pl-3"></i>
-                تنظیمات حساب کاربری
-            </a>
-        </li>
-
-        <li>
             <a href="#" class="has-icon">
-                <i class="fas fa-newspaper pl-3"></i>
+                <i class="far fa-newspaper pl-3"></i>
                 مقالات آپلود شده
             </a>
         </li>
 
         <li>
-            <a href="{{ route('services', auth()->user()->name) }}" class="has-icon">
+            <a href="{{ '/dashboard/' . auth()->user()->username . '/general_settings' }}" class="has-icon">
+                <i class="fas fa-cog pl-3"></i>
+                تنظیمات کلی
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ route('services', auth()->user()->username) }}" class="has-icon">
                 <i class="fas fa-stream pl-3"></i>
                 سرویس‌ها
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ '/dashboard/' . auth()->user()->username }}" class="has-icon">
+                <i class="far fa-user pl-3"></i>
+                تنظیمات حساب کاربری
             </a>
         </li>
 
@@ -50,10 +45,15 @@
         </li>
     </ul>
 
-    <div class="dashboard-nav__back">
-        <a href="/" class="has-icon">
-            بازگشت به صفحه اصلی
-            <i class="fas fa-long-arrow-alt-left pr-2"></i>
-        </a>
+    <div class="dashboard-nav__user">
+        <avatar
+                user="{{ auth()->id() }}"
+                image="{{ auth()->user()->avatar ?
+                    '/' . auth()->user()->avatar :
+                    asset('images/avatar.svg')
+                }}"></avatar>
+
+        <h3>{{ auth()->user()->username }}</h3>
+        <span>{{ auth()->user()->email }}</span>
     </div>
 </nav>

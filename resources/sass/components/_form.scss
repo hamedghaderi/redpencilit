@@ -2,12 +2,29 @@
 .input {
   @apply p-3 border text-sm;
 
+  &--right {
+    padding-right: 2.5rem !important;
+  }
+
   &:focus {
-    border-color: #3490dc;
+    @apply border-indigo;
   }
 
   &-icon {
     @apply absolute pin-l h-full border bg-white rounded-tl rounded-bl flex items-center px-3 text-grey;
+
+    &--no-border {
+      @apply border-none bg-transparent;
+    }
+
+    &--right {
+      left: auto;
+      @apply pin-r;
+    }
+  }
+
+  &--rounded {
+    @apply rounded;
   }
 }
 
@@ -65,6 +82,8 @@
 }
 
 .select {
+  height: auto !important;
+
   &::after {
     border-width: 2px;
     border: 3px solid transparent;
@@ -72,7 +91,7 @@
     @apply border-r-0 border-t-0 border-grey-dark block mt-3 pointer-events-none absolute z-10;
     height: 0.625em;
     width: 0.625em;
-    margin-top: .5em;
+    margin-top: -.25em;
     content: "";
     left: 1.125em;
     top: 50%;

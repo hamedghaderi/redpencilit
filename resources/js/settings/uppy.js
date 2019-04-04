@@ -1,7 +1,7 @@
 let uppy_settings = {
     restrictions: {
         allowMultipleUploads: false,
-        maxNumberOfFiles: 3,
+        maxNumberOfFiles: 4,
         minNumberOfFiles: 1,
         target: '#file-uploader',
         allowedFileTypes: [

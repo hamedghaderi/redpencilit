@@ -17,6 +17,8 @@ class CreateDocumentDraftsTable extends Migration
             $table->increments('id');
             $table->string('path');
             $table->unsignedInteger('words');
+            $table->string('temporary_user', 16);
+            $table->boolean('recent');
             $table->timestamps();
         });
     }

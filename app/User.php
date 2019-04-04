@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'avatar'
+        'name', 'email', 'password', 'avatar', 'phone', 'username'
     ];
 
     /**
@@ -30,7 +30,12 @@ class User extends Authenticatable
 
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'username';
+    }
+
+    public function setting()
+    {
+       return $this->hasOne(Setting::class, 'owner_id');
     }
 }
 

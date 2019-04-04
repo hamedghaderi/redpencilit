@@ -33,7 +33,7 @@ class ServicesController extends Controller
         }
 
         request()->validate([
-            'name' => 'required|min:3'
+            'name' => 'required|min:3',
         ]);
 
        Service::create([
@@ -41,12 +41,14 @@ class ServicesController extends Controller
            'owner_id' => auth()->id()
        ]);
 
-       return redirect('dashboard/' . $user->name . '/services');
+       return redirect('dashboard/' . $user->username . '/services');
     }
 
     public function update(User $user, Service $service)
     {
-        $attributes = request()->validate(['name' => 'required|min:3']);
+        $attributes = request()->validate([
+            'name' => 'required|min:3',
+        ]);
 
         $service->update($attributes);
 

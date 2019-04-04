@@ -16,7 +16,7 @@
         <div class="w-1/2">
             <div class="p-6">
                 <div class="bg-white shadow p-6 rounded">
-                    <form action="{{ '/dashboard/' .auth()->user()->name . '/services' }}" method="POST">
+                    <form action="{{ '/dashboard/' .auth()->user()->username . '/services' }}" method="POST">
                         @csrf
 
                         <div class="form-group">
@@ -25,7 +25,7 @@
                         </div>
 
                         <div class="form-group mb-0">
-                            <button type="submit" class="button button--sm button--outline--primary">ذخیره سرویس</button>
+                            <button type="submit" class="button button--smooth--primary">ذخیره سرویس</button>
                         </div>
                     </form>
                 </div>
@@ -42,6 +42,7 @@
             <div class="w-1/4 text-sm text-grey-dark">
                 نام سرویس
             </div>
+
             <div class="w-1/4 text-sm text-grey-dark">
                 تاریخ ایجاد سرویس
             </div>
@@ -54,13 +55,23 @@
         @foreach($services as $service)
             <div class="row mb-3">
                 <div class="bg-white px-6 py-3 shadow flex items-center relative">
-                    <div class="w-1/4">
-                        <form action="{{ '/dashboard/' . auth()->user()->name . '/services/' . $service->id }}" method="POST">
-                            @method('PATCH')
-                            @csrf
+                    <form class="flex w-1/4"
+                          action="{{ '/dashboard/' . auth()->user()->username . '/services/' . $service->id }}"
+                          method="POST"
+                          @change="onChange">
+
+                        @csrf
+                        @method('PATCH')
+
+                        <div class="w-full">
                             <input type="text" name="name" value="{{ $service->name }}" class="focusable-input">
-                        </form>
-                    </div>
+                        </div>
+
+                        <button type="submit" class="card-button" v-show="showUpdateButton">
+                            <i class="fas fa-save"></i>
+                        </button>
+                    </form>
+
 
                     <div class="w-1/4 text-grey-darker">
                         {{ $service->created_at->diffForHumans() }}
@@ -71,11 +82,11 @@
                     </div>
 
                     <div class="w-1/4">
-                        <form action="{{ '/dashboard/' . auth()->user()->name . '/services/' . $service->id }}"
+                        <form action="{{ '/dashboard/' . auth()->user()->username . '/services/' . $service->id }}"
                               method="POST">
                             @csrf
                             @method('DELETE')
-                            <button class="button button--outline--danger button--sm">حذف سرویس</button>
+                            <button class="button button--smooth--danger button--sm">حذف سرویس</button>
                         </form>
                     </div>
                 </div>

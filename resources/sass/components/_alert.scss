@@ -1,0 +1,31 @@
+.alert {
+  @apply text-center px-3 py-2 rounded bg-white shadow border-r-4 flex items-center pr-12 text-grey-darker;
+  min-width: 300px;
+  min-height: 40px;
+
+  &--success {
+    @apply border-green;
+  }
+
+  &--danger {
+    @apply border-red;
+  }
+
+  &--danger &__mark {
+    @apply absolute rounded-full bg-red text-white inline-flex items-center justify-center;
+    width: 20px; height: 20px;
+    right: 10px;
+  }
+
+  &--success &__mark {
+    @apply absolute rounded-full bg-green text-white inline-flex items-center justify-center;
+    width: 20px; height: 20px;
+    right: 10px;
+  }
+
+  &--flash {
+    position: fixed;
+    left: 25px;
+    bottom: 25px;
+  }
+}

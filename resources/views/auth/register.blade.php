@@ -42,6 +42,24 @@
 
                 <div class="form-group mb-4">
                     <div class="relative flex">
+                        <input id="phone" type="text" class="input field-rtl border w-full pl-12 rounded block{{
+                        $errors->has('phone') ? ' is-invalid' : '' }}" name="phone" value="{{ old('phone') }}"
+                               required placeholder="شماره تماس (موبایل)">
+
+                        <span class="input-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </span>
+                    </div>
+
+                    @if ($errors->has('phone'))
+                        <div class="feedback feedback__invalid my-2" role="alert">
+                            <p>{{ $errors->first('phone') }}</p>
+                        </div>
+                    @endif
+                </div>
+
+                <div class="form-group mb-4">
+                    <div class="relative flex">
                         <input id="password" type="password" class="input field-rtl pl-12 border w-full rounded block{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" placeholder="رمز عبور" required>
 
                         <span class="input-icon">

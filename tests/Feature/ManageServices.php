@@ -56,6 +56,28 @@ class ManageServices extends TestCase
             ->assertSessionHasErrors('name');
     }
 
+    /** @test **/
+    public function a_service_requires_a_price()
+    {
+        $user = $this->signIn();
+
+        $service = factory(Service::class)->raw(['price' => null]);
+
+        $this->post('/dashboard/' . $user->name . '/services', $service)
+            ->assertSessionHasErrors('price');
+    }
+
+    /** @test **/
+    public function a_price_should_be_a_valid_number()
+    {
+        $user = $this->signIn();
+
+        $service = factory(Service::class)->raw(['price' => 'hello']);
+
+        $this->post('/dashboard/' . $user->name . '/services', $service)
+            ->assertSessionHasErrors('price');
+    }
+
     /** @test  **/
     public function a_user_can_update_a_service()
     {
@@ -63,9 +85,12 @@ class ManageServices extends TestCase
 
        $service = factory(Service::class)->create();
 
-       $this->patch('/dashboard/' . $user->name . '/services/' .  $service->id, ['name' => 'Changed']);
+       $this->patch('/dashboard/' . $user->name . '/services/' .  $service->id, [
+           'name' => 'Changed',
+           'price' => 150000
+       ]);
 
-       $this->assertDatabaseHas('services', ['name' => 'Changed']);
+       $this->assertDatabaseHas('services', ['name' => 'Changed', 'price' => 150000]);
     }
 
     /** @test **/

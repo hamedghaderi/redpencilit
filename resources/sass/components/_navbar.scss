@@ -24,10 +24,10 @@
   max-width: 250px;
 
   &__user {
-    @apply text-center pb-12 mb-12 border-b border-grey-lighter;
+    @apply text-center pb-12 mb-12;
 
     span {
-      @apply text-grey-dark text-sm;
+      @apply text-grey-dark text-xs;
     }
   }
 
@@ -53,21 +53,21 @@
   }
 
   &__list {
-    @apply list-reset px-6;
-
-    li {
-      @apply mb-12;
-    }
+    @apply list-reset pb-4 border-b border-grey-lighter mb-8;
 
     a {
-      @apply no-underline text-grey-darkest text-sm;
+      @apply no-underline text-grey-darkest text-sm w-full px-6 py-4;
 
-      &:hover i {
-        @apply text-indigo;
+      &:hover {
+        @apply text-indigo bg-indigo-lightest;
+
+        &:hover i {
+          @apply text-indigo;
+        }
       }
 
       i {
-        @apply text-grey text-base;
+        @apply text-grey-dark text-base;
       }
     }
   }

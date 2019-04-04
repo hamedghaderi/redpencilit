@@ -45,7 +45,7 @@
             this.uppy = uppy;
 
             uppy.on('upload-success', (file, response) => {
-                this.$emit('fileUploaded', response.body.words);
+                this.$emit('fileUploaded', response.body);
             });
         },
     }

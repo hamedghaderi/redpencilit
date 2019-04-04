@@ -1,0 +1,30 @@
+.tabs {
+  @apply flex bg-white w-full relative rounded rounded-b-none;
+}
+
+.tab {
+  &-header {
+    @apply flex px-6 border rounded rounded-b-none w-full;
+    min-height: 50px;
+    line-height: calc(50px - 2px);
+  }
+
+  &-content {
+    @apply absolute w-full border rounded rounded-t-none px-6 py-6 bg-white;
+    top: 50px;
+  }
+
+  &-pane {
+    @apply border-b-2 border-transparent ml-6;
+
+    &--active {
+      @apply border-indigo;
+    }
+  }
+
+  &-name {
+    a {
+      @apply no-underline text-grey-dark;
+    }
+  }
+}

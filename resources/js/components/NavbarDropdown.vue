@@ -5,7 +5,7 @@
         </dropdown-toggler>
 
         <div v-show="show" class="dropdown__content dropdown__content--left">
-            <dropdown-content v-if="!signedIn" @hideDropdown="closeDropdown">
+            <dropdown-content v-if="!isSignedIn" @hideDropdown="closeDropdown">
                 <dropdown-item href="/login">
                     <i class="fas fa-sign-out-alt"></i>
                     ورود به حساب کاربری
@@ -49,14 +49,21 @@
 
        data() {
            return {
-               user: window.Redpencilit.user,
+               user: false,
+               isSignedIn: false,
                show: false,
                token: null,
+               data: null,
            }
        },
 
        created() {
             this.token = document.querySelector('meta[name="csrf-token"]').content;
+
+            this.isSignedIn = this.signedIn;
+            this.user = this.signedInUser;
+
+            window.events.$on('userCreated', data => this.showUser(data));
        },
 
        computed: {
@@ -69,7 +76,7 @@
            },
 
            dashboard() {
-               return '/dashboard/' + this.user.name;
+               return '/dashboard/' + this.user.username;
            }
        },
 
@@ -84,6 +91,11 @@
 
            logout() {
                 document.getElementById('logout-form').submit();
+           },
+
+           showUser(data) {
+              this.user = data;
+              this.isSignedIn = true;
            }
        }
    }
