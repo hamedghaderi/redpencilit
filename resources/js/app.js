@@ -42,6 +42,7 @@ Vue.component('upload-view', require('./pages/UploadView.vue').default);
 Vue.component('user-account-form', require('./pages/UserAccountForm.vue').default);
 Vue.component('update-general-settings', require('./pages/UpdateGeneralSettings.vue').default);
 Vue.component('flash', require('./components/Flash.vue').default);
+Vue.component('services', require('./pages/Services.vue').default);
 
 Vue.component('upload-service', {
     data() {
@@ -70,3 +71,4 @@ Vue.component('upload-service', {
 const app = new Vue({
   el: '#app',
 });
+

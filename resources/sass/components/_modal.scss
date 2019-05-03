@@ -1,0 +1,24 @@
+.modal {
+  @apply fixed w-full h-full pin-t pin-l pin-r pin-b z-20 flex items-center;
+  background: rgba(0,0,0,.9);
+
+  &__wrapper {
+    @apply mx-auto w-1/2 bg-white rounded flex flex-wrap;
+  }
+
+  &__body {
+    @apply w-full px-6 py-6;
+  }
+
+  &__footer {
+    @apply w-full bg-grey-light px-6 py-6 w-full;
+  }
+
+  &__footer:empty {
+    display: none;
+  }
+
+  &__close {
+    @apply text-white absolute pin-t pin-r pt-6 pr-6 text-4xl cursor-pointer;
+  }
+}

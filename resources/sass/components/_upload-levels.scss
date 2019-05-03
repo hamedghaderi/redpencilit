@@ -136,3 +136,7 @@
 .upload-levels__list.half::after {
   @apply w-1/2 bg-red;
 }
+
+.upload-levels__list.full::after {
+  @apply w-full bg-red;
+}

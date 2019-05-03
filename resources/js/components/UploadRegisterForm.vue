@@ -123,7 +123,7 @@
                     .then(response => {
                         flash('حساب شما با موفقیت ایجاد شد.');
 
-                        if (response.status === 201) {
+                        if (response.data.status === 200) {
                             window.events.$emit('userCreated', response.data);
                             this.$emit('userRegistered', response.data);
                         }

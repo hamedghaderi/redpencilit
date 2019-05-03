@@ -17,12 +17,13 @@ class ManageServices extends TestCase
 
         $user = $this->signIn();
 
-        $service = factory(Service::class)->raw();
+        $service = factory(Service::class)->raw(['negotiable' => true]);
 
-        $this->post('/dashboard/' . $user->name . '/services', $service)
-            ->assertRedirect('/dashboard/' . $user->name . '/services');
+        $this->post('/dashboard/' . $user->username . '/services', $service)
+            ->assertRedirect('/dashboard/' . $user->username . '/services');
 
         $this->assertDatabaseHas('services', ['name' => $service['name']]);
+        $this->assertDatabaseHas('services', ['negotiable' => true]);
     }
 
     /** @test **/
@@ -40,9 +41,11 @@ class ManageServices extends TestCase
 
         $user = $this->signIn();
 
-       $services = factory(Service::class)->create();
+       $service = factory(Service::class)->create();
 
-       $this->get('/dashboard/' . $user->name . '/services')->assertSee($services->name);
+       $response = $this->json('get', '/dashboard/' . $user->username . '/services');
+
+       $response->assertJson([['name' => $service->name]]);
     }
 
     /** @test **/
@@ -52,30 +55,8 @@ class ManageServices extends TestCase
 
         $service = factory(Service::class)->raw(['name' => null]);
 
-        $this->post('/dashboard/' . $user->name . '/services', $service)
+        $this->post('/dashboard/' . $user->username . '/services', $service)
             ->assertSessionHasErrors('name');
-    }
-
-    /** @test **/
-    public function a_service_requires_a_price()
-    {
-        $user = $this->signIn();
-
-        $service = factory(Service::class)->raw(['price' => null]);
-
-        $this->post('/dashboard/' . $user->name . '/services', $service)
-            ->assertSessionHasErrors('price');
-    }
-
-    /** @test **/
-    public function a_price_should_be_a_valid_number()
-    {
-        $user = $this->signIn();
-
-        $service = factory(Service::class)->raw(['price' => 'hello']);
-
-        $this->post('/dashboard/' . $user->name . '/services', $service)
-            ->assertSessionHasErrors('price');
     }
 
     /** @test  **/
@@ -83,14 +64,14 @@ class ManageServices extends TestCase
     {
        $user = $this->signIn() ;
 
-       $service = factory(Service::class)->create();
+       $service = factory(Service::class)->create(['negotiable' => false]);
 
-       $this->patch('/dashboard/' . $user->name . '/services/' .  $service->id, [
+       $this->patch('/dashboard/' . $user->username . '/services/' .  $service->id, [
            'name' => 'Changed',
-           'price' => 150000
+           'negotiable' => true
        ]);
 
-       $this->assertDatabaseHas('services', ['name' => 'Changed', 'price' => 150000]);
+       $this->assertDatabaseHas('services', ['name' => 'Changed', 'negotiable' => true]);
     }
 
     /** @test **/
@@ -102,7 +83,7 @@ class ManageServices extends TestCase
 
         $this->assertDatabaseHas('services', ['name' => 'My Service']);
 
-        $this->delete('/dashboard/' . $user->name . '/services/' .  $service->id);
+        $this->delete('/dashboard/' . $user->username . '/services/' .  $service->id);
 
         $this->assertDatabaseMissing('services', ['name' => 'My Service']);
     }

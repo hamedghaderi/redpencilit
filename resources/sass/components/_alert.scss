@@ -1,5 +1,5 @@
 .alert {
-  @apply text-center px-3 py-2 rounded bg-white shadow border-r-4 flex items-center pr-12 text-grey-darker;
+  @apply text-center px-3 py-3 rounded bg-grey-darker shadow border-r-4 flex items-center pr-12 text-white fixed z-20 overflow-hidden;
   min-width: 300px;
   min-height: 40px;
 

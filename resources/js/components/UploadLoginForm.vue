@@ -59,8 +59,9 @@
             onSubmit() {
                 axios.post('/login', this.$data)
                     .then(response => {
-                        if (response.status === 200) {
+                        if (response.data.status === 200) {
                             window.events.$emit('userCreated', response.data);
+
                             this.$emit('userLoggedIn', response.data);
                         }
                     }).catch(error => {

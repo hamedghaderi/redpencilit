@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function() {
     // Services
     Route::get('dashboard/{user}/services', 'ServicesController@index')->name('services');
+    Route::get('dashboard/{user}/services/{service}', 'ServicesController@show');
     Route::post('dashboard/{user}/services', 'ServicesController@store');
     Route::patch('dashboard/{user}/services/{service}', 'ServicesController@update');
     Route::delete('dashboard/{user}/services/{service}', 'ServicesController@destroy');
@@ -28,10 +29,13 @@ Route::middleware('auth')->group(function() {
     Route::get('/dashboard/{user}/general_settings', 'SettingsController@index');
     Route::post('/dashboard/{user}/settings', 'SettingsController@store');
     Route::patch('/dashboard/{user}/settings/{setting}', 'SettingsController@update');
+
+    Route::post('/users/{user}/documents', 'DocumentsController@store');
+    Route::delete('/users/{user}/documents/{token}', 'DocumentsController@destroy');
 });
 
 Route::get('orders/create', 'OrdersController@create')->name('new-order');
-Route::post('api/documents', 'DocumentsController@store');
+//Route::post('api/documents', 'DocumentsController@store');
 
 Auth::routes();
 

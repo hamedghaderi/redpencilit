@@ -37,5 +37,20 @@ class User extends Authenticatable
     {
        return $this->hasOne(Setting::class, 'owner_id');
     }
+
+    public function documents()
+    {
+       return $this->hasMany(DocumentDraft::class, 'owner_id');
+    }
+
+    public function services()
+    {
+       return $this->hasMany(Service::class, 'owner_id');
+    }
+
+    public function drafts()
+    {
+       return $this->hasMany(DocumentDraft::class, 'owner_id');
+    }
 }
 

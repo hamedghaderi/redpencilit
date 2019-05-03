@@ -3,10 +3,6 @@
         <div id="upload" class="w-3/4 mx-auto mb-3">
             <div id="file-uploader"></div>
         </div>
-
-        <div class="test" v-if="test">
-            <h1>Hello</h1>
-        </div>
     </div>
 </template>
 
@@ -18,24 +14,37 @@
    import {uppy_settings} from "../settings/uppy";
 
    export default {
+        props: ['user', 'token'],
+
         data() {
             return {
                 uppy: null,
                 articles: [],
-                test: false
+                test: false,
+                endpoint: null,
             }
         },
+
+       created() {
+            if (!this.user) {
+                this.endpoint = `/users/${window.Redpencilit.user.username}/documents`;
+            } else {
+                this.endpoint = `/users/${this.user.username}/documents`;
+            }
+       },
+
+
         mounted() {
-            let csrf = document.getElementById('csrf').getAttribute('content');
+            let token = this.token ? this.token : document.getElementById('csrf').getAttribute('content');
 
             const uppy = Uppy(uppy_settings)
                 .use(Dashboard, dashboard_settings)
                 .use(XHRUpload, {
-                    endpoint: '/api/documents',
+                    endpoint: this.endpoint,
                     bundle: true,
                     fieldName: 'articles[]',
                     headers: {
-                        'X-CSRF-TOKEN': csrf
+                        'X-CSRF-TOKEN': token,
                     },
                     getResponseError(responseText, xhr) {
                         return new Error(responseText) ;

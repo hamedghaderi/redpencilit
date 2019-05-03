@@ -1,13 +1,16 @@
 <template>
-    <div class="alert alert--flash fade show"
-        :class="'alert--'+level"
-        role="alert"
-        v-show="show"
-        >
-        <span v-if="level === 'success'" class="alert__mark"> <i class="fas fa-check"></i> </span>
-        <span v-if="level === 'danger'" class="alert__mark"> <i class="fas fa-times"></i> </span>
-        {{ body }}
-    </div>
+    <transition name="slide">
+        <div class="alert alert--flash fade show"
+            :class="['alert--'+level, {'active': show}]"
+            role="alert"
+            v-if="show"
+            >
+            <span v-if="level === 'success'" class="alert__mark"> <i class="fas fa-check"></i> </span>
+            <span v-if="level === 'danger'" class="alert__mark"> <i class="fas fa-times"></i> </span>
+
+            {{ body }}
+        </div>
+    </transition>
 </template>
 
 <script>
@@ -17,7 +20,7 @@
         data() {
             return {
                 body: '',
-               level: 'success',
+                level: 'success',
                 show: false
             }
         },
@@ -47,4 +50,10 @@
         }
     }
 </script>
+
+<style>
+    .alert {
+        border-bottom: 1px solid white;
+    }
+</style>
 

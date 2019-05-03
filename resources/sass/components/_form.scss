@@ -47,17 +47,49 @@
   }
 }
 
-.form-group input {
+.form-group input:not([type=checkbox]) {
   @apply block p-3 w-full;
 }
 
 
+
+// Custom Checkboxes
+.label-check {
+  @apply overflow-hidden relative;
+
+  .check-toggle {
+    @apply w-4 h-4 relative inline-block align-middle border border-grey-light rounded-sm cursor-pointer;
+  }
+
+  &:hover .check-toggle {
+    @apply border-indigo;
+  }
+
+  .check-custom {
+    @apply absolute w-px h-px overflow-hidden;
+    left: -10000px;
+    top: auto;
+
+    &:checked ~ .check-toggle {
+      @apply bg-indigo border-indigo;
+      background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMyIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cG9seWxpbmUgcG9pbnRzPSIyMCA2IDkgMTcgNCAxMiI+PC9wb2x5bGluZT48L3N2Zz4=);
+      background-position: center;
+      background-repeat: no-repeat;
+      outline: 0;
+    }
+  }
+}
 
 
 // LABELS
 .form-group label {
   @apply block text-grey-darker mb-3;
 }
+
+.form-group label.mb-0 {
+  @apply mb-0;
+}
+
 
 .dashboard-label {
   @apply text-sm;

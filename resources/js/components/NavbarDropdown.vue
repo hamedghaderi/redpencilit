@@ -94,7 +94,8 @@
            },
 
            showUser(data) {
-              this.user = data;
+              this.user = data.user;
+              this.token = data.token;
               this.isSignedIn = true;
            }
        }

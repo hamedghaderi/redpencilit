@@ -33,6 +33,7 @@
  }
 
   &--smooth {
+
     &--danger {
       @apply bg-red-lightest text-red;
 
@@ -43,6 +44,18 @@
 
     &--primary {
       @apply bg-indigo-lightest text-indigo;
+
+      &:disabled {
+        @apply bg-grey-lighter text-indigo-lighter;
+      }
+
+      &:hover {
+        transform: none;
+      }
+    }
+
+    &--success {
+      @apply bg-green-lightest text-green;
 
       &:hover {
         transform: none;

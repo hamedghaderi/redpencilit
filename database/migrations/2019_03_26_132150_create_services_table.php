@@ -16,6 +16,7 @@ class CreateServicesTable extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('owner_id');
+            $table->boolean('negotiable')->default(false);
             $table->string('name', 50);
             $table->timestamps();
 
