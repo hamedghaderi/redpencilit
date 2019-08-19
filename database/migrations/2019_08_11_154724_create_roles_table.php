@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDocumentDraftsTable extends Migration
+class CreateRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,11 @@ class CreateDocumentDraftsTable extends Migration
      */
     public function up()
     {
-        Schema::create('document_drafts', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('owner_id');
-            $table->string('path');
-            $table->string('token', 30);
-            $table->unsignedInteger('words');
+            $table->string('name')->unique();
+            $table->string('label')->nullable();
             $table->timestamps();
-
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -32,6 +28,6 @@ class CreateDocumentDraftsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('document_drafts');
+        Schema::dropIfExists('roles');
     }
 }

@@ -1,26 +1,28 @@
 .alert {
-  @apply text-center px-3 py-3 rounded bg-grey-darker shadow border-r-4 flex items-center pr-12 text-white fixed z-20 overflow-hidden;
+  @apply text-center px-24 py-8 text-sm rounded bg-white shadow-md flex items-center fixed z-20 overflow-hidden;
   min-width: 300px;
+  max-width: 500px;
   min-height: 40px;
 
+  img {
+    width: 60px;
+    margin-right: 20px;
+  }
+
   &--success {
-    @apply border-green;
+    @apply text-teal-darker;
   }
 
   &--danger {
-    @apply border-red;
+    @apply text-red-darker;
   }
 
   &--danger &__mark {
-    @apply absolute rounded-full bg-red text-white inline-flex items-center justify-center;
-    width: 20px; height: 20px;
-    right: 10px;
+    @apply absolute pin-r inline-flex items-center justify-center;
   }
 
   &--success &__mark {
-    @apply absolute rounded-full bg-green text-white inline-flex items-center justify-center;
-    width: 20px; height: 20px;
-    right: 10px;
+    @apply absolute pin-r flex items-center justify-center;
   }
 
   &--flash {

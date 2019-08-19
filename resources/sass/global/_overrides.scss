@@ -6,7 +6,11 @@
   border: 1px dashed #ced4da !important;
 }
 
-.uppy-DashboarAddFiles {
+.uppy-Dashboard-browse {
+  text-decoration: none !important;
+}
+
+.uppy-DashboardAddFiles {
   background-image: url("../images/upload-background.svg");
   background-repeat: no-repeat;
   background-position: center center;
@@ -43,8 +47,6 @@
   right: auto !important;
   left: 10px !important;
 }
-
-
 
 
 // Uppy Status Bar
@@ -155,7 +157,6 @@
 }
 
 
-
 // Uppy Button
 .uppy-size--md .uppy-StatusBar.is-waiting .uppy-StatusBar-actionBtn--upload {
   box-shadow: 0 3px 24px rgba(#5A5DFF, .3) !important;
@@ -167,8 +168,6 @@
   padding-bottom: 12px !important;
   text-align: center !important;
 }
-
-
 
 
 // Uppy Informer

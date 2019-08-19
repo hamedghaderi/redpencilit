@@ -4,24 +4,33 @@
     </div>
 
     <ul class="dashboard-nav__list">
-        <li>
+        <li class="dashboard-nav__parent">
             <a href="#" class="has-icon">
+                <i class="fas fa-user-shield pl-3"></i>
+                مدیریت
+            </a>
+            
+            <ul class="dashboard-nav__child">
+                <li>
+                    <a href="{{ '/dashboard/' . auth()->user()->username . '/general_settings' }}">
+                        <i class="fa fa-list pl-3"></i>
+                        تنظیمات کلی
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ '/dashboard/' . auth()->user()->username . '/general_settings' }}">
+                        <i class="fas fa-cog pl-3"></i>
+                        سرویس‌ها
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="{{ '/dashboard/' . auth()->user()->username . '/drafts' }}" class="has-icon">
                 <i class="far fa-newspaper pl-3"></i>
                 مقالات آپلود شده
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ '/dashboard/' . auth()->user()->username . '/general_settings' }}" class="has-icon">
-                <i class="fas fa-cog pl-3"></i>
-                تنظیمات کلی
-            </a>
-        </li>
-
-        <li>
-            <a href="{{ route('services', auth()->user()->username) }}" class="has-icon">
-                <i class="fas fa-stream pl-3"></i>
-                سرویس‌ها
             </a>
         </li>
 
@@ -36,7 +45,7 @@
             <a href="#" class="has-icon" onclick="event.preventDefault(); document.getElementById('logout-form').submit
             ();">
                 <i class="fas fa-sign-out-alt pl-3"></i>
-               خروج از حساب
+                خروج از حساب
 
                 <form id="logout-form" style="display: none;" action="/logout" method="POST">
                     @csrf
@@ -55,5 +64,12 @@
 
         <h3>{{ auth()->user()->username }}</h3>
         <span>{{ auth()->user()->email }}</span>
+    </div>
+
+    <div class="new-order text-center">
+        <a class="button button--outline--primary has-icon" href="{{ route('new-order') }}">
+            <i class="far fa-file-alt pl-1"></i>
+            سفارش جدید
+        </a>
     </div>
 </nav>

@@ -7,31 +7,33 @@
 </template>
 
 <script>
-   import Uppy from '@uppy/core';
-   import Dashboard from '@uppy/dashboard';
-   import XHRUpload from '@uppy/xhr-upload';
-   import {dashboard_settings} from '../settings/uppy-dashboard';
-   import {uppy_settings} from "../settings/uppy";
+    const Uppy = require('@uppy/core');
+    const XHRUpload = require('@uppy/xhr-upload');
+    const Dashboard = require('@uppy/dashboard');
 
-   export default {
+
+
+    import {dashboard_settings} from '../settings/uppy-dashboard';
+    import {uppy_settings} from "../settings/uppy";
+
+    export default {
         props: ['user', 'token'],
 
         data() {
             return {
                 uppy: null,
-                articles: [],
-                test: false,
+                documents: [],
                 endpoint: null,
             }
         },
 
-       created() {
+        created() {
             if (!this.user) {
-                this.endpoint = `/users/${window.Redpencilit.user.username}/documents`;
+                this.endpoint = `/users/${window.Redpencilit.user.username}/orders`;
             } else {
-                this.endpoint = `/users/${this.user.username}/documents`;
+                this.endpoint = `/users/${this.user.username}/orders`;
             }
-       },
+        },
 
 
         mounted() {
@@ -42,19 +44,19 @@
                 .use(XHRUpload, {
                     endpoint: this.endpoint,
                     bundle: true,
-                    fieldName: 'articles[]',
+                    fieldName: 'documents[]',
                     headers: {
                         'X-CSRF-TOKEN': token,
                     },
                     getResponseError(responseText, xhr) {
-                        return new Error(responseText) ;
+                        return new Error(responseText);
                     }
                 });
 
             this.uppy = uppy;
 
             uppy.on('upload-success', (file, response) => {
-                this.$emit('fileUploaded', response.body);
+                this.$emit('fileUploaded', response.body.data);
             });
         },
     }

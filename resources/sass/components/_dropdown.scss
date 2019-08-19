@@ -6,18 +6,6 @@
     @apply list-reset shadow-md rounded py-6 text-sm bg-white;
   }
 
-  li {
-    @apply w-full block py-3 text-right px-8 py-3 relative;
-
-    &:hover {
-      @apply bg-grey-lighter;
-
-      a {
-        @apply text-red;
-      }
-    }
-  }
-
   a {
     @apply flex items-center text-grey-darker no-underline;
 
@@ -27,15 +15,27 @@
   }
 
   &__content {
-    @apply absolute z-50;
+    @apply absolute z-50 shadow border border-grey-light py-6 rounded bg-white text-sm;
 
     &--left {
       @apply pin-l;
       top: 100%;
     }
+
+    a {
+      @apply pr-4 pl-12 py-1 leading-loose;
+
+      &:hover {
+        @apply bg-grey-lighter;
+      }
+    }
   }
 
   &_toggler {
     @apply cursor-pointer;
+  }
+
+  &__title {
+    @apply text-grey pr-4 pl-8 text-right block mb-4;
   }
 }

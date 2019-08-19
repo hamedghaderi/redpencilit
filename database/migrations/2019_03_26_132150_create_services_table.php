@@ -15,12 +15,14 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('owner_id');
+            $table->unsignedInteger('user_id');
             $table->boolean('negotiable')->default(false);
             $table->string('name', 50);
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete
+            ('cascade');
         });
     }
 

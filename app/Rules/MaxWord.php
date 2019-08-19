@@ -3,27 +3,26 @@
 namespace App\Rules;
 
 use App\DocumentWordCount;
+use App\Setting;
 use Illuminate\Contracts\Validation\Rule;
 
 class MaxWord implements Rule
 {
+    protected $wordCount = 0;
+
     /**
      * Determine if the validation rule passes.
      *
      * @param  string  $attribute
+     * @param          $documents
+     *
      * @return bool
      */
     public function passes($attribute, $documents)
     {
-        $doc = new DocumentWordCount;
+        $this->wordCount = DocumentWordCount::files($documents)->countWords();
 
-        $sum = 0;
-
-        foreach ($documents as $document) {
-            $sum += $doc->countWords($document);
-        }
-
-        return $sum <= 20000;
+        return $this->wordCount <= (int) Setting::first()->upload_words_per_day;
     }
 
     /**
@@ -33,6 +32,6 @@ class MaxWord implements Rule
      */
     public function message()
     {
-        return 'تعداد کلمات باید کمتر از ۲۰۰۰ باشد.';
+        return 'تعداد کلمات بایستی کمتر از' . $this->wordCount . 'باشد.';
     }
 }

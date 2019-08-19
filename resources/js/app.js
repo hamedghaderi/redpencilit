@@ -1,4 +1,3 @@
-
 import './bootstrap.js';
 
 window.Vue = require('vue');
@@ -9,7 +8,7 @@ window.flash = function (message, level = 'success') {
 }
 
 if (process.env.NODE_ENV === "production") {
-  Vue.config.devtools = false;
+    Vue.config.devtools = false;
 }
 
 /**
@@ -23,20 +22,20 @@ if (process.env.NODE_ENV === "production") {
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 Vue.directive('dropdown-outside-click', {
-  bind: function(el, binding, vnode) {
-    document.body.addEventListener('click', function(event) {
-      if (
-          event.target !== el && // element which clicked on is not the current element
-          event.target.id !== binding.value.ref // and it's not event the toggler button
-      ) {
-        vnode.context[binding.value.method](event); // then run hide event on the content
-      }
-    });
-  }
+    bind: function (el, binding, vnode) {
+        document.body.addEventListener('click', function (event) {
+            if (
+                event.target !== el && // element which clicked on is not the current element
+                event.target.id !== binding.value.ref // and it's not event the toggler button
+            ) {
+                vnode.context[binding.value.method](event); // then run hide event on the content
+            }
+        });
+    }
 });
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('navbar-dropdown', require('./components/NavbarDropdown.vue').default);
+Vue.component('dropdown', require('./components/Dropdown.vue').default);
 Vue.component('avatar', require('./components/Avatar.vue').default);
 Vue.component('upload-view', require('./pages/UploadView.vue').default);
 Vue.component('user-account-form', require('./pages/UserAccountForm.vue').default);
@@ -46,17 +45,17 @@ Vue.component('services', require('./pages/Services.vue').default);
 
 Vue.component('upload-service', {
     data() {
-      return {
-        showUpdateButton: false,
-          user: []
-      };
+        return {
+            showUpdateButton: false,
+            user: []
+        };
     },
 
-   methods: {
-      onChange() {
-        this.showUpdateButton = true;
-     },
-   }
+    methods: {
+        onChange() {
+            this.showUpdateButton = true;
+        },
+    }
 });
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -69,6 +68,6 @@ Vue.component('upload-service', {
 
 
 const app = new Vue({
-  el: '#app',
+    el: '#app',
 });
 

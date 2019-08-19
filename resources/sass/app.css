@@ -37,6 +37,10 @@
   color: #8795a1 !important;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 body {
   @apply bg-grey-lightest text-right font-normal pb-16;
   direction: rtl;
@@ -48,11 +52,22 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  @apply .text-blue;
+  @apply .text-blue .no-underline outline-none;
 }
 
 hr {
   @apply border-t-2 border-grey-lighter mb-8;
+}
+
+.absolute-center {
+  @apply absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .container {
@@ -87,7 +102,11 @@ hr {
   border: 1px dashed #ced4da !important;
 }
 
-.uppy-DashboarAddFiles {
+.uppy-Dashboard-browse {
+  text-decoration: none !important;
+}
+
+.uppy-DashboardAddFiles {
   background-image: url("../images/upload-background.svg");
   background-repeat: no-repeat;
   background-position: center center;
@@ -247,6 +266,25 @@ hr {
   background-position: center center;
 }
 
+.list {
+  @apply list-reset mx-auto;
+}
+.list li {
+  @apply relative text-sm pr-6 text-right mb-3 leading-normal;
+}
+.list li::before {
+  content: "";
+  @apply absolute pin-r bg-green-light rounded-full;
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
 /* Components */
 .button {
   @apply text-white px-6 py-3 rounded-full relative z-10 inline-flex .no-underline items-center;
@@ -344,6 +382,10 @@ hr {
 .card-button {
   @apply absolute pin-l text-2xl bg-green-lightest text-green rounded rounded-r-none pin-t h-full;
   width: 60px;
+}
+
+.button > img.loader {
+  max-width: 40px;
 }
 
 .input {
@@ -541,8 +583,19 @@ hr {
   width: 250px;
   max-width: 250px;
 }
+.dashboard-nav__parent {
+  @apply relative;
+}
+.dashboard-nav__child {
+  @apply bg-white absolute list-reset z-10 shadow p-6 pin-t;
+  right: 100%;
+  min-width: 200px;
+}
+.dashboard-nav__child li:not(:last-child) {
+  @apply mb-6;
+}
 .dashboard-nav__user {
-  @apply text-center pb-12 mb-12;
+  @apply text-center pb-6 mb-6;
 }
 .dashboard-nav__user span {
   @apply text-grey-dark text-xs;
@@ -597,15 +650,6 @@ hr {
 .dropdown ul {
   @apply list-reset shadow-md rounded py-6 text-sm bg-white;
 }
-.dropdown li {
-  @apply w-full block py-3 text-right px-8 py-3 relative;
-}
-.dropdown li:hover {
-  @apply bg-grey-lighter;
-}
-.dropdown li:hover a {
-  @apply text-red;
-}
 .dropdown a {
   @apply flex items-center text-grey-darker no-underline;
 }
@@ -613,14 +657,23 @@ hr {
   @apply ml-3;
 }
 .dropdown__content {
-  @apply absolute z-50;
+  @apply absolute z-50 shadow border border-grey-light py-6 rounded bg-white text-sm;
 }
 .dropdown__content--left {
   @apply pin-l;
   top: 100%;
 }
+.dropdown__content a {
+  @apply pr-4 pl-12 py-1 leading-loose;
+}
+.dropdown__content a:hover {
+  @apply bg-grey-lighter;
+}
 .dropdown_toggler {
   @apply cursor-pointer;
+}
+.dropdown__title {
+  @apply text-grey pr-4 pl-8 text-right block mb-4;
 }
 
 .upload-levels {
@@ -758,6 +811,12 @@ hr {
 .tag--info {
   @apply bg-blue-lightest border-blue text-blue-darker;
 }
+.tag--success {
+  @apply bg-green-lightest border-green text-green-darker;
+}
+.tag--primary {
+  @apply bg-indigo-lightest border-indigo text-indigo-darker;
+}
 
 .tabs {
   @apply flex bg-white w-full relative rounded rounded-b-none;
@@ -783,27 +842,26 @@ hr {
 }
 
 .alert {
-  @apply text-center px-3 py-3 rounded bg-grey-darker shadow border-r-4 flex items-center pr-12 text-white fixed z-20 overflow-hidden;
+  @apply text-center px-24 py-8 text-sm rounded bg-white shadow-md flex items-center fixed z-20 overflow-hidden;
   min-width: 300px;
+  max-width: 500px;
   min-height: 40px;
 }
+.alert img {
+  width: 60px;
+  margin-right: 20px;
+}
 .alert--success {
-  @apply border-green;
+  @apply text-teal-darker;
 }
 .alert--danger {
-  @apply border-red;
+  @apply text-red-darker;
 }
 .alert--danger .alert__mark {
-  @apply absolute rounded-full bg-red text-white inline-flex items-center justify-center;
-  width: 20px;
-  height: 20px;
-  right: 10px;
+  @apply absolute pin-r inline-flex items-center justify-center;
 }
 .alert--success .alert__mark {
-  @apply absolute rounded-full bg-green text-white inline-flex items-center justify-center;
-  width: 20px;
-  height: 20px;
-  right: 10px;
+  @apply absolute pin-r flex items-center justify-center;
 }
 .alert--flash {
   position: fixed;
@@ -829,6 +887,8 @@ hr {
 }
 .modal__close {
   @apply text-white absolute pin-t pin-r pt-6 pr-6 text-4xl cursor-pointer;
+  height: 50px;
+  width: 50px;
 }
 
 /**

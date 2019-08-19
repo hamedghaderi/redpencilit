@@ -127,3 +127,7 @@
   @apply absolute pin-l text-2xl bg-green-lightest text-green rounded rounded-r-none pin-t h-full;
   width: 60px;
 }
+
+.button > img.loader {
+  max-width: 40px;
+}

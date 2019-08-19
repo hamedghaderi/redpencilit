@@ -54,7 +54,7 @@
             <div class="relative flex">
                 <input type="text" name="phone" placeholder="شماره تماس"
                        class="input input--rounded input--right"
-                        v-model="phone">
+                       v-model="phone">
 
                 <span class="input-icon input-icon--no-border input-icon--right">
                       <i class="fas fa-mobile-alt"></i>
@@ -70,7 +70,7 @@
             <div class="relative flex">
                 <input type="password" name="password" placeholder="رمز عبور"
                        class="input input--rounded input--right"
-                        v-model="password">
+                       v-model="password">
 
                 <span class="input-icon input-icon--no-border input-icon--right">
                       <i class="fas fa-key"></i>
@@ -87,16 +87,17 @@
                 <input type="password" name="password_confirmation"
                        placeholder="تایید رمز عبور"
                        class="input input--rounded input--right"
-                        v-model="password_confirmation">
+                       v-model="password_confirmation">
 
                 <span class="input-icon input-icon--no-border input-icon--right">
-                                              <i class="fas fa-key"></i>
-                                         </span>
+                      <i class="fas fa-key"></i>
+                 </span>
             </div>
         </div>
 
         <div class="form-group">
-            <button class="button button--primary button--block" @click="submitForm">تائید</button>
+            <button class="button button--primary button--block" @click="submitForm" v-html="buttonText">
+            </button>
         </div>
     </div>
 </template>
@@ -113,23 +114,31 @@
                 password: '',
                 password_confirmation: '',
                 phone: '',
-                errors: new Errors()
+                errors: new Errors(),
+                buttonText: 'تائید'
             }
         },
 
         methods: {
             submitForm() {
+                this.buttonText = '<img src="/images/three-dots.svg" class="loader">';
+
                 axios.post('/register', this.$data)
                     .then(response => {
-                        flash('حساب شما با موفقیت ایجاد شد.');
+                        flash('حساب شما با موفقیت ایجاد شد. لطفا قبل از بارگذاری فایل‌ها، وارد ایمیلتان شوید و حساب خودتان را فعال کنید.');
 
                         if (response.data.status === 200) {
+                            this.buttonText = '<i class="fas fa-check">';
                             window.events.$emit('userCreated', response.data);
+
                             this.$emit('userRegistered', response.data);
                         }
+
+
                     })
                     .catch(error => {
-                       this.errors.record( error.response.data.errors );
+                        this.buttonText = 'تائید';
+                        this.errors.record(error.response.data.errors);
                     });
             }
         }

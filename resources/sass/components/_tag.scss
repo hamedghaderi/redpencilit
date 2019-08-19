@@ -8,4 +8,12 @@
   &--info {
     @apply bg-blue-lightest border-blue text-blue-darker;
   }
+
+  &--success {
+    @apply bg-green-lightest border-green text-green-darker;
+  }
+
+  &--primary {
+    @apply bg-indigo-lightest border-indigo text-indigo-darker;
+  }
 }

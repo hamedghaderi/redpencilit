@@ -1,7 +1,7 @@
 <template>
     <div class="modal">
         <span class="modal__close">
-            <i class="fas fa-times" @click="onClose"></i>
+            <img src="/images/cross-out.svg" alt="cross out icon" @click="onClose">
         </span>
 
         <div class="modal__wrapper">
@@ -13,8 +13,6 @@
                 <slot name="footer"></slot>
             </div>
         </div>
-
-
     </div>
 </template>
 

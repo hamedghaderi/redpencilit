@@ -1,3 +1,6 @@
+const Persian = require('@uppy/locales/lib/fa_IR');
+Persian.strings.youCanOnlyUploadFileTypes = 'فرمت‌ فایل صحیح نیست. لطفا از فرمت docx استفاده کنید.';
+
 let uppy_settings = {
     restrictions: {
         allowMultipleUploads: false,
@@ -9,19 +12,7 @@ let uppy_settings = {
         ],
     },
 
-    locale: {
-        strings: {
-            youCanOnlyUploadFileTypes: 'فرمت‌های مجاز:',
-            youCanOnlyUploadX: {
-                0: 'حداکثر تعداد فایل‌های مجاز: ‌%{smart_count} فایل',
-                1: 'حداکثر تعداد فایل‌های مجاز: ‌%{smart_count} فایل'
-            },
-            youHaveToAtLeastSelectX: {
-                0: 'هیچ فایلی آپلود نشده است.',
-                1: 'هیچ فایلی آپلود نشده است.'
-            },
-        }
-    }
+    locale: Persian
 };
 
 export {uppy_settings};

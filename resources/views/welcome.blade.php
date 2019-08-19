@@ -64,6 +64,9 @@
         </style>
     </head>
     <body>
+        @can('can-edit', auth()->user())
+            <h1>Hello</h1>
+        @endcan
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">

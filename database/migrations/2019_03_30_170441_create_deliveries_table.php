@@ -15,9 +15,9 @@ class CreateDeliveriesTable extends Migration
     {
         Schema::create('deliveries', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('deliver_date');
-            $table->integer('total_words')->default(0);
-            $table->integer('limit')->default(0);
+            $table->timestamp('date');
+            $table->integer('total_words');
+            $table->integer('leftover');
             $table->timestamps();
         });
     }

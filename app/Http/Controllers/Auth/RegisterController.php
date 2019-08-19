@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Role;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -65,12 +67,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::forceCreate([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
+            'confirmation_token' => Str::random(25)
         ]);
+        
+        if ((int) User::all()->count() === 1)  {
+            $role = Role::create(['name' => 'super-admin', 'label' => 'Super Manger']);
+            
+            $user->addRole($role);
+        }
+
+        return $user;
     }
 }

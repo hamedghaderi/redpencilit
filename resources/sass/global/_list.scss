@@ -1,0 +1,20 @@
+.list {
+  @apply list-reset mx-auto;
+
+  li {
+    @apply relative text-sm pr-6 text-right mb-3 leading-normal;
+
+    &::before {
+     content: '';
+      @apply absolute pin-r bg-green-light rounded-full;
+      width: 10px;
+      height: 10px;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      -moz-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+      -o-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+  }
+}

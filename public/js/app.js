@@ -86,6 +86,42 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@uppy/companion-client/lib/AuthError.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/@uppy/companion-client/lib/AuthError.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AuthError = function (_Error) {
+  _inherits(AuthError, _Error);
+
+  function AuthError() {
+    _classCallCheck(this, AuthError);
+
+    var _this = _possibleConstructorReturn(this, _Error.call(this, 'Authorization required'));
+
+    _this.name = 'AuthError';
+    _this.isAuthError = true;
+    return _this;
+  }
+
+  return AuthError;
+}(Error);
+
+module.exports = AuthError;
+
+/***/ }),
+
 /***/ "./node_modules/@uppy/companion-client/lib/Provider.js":
 /*!*************************************************************!*\
   !*** ./node_modules/@uppy/companion-client/lib/Provider.js ***!
@@ -98,8 +134,6 @@
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -107,6 +141,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var RequestClient = __webpack_require__(/*! ./RequestClient */ "./node_modules/@uppy/companion-client/lib/RequestClient.js");
+var tokenStorage = __webpack_require__(/*! ./tokenStorage */ "./node_modules/@uppy/companion-client/lib/tokenStorage.js");
 
 var _getName = function _getName(id) {
   return id.split('-').map(function (s) {
@@ -131,20 +166,34 @@ module.exports = function (_RequestClient) {
     return _this;
   }
 
+  Provider.prototype.headers = function headers() {
+    var _this2 = this;
+
+    return new Promise(function (resolve, reject) {
+      _RequestClient.prototype.headers.call(_this2).then(function (headers) {
+        _this2.getAuthToken().then(function (token) {
+          resolve(_extends({}, headers, { 'uppy-auth-token': token }));
+        });
+      }).catch(reject);
+    });
+  };
+
+  Provider.prototype.onReceiveResponse = function onReceiveResponse(response) {
+    response = _RequestClient.prototype.onReceiveResponse.call(this, response);
+    var authenticated = response.status !== 401;
+    this.uppy.getPlugin(this.pluginId).setPluginState({ authenticated: authenticated });
+    return response;
+  };
+
   // @todo(i.olarewaju) consider whether or not this method should be exposed
+
+
   Provider.prototype.setAuthToken = function setAuthToken(token) {
-    // @todo(i.olarewaju) add fallback for OOM storage
-    this.uppy.getPlugin(this.pluginId).storage.setItem(this.tokenKey, token);
+    return this.uppy.getPlugin(this.pluginId).storage.setItem(this.tokenKey, token);
   };
 
   Provider.prototype.getAuthToken = function getAuthToken() {
     return this.uppy.getPlugin(this.pluginId).storage.getItem(this.tokenKey);
-  };
-
-  Provider.prototype.checkAuth = function checkAuth() {
-    return this.get(this.id + '/authorized').then(function (payload) {
-      return payload.authenticated;
-    });
   };
 
   Provider.prototype.authUrl = function authUrl() {
@@ -160,13 +209,16 @@ module.exports = function (_RequestClient) {
   };
 
   Provider.prototype.logout = function logout() {
-    var _this2 = this;
+    var _this3 = this;
 
     var redirect = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : location.href;
 
-    return this.get(this.id + '/logout?redirect=' + redirect).then(function (res) {
-      _this2.uppy.getPlugin(_this2.pluginId).storage.removeItem(_this2.tokenKey);
-      return res;
+    return new Promise(function (resolve, reject) {
+      _this3.get(_this3.id + '/logout?redirect=' + redirect).then(function (res) {
+        _this3.uppy.getPlugin(_this3.pluginId).storage.removeItem(_this3.tokenKey).then(function () {
+          return resolve(res);
+        }).catch(reject);
+      }).catch(reject);
     });
   };
 
@@ -177,31 +229,28 @@ module.exports = function (_RequestClient) {
       plugin.opts = _extends({}, defaultOpts, opts);
     }
 
-    if (opts.serverPattern) {
-      var pattern = opts.serverPattern;
-      // validate serverPattern param
+    if (opts.serverUrl || opts.serverPattern) {
+      throw new Error('`serverUrl` and `serverPattern` have been renamed to `companionUrl` and `companionAllowedHosts` respectively in 0.30.5 release. Please consult the docs (for example, https://uppy.io/docs/instagram/ for Instagram plugin) and use the updated options.`');
+    }
+
+    if (opts.companionAllowedHosts) {
+      var pattern = opts.companionAllowedHosts;
+      // validate companionAllowedHosts param
       if (typeof pattern !== 'string' && !Array.isArray(pattern) && !(pattern instanceof RegExp)) {
-        throw new TypeError(plugin.id + ': the option "serverPattern" must be one of string, Array, RegExp');
+        throw new TypeError(plugin.id + ': the option "companionAllowedHosts" must be one of string, Array, RegExp');
       }
-      plugin.opts.serverPattern = pattern;
+      plugin.opts.companionAllowedHosts = pattern;
     } else {
       // does not start with https://
-      if (/^(?!https?:\/\/).*$/.test(opts.serverUrl)) {
-        plugin.opts.serverPattern = location.protocol + '//' + opts.serverUrl.replace(/^\/\//, '');
+      if (/^(?!https?:\/\/).*$/i.test(opts.companionUrl)) {
+        plugin.opts.companionAllowedHosts = 'https://' + opts.companionUrl.replace(/^\/\//, '');
       } else {
-        plugin.opts.serverPattern = opts.serverUrl;
+        plugin.opts.companionAllowedHosts = opts.companionUrl;
       }
     }
 
-    plugin.storage = plugin.opts.storage || localStorage;
+    plugin.storage = plugin.opts.storage || tokenStorage;
   };
-
-  _createClass(Provider, [{
-    key: 'defaultHeaders',
-    get: function get() {
-      return _extends({}, _RequestClient.prototype.defaultHeaders, { 'uppy-auth-token': this.getAuthToken() });
-    }
-  }]);
 
   return Provider;
 }(RequestClient);
@@ -218,14 +267,15 @@ module.exports = function (_RequestClient) {
 "use strict";
 
 
-// Remove the trailing slash so we can always safely append /xyz.
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var AuthError = __webpack_require__(/*! ./AuthError */ "./node_modules/@uppy/companion-client/lib/AuthError.js");
+
+// Remove the trailing slash so we can always safely append /xyz.
 function stripSlash(url) {
   return url.replace(/\/$/, '');
 }
@@ -239,10 +289,26 @@ module.exports = function () {
     this.onReceiveResponse = this.onReceiveResponse.bind(this);
   }
 
+  RequestClient.prototype.headers = function headers() {
+    return Promise.resolve(_extends({}, this.defaultHeaders, this.opts.serverHeaders || {}));
+  };
+
+  RequestClient.prototype._getPostResponseFunc = function _getPostResponseFunc(skip) {
+    var _this = this;
+
+    return function (response) {
+      if (!skip) {
+        return _this.onReceiveResponse(response);
+      }
+
+      return response;
+    };
+  };
+
   RequestClient.prototype.onReceiveResponse = function onReceiveResponse(response) {
     var state = this.uppy.getState();
     var companion = state.companion || {};
-    var host = this.opts.serverUrl;
+    var host = this.opts.companionUrl;
     var headers = response.headers;
     // Store the self-identified domain name for the Companion instance we just hit.
     if (headers.has('i-am') && headers.get('i-am') !== companion[host]) {
@@ -262,54 +328,73 @@ module.exports = function () {
     return this.hostname + '/' + url;
   };
 
-  RequestClient.prototype.get = function get(path) {
-    var _this = this;
+  RequestClient.prototype._json = function _json(res) {
+    if (res.status === 401) {
+      throw new AuthError();
+    }
 
-    return fetch(this._getUrl(path), {
-      method: 'get',
-      headers: this.headers,
-      credentials: 'same-origin'
-    })
-    // @todo validate response status before calling json
-    .then(this.onReceiveResponse).then(function (res) {
-      return res.json();
-    }).catch(function (err) {
-      throw new Error('Could not get ' + _this._getUrl(path) + '. ' + err);
-    });
+    if (res.status < 200 || res.status > 300) {
+      throw new Error('Failed request to ' + res.url + '. ' + res.statusText);
+    }
+    return res.json();
   };
 
-  RequestClient.prototype.post = function post(path, data) {
+  RequestClient.prototype.get = function get(path, skipPostResponse) {
     var _this2 = this;
 
-    return fetch(this._getUrl(path), {
-      method: 'post',
-      headers: this.headers,
-      credentials: 'same-origin',
-      body: JSON.stringify(data)
-    }).then(this.onReceiveResponse).then(function (res) {
-      if (res.status < 200 || res.status > 300) {
-        throw new Error('Could not post ' + _this2._getUrl(path) + '. ' + res.statusText);
-      }
-      return res.json();
-    }).catch(function (err) {
-      throw new Error('Could not post ' + _this2._getUrl(path) + '. ' + err);
+    return new Promise(function (resolve, reject) {
+      _this2.headers().then(function (headers) {
+        fetch(_this2._getUrl(path), {
+          method: 'get',
+          headers: headers,
+          credentials: 'same-origin'
+        }).then(_this2._getPostResponseFunc(skipPostResponse)).then(function (res) {
+          return _this2._json(res).then(resolve);
+        }).catch(function (err) {
+          err = err.isAuthError ? err : new Error('Could not get ' + _this2._getUrl(path) + '. ' + err);
+          reject(err);
+        });
+      });
     });
   };
 
-  RequestClient.prototype.delete = function _delete(path, data) {
+  RequestClient.prototype.post = function post(path, data, skipPostResponse) {
     var _this3 = this;
 
-    return fetch(this.hostname + '/' + path, {
-      method: 'delete',
-      headers: this.headers,
-      credentials: 'same-origin',
-      body: data ? JSON.stringify(data) : null
-    }).then(this.onReceiveResponse)
-    // @todo validate response status before calling json
-    .then(function (res) {
-      return res.json();
-    }).catch(function (err) {
-      throw new Error('Could not delete ' + _this3._getUrl(path) + '. ' + err);
+    return new Promise(function (resolve, reject) {
+      _this3.headers().then(function (headers) {
+        fetch(_this3._getUrl(path), {
+          method: 'post',
+          headers: headers,
+          credentials: 'same-origin',
+          body: JSON.stringify(data)
+        }).then(_this3._getPostResponseFunc(skipPostResponse)).then(function (res) {
+          return _this3._json(res).then(resolve);
+        }).catch(function (err) {
+          err = err.isAuthError ? err : new Error('Could not post ' + _this3._getUrl(path) + '. ' + err);
+          reject(err);
+        });
+      });
+    });
+  };
+
+  RequestClient.prototype.delete = function _delete(path, data, skipPostResponse) {
+    var _this4 = this;
+
+    return new Promise(function (resolve, reject) {
+      _this4.headers().then(function (headers) {
+        fetch(_this4.hostname + '/' + path, {
+          method: 'delete',
+          headers: headers,
+          credentials: 'same-origin',
+          body: data ? JSON.stringify(data) : null
+        }).then(_this4._getPostResponseFunc(skipPostResponse)).then(function (res) {
+          return _this4._json(res).then(resolve);
+        }).catch(function (err) {
+          err = err.isAuthError ? err : new Error('Could not delete ' + _this4._getUrl(path) + '. ' + err);
+          reject(err);
+        });
+      });
     });
   };
 
@@ -319,7 +404,7 @@ module.exports = function () {
       var _uppy$getState = this.uppy.getState(),
           companion = _uppy$getState.companion;
 
-      var host = this.opts.serverUrl;
+      var host = this.opts.companionUrl;
       return stripSlash(companion && companion[host] ? companion[host] : host);
     }
   }, {
@@ -329,11 +414,6 @@ module.exports = function () {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       };
-    }
-  }, {
-    key: 'headers',
-    get: function get() {
-      return _extends({}, this.defaultHeaders, this.opts.serverHeaders || {});
     }
   }]);
 
@@ -457,6 +537,39 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/@uppy/companion-client/lib/tokenStorage.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/@uppy/companion-client/lib/tokenStorage.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/**
+ * This module serves as an Async wrapper for LocalStorage
+ */
+
+module.exports.setItem = function (key, value) {
+  return new Promise(function (resolve) {
+    localStorage.setItem(key, value);
+    resolve();
+  });
+};
+
+module.exports.getItem = function (key) {
+  return Promise.resolve(localStorage.getItem(key));
+};
+
+module.exports.removeItem = function (key) {
+  return new Promise(function (resolve) {
+    localStorage.removeItem(key);
+    resolve();
+  });
+};
+
+/***/ }),
+
 /***/ "./node_modules/@uppy/core/lib/Plugin.js":
 /*!***********************************************!*\
   !*** ./node_modules/@uppy/core/lib/Plugin.js ***!
@@ -471,7 +584,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var preact = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.mjs");
-var findDOMElement = __webpack_require__(/*! @uppy/utils/lib/findDOMElement */ "./node_modules/@uppy/utils/lib/findDOMElement.js");
+var findDOMElement = __webpack_require__(/*! @uppy/utils/lib/findDOMElement */ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/findDOMElement.js");
 
 /**
  * Defer a frequent call to the microtask queue.
@@ -671,17 +784,17 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Translator = __webpack_require__(/*! @uppy/utils/lib/Translator */ "./node_modules/@uppy/utils/lib/Translator.js");
+var Translator = __webpack_require__(/*! @uppy/utils/lib/Translator */ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/Translator.js");
 var ee = __webpack_require__(/*! namespace-emitter */ "./node_modules/namespace-emitter/index.js");
 var cuid = __webpack_require__(/*! cuid */ "./node_modules/cuid/index.js");
 // const throttle = require('lodash.throttle')
 var prettyBytes = __webpack_require__(/*! prettier-bytes */ "./node_modules/prettier-bytes/index.js");
 var match = __webpack_require__(/*! mime-match */ "./node_modules/mime-match/index.js");
 var DefaultStore = __webpack_require__(/*! @uppy/store-default */ "./node_modules/@uppy/store-default/lib/index.js");
-var getFileType = __webpack_require__(/*! @uppy/utils/lib/getFileType */ "./node_modules/@uppy/utils/lib/getFileType.js");
-var getFileNameAndExtension = __webpack_require__(/*! @uppy/utils/lib/getFileNameAndExtension */ "./node_modules/@uppy/utils/lib/getFileNameAndExtension.js");
-var generateFileID = __webpack_require__(/*! @uppy/utils/lib/generateFileID */ "./node_modules/@uppy/utils/lib/generateFileID.js");
-var getTimeStamp = __webpack_require__(/*! @uppy/utils/lib/getTimeStamp */ "./node_modules/@uppy/utils/lib/getTimeStamp.js");
+var getFileType = __webpack_require__(/*! @uppy/utils/lib/getFileType */ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/getFileType.js");
+var getFileNameAndExtension = __webpack_require__(/*! @uppy/utils/lib/getFileNameAndExtension */ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/getFileNameAndExtension.js");
+var generateFileID = __webpack_require__(/*! @uppy/utils/lib/generateFileID */ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/generateFileID.js");
+var getTimeStamp = __webpack_require__(/*! @uppy/utils/lib/getTimeStamp */ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/getTimeStamp.js");
 var supportsUploadProgress = __webpack_require__(/*! ./supportsUploadProgress */ "./node_modules/@uppy/core/lib/supportsUploadProgress.js");
 var Plugin = __webpack_require__(/*! ./Plugin */ "./node_modules/@uppy/core/lib/Plugin.js"); // Exported from here.
 
@@ -701,19 +814,22 @@ var Uppy = function () {
 
     _classCallCheck(this, Uppy);
 
-    var defaultLocale = {
+    this.defaultLocale = {
       strings: {
         youCanOnlyUploadX: {
           0: 'You can only upload %{smart_count} file',
-          1: 'You can only upload %{smart_count} files'
+          1: 'You can only upload %{smart_count} files',
+          2: 'You can only upload %{smart_count} files'
         },
         youHaveToAtLeastSelectX: {
           0: 'You have to select at least %{smart_count} file',
-          1: 'You have to select at least %{smart_count} files'
+          1: 'You have to select at least %{smart_count} files',
+          2: 'You have to select at least %{smart_count} files'
         },
         exceedsSize: 'This file exceeds maximum allowed size of',
-        youCanOnlyUploadFileTypes: 'You can only upload:',
+        youCanOnlyUploadFileTypes: 'You can only upload: %{types}',
         companionError: 'Connection with Companion failed',
+        companionAuthError: 'Authorization required',
         failedToUpload: 'Failed to upload %{file}',
         noInternetConnection: 'No Internet connection',
         connectedToInternet: 'Connected to the Internet',
@@ -721,12 +837,14 @@ var Uppy = function () {
         noFilesFound: 'You have no files or folders here',
         selectXFiles: {
           0: 'Select %{smart_count} file',
-          1: 'Select %{smart_count} files'
+          1: 'Select %{smart_count} files',
+          2: 'Select %{smart_count} files'
         },
         cancel: 'Cancel',
         logOut: 'Log out',
         filter: 'Filter',
-        resetFilter: 'Reset filter'
+        resetFilter: 'Reset filter',
+        loading: 'Loading...'
       }
 
       // set default options
@@ -748,7 +866,6 @@ var Uppy = function () {
       onBeforeUpload: function onBeforeUpload(files) {
         return files;
       },
-      locale: defaultLocale,
       store: DefaultStore()
 
       // Merge default options with the ones set by user
@@ -756,7 +873,7 @@ var Uppy = function () {
     this.opts.restrictions = _extends({}, defaultOptions.restrictions, this.opts.restrictions);
 
     // i18n
-    this.translator = new Translator([defaultLocale, this.opts.locale]);
+    this.translator = new Translator([this.defaultLocale, this.opts.locale]);
     this.locale = this.translator.locale;
     this.i18n = this.translator.translate.bind(this.translator);
 
@@ -802,6 +919,7 @@ var Uppy = function () {
       allowNewUpload: true,
       capabilities: {
         uploadProgress: supportsUploadProgress(),
+        individualCancellation: true,
         resumableUploads: false
       },
       totalProgress: 0,
@@ -1044,7 +1162,7 @@ var Uppy = function () {
     }
 
     if (allowedFileTypes) {
-      var isCorrectFileType = allowedFileTypes.filter(function (type) {
+      var isCorrectFileType = allowedFileTypes.some(function (type) {
         // if (!file.type) return false
 
         // is this is a mime-type
@@ -1055,19 +1173,19 @@ var Uppy = function () {
 
         // otherwise this is likely an extension
         if (type[0] === '.') {
-          if (file.extension === type.substr(1)) {
-            return file.extension;
-          }
+          return file.extension.toLowerCase() === type.substr(1).toLowerCase();
         }
-      }).length > 0;
+        return false;
+      });
 
       if (!isCorrectFileType) {
         var allowedFileTypesString = allowedFileTypes.join(', ');
-        throw new Error(this.i18n('youCanOnlyUploadFileTypes') + ' ' + allowedFileTypesString);
+        throw new Error(this.i18n('youCanOnlyUploadFileTypes', { types: allowedFileTypesString }));
       }
     }
 
-    if (maxFileSize) {
+    // We can't check maxFileSize if the size is unknown.
+    if (maxFileSize && file.data.size != null) {
       if (file.data.size > maxFileSize) {
         throw new Error(this.i18n('exceedsSize') + ' ' + prettyBytes(maxFileSize));
       }
@@ -1135,6 +1253,8 @@ var Uppy = function () {
     meta.name = fileName;
     meta.type = fileType;
 
+    // `null` means the size is unknown.
+    var size = isFinite(file.data.size) ? file.data.size : null;
     var newFile = {
       source: file.source || '',
       id: fileID,
@@ -1146,11 +1266,11 @@ var Uppy = function () {
       progress: {
         percentage: 0,
         bytesUploaded: 0,
-        bytesTotal: file.data.size || 0,
+        bytesTotal: size,
         uploadComplete: false,
         uploadStarted: false
       },
-      size: file.data.size || 0,
+      size: size,
       isRemote: isRemote,
       remote: file.remote || '',
       preview: file.preview
@@ -1159,6 +1279,7 @@ var Uppy = function () {
     try {
       this._checkRestrictions(newFile);
     } catch (err) {
+      this.emit('restriction-failed', newFile, err);
       onError(err);
     }
 
@@ -1339,11 +1460,16 @@ var Uppy = function () {
       return;
     }
 
+    // bytesTotal may be null or zero; in that case we can't divide by it
+    var canHavePercentage = isFinite(data.bytesTotal) && data.bytesTotal > 0;
     this.setFileState(file.id, {
       progress: _extends({}, this.getFile(file.id).progress, {
         bytesUploaded: data.bytesUploaded,
         bytesTotal: data.bytesTotal,
-        percentage: Math.floor((data.bytesUploaded / data.bytesTotal * 100).toFixed(2))
+        percentage: canHavePercentage
+        // TODO(goto-bus-stop) flooring this should probably be the choice of the UI?
+        // we get more accurate calculations if we don't round this at all.
+        ? Math.floor(data.bytesUploaded / data.bytesTotal * 100) : 0
       })
     });
 
@@ -1737,37 +1863,29 @@ var Uppy = function () {
   /**
    * Logs stuff to console, only if `debug` is set to true. Silent in production.
    *
-   * @param {String|Object} msg to log
+   * @param {String|Object} message to log
    * @param {String} [type] optional `error` or `warning`
    */
 
 
-  Uppy.prototype.log = function log(msg, type) {
+  Uppy.prototype.log = function log(message, type) {
     if (!this.opts.debug) {
       return;
     }
 
-    var message = '[Uppy] [' + getTimeStamp() + '] ' + msg;
-
-    window['uppyLog'] = window['uppyLog'] + '\n' + 'DEBUG LOG: ' + msg;
+    var prefix = '[Uppy] [' + getTimeStamp() + ']';
 
     if (type === 'error') {
-      console.error(message);
+      console.error(prefix, message);
       return;
     }
 
     if (type === 'warning') {
-      console.warn(message);
+      console.warn(prefix, message);
       return;
     }
 
-    if (msg === '' + msg) {
-      console.log(message);
-    } else {
-      message = '[Uppy] [' + getTimeStamp() + ']';
-      console.log(message);
-      console.dir(msg);
-    }
+    console.log(prefix, message);
   };
 
   /**
@@ -1938,7 +2056,6 @@ var Uppy = function () {
 
       var currentUpload = currentUploads[uploadID];
       if (!currentUpload) {
-        _this8.log('Not setting result for an upload that has been removed: ' + uploadID);
         return;
       }
 
@@ -1961,7 +2078,6 @@ var Uppy = function () {
           currentUploads = _getState8.currentUploads;
 
       if (!currentUploads[uploadID]) {
-        _this8.log('Not setting result for an upload that has been canceled: ' + uploadID);
         return;
       }
       var currentUpload = currentUploads[uploadID];
@@ -1970,6 +2086,11 @@ var Uppy = function () {
 
       _this8._removeUpload(uploadID);
 
+      return result;
+    }).then(function (result) {
+      if (result == null) {
+        _this8.log('Not setting result for an upload that has been removed: ' + uploadID);
+      }
       return result;
     });
   };
@@ -2105,6 +2226,368 @@ module.exports = function supportsUploadProgress(userAgent) {
 
 /***/ }),
 
+/***/ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/Translator.js":
+/*!****************************************************************************!*\
+  !*** ./node_modules/@uppy/core/node_modules/@uppy/utils/lib/Translator.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Translates strings with interpolation & pluralization support.
+ * Extensible with custom dictionaries and pluralization functions.
+ *
+ * Borrows heavily from and inspired by Polyglot https://github.com/airbnb/polyglot.js,
+ * basically a stripped-down version of it. Differences: pluralization functions are not hardcoded
+ * and can be easily added among with dictionaries, nested objects are used for pluralization
+ * as opposed to `||||` delimeter
+ *
+ * Usage example: `translator.translate('files_chosen', {smart_count: 3})`
+ *
+ * @param {object|Array<object>} locale Locale or list of locales.
+ */
+module.exports = function () {
+  function Translator(locales) {
+    var _this = this;
+
+    _classCallCheck(this, Translator);
+
+    this.locale = {
+      strings: {},
+      pluralize: function pluralize(n) {
+        if (n === 1) {
+          return 0;
+        }
+        return 1;
+      }
+    };
+
+    if (Array.isArray(locales)) {
+      locales.forEach(function (locale) {
+        return _this._apply(locale);
+      });
+    } else {
+      this._apply(locales);
+    }
+  }
+
+  Translator.prototype._apply = function _apply(locale) {
+    if (!locale || !locale.strings) {
+      return;
+    }
+
+    var prevLocale = this.locale;
+    this.locale = _extends({}, prevLocale, {
+      strings: _extends({}, prevLocale.strings, locale.strings)
+    });
+    this.locale.pluralize = locale.pluralize || prevLocale.pluralize;
+  };
+
+  /**
+   * Takes a string with placeholder variables like `%{smart_count} file selected`
+   * and replaces it with values from options `{smart_count: 5}`
+   *
+   * @license https://github.com/airbnb/polyglot.js/blob/master/LICENSE
+   * taken from https://github.com/airbnb/polyglot.js/blob/master/lib/polyglot.js#L299
+   *
+   * @param {string} phrase that needs interpolation, with placeholders
+   * @param {object} options with values that will be used to replace placeholders
+   * @return {string} interpolated
+   */
+
+
+  Translator.prototype.interpolate = function interpolate(phrase, options) {
+    var _String$prototype = String.prototype,
+        split = _String$prototype.split,
+        replace = _String$prototype.replace;
+
+    var dollarRegex = /\$/g;
+    var dollarBillsYall = '$$$$';
+    var interpolated = [phrase];
+
+    for (var arg in options) {
+      if (arg !== '_' && options.hasOwnProperty(arg)) {
+        // Ensure replacement value is escaped to prevent special $-prefixed
+        // regex replace tokens. the "$$$$" is needed because each "$" needs to
+        // be escaped with "$" itself, and we need two in the resulting output.
+        var replacement = options[arg];
+        if (typeof replacement === 'string') {
+          replacement = replace.call(options[arg], dollarRegex, dollarBillsYall);
+        }
+        // We create a new `RegExp` each time instead of using a more-efficient
+        // string replace so that the same argument can be replaced multiple times
+        // in the same phrase.
+        interpolated = insertReplacement(interpolated, new RegExp('%\\{' + arg + '\\}', 'g'), replacement);
+      }
+    }
+
+    return interpolated;
+
+    function insertReplacement(source, rx, replacement) {
+      var newParts = [];
+      source.forEach(function (chunk) {
+        split.call(chunk, rx).forEach(function (raw, i, list) {
+          if (raw !== '') {
+            newParts.push(raw);
+          }
+
+          // Interlace with the `replacement` value
+          if (i < list.length - 1) {
+            newParts.push(replacement);
+          }
+        });
+      });
+      return newParts;
+    }
+  };
+
+  /**
+   * Public translate method
+   *
+   * @param {string} key
+   * @param {object} options with values that will be used later to replace placeholders in string
+   * @return {string} translated (and interpolated)
+   */
+
+
+  Translator.prototype.translate = function translate(key, options) {
+    return this.translateArray(key, options).join('');
+  };
+
+  /**
+   * Get a translation and return the translated and interpolated parts as an array.
+   * @param {string} key
+   * @param {object} options with values that will be used to replace placeholders
+   * @return {Array} The translated and interpolated parts, in order.
+   */
+
+
+  Translator.prototype.translateArray = function translateArray(key, options) {
+    if (options && typeof options.smart_count !== 'undefined') {
+      var plural = this.locale.pluralize(options.smart_count);
+      return this.interpolate(this.locale.strings[key][plural], options);
+    }
+
+    return this.interpolate(this.locale.strings[key], options);
+  };
+
+  return Translator;
+}();
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/findDOMElement.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@uppy/core/node_modules/@uppy/utils/lib/findDOMElement.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var isDOMElement = __webpack_require__(/*! ./isDOMElement */ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/isDOMElement.js");
+
+/**
+ * Find a DOM element.
+ *
+ * @param {Node|string} element
+ * @return {Node|null}
+ */
+module.exports = function findDOMElement(element) {
+  var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
+
+  if (typeof element === 'string') {
+    return context.querySelector(element);
+  }
+
+  if ((typeof element === 'undefined' ? 'undefined' : _typeof(element)) === 'object' && isDOMElement(element)) {
+    return element;
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/generateFileID.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@uppy/core/node_modules/@uppy/utils/lib/generateFileID.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Takes a file object and turns it into fileID, by converting file.name to lowercase,
+ * removing extra characters and adding type, size and lastModified
+ *
+ * @param {Object} file
+ * @return {String} the fileID
+ *
+ */
+module.exports = function generateFileID(file) {
+  // filter is needed to not join empty values with `-`
+  return ['uppy', file.name ? file.name.toLowerCase().replace(/[^A-Z0-9]/ig, '') : '', file.type, file.data.size, file.data.lastModified].filter(function (val) {
+    return val;
+  }).join('-');
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/getFileNameAndExtension.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/@uppy/core/node_modules/@uppy/utils/lib/getFileNameAndExtension.js ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+* Takes a full filename string and returns an object {name, extension}
+*
+* @param {string} fullFileName
+* @return {object} {name, extension}
+*/
+module.exports = function getFileNameAndExtension(fullFileName) {
+  var re = /(?:\.([^.]+))?$/;
+  var fileExt = re.exec(fullFileName)[1];
+  var fileName = fullFileName.replace('.' + fileExt, '');
+  return {
+    name: fileName,
+    extension: fileExt
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/getFileType.js":
+/*!*****************************************************************************!*\
+  !*** ./node_modules/@uppy/core/node_modules/@uppy/utils/lib/getFileType.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var getFileNameAndExtension = __webpack_require__(/*! ./getFileNameAndExtension */ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/getFileNameAndExtension.js");
+var mimeTypes = __webpack_require__(/*! ./mimeTypes */ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/mimeTypes.js");
+
+module.exports = function getFileType(file) {
+  var fileExtension = file.name ? getFileNameAndExtension(file.name).extension : null;
+  fileExtension = fileExtension ? fileExtension.toLowerCase() : null;
+
+  if (file.isRemote) {
+    // some remote providers do not support file types
+    return file.type ? file.type : mimeTypes[fileExtension];
+  }
+
+  // check if mime type is set in the file object
+  if (file.type) {
+    return file.type;
+  }
+
+  // see if we can map extension to a mime type
+  if (fileExtension && mimeTypes[fileExtension]) {
+    return mimeTypes[fileExtension];
+  }
+
+  // if all fails, fall back to a generic byte stream type
+  return 'application/octet-stream';
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/getTimeStamp.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@uppy/core/node_modules/@uppy/utils/lib/getTimeStamp.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Returns a timestamp in the format of `hours:minutes:seconds`
+*/
+module.exports = function getTimeStamp() {
+  var date = new Date();
+  var hours = pad(date.getHours().toString());
+  var minutes = pad(date.getMinutes().toString());
+  var seconds = pad(date.getSeconds().toString());
+  return hours + ':' + minutes + ':' + seconds;
+};
+
+/**
+ * Adds zero to strings shorter than two characters
+*/
+function pad(str) {
+  return str.length !== 2 ? 0 + str : str;
+}
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/isDOMElement.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@uppy/core/node_modules/@uppy/utils/lib/isDOMElement.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * Check if an object is a DOM element. Duck-typing based on `nodeType`.
+ *
+ * @param {*} obj
+ */
+module.exports = function isDOMElement(obj) {
+  return obj && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && obj.nodeType === Node.ELEMENT_NODE;
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/core/node_modules/@uppy/utils/lib/mimeTypes.js":
+/*!***************************************************************************!*\
+  !*** ./node_modules/@uppy/core/node_modules/@uppy/utils/lib/mimeTypes.js ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = {
+  'md': 'text/markdown',
+  'markdown': 'text/markdown',
+  'mp4': 'video/mp4',
+  'mp3': 'audio/mp3',
+  'svg': 'image/svg+xml',
+  'jpg': 'image/jpeg',
+  'png': 'image/png',
+  'gif': 'image/gif',
+  'yaml': 'text/yaml',
+  'yml': 'text/yaml',
+  'csv': 'text/csv',
+  'avi': 'video/x-msvideo',
+  'mks': 'video/x-matroska',
+  'mkv': 'video/x-matroska',
+  'mov': 'video/quicktime',
+  'doc': 'application/msword',
+  'docm': 'application/vnd.ms-word.document.macroenabled.12',
+  'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'dot': 'application/msword',
+  'dotm': 'application/vnd.ms-word.template.macroenabled.12',
+  'dotx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
+  'xla': 'application/vnd.ms-excel',
+  'xlam': 'application/vnd.ms-excel.addin.macroenabled.12',
+  'xlc': 'application/vnd.ms-excel',
+  'xlf': 'application/x-xliff+xml',
+  'xlm': 'application/vnd.ms-excel',
+  'xls': 'application/vnd.ms-excel',
+  'xlsb': 'application/vnd.ms-excel.sheet.binary.macroenabled.12',
+  'xlsm': 'application/vnd.ms-excel.sheet.macroenabled.12',
+  'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'xlt': 'application/vnd.ms-excel',
+  'xltm': 'application/vnd.ms-excel.template.macroenabled.12',
+  'xltx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
+  'xlw': 'application/vnd.ms-excel'
+};
+
+/***/ }),
+
 /***/ "./node_modules/@uppy/dashboard/lib/components/ActionBrowseTagline.js":
 /*!****************************************************************************!*\
   !*** ./node_modules/@uppy/dashboard/lib/components/ActionBrowseTagline.js ***!
@@ -2206,7 +2689,7 @@ var poweredByUppy = function poweredByUppy(props) {
     'Powered by ',
     h(
       'svg',
-      { 'aria-hidden': 'true', 'class': 'UppyIcon uppy-Dashboard-poweredByIcon', width: '11', height: '11', viewBox: '0 0 11 11', xmlns: 'http://www.w3.org/2000/svg' },
+      { 'aria-hidden': 'true', 'class': 'UppyIcon uppy-Dashboard-poweredByIcon', width: '11', height: '11', viewBox: '0 0 11 11' },
       h('path', { d: 'M7.365 10.5l-.01-4.045h2.612L5.5.806l-4.467 5.65h2.604l.01 4.044h3.718z', 'fill-rule': 'evenodd' })
     ),
     h(
@@ -2241,7 +2724,7 @@ var AddFiles = function (_Component) {
     if (!hasAcquirers) {
       return h(
         'div',
-        { 'class': 'uppy-DashboarAddFiles' },
+        { 'class': 'uppy-DashboardAddFiles' },
         h(
           'div',
           { 'class': 'uppy-DashboardTabs' },
@@ -2256,7 +2739,7 @@ var AddFiles = function (_Component) {
         ),
         h(
           'div',
-          { 'class': 'uppy-DashboarAddFiles-info' },
+          { 'class': 'uppy-DashboardAddFiles-info' },
           this.props.note && h(
             'div',
             { 'class': 'uppy-Dashboard-note' },
@@ -2272,7 +2755,7 @@ var AddFiles = function (_Component) {
     // after removing — otherwise browser thinks it’s already selected
     return h(
       'div',
-      { 'class': 'uppy-DashboarAddFiles' },
+      { 'class': 'uppy-DashboardAddFiles' },
       h(
         'div',
         { 'class': 'uppy-DashboardTabs' },
@@ -2346,7 +2829,7 @@ var AddFiles = function (_Component) {
       ),
       h(
         'div',
-        { 'class': 'uppy-DashboarAddFiles-info' },
+        { 'class': 'uppy-DashboardAddFiles-info' },
         this.props.note && h(
           'div',
           { 'class': 'uppy-Dashboard-note' },
@@ -2424,7 +2907,7 @@ var PickerPanelContent = __webpack_require__(/*! ./PickerPanelContent */ "./node
 var PanelTopBar = __webpack_require__(/*! ./PickerPanelTopBar */ "./node_modules/@uppy/dashboard/lib/components/PickerPanelTopBar.js");
 var FileCard = __webpack_require__(/*! ./FileCard */ "./node_modules/@uppy/dashboard/lib/components/FileCard.js");
 var classNames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-var isTouchDevice = __webpack_require__(/*! @uppy/utils/lib/isTouchDevice */ "./node_modules/@uppy/utils/lib/isTouchDevice.js");
+var isTouchDevice = __webpack_require__(/*! @uppy/utils/lib/isTouchDevice */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/isTouchDevice.js");
 
 var _require = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.mjs"),
     h = _require.h;
@@ -2448,14 +2931,19 @@ function TransitionWrapper(props) {
 module.exports = function Dashboard(props) {
   var noFiles = props.totalFileCount === 0;
 
-  var dashboardClassName = classNames({ 'uppy-Root': props.isTargetDOMEl }, 'uppy-Dashboard', { 'Uppy--isTouchDevice': isTouchDevice() }, { 'uppy-Dashboard--animateOpenClose': props.animateOpenClose }, { 'uppy-Dashboard--isClosing': props.isClosing }, { 'uppy-Dashboard--modal': !props.inline }, { 'uppy-size--md': props.containerWidth > 576 }, { 'uppy-size--lg': props.containerWidth > 700 }, { 'uppy-Dashboard--isAddFilesPanelVisible': props.showAddFilesPanel });
+  var dashboardClassName = classNames({ 'uppy-Root': props.isTargetDOMEl }, 'uppy-Dashboard', { 'Uppy--isTouchDevice': isTouchDevice() }, { 'uppy-Dashboard--animateOpenClose': props.animateOpenClose }, { 'uppy-Dashboard--isClosing': props.isClosing }, { 'uppy-Dashboard--isDraggingOver': props.isDraggingOver }, { 'uppy-Dashboard--modal': !props.inline }, { 'uppy-size--md': props.containerWidth > 576 }, { 'uppy-size--lg': props.containerWidth > 700 }, { 'uppy-size--xl': props.containerWidth > 900 }, { 'uppy-Dashboard--isAddFilesPanelVisible': props.showAddFilesPanel }, { 'uppy-Dashboard--isInnerWrapVisible': props.areInsidesReadyToBeVisible });
 
   return h(
     'div',
     { 'class': dashboardClassName,
       'aria-hidden': props.inline ? 'false' : props.isHidden,
       'aria-label': !props.inline ? props.i18n('dashboardWindowTitle') : props.i18n('dashboardTitle'),
-      onpaste: props.handlePaste },
+      onpaste: props.handlePaste,
+
+      onDragOver: props.handleDragOver,
+      onDragLeave: props.handleDragLeave,
+      onDrop: props.handleDrop
+    },
     h('div', { 'class': 'uppy-Dashboard-overlay', tabindex: -1, onclick: props.handleClickOutside }),
     h(
       'div',
@@ -2466,9 +2954,9 @@ module.exports = function Dashboard(props) {
           width: props.inline && props.width ? props.width : '',
           height: props.inline && props.height ? props.height : ''
         } },
-      h(
+      !props.inline ? h(
         'button',
-        { 'class': 'uppy-Dashboard-close',
+        { 'class': 'uppy-u-reset uppy-Dashboard-close',
           type: 'button',
           'aria-label': props.i18n('closeModal'),
           title: props.i18n('closeModal'),
@@ -2478,10 +2966,15 @@ module.exports = function Dashboard(props) {
           { 'aria-hidden': 'true' },
           '\xD7'
         )
-      ),
+      ) : null,
       h(
         'div',
         { 'class': 'uppy-Dashboard-innerWrap' },
+        h(
+          'div',
+          { 'class': 'uppy-Dashboard-dropFilesHereHint' },
+          props.i18n('dropHint')
+        ),
         !noFiles && props.showSelectedFiles && h(PanelTopBar, props),
         props.showSelectedFiles ? noFiles ? h(AddFiles, props) : h(FileList, props) : h(AddFiles, props),
         h(
@@ -2588,7 +3081,7 @@ var FileCard = function (_Component) {
           { 'class': 'uppy-DashboardFileCard-label' },
           field.name
         ),
-        h('input', { 'class': 'uppy-c-textInput uppy-DashboardFileCard-input',
+        h('input', { 'class': 'uppy-u-reset uppy-c-textInput uppy-DashboardFileCard-input',
           type: 'text',
           'data-name': field.id,
           value: file.meta[field.id],
@@ -2696,7 +3189,7 @@ module.exports = FileCard;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var getFileNameAndExtension = __webpack_require__(/*! @uppy/utils/lib/getFileNameAndExtension */ "./node_modules/@uppy/utils/lib/getFileNameAndExtension.js");
+var getFileNameAndExtension = __webpack_require__(/*! @uppy/utils/lib/getFileNameAndExtension */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getFileNameAndExtension.js");
 var truncateString = __webpack_require__(/*! ../utils/truncateString */ "./node_modules/@uppy/dashboard/lib/utils/truncateString.js");
 var copyToClipboard = __webpack_require__(/*! ../utils/copyToClipboard */ "./node_modules/@uppy/dashboard/lib/utils/copyToClipboard.js");
 var prettyBytes = __webpack_require__(/*! prettier-bytes */ "./node_modules/prettier-bytes/index.js");
@@ -2717,7 +3210,7 @@ function FileItemProgressWrapper(props) {
     return;
   }
 
-  if (props.isUploaded || props.bundled || props.hidePauseResumeCancelButtons && !props.error) {
+  if (props.isUploaded || props.hidePauseResumeCancelButtons && !props.error) {
     return h(
       'div',
       { 'class': 'uppy-DashboardItem-progressIndicator' },
@@ -2725,7 +3218,7 @@ function FileItemProgressWrapper(props) {
         progress: props.file.progress.percentage,
         fileID: props.file.id,
         hidePauseResumeCancelButtons: props.hidePauseResumeCancelButtons,
-        bundled: props.bundled
+        individualCancellation: props.individualCancellation
       })
     );
   }
@@ -2741,12 +3234,13 @@ function FileItemProgressWrapper(props) {
     props.error ? props.hideRetryButton ? null : iconRetry() : h(FileItemProgress, {
       progress: props.file.progress.percentage,
       fileID: props.file.id,
+      individualCancellation: props.individualCancellation,
       hidePauseResumeCancelButtons: props.hidePauseResumeCancelButtons
     })
   );
 }
 
-module.exports = function fileItem(props) {
+module.exports = function FileItem(props) {
   var file = props.file;
   var acquirers = props.acquirers;
 
@@ -2774,7 +3268,7 @@ module.exports = function fileItem(props) {
 
     if (props.resumableUploads) {
       props.pauseUpload(file.id);
-    } else {
+    } else if (props.individualCancellation) {
       props.cancelUpload(file.id);
     }
   }
@@ -2793,12 +3287,16 @@ module.exports = function fileItem(props) {
         return props.i18n('resumeUpload');
       }
       return props.i18n('pauseUpload');
-    } else {
+    } else if (props.individualCancellation) {
       return props.i18n('cancelUpload');
     }
+
+    return '';
   }
 
-  var dashboardItemClass = classNames('uppy-DashboardItem', { 'is-inprogress': uploadInProgress }, { 'is-processing': isProcessing }, { 'is-complete': isUploaded }, { 'is-paused': isPaused }, { 'is-error': error }, { 'is-resumable': props.resumableUploads }, { 'is-bundled': props.bundledUpload });
+  var dashboardItemClass = classNames('uppy-DashboardItem', { 'is-inprogress': uploadInProgress }, { 'is-processing': isProcessing }, { 'is-complete': isUploaded }, { 'is-paused': isPaused }, { 'is-error': error }, { 'is-resumable': props.resumableUploads }, { 'is-noIndividualCancellation': !props.individualCancellation });
+
+  var showRemoveButton = props.individualCancellation ? !isUploaded : !uploadInProgress && !isUploaded;
 
   return h(
     'li',
@@ -2886,7 +3384,7 @@ module.exports = function fileItem(props) {
     h(
       'div',
       { 'class': 'uppy-DashboardItem-action' },
-      !isUploaded && h(
+      showRemoveButton && h(
         'button',
         { 'class': 'uppy-DashboardItem-remove',
           type: 'button',
@@ -2897,9 +3395,9 @@ module.exports = function fileItem(props) {
           } },
         h(
           'svg',
-          { 'aria-hidden': 'true', 'class': 'UppyIcon', width: '60', height: '60', viewBox: '0 0 60 60', xmlns: 'http://www.w3.org/2000/svg' },
-          h('path', { stroke: '#FFF', 'stroke-width': '1', 'fill-rule': 'nonzero', 'vector-effect': 'non-scaling-stroke', d: 'M30 1C14 1 1 14 1 30s13 29 29 29 29-13 29-29S46 1 30 1z' }),
-          h('path', { fill: '#FFF', 'vector-effect': 'non-scaling-stroke', d: 'M42 39.667L39.667 42 30 32.333 20.333 42 18 39.667 27.667 30 18 20.333 20.333 18 30 27.667 39.667 18 42 20.333 32.333 30z' })
+          { 'aria-hidden': 'true', 'class': 'UppyIcon', width: '18', height: '18', viewBox: '0 0 18 18' },
+          h('path', { d: 'M9 0C4.034 0 0 4.034 0 9s4.034 9 9 9 9-4.034 9-9-4.034-9-9-9z' }),
+          h('path', { fill: '#FFF', d: 'M13 12.222l-.778.778L9 9.778 5.778 13 5 12.222 8.222 9 5 5.778 5.778 5 9 8.222 12.222 5l.778.778L9.778 9z' })
         )
       )
     )
@@ -2942,7 +3440,7 @@ module.exports = function (props) {
         "stroke-dashoffset": circleLength - circleLength / 100 * props.progress
       })
     ),
-    !props.hidePauseResumeCancelButtons && !props.bundled ? h(
+    !props.hidePauseResumeCancelButtons ? h(
       "g",
       null,
       h("polygon", { "class": "play", transform: "translate(3, 3)", points: "12 20 12 10 20 15" }),
@@ -3026,13 +3524,8 @@ module.exports = function FilePreview(props) {
     ),
     h(
       'svg',
-      { 'class': 'uppy-DashboardItem-previewIconBg', width: '72', height: '93', viewBox: '0 0 72 93' },
-      h(
-        'g',
-        null,
-        h('path', { d: 'M24.08 5h38.922A2.997 2.997 0 0 1 66 8.003v74.994A2.997 2.997 0 0 1 63.004 86H8.996A2.998 2.998 0 0 1 6 83.01V22.234L24.08 5z', fill: '#FFF' }),
-        h('path', { d: 'M24 5L6 22.248h15.007A2.995 2.995 0 0 0 24 19.244V5z', fill: '#E4E4E4' })
-      )
+      { 'class': 'uppy-DashboardItem-previewIconBg', width: '58', height: '76', viewBox: '0 0 58 76' },
+      h('rect', { fill: '#FFF', width: '58', height: '76', rx: '3', 'fill-rule': 'evenodd' })
     )
   );
 };
@@ -3202,8 +3695,8 @@ function PanelTopBar(props) {
         } },
       h(
         'svg',
-        { 'class': 'UppyIcon', width: '15', height: '15', viewBox: '0 0 13 13', version: '1.1', xmlns: 'http://www.w3.org/2000/svg' },
-        h('path', { d: 'M7,6 L13,6 L13,7 L7,7 L7,13 L6,13 L6,7 L0,7 L0,6 L6,6 L6,0 L7,0 L7,6 Z' })
+        { 'class': 'UppyIcon', width: '15', height: '15', viewBox: '0 0 15 15' },
+        h('path', { d: 'M8 6.5h6a.5.5 0 0 1 .5.5v.5a.5.5 0 0 1-.5.5H8v6a.5.5 0 0 1-.5.5H7a.5.5 0 0 1-.5-.5V8h-6a.5.5 0 0 1-.5-.5V7a.5.5 0 0 1 .5-.5h6v-6A.5.5 0 0 1 7 0h.5a.5.5 0 0 1 .5.5v6z' })
       )
     )
   );
@@ -3275,7 +3768,7 @@ function localIcon() {
 function iconRetry() {
   return h(
     "svg",
-    { "aria-hidden": "true", "class": "UppyIcon retry", width: "28", height: "31", viewBox: "0 0 16 19", xmlns: "http://www.w3.org/2000/svg" },
+    { "aria-hidden": "true", "class": "UppyIcon retry", width: "28", height: "31", viewBox: "0 0 16 19" },
     h("path", { d: "M16 11a8 8 0 1 1-8-8v2a6 6 0 1 0 6 6h2z" }),
     h("path", { d: "M7.9 3H10v2H7.9z" }),
     h("path", { d: "M8.536.5l3.535 3.536-1.414 1.414L7.12 1.914z" }),
@@ -3294,41 +3787,45 @@ function checkIcon() {
 function iconAudio() {
   return h(
     "svg",
-    { "aria-hidden": "true", "class": "UppyIcon", width: "55", height: "55", viewBox: "0 0 55 55" },
-    h("path", { d: "M52.66.25c-.216-.19-.5-.276-.79-.242l-31 4.01a1 1 0 0 0-.87.992V40.622C18.174 38.428 15.273 37 12 37c-5.514 0-10 4.037-10 9s4.486 9 10 9 10-4.037 10-9c0-.232-.02-.46-.04-.687.014-.065.04-.124.04-.192V16.12l29-3.753v18.257C49.174 28.428 46.273 27 43 27c-5.514 0-10 4.037-10 9s4.486 9 10 9c5.464 0 9.913-3.966 9.993-8.867 0-.013.007-.024.007-.037V1a.998.998 0 0 0-.34-.75zM12 53c-4.41 0-8-3.14-8-7s3.59-7 8-7 8 3.14 8 7-3.59 7-8 7zm31-10c-4.41 0-8-3.14-8-7s3.59-7 8-7 8 3.14 8 7-3.59 7-8 7zM22 14.1V5.89l29-3.753v8.21l-29 3.754z" })
+    { "aria-hidden": "true", "class": "UppyIcon", width: "25", height: "25", viewBox: "0 0 25 25" },
+    h("path", { d: "M9.5 18.64c0 1.14-1.145 2-2.5 2s-2.5-.86-2.5-2c0-1.14 1.145-2 2.5-2 .557 0 1.079.145 1.5.396V7.25a.5.5 0 0 1 .379-.485l9-2.25A.5.5 0 0 1 18.5 5v11.64c0 1.14-1.145 2-2.5 2s-2.5-.86-2.5-2c0-1.14 1.145-2 2.5-2 .557 0 1.079.145 1.5.396V8.67l-8 2v7.97zm8-11v-2l-8 2v2l8-2zM7 19.64c.855 0 1.5-.484 1.5-1s-.645-1-1.5-1-1.5.484-1.5 1 .645 1 1.5 1zm9-2c.855 0 1.5-.484 1.5-1s-.645-1-1.5-1-1.5.484-1.5 1 .645 1 1.5 1z", fill: "#049BCF", "fill-rule": "nonzero" })
   );
 }
 
 function iconVideo() {
   return h(
     "svg",
-    { "aria-hidden": "true", "class": "UppyIcon", viewBox: "0 0 58 58" },
-    h("path", { d: "M36.537 28.156l-11-7a1.005 1.005 0 0 0-1.02-.033C24.2 21.3 24 21.635 24 22v14a1 1 0 0 0 1.537.844l11-7a1.002 1.002 0 0 0 0-1.688zM26 34.18V23.82L34.137 29 26 34.18z" }),
-    h("path", { d: "M57 6H1a1 1 0 0 0-1 1v44a1 1 0 0 0 1 1h56a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1zM10 28H2v-9h8v9zm-8 2h8v9H2v-9zm10 10V8h34v42H12V40zm44-12h-8v-9h8v9zm-8 2h8v9h-8v-9zm8-22v9h-8V8h8zM2 8h8v9H2V8zm0 42v-9h8v9H2zm54 0h-8v-9h8v9z" })
+    { "aria-hidden": "true", "class": "UppyIcon", width: "25", height: "25", viewBox: "0 0 25 25" },
+    h("path", { d: "M16 11.834l4.486-2.691A1 1 0 0 1 22 10v6a1 1 0 0 1-1.514.857L16 14.167V17a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2.834zM15 9H5v8h10V9zm1 4l5 3v-6l-5 3z", fill: "#19AF67", "fill-rule": "nonzero" })
   );
 }
 
 function iconPDF() {
   return h(
     "svg",
-    { "aria-hidden": "true", "class": "UppyIcon", viewBox: "0 0 342 335" },
-    h("path", { d: "M329.337 227.84c-2.1 1.3-8.1 2.1-11.9 2.1-12.4 0-27.6-5.7-49.1-14.9 8.3-.6 15.8-.9 22.6-.9 12.4 0 16 0 28.2 3.1 12.1 3 12.2 9.3 10.2 10.6zm-215.1 1.9c4.8-8.4 9.7-17.3 14.7-26.8 12.2-23.1 20-41.3 25.7-56.2 11.5 20.9 25.8 38.6 42.5 52.8 2.1 1.8 4.3 3.5 6.7 5.3-34.1 6.8-63.6 15-89.6 24.9zm39.8-218.9c6.8 0 10.7 17.06 11 33.16.3 16-3.4 27.2-8.1 35.6-3.9-12.4-5.7-31.8-5.7-44.5 0 0-.3-24.26 2.8-24.26zm-133.4 307.2c3.9-10.5 19.1-31.3 41.6-49.8 1.4-1.1 4.9-4.4 8.1-7.4-23.5 37.6-39.3 52.5-49.7 57.2zm315.2-112.3c-6.8-6.7-22-10.2-45-10.5-15.6-.2-34.3 1.2-54.1 3.9-8.8-5.1-17.9-10.6-25.1-17.3-19.2-18-35.2-42.9-45.2-70.3.6-2.6 1.2-4.8 1.7-7.1 0 0 10.8-61.5 7.9-82.3-.4-2.9-.6-3.7-1.4-5.9l-.9-2.5c-2.9-6.76-8.7-13.96-17.8-13.57l-5.3-.17h-.1c-10.1 0-18.4 5.17-20.5 12.84-6.6 24.3.2 60.5 12.5 107.4l-3.2 7.7c-8.8 21.4-19.8 43-29.5 62l-1.3 2.5c-10.2 20-19.5 37-27.9 51.4l-8.7 4.6c-.6.4-15.5 8.2-19 10.3-29.6 17.7-49.28 37.8-52.54 53.8-1.04 5-.26 11.5 5.01 14.6l8.4 4.2c3.63 1.8 7.53 2.7 11.43 2.7 21.1 0 45.6-26.2 79.3-85.1 39-12.7 83.4-23.3 122.3-29.1 29.6 16.7 66 28.3 89 28.3 4.1 0 7.6-.4 10.5-1.2 4.4-1.1 8.1-3.6 10.4-7.1 4.4-6.7 5.4-15.9 4.1-25.4-.3-2.8-2.6-6.3-5-8.7z" })
+    { "aria-hidden": "true", "class": "UppyIcon", width: "25", height: "25", viewBox: "0 0 25 25" },
+    h("path", { d: "M9.766 8.295c-.691-1.843-.539-3.401.747-3.726 1.643-.414 2.505.938 2.39 3.299-.039.79-.194 1.662-.537 3.148.324.49.66.967 1.055 1.51.17.231.382.488.629.757 1.866-.128 3.653.114 4.918.655 1.487.635 2.192 1.685 1.614 2.84-.566 1.133-1.839 1.084-3.416.249-1.141-.604-2.457-1.634-3.51-2.707a13.467 13.467 0 0 0-2.238.426c-1.392 4.051-4.534 6.453-5.707 4.572-.986-1.58 1.38-4.206 4.914-5.375.097-.322.185-.656.264-1.001.08-.353.306-1.31.407-1.737-.678-1.059-1.2-2.031-1.53-2.91zm2.098 4.87c-.033.144-.068.287-.104.427l.033-.01-.012.038a14.065 14.065 0 0 1 1.02-.197l-.032-.033.052-.004a7.902 7.902 0 0 1-.208-.271c-.197-.27-.38-.526-.555-.775l-.006.028-.002-.003c-.076.323-.148.632-.186.8zm5.77 2.978c1.143.605 1.832.632 2.054.187.26-.519-.087-1.034-1.113-1.473-.911-.39-2.175-.608-3.55-.608.845.766 1.787 1.459 2.609 1.894zM6.559 18.789c.14.223.693.16 1.425-.413.827-.648 1.61-1.747 2.208-3.206-2.563 1.064-4.102 2.867-3.633 3.62zm5.345-10.97c.088-1.793-.351-2.48-1.146-2.28-.473.119-.564 1.05-.056 2.405.213.566.52 1.188.908 1.859.18-.858.268-1.453.294-1.984z", fill: "#E2514A", "fill-rule": "nonzero" })
   );
 }
 
 function iconFile() {
   return h(
     "svg",
-    { "aria-hidden": "true", "class": "UppyIcon", width: "44", height: "58", viewBox: "0 0 44 58" },
-    h("path", { d: "M27.437.517a1 1 0 0 0-.094.03H4.25C2.037.548.217 2.368.217 4.58v48.405c0 2.212 1.82 4.03 4.03 4.03H39.03c2.21 0 4.03-1.818 4.03-4.03V15.61a1 1 0 0 0-.03-.28 1 1 0 0 0 0-.093 1 1 0 0 0-.03-.032 1 1 0 0 0 0-.03 1 1 0 0 0-.032-.063 1 1 0 0 0-.03-.063 1 1 0 0 0-.032 0 1 1 0 0 0-.03-.063 1 1 0 0 0-.032-.03 1 1 0 0 0-.03-.063 1 1 0 0 0-.063-.062l-14.593-14a1 1 0 0 0-.062-.062A1 1 0 0 0 28 .708a1 1 0 0 0-.374-.157 1 1 0 0 0-.156 0 1 1 0 0 0-.03-.03l-.003-.003zM4.25 2.547h22.218v9.97c0 2.21 1.82 4.03 4.03 4.03h10.564v36.438a2.02 2.02 0 0 1-2.032 2.032H4.25c-1.13 0-2.032-.9-2.032-2.032V4.58c0-1.13.902-2.032 2.03-2.032zm24.218 1.345l10.375 9.937.75.718H30.5c-1.13 0-2.032-.9-2.032-2.03V3.89z" })
+    { "aria-hidden": "true", "class": "UppyIcon", width: "25", height: "25", viewBox: "0 0 25 25" },
+    h(
+      "g",
+      { fill: "#A7AFB7", "fill-rule": "nonzero" },
+      h("path", { d: "M5.5 22a.5.5 0 0 1-.5-.5v-18a.5.5 0 0 1 .5-.5h10.719a.5.5 0 0 1 .367.16l3.281 3.556a.5.5 0 0 1 .133.339V21.5a.5.5 0 0 1-.5.5h-14zm.5-1h13V7.25L16 4H6v17z" }),
+      h("path", { d: "M15 4v3a1 1 0 0 0 1 1h3V7h-3V4h-1z" })
+    )
   );
 }
 
 function iconText() {
   return h(
     "svg",
-    { "aria-hidden": "true", "class": "UppyIcon", width: "62", height: "62", viewBox: "0 0 62 62", xmlns: "http://www.w3.org/2000/svg" },
-    h("path", { d: "M4.309 4.309h24.912v53.382h-6.525v3.559h16.608v-3.559h-6.525V4.309h24.912v10.676h3.559V.75H.75v14.235h3.559z", "fill-rule": "nonzero", fill: "#000" })
+    { "aria-hidden": "true", "class": "UppyIcon", width: "25", height: "25", viewBox: "0 0 25 25" },
+    h("path", { d: "M4.5 7h13a.5.5 0 1 1 0 1h-13a.5.5 0 0 1 0-1zm0 3h15a.5.5 0 1 1 0 1h-15a.5.5 0 1 1 0-1zm0 3h15a.5.5 0 1 1 0 1h-15a.5.5 0 1 1 0-1zm0 3h10a.5.5 0 1 1 0 1h-10a.5.5 0 1 1 0-1z", fill: "#5A5E69", "fill-rule": "nonzero" })
   );
 }
 
@@ -3367,14 +3864,14 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _require = __webpack_require__(/*! @uppy/core */ "./node_modules/@uppy/core/lib/index.js"),
     Plugin = _require.Plugin;
 
-var Translator = __webpack_require__(/*! @uppy/utils/lib/Translator */ "./node_modules/@uppy/utils/lib/Translator.js");
-var dragDrop = __webpack_require__(/*! drag-drop */ "./node_modules/drag-drop/index.js");
+var Translator = __webpack_require__(/*! @uppy/utils/lib/Translator */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/Translator.js");
 var DashboardUI = __webpack_require__(/*! ./components/Dashboard */ "./node_modules/@uppy/dashboard/lib/components/Dashboard.js");
-var StatusBar = __webpack_require__(/*! @uppy/status-bar */ "./node_modules/@uppy/status-bar/lib/index.js");
+var StatusBar = __webpack_require__(/*! @uppy/status-bar */ "./node_modules/@uppy/dashboard/node_modules/@uppy/status-bar/lib/index.js");
 var Informer = __webpack_require__(/*! @uppy/informer */ "./node_modules/@uppy/informer/lib/index.js");
 var ThumbnailGenerator = __webpack_require__(/*! @uppy/thumbnail-generator */ "./node_modules/@uppy/thumbnail-generator/lib/index.js");
-var findAllDOMElements = __webpack_require__(/*! @uppy/utils/lib/findAllDOMElements */ "./node_modules/@uppy/utils/lib/findAllDOMElements.js");
-var toArray = __webpack_require__(/*! @uppy/utils/lib/toArray */ "./node_modules/@uppy/utils/lib/toArray.js");
+var findAllDOMElements = __webpack_require__(/*! @uppy/utils/lib/findAllDOMElements */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/findAllDOMElements.js");
+var toArray = __webpack_require__(/*! @uppy/utils/lib/toArray */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/toArray.js");
+var getDroppedFiles = __webpack_require__(/*! @uppy/utils/lib/getDroppedFiles */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getDroppedFiles/index.js");
 var cuid = __webpack_require__(/*! cuid */ "./node_modules/cuid/index.js");
 var ResizeObserver = __webpack_require__(/*! resize-observer-polyfill */ "./node_modules/resize-observer-polyfill/dist/ResizeObserver.es.js").default || __webpack_require__(/*! resize-observer-polyfill */ "./node_modules/resize-observer-polyfill/dist/ResizeObserver.es.js");
 
@@ -3416,11 +3913,9 @@ module.exports = function (_Plugin) {
     _this.type = 'orchestrator';
     _this.modalName = 'uppy-Dashboard-' + cuid();
 
-    var defaultLocale = {
+    _this.defaultLocale = {
       strings: {
-        selectToUpload: 'Select files to upload',
         closeModal: 'Close Modal',
-        upload: 'Upload',
         importFrom: 'Import from %{name}',
         addingMoreFiles: 'Adding more files',
         addMoreFiles: 'Add more files',
@@ -3433,7 +3928,6 @@ module.exports = function (_Plugin) {
         fileSource: 'File source: %{name}',
         done: 'Done',
         back: 'Back',
-        name: 'Name',
         removeFile: 'Remove file',
         editFile: 'Edit file',
         editing: 'Editing %{file}',
@@ -3441,14 +3935,11 @@ module.exports = function (_Plugin) {
         finishEditingFile: 'Finish editing file',
         saveChanges: 'Save changes',
         cancel: 'Cancel',
-        localDisk: 'Local Disk',
         myDevice: 'My Device',
         dropPasteImport: 'Drop files here, paste, %{browse} or import from',
         dropPaste: 'Drop files here, paste or %{browse}',
+        dropHint: 'Drop your files here',
         browse: 'browse',
-        fileProgress: 'File progress: upload speed and ETA',
-        numberOfSelectedFiles: 'Number of selected files',
-        uploadAllNewFiles: 'Upload all new files',
         emptyFolderAdded: 'No files were added from empty folder',
         uploadComplete: 'Upload complete',
         uploadPaused: 'Upload paused',
@@ -3458,27 +3949,23 @@ module.exports = function (_Plugin) {
         cancelUpload: 'Cancel upload',
         xFilesSelected: {
           0: '%{smart_count} file selected',
-          1: '%{smart_count} files selected'
-        },
-        uploadXFiles: {
-          0: 'Upload %{smart_count} file',
-          1: 'Upload %{smart_count} files'
+          1: '%{smart_count} files selected',
+          2: '%{smart_count} files selected'
         },
         uploadingXFiles: {
           0: 'Uploading %{smart_count} file',
-          1: 'Uploading %{smart_count} files'
+          1: 'Uploading %{smart_count} files',
+          2: 'Uploading %{smart_count} files'
         },
         processingXFiles: {
           0: 'Processing %{smart_count} file',
-          1: 'Processing %{smart_count} files'
-        },
-        uploadXNewFiles: {
-          0: 'Upload +%{smart_count} file',
-          1: 'Upload +%{smart_count} files'
+          1: 'Processing %{smart_count} files',
+          2: 'Processing %{smart_count} files'
         },
         folderAdded: {
           0: 'Added %{smart_count} file from %{folder}',
-          1: 'Added %{smart_count} files from %{folder}'
+          1: 'Added %{smart_count} files from %{folder}',
+          2: 'Added %{smart_count} files from %{folder}'
         }
       }
 
@@ -3517,7 +4004,7 @@ module.exports = function (_Plugin) {
     };_this.opts = _extends({}, defaultOptions, opts);
 
     // i18n
-    _this.translator = new Translator([defaultLocale, _this.uppy.locale, _this.opts.locale]);
+    _this.translator = new Translator([_this.defaultLocale, _this.uppy.locale, _this.opts.locale]);
     _this.i18n = _this.translator.translate.bind(_this.translator);
     _this.i18nArray = _this.translator.translateArray.bind(_this.translator);
 
@@ -3542,11 +4029,18 @@ module.exports = function (_Plugin) {
     _this.handleClickOutside = _this.handleClickOutside.bind(_this);
     _this.toggleFileCard = _this.toggleFileCard.bind(_this);
     _this.toggleAddFilesPanel = _this.toggleAddFilesPanel.bind(_this);
-    _this.handleDrop = _this.handleDrop.bind(_this);
     _this.handlePaste = _this.handlePaste.bind(_this);
     _this.handleInputChange = _this.handleInputChange.bind(_this);
     _this.render = _this.render.bind(_this);
     _this.install = _this.install.bind(_this);
+
+    _this.handleDragOver = _this.handleDragOver.bind(_this);
+    _this.handleDragLeave = _this.handleDragLeave.bind(_this);
+    _this.handleDrop = _this.handleDrop.bind(_this);
+
+    // Timeouts
+    _this.makeDashboardInsidesVisibleAnywayTimeout = null;
+    _this.removeDragOverClassTimeout = null;
     return _this;
   }
 
@@ -3615,9 +4109,8 @@ module.exports = function (_Plugin) {
   Dashboard.prototype.requestCloseModal = function requestCloseModal() {
     if (this.opts.onRequestCloseModal) {
       return this.opts.onRequestCloseModal();
-    } else {
-      this.closeModal();
     }
+    return this.closeModal();
   };
 
   Dashboard.prototype.getFocusableNodes = function getFocusableNodes() {
@@ -3812,76 +4305,66 @@ module.exports = function (_Plugin) {
     if (this.opts.closeModalOnClickOutside) this.requestCloseModal();
   };
 
-  Dashboard.prototype.handlePaste = function handlePaste(ev) {
+  Dashboard.prototype.handlePaste = function handlePaste(event) {
     var _this4 = this;
 
-    var files = toArray(ev.clipboardData.items);
-    files.forEach(function (file) {
-      if (file.kind !== 'file') return;
+    // 1. Let any acquirer plugin (Url/Webcam/etc.) handle pastes to the root
+    this.uppy.iteratePlugins(function (plugin) {
+      if (plugin.type === 'acquirer') {
+        // Every Plugin with .type acquirer can define handleRootPaste(event)
+        plugin.handleRootPaste && plugin.handleRootPaste(event);
+      }
+    });
 
-      var blob = file.getAsFile();
-      if (!blob) {
-        _this4.uppy.log('[Dashboard] File pasted, but the file blob is empty');
-        _this4.uppy.info('Error pasting file', 'error');
-        return;
-      }
+    // 2. Add all dropped files
+    var files = toArray(event.clipboardData.files);
+    files.forEach(function (file) {
       _this4.uppy.log('[Dashboard] File pasted');
-      try {
-        _this4.uppy.addFile({
-          source: _this4.id,
-          name: file.name,
-          type: file.type,
-          data: blob
-        });
-      } catch (err) {
-        // Nothing, restriction errors handled in Core
-      }
+      _this4.addFile(file);
     });
   };
 
-  Dashboard.prototype.handleInputChange = function handleInputChange(ev) {
+  Dashboard.prototype.handleInputChange = function handleInputChange(event) {
     var _this5 = this;
 
-    ev.preventDefault();
-    var files = toArray(ev.target.files);
-
+    event.preventDefault();
+    var files = toArray(event.target.files);
     files.forEach(function (file) {
-      try {
-        _this5.uppy.addFile({
-          source: _this5.id,
-          name: file.name,
-          type: file.type,
-          data: file
-        });
-      } catch (err) {
-        // Nothing, restriction errors handled in Core
-      }
+      return _this5.addFile(file);
     });
   };
 
-  Dashboard.prototype.initEvents = function initEvents() {
+  Dashboard.prototype.addFile = function addFile(file) {
+    try {
+      this.uppy.addFile({
+        source: this.id,
+        name: file.name,
+        type: file.type,
+        data: file,
+        meta: {
+          // path of the file relative to the ancestor directory the user selected.
+          // e.g. 'docs/Old Prague/airbnb.pdf'
+          relativePath: file.relativePath || null
+        }
+      });
+    } catch (err) {
+      // Nothing, restriction errors handled in Core
+    }
+  };
+
+  // _Why make insides of Dashboard invisible until first ResizeObserver event is emitted?
+  //  ResizeOberserver doesn't emit the first resize event fast enough, users can see the jump from one .uppy-size-- to another (e.g. in Safari)
+  // _Why not apply visibility property to .uppy-Dashboard-inner?
+  //  Because ideally, acc to specs, ResizeObserver should see invisible elements as of width 0. So even though applying invisibility to .uppy-Dashboard-inner works now, it may not work in the future.
+
+
+  Dashboard.prototype.startListeningToResize = function startListeningToResize() {
     var _this6 = this;
 
-    // Modal open button
-    var showModalTrigger = findAllDOMElements(this.opts.trigger);
-    if (!this.opts.inline && showModalTrigger) {
-      showModalTrigger.forEach(function (trigger) {
-        return trigger.addEventListener('click', _this6.openModal);
-      });
-    }
-
-    if (!this.opts.inline && !showModalTrigger) {
-      this.uppy.log('Dashboard modal trigger not found. Make sure `trigger` is set in Dashboard options unless you are planning to call openModal() method yourself', 'error');
-    }
-
-    // Drag Drop
-    this.removeDragDropListener = dragDrop(this.el, function (files) {
-      _this6.handleDrop(files);
-    });
-
     // Watch for Dashboard container (`.uppy-Dashboard-inner`) resize
-    // and update containerWidth/containerHeight in plugin state accordingly
-    this.ro = new ResizeObserver(function (entries, observer) {
+    // and update containerWidth/containerHeight in plugin state accordingly.
+    // Emits first event on initialization.
+    this.resizeObserver = new ResizeObserver(function (entries, observer) {
       for (var _iterator = entries, _isArray = Array.isArray(_iterator), _i = 0, _iterator = _isArray ? _iterator : _iterator[Symbol.iterator]();;) {
         var _ref;
 
@@ -3904,11 +4387,100 @@ module.exports = function (_Plugin) {
 
         _this6.setPluginState({
           containerWidth: width,
-          containerHeight: height
+          containerHeight: height,
+          areInsidesReadyToBeVisible: true
         });
       }
     });
-    this.ro.observe(this.el.querySelector('.uppy-Dashboard-inner'));
+    this.resizeObserver.observe(this.el.querySelector('.uppy-Dashboard-inner'));
+
+    // If ResizeObserver fails to emit an event telling us what size to use - default to the mobile view
+    this.makeDashboardInsidesVisibleAnywayTimeout = setTimeout(function () {
+      var pluginState = _this6.getPluginState();
+      if (!pluginState.areInsidesReadyToBeVisible) {
+        _this6.uppy.log("[Dashboard] resize event didn't fire on time: defaulted to mobile layout");
+
+        _this6.setPluginState({
+          areInsidesReadyToBeVisible: true
+        });
+      }
+    }, 1000);
+  };
+
+  Dashboard.prototype.stopListeningToResize = function stopListeningToResize() {
+    this.resizeObserver.disconnect();
+
+    clearTimeout(this.makeDashboardInsidesVisibleAnywayTimeout);
+  };
+
+  Dashboard.prototype.handleDragOver = function handleDragOver(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    clearTimeout(this.removeDragOverClassTimeout);
+    this.setPluginState({ isDraggingOver: true });
+  };
+
+  Dashboard.prototype.handleDragLeave = function handleDragLeave(event) {
+    var _this7 = this;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    clearTimeout(this.removeDragOverClassTimeout);
+    // Timeout against flickering, this solution is taken from drag-drop library. Solution with 'pointer-events: none' didn't work across browsers.
+    this.removeDragOverClassTimeout = setTimeout(function () {
+      _this7.setPluginState({ isDraggingOver: false });
+    }, 50);
+  };
+
+  Dashboard.prototype.handleDrop = function handleDrop(event, dropCategory) {
+    var _this8 = this;
+
+    event.preventDefault();
+    event.stopPropagation();
+    clearTimeout(this.removeDragOverClassTimeout);
+    // 1. Add a small (+) icon on drop
+    event.dataTransfer.dropEffect = 'copy';
+
+    // 2. Remove dragover class
+    this.setPluginState({ isDraggingOver: false });
+
+    // 3. Let any acquirer plugin (Url/Webcam/etc.) handle drops to the root
+    this.uppy.iteratePlugins(function (plugin) {
+      if (plugin.type === 'acquirer') {
+        // Every Plugin with .type acquirer can define handleRootDrop(event)
+        plugin.handleRootDrop && plugin.handleRootDrop(event);
+      }
+    });
+
+    // 4. Add all dropped files
+    getDroppedFiles(event.dataTransfer).then(function (files) {
+      if (files.length > 0) {
+        _this8.uppy.log('[Dashboard] Files were dropped');
+        files.forEach(function (file) {
+          return _this8.addFile(file);
+        });
+      }
+    });
+  };
+
+  Dashboard.prototype.initEvents = function initEvents() {
+    var _this9 = this;
+
+    // Modal open button
+    var showModalTrigger = findAllDOMElements(this.opts.trigger);
+    if (!this.opts.inline && showModalTrigger) {
+      showModalTrigger.forEach(function (trigger) {
+        return trigger.addEventListener('click', _this9.openModal);
+      });
+    }
+
+    if (!this.opts.inline && !showModalTrigger) {
+      this.uppy.log('Dashboard modal trigger not found. Make sure `trigger` is set in Dashboard options unless you are planning to call openModal() method yourself', 'error');
+    }
+
+    this.startListeningToResize();
 
     this.uppy.on('plugin-remove', this.removeTarget);
     this.uppy.on('file-added', this.handleFileAdded);
@@ -3930,19 +4502,17 @@ module.exports = function (_Plugin) {
   };
 
   Dashboard.prototype.removeEvents = function removeEvents() {
-    var _this7 = this;
+    var _this10 = this;
 
     var showModalTrigger = findAllDOMElements(this.opts.trigger);
     if (!this.opts.inline && showModalTrigger) {
       showModalTrigger.forEach(function (trigger) {
-        return trigger.removeEventListener('click', _this7.openModal);
+        return trigger.removeEventListener('click', _this10.openModal);
       });
     }
 
-    this.ro.unobserve(this.el.querySelector('.uppy-Dashboard-inner'));
+    this.stopListeningToResize();
 
-    this.removeDragDropListener();
-    // window.removeEventListener('resize', this.throttledUpdateDashboardElWidth)
     window.removeEventListener('popstate', this.handlePopState, false);
     this.uppy.off('plugin-remove', this.removeTarget);
     this.uppy.off('file-added', this.handleFileAdded);
@@ -3963,27 +4533,8 @@ module.exports = function (_Plugin) {
     });
   };
 
-  Dashboard.prototype.handleDrop = function handleDrop(files) {
-    var _this8 = this;
-
-    this.uppy.log('[Dashboard] Files were dropped');
-
-    files.forEach(function (file) {
-      try {
-        _this8.uppy.addFile({
-          source: _this8.id,
-          name: file.name,
-          type: file.type,
-          data: file
-        });
-      } catch (err) {
-        // Nothing, restriction errors handled in Core
-      }
-    });
-  };
-
   Dashboard.prototype.render = function render(state) {
-    var _this9 = this;
+    var _this11 = this;
 
     var pluginState = this.getPluginState();
     var files = state.files,
@@ -4034,15 +4585,15 @@ module.exports = function (_Plugin) {
     var isAllPaused = inProgressFiles.length !== 0 && pausedFiles.length === inProgressFiles.length;
 
     var attachRenderFunctionToTarget = function attachRenderFunctionToTarget(target) {
-      var plugin = _this9.uppy.getPlugin(target.id);
+      var plugin = _this11.uppy.getPlugin(target.id);
       return _extends({}, target, {
-        icon: plugin.icon || _this9.opts.defaultPickerIcon,
+        icon: plugin.icon || _this11.opts.defaultPickerIcon,
         render: plugin.render
       });
     };
 
     var isSupported = function isSupported(target) {
-      var plugin = _this9.uppy.getPlugin(target.id);
+      var plugin = _this11.uppy.getPlugin(target.id);
       // If the plugin does not provide a `supported` check, assume the plugin works everywhere.
       if (typeof plugin.isSupported !== 'function') {
         return true;
@@ -4059,19 +4610,19 @@ module.exports = function (_Plugin) {
     }).map(attachRenderFunctionToTarget);
 
     var startUpload = function startUpload(ev) {
-      _this9.uppy.upload().catch(function (err) {
+      _this11.uppy.upload().catch(function (err) {
         // Log error.
-        _this9.uppy.log(err.stack || err.message || err);
+        _this11.uppy.log(err.stack || err.message || err);
       });
     };
 
     var cancelUpload = function cancelUpload(fileID) {
-      _this9.uppy.removeFile(fileID);
+      _this11.uppy.removeFile(fileID);
     };
 
     var saveFileCard = function saveFileCard(meta, fileID) {
-      _this9.uppy.setFileMeta(fileID, meta);
-      _this9.toggleFileCard();
+      _this11.uppy.setFileMeta(fileID, meta);
+      _this11.toggleFileCard();
     };
 
     return DashboardUI({
@@ -4116,7 +4667,7 @@ module.exports = function (_Plugin) {
       note: this.opts.note,
       metaFields: pluginState.metaFields,
       resumableUploads: capabilities.resumableUploads || false,
-      bundled: capabilities.bundled || false,
+      individualCancellation: capabilities.individualCancellation,
       startUpload: startUpload,
       pauseUpload: this.uppy.pauseResume,
       retryUpload: this.uppy.retryUpload,
@@ -4134,26 +4685,32 @@ module.exports = function (_Plugin) {
       currentWidth: pluginState.containerWidth,
       isWide: pluginState.containerWidth > 400,
       containerWidth: pluginState.containerWidth,
+      areInsidesReadyToBeVisible: pluginState.areInsidesReadyToBeVisible,
       isTargetDOMEl: this.isTargetDOMEl,
       parentElement: this.el,
       allowedFileTypes: this.uppy.opts.restrictions.allowedFileTypes,
       maxNumberOfFiles: this.uppy.opts.restrictions.maxNumberOfFiles,
-      showSelectedFiles: this.opts.showSelectedFiles
+      showSelectedFiles: this.opts.showSelectedFiles,
+      // drag props
+      isDraggingOver: pluginState.isDraggingOver,
+      handleDragOver: this.handleDragOver,
+      handleDragLeave: this.handleDragLeave,
+      handleDrop: this.handleDrop
     });
   };
 
   Dashboard.prototype.discoverProviderPlugins = function discoverProviderPlugins() {
-    var _this10 = this;
+    var _this12 = this;
 
     this.uppy.iteratePlugins(function (plugin) {
-      if (plugin && !plugin.target && plugin.opts && plugin.opts.target === _this10.constructor) {
-        _this10.addTarget(plugin);
+      if (plugin && !plugin.target && plugin.opts && plugin.opts.target === _this12.constructor) {
+        _this12.addTarget(plugin);
       }
     });
   };
 
   Dashboard.prototype.install = function install() {
-    var _this11 = this;
+    var _this13 = this;
 
     // Set default state for Dashboard
     this.setPluginState({
@@ -4163,7 +4720,9 @@ module.exports = function (_Plugin) {
       showAddFilesPanel: false,
       activePickerPanel: false,
       metaFields: this.opts.metaFields,
-      targets: []
+      targets: [],
+      // We'll make them visible once .containerWidth is determined
+      areInsidesReadyToBeVisible: false
     });
 
     var _opts = this.opts,
@@ -4188,9 +4747,9 @@ module.exports = function (_Plugin) {
 
     var plugins = this.opts.plugins || [];
     plugins.forEach(function (pluginID) {
-      var plugin = _this11.uppy.getPlugin(pluginID);
+      var plugin = _this13.uppy.getPlugin(pluginID);
       if (plugin) {
-        plugin.mount(_this11, plugin);
+        plugin.mount(_this13, plugin);
       }
     });
 
@@ -4228,7 +4787,7 @@ module.exports = function (_Plugin) {
   };
 
   Dashboard.prototype.uninstall = function uninstall() {
-    var _this12 = this;
+    var _this14 = this;
 
     if (!this.opts.disableInformer) {
       var informer = this.uppy.getPlugin(this.id + ':Informer');
@@ -4249,7 +4808,7 @@ module.exports = function (_Plugin) {
 
     var plugins = this.opts.plugins || [];
     plugins.forEach(function (pluginID) {
-      var plugin = _this12.uppy.getPlugin(pluginID);
+      var plugin = _this14.uppy.getPlugin(pluginID);
       if (plugin) plugin.unmount();
     });
 
@@ -4331,6 +4890,7 @@ module.exports = function copyToClipboard(textToCopy, fallbackString) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _require = __webpack_require__(/*! ../components/icons */ "./node_modules/@uppy/dashboard/lib/components/icons.js"),
+    iconFile = _require.iconFile,
     iconText = _require.iconText,
     iconAudio = _require.iconAudio,
     iconVideo = _require.iconVideo,
@@ -4338,8 +4898,8 @@ var _require = __webpack_require__(/*! ../components/icons */ "./node_modules/@u
 
 module.exports = function getIconByMime(fileType) {
   var defaultChoice = {
-    color: '#cbcbcb',
-    icon: ''
+    color: '#838999',
+    icon: iconFile()
   };
 
   if (!fileType) return defaultChoice;
@@ -4349,28 +4909,28 @@ module.exports = function getIconByMime(fileType) {
 
   if (fileTypeGeneral === 'text') {
     return {
-      color: '#cbcbcb',
+      color: '#5a5e69',
       icon: iconText()
     };
   }
 
   if (fileTypeGeneral === 'audio') {
     return {
-      color: '#1abc9c',
+      color: '#068dbb',
       icon: iconAudio()
     };
   }
 
   if (fileTypeGeneral === 'video') {
     return {
-      color: '#2980b9',
+      color: '#19af67',
       icon: iconVideo()
     };
   }
 
   if (fileTypeGeneral === 'application' && fileTypeSpecific === 'pdf') {
     return {
-      color: '#e74c3c',
+      color: '#e25149',
       icon: iconPDF()
     };
   }
@@ -4432,124 +4992,10 @@ module.exports = function truncateString(str, length) {
 
 /***/ }),
 
-/***/ "./node_modules/@uppy/informer/lib/index.js":
-/*!**************************************************!*\
-  !*** ./node_modules/@uppy/informer/lib/index.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _require = __webpack_require__(/*! @uppy/core */ "./node_modules/@uppy/core/lib/index.js"),
-    Plugin = _require.Plugin;
-
-var _require2 = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.mjs"),
-    h = _require2.h;
-
-/**
- * Informer
- * Shows rad message bubbles
- * used like this: `uppy.info('hello world', 'info', 5000)`
- * or for errors: `uppy.info('Error uploading img.jpg', 'error', 5000)`
- *
- */
-
-
-module.exports = function (_Plugin) {
-  _inherits(Informer, _Plugin);
-
-  function Informer(uppy, opts) {
-    _classCallCheck(this, Informer);
-
-    var _this = _possibleConstructorReturn(this, _Plugin.call(this, uppy, opts));
-
-    _this.type = 'progressindicator';
-    _this.id = _this.opts.id || 'Informer';
-    _this.title = 'Informer';
-
-    // set default options
-    var defaultOptions = {
-      typeColors: {
-        info: {
-          text: '#fff',
-          bg: '#000'
-        },
-        warning: {
-          text: '#fff',
-          bg: '#F6A623'
-        },
-        error: {
-          text: '#fff',
-          bg: '#D32F2F'
-        },
-        success: {
-          text: '#fff',
-          bg: '#1BB240'
-        }
-      }
-
-      // merge default options with the ones set by user
-    };_this.opts = _extends({}, defaultOptions, opts);
-
-    _this.render = _this.render.bind(_this);
-    return _this;
-  }
-
-  Informer.prototype.render = function render(state) {
-    var _state$info = state.info,
-        isHidden = _state$info.isHidden,
-        message = _state$info.message,
-        details = _state$info.details;
-    // const style = {
-    //   backgroundColor: this.opts.typeColors[type].bg,
-    //   color: this.opts.typeColors[type].text
-    // }
-
-    return h(
-      'div',
-      { 'class': 'uppy uppy-Informer',
-        'aria-hidden': isHidden },
-      h(
-        'p',
-        { role: 'alert' },
-        message,
-        ' ',
-        details && h(
-          'span',
-          {
-            'aria-label': details,
-            'data-microtip-position': 'top',
-            'data-microtip-size': 'large',
-            role: 'tooltip' },
-          '?'
-        )
-      )
-    );
-  };
-
-  Informer.prototype.install = function install() {
-    var target = this.opts.target;
-    if (target) {
-      this.mount(target, this);
-    }
-  };
-
-  return Informer;
-}(Plugin);
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/status-bar/lib/StatusBar.js":
-/*!********************************************************!*\
-  !*** ./node_modules/@uppy/status-bar/lib/StatusBar.js ***!
-  \********************************************************/
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/status-bar/lib/StatusBar.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/status-bar/lib/StatusBar.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4557,9 +5003,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var throttle = __webpack_require__(/*! lodash.throttle */ "./node_modules/lodash.throttle/index.js");
 var classNames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-var statusBarStates = __webpack_require__(/*! ./StatusBarStates */ "./node_modules/@uppy/status-bar/lib/StatusBarStates.js");
+var statusBarStates = __webpack_require__(/*! ./StatusBarStates */ "./node_modules/@uppy/dashboard/node_modules/@uppy/status-bar/lib/StatusBarStates.js");
 var prettyBytes = __webpack_require__(/*! prettier-bytes */ "./node_modules/prettier-bytes/index.js");
-var prettyETA = __webpack_require__(/*! @uppy/utils/lib/prettyETA */ "./node_modules/@uppy/utils/lib/prettyETA.js");
+var prettyETA = __webpack_require__(/*! @uppy/utils/lib/prettyETA */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/prettyETA.js");
 
 var _require = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.mjs"),
     h = _require.h;
@@ -4706,9 +5152,12 @@ var RetryBtn = function RetryBtn(props) {
   return h(
     'button',
     { type: 'button',
-      'class': 'uppy-u-reset uppy-c-btn uppy-StatusBar-actionBtn uppy-StatusBar-actionBtn--retry',
-      'aria-label': props.i18n('retryUpload'),
-      onclick: props.retryAll },
+      'class': 'uppy-u-reset uppy-c-btn uppy-StatusBar-actionBtn uppy-StatusBar-actionBtn--retry', 'aria-label': props.i18n('retryUpload'), onclick: props.retryAll },
+    h(
+      'svg',
+      { 'aria-hidden': 'true', 'class': 'UppyIcon', width: '8', height: '10', viewBox: '0 0 8 10' },
+      h('path', { d: 'M4 2.408a2.75 2.75 0 1 0 2.75 2.75.626.626 0 0 1 1.25.018v.023a4 4 0 1 1-4-4.041V.25a.25.25 0 0 1 .389-.208l2.299 1.533a.25.25 0 0 1 0 .416l-2.3 1.533A.25.25 0 0 1 4 3.316v-.908z' })
+    ),
     props.i18n('retry')
   );
 };
@@ -4724,8 +5173,13 @@ var CancelBtn = function CancelBtn(props) {
       onclick: props.cancelAll },
     h(
       'svg',
-      { 'aria-hidden': 'true', 'class': 'UppyIcon', width: '16', height: '16', viewBox: '0 0 16 16', xmlns: 'http://www.w3.org/2000/svg' },
-      h('path', { d: 'M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16zm1.414-8l2.122-2.121-1.415-1.415L8 6.586 5.879 4.464 4.464 5.88 6.586 8l-2.122 2.121 1.415 1.415L8 9.414l2.121 2.122 1.415-1.415L9.414 8z', fill: '#949494', 'fill-rule': 'evenodd' })
+      { 'aria-hidden': 'true', 'class': 'UppyIcon', width: '16', height: '16', viewBox: '0 0 16 16' },
+      h(
+        'g',
+        { fill: 'none', 'fill-rule': 'evenodd' },
+        h('circle', { fill: '#888', cx: '8', cy: '8', r: '8' }),
+        h('path', { fill: '#FFF', d: 'M9.283 8l2.567 2.567-1.283 1.283L8 9.283 5.433 11.85 4.15 10.567 6.717 8 4.15 5.433 5.433 4.15 8 6.717l2.567-2.567 1.283 1.283z' })
+      )
     )
   );
 };
@@ -4748,12 +5202,22 @@ var PauseResumeButton = function PauseResumeButton(props) {
       } },
     isAllPaused ? h(
       'svg',
-      { 'aria-hidden': 'true', 'class': 'UppyIcon', width: '16', height: '16', viewBox: '0 0 16 16', xmlns: 'http://www.w3.org/2000/svg' },
-      h('path', { d: 'M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16zM6 5v6l5-3-5-3z', fill: '#949494', 'fill-rule': 'evenodd' })
+      { 'aria-hidden': 'true', 'class': 'UppyIcon', width: '16', height: '16', viewBox: '0 0 16 16' },
+      h(
+        'g',
+        { fill: 'none', 'fill-rule': 'evenodd' },
+        h('circle', { fill: '#888', cx: '8', cy: '8', r: '8' }),
+        h('path', { fill: '#FFF', d: 'M6 4.25L11.5 8 6 11.75z' })
+      )
     ) : h(
       'svg',
-      { 'aria-hidden': 'true', 'class': 'UppyIcon', width: '16', height: '16', viewBox: '0 0 16 16', xmlns: 'http://www.w3.org/2000/svg' },
-      h('path', { d: 'M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16zM5 5v6h2V5H5zm4 0v6h2V5H9z', fill: '#949494', 'fill-rule': 'evenodd' })
+      { 'aria-hidden': 'true', 'class': 'UppyIcon', width: '16', height: '16', viewBox: '0 0 16 16' },
+      h(
+        'g',
+        { fill: 'none', 'fill-rule': 'evenodd' },
+        h('circle', { fill: '#888', cx: '8', cy: '8', r: '8' }),
+        h('path', { d: 'M5 4.5h2v7H5v-7zm4 0h2v7H9v-7z', fill: '#FFF' })
+      )
     )
   );
 };
@@ -4761,7 +5225,7 @@ var PauseResumeButton = function PauseResumeButton(props) {
 var LoadingSpinner = function LoadingSpinner(props) {
   return h(
     'svg',
-    { 'class': 'uppy-StatusBar-spinner', width: '14', height: '14', xmlns: 'http://www.w3.org/2000/svg' },
+    { 'class': 'uppy-StatusBar-spinner', width: '14', height: '14' },
     h('path', { d: 'M13.983 6.547c-.12-2.509-1.64-4.893-3.939-5.936-2.48-1.127-5.488-.656-7.556 1.094C.524 3.367-.398 6.048.162 8.562c.556 2.495 2.46 4.52 4.94 5.183 2.932.784 5.61-.602 7.256-3.015-1.493 1.993-3.745 3.309-6.298 2.868-2.514-.434-4.578-2.349-5.153-4.84a6.226 6.226 0 0 1 2.98-6.778C6.34.586 9.74 1.1 11.373 3.493c.407.596.693 1.282.842 1.988.127.598.073 1.197.161 1.794.078.525.543 1.257 1.15.864.525-.341.49-1.05.456-1.592-.007-.15.02.3 0 0', 'fill-rule': 'evenodd' })
   );
 };
@@ -4857,11 +5321,19 @@ var ProgressBarComplete = function ProgressBarComplete(_ref) {
     'div',
     { 'class': 'uppy-StatusBar-content', role: 'status', title: i18n('complete') },
     h(
-      'svg',
-      { 'aria-hidden': 'true', 'class': 'uppy-StatusBar-statusIndicator UppyIcon', width: '18', height: '17', viewBox: '0 0 23 17' },
-      h('path', { d: 'M8.944 17L0 7.865l2.555-2.61 6.39 6.525L20.41 0 23 2.645z' })
-    ),
-    i18n('complete')
+      'div',
+      { 'class': 'uppy-StatusBar-status' },
+      h(
+        'div',
+        { 'class': 'uppy-StatusBar-statusPrimary' },
+        h(
+          'svg',
+          { 'aria-hidden': 'true', 'class': 'uppy-StatusBar-statusIndicator UppyIcon', width: '15', height: '11', viewBox: '0 0 15 11' },
+          h('path', { d: 'M.414 5.843L1.627 4.63l3.472 3.472L13.202 0l1.212 1.213L5.1 10.528z' })
+        ),
+        i18n('complete')
+      )
+    )
   );
 };
 
@@ -4873,19 +5345,27 @@ var ProgressBarError = function ProgressBarError(_ref2) {
 
   return h(
     'div',
-    { 'class': 'uppy-StatusBar-content', role: 'alert' },
+    { 'class': 'uppy-StatusBar-content', role: 'alert', title: i18n('uploadFailed') },
     h(
-      'span',
-      { 'class': 'uppy-StatusBar-contentPadding' },
-      i18n('uploadFailed'),
-      '.'
+      'div',
+      { 'class': 'uppy-StatusBar-status' },
+      h(
+        'div',
+        { 'class': 'uppy-StatusBar-statusPrimary' },
+        h(
+          'svg',
+          { 'aria-hidden': 'true', 'class': 'uppy-StatusBar-statusIndicator UppyIcon', width: '11', height: '11', viewBox: '0 0 11 11' },
+          h('path', { d: 'M4.278 5.5L0 1.222 1.222 0 5.5 4.278 9.778 0 11 1.222 6.722 5.5 11 9.778 9.778 11 5.5 6.722 1.222 11 0 9.778z' })
+        ),
+        i18n('uploadFailed')
+      )
     ),
     h(
       'span',
       { 'class': 'uppy-StatusBar-details',
         'aria-label': error,
-        'data-microtip-position': 'top',
-        'data-microtip-size': 'large',
+        'data-microtip-position': 'top-right',
+        'data-microtip-size': 'medium',
         role: 'tooltip' },
       '?'
     )
@@ -4894,10 +5374,10 @@ var ProgressBarError = function ProgressBarError(_ref2) {
 
 /***/ }),
 
-/***/ "./node_modules/@uppy/status-bar/lib/StatusBarStates.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/@uppy/status-bar/lib/StatusBarStates.js ***!
-  \**************************************************************/
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/status-bar/lib/StatusBarStates.js":
+/*!*******************************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/status-bar/lib/StatusBarStates.js ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -4912,10 +5392,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/@uppy/status-bar/lib/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/@uppy/status-bar/lib/index.js ***!
-  \****************************************************/
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/status-bar/lib/index.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/status-bar/lib/index.js ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4930,11 +5410,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _require = __webpack_require__(/*! @uppy/core */ "./node_modules/@uppy/core/lib/index.js"),
     Plugin = _require.Plugin;
 
-var Translator = __webpack_require__(/*! @uppy/utils/lib/Translator */ "./node_modules/@uppy/utils/lib/Translator.js");
-var StatusBarUI = __webpack_require__(/*! ./StatusBar */ "./node_modules/@uppy/status-bar/lib/StatusBar.js");
-var statusBarStates = __webpack_require__(/*! ./StatusBarStates */ "./node_modules/@uppy/status-bar/lib/StatusBarStates.js");
-var getSpeed = __webpack_require__(/*! @uppy/utils/lib/getSpeed */ "./node_modules/@uppy/utils/lib/getSpeed.js");
-var getBytesRemaining = __webpack_require__(/*! @uppy/utils/lib/getBytesRemaining */ "./node_modules/@uppy/utils/lib/getBytesRemaining.js");
+var Translator = __webpack_require__(/*! @uppy/utils/lib/Translator */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/Translator.js");
+var StatusBarUI = __webpack_require__(/*! ./StatusBar */ "./node_modules/@uppy/dashboard/node_modules/@uppy/status-bar/lib/StatusBar.js");
+var statusBarStates = __webpack_require__(/*! ./StatusBarStates */ "./node_modules/@uppy/dashboard/node_modules/@uppy/status-bar/lib/StatusBarStates.js");
+var getSpeed = __webpack_require__(/*! @uppy/utils/lib/getSpeed */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getSpeed.js");
+var getBytesRemaining = __webpack_require__(/*! @uppy/utils/lib/getBytesRemaining */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getBytesRemaining.js");
 
 /**
  * StatusBar: renders a status bar with upload/pause/resume/cancel/retry buttons,
@@ -4952,41 +5432,38 @@ module.exports = function (_Plugin) {
     _this.title = 'StatusBar';
     _this.type = 'progressindicator';
 
-    var defaultLocale = {
+    _this.defaultLocale = {
       strings: {
         uploading: 'Uploading',
         upload: 'Upload',
         complete: 'Complete',
         uploadFailed: 'Upload failed',
-        pleasePressRetry: 'Please press Retry to upload again',
         paused: 'Paused',
-        error: 'Error',
         retry: 'Retry',
         cancel: 'Cancel',
         pause: 'Pause',
         resume: 'Resume',
-        pressToRetry: 'Press to retry',
-        // retryUpload: 'Retry upload',
-        // resumeUpload: 'Resume upload',
-        // cancelUpload: 'Cancel upload',
-        // pauseUpload: 'Pause upload',
         filesUploadedOfTotal: {
           0: '%{complete} of %{smart_count} file uploaded',
-          1: '%{complete} of %{smart_count} files uploaded'
+          1: '%{complete} of %{smart_count} files uploaded',
+          2: '%{complete} of %{smart_count} files uploaded'
         },
         dataUploadedOfTotal: '%{complete} of %{total}',
         xTimeLeft: '%{time} left',
         uploadXFiles: {
           0: 'Upload %{smart_count} file',
-          1: 'Upload %{smart_count} files'
+          1: 'Upload %{smart_count} files',
+          2: 'Upload %{smart_count} files'
         },
         uploadXNewFiles: {
           0: 'Upload +%{smart_count} file',
-          1: 'Upload +%{smart_count} files'
+          1: 'Upload +%{smart_count} files',
+          2: 'Upload +%{smart_count} files'
         },
         xMoreFilesAdded: {
           0: '%{smart_count} more file added',
-          1: '%{smart_count} more files added'
+          1: '%{smart_count} more files added',
+          2: '%{smart_count} more files added'
         }
       }
 
@@ -4998,13 +5475,12 @@ module.exports = function (_Plugin) {
       hidePauseResumeButton: false,
       hideCancelButton: false,
       showProgressDetails: false,
-      locale: defaultLocale,
       hideAfterFinish: true
 
       // merge default options with the ones set by user
     };_this.opts = _extends({}, defaultOptions, opts);
 
-    _this.translator = new Translator([defaultLocale, _this.uppy.locale, _this.opts.locale]);
+    _this.translator = new Translator([_this.defaultLocale, _this.uppy.locale, _this.opts.locale]);
     _this.i18n = _this.translator.translate.bind(_this.translator);
 
     _this.startUpload = _this.startUpload.bind(_this);
@@ -5202,6 +5678,748 @@ module.exports = function (_Plugin) {
 
 /***/ }),
 
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/Translator.js":
+/*!*********************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/Translator.js ***!
+  \*********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/**
+ * Translates strings with interpolation & pluralization support.
+ * Extensible with custom dictionaries and pluralization functions.
+ *
+ * Borrows heavily from and inspired by Polyglot https://github.com/airbnb/polyglot.js,
+ * basically a stripped-down version of it. Differences: pluralization functions are not hardcoded
+ * and can be easily added among with dictionaries, nested objects are used for pluralization
+ * as opposed to `||||` delimeter
+ *
+ * Usage example: `translator.translate('files_chosen', {smart_count: 3})`
+ *
+ * @param {object|Array<object>} locale Locale or list of locales.
+ */
+module.exports = function () {
+  function Translator(locales) {
+    var _this = this;
+
+    _classCallCheck(this, Translator);
+
+    this.locale = {
+      strings: {},
+      pluralize: function pluralize(n) {
+        if (n === 1) {
+          return 0;
+        }
+        return 1;
+      }
+    };
+
+    if (Array.isArray(locales)) {
+      locales.forEach(function (locale) {
+        return _this._apply(locale);
+      });
+    } else {
+      this._apply(locales);
+    }
+  }
+
+  Translator.prototype._apply = function _apply(locale) {
+    if (!locale || !locale.strings) {
+      return;
+    }
+
+    var prevLocale = this.locale;
+    this.locale = _extends({}, prevLocale, {
+      strings: _extends({}, prevLocale.strings, locale.strings)
+    });
+    this.locale.pluralize = locale.pluralize || prevLocale.pluralize;
+  };
+
+  /**
+   * Takes a string with placeholder variables like `%{smart_count} file selected`
+   * and replaces it with values from options `{smart_count: 5}`
+   *
+   * @license https://github.com/airbnb/polyglot.js/blob/master/LICENSE
+   * taken from https://github.com/airbnb/polyglot.js/blob/master/lib/polyglot.js#L299
+   *
+   * @param {string} phrase that needs interpolation, with placeholders
+   * @param {object} options with values that will be used to replace placeholders
+   * @return {string} interpolated
+   */
+
+
+  Translator.prototype.interpolate = function interpolate(phrase, options) {
+    var _String$prototype = String.prototype,
+        split = _String$prototype.split,
+        replace = _String$prototype.replace;
+
+    var dollarRegex = /\$/g;
+    var dollarBillsYall = '$$$$';
+    var interpolated = [phrase];
+
+    for (var arg in options) {
+      if (arg !== '_' && options.hasOwnProperty(arg)) {
+        // Ensure replacement value is escaped to prevent special $-prefixed
+        // regex replace tokens. the "$$$$" is needed because each "$" needs to
+        // be escaped with "$" itself, and we need two in the resulting output.
+        var replacement = options[arg];
+        if (typeof replacement === 'string') {
+          replacement = replace.call(options[arg], dollarRegex, dollarBillsYall);
+        }
+        // We create a new `RegExp` each time instead of using a more-efficient
+        // string replace so that the same argument can be replaced multiple times
+        // in the same phrase.
+        interpolated = insertReplacement(interpolated, new RegExp('%\\{' + arg + '\\}', 'g'), replacement);
+      }
+    }
+
+    return interpolated;
+
+    function insertReplacement(source, rx, replacement) {
+      var newParts = [];
+      source.forEach(function (chunk) {
+        split.call(chunk, rx).forEach(function (raw, i, list) {
+          if (raw !== '') {
+            newParts.push(raw);
+          }
+
+          // Interlace with the `replacement` value
+          if (i < list.length - 1) {
+            newParts.push(replacement);
+          }
+        });
+      });
+      return newParts;
+    }
+  };
+
+  /**
+   * Public translate method
+   *
+   * @param {string} key
+   * @param {object} options with values that will be used later to replace placeholders in string
+   * @return {string} translated (and interpolated)
+   */
+
+
+  Translator.prototype.translate = function translate(key, options) {
+    return this.translateArray(key, options).join('');
+  };
+
+  /**
+   * Get a translation and return the translated and interpolated parts as an array.
+   * @param {string} key
+   * @param {object} options with values that will be used to replace placeholders
+   * @return {Array} The translated and interpolated parts, in order.
+   */
+
+
+  Translator.prototype.translateArray = function translateArray(key, options) {
+    if (options && typeof options.smart_count !== 'undefined') {
+      var plural = this.locale.pluralize(options.smart_count);
+      return this.interpolate(this.locale.strings[key][plural], options);
+    }
+
+    return this.interpolate(this.locale.strings[key], options);
+  };
+
+  return Translator;
+}();
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/findAllDOMElements.js":
+/*!*****************************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/findAllDOMElements.js ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var isDOMElement = __webpack_require__(/*! ./isDOMElement */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/isDOMElement.js");
+
+/**
+ * Find one or more DOM elements.
+ *
+ * @param {string} element
+ * @return {Array|null}
+ */
+module.exports = function findAllDOMElements(element) {
+  if (typeof element === 'string') {
+    var elements = [].slice.call(document.querySelectorAll(element));
+    return elements.length > 0 ? elements : null;
+  }
+
+  if ((typeof element === 'undefined' ? 'undefined' : _typeof(element)) === 'object' && isDOMElement(element)) {
+    return [element];
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getBytesRemaining.js":
+/*!****************************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getBytesRemaining.js ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function getBytesRemaining(fileProgress) {
+  return fileProgress.bytesTotal - fileProgress.bytesUploaded;
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getDroppedFiles/index.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getDroppedFiles/index.js ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var webkitGetAsEntryApi = __webpack_require__(/*! ./utils/webkitGetAsEntryApi */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getDroppedFiles/utils/webkitGetAsEntryApi.js");
+var fallbackApi = __webpack_require__(/*! ./utils/fallbackApi */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getDroppedFiles/utils/fallbackApi.js");
+
+// Returns a promise that resolves to the array of dropped files (if a folder is dropped, and browser supports folder parsing - promise resolves to the flat array of all files in all directories).
+// Each file has .relativePath prop appended to it (e.g. "/docs/Prague/ticket_from_prague_to_ufa.pdf") if browser supports it. Otherwise it's undefined.
+//
+// @param {DataTransfer} dataTransfer
+// @returns {Promise} - Array<File>
+module.exports = function getDroppedFiles(dataTransfer) {
+  // Get all files from all subdirs. Works (at least) in Chrome, Mozilla, and Safari
+  if (dataTransfer.items[0] && 'webkitGetAsEntry' in dataTransfer.items[0]) {
+    return webkitGetAsEntryApi(dataTransfer);
+    // Otherwise just return all first-order files
+  } else {
+    return fallbackApi(dataTransfer);
+  }
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getDroppedFiles/utils/fallbackApi.js":
+/*!********************************************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getDroppedFiles/utils/fallbackApi.js ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toArray = __webpack_require__(/*! ../../toArray */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/toArray.js");
+
+// .files fallback, should be implemented in any browser
+module.exports = function fallbackApi(dataTransfer) {
+  var files = toArray(dataTransfer.files);
+  return Promise.resolve(files);
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getDroppedFiles/utils/webkitGetAsEntryApi.js":
+/*!****************************************************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getDroppedFiles/utils/webkitGetAsEntryApi.js ***!
+  \****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toArray = __webpack_require__(/*! ../../toArray */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/toArray.js");
+
+// Recursive function, calls the original callback() when the directory is entirely parsed.
+// @param {function} callback - called with ([ all files and directories in that directoryReader ])
+function readEntries(directoryReader, oldEntries, callback) {
+  directoryReader.readEntries(function (entries) {
+    var newEntries = [].concat(oldEntries, entries);
+    // According to the FileSystem API spec, readEntries() must be called until it calls the callback with an empty array.
+    if (entries.length) {
+      setTimeout(function () {
+        readEntries(directoryReader, newEntries, callback);
+      }, 0);
+      // Done iterating this particular directory
+    } else {
+      callback(newEntries);
+    }
+  },
+  // Make sure we resolve on error anyway
+  function () {
+    return callback(oldEntries);
+  });
+}
+
+// @param {function} resolve - function that will be called when :files array is appended with a file
+// @param {Array<File>} files - array of files to enhance
+// @param {FileSystemFileEntry} fileEntry
+function addEntryToFiles(resolve, files, fileEntry) {
+  // Creates a new File object which can be used to read the file.
+  fileEntry.file(function (file) {
+    // Preserve the relative path from the FileSystemFileEntry#fullPath, because File#webkitRelativePath is always '', at least onDrop.
+    // => "/docs/Prague/ticket_from_prague_to_ufa.pdf"
+    file.relativePath = fileEntry.fullPath;
+    files.push(file);
+    resolve();
+  },
+  // Make sure we resolve on error anyway
+  function () {
+    return resolve();
+  });
+}
+
+// @param {function} resolve - function that will be called when :directoryEntry is done being recursively parsed
+// @param {Array<File>} files - array of files to enhance
+// @param {FileSystemDirectoryEntry} directoryEntry
+function recursivelyAddFilesFromDirectory(resolve, files, directoryEntry) {
+  var directoryReader = directoryEntry.createReader();
+  readEntries(directoryReader, [], function (entries) {
+    var promises = entries.map(function (entry) {
+      return createPromiseToAddFileOrParseDirectory(files, entry);
+    });
+    Promise.all(promises).then(function () {
+      return resolve();
+    });
+  });
+}
+
+// @param {Array<File>} files - array of files to enhance
+// @param {(FileSystemFileEntry|FileSystemDirectoryEntry)} entry
+function createPromiseToAddFileOrParseDirectory(files, entry) {
+  return new Promise(function (resolve) {
+    if (entry.isFile) {
+      addEntryToFiles(resolve, files, entry);
+    } else if (entry.isDirectory) {
+      recursivelyAddFilesFromDirectory(resolve, files, entry);
+    }
+  });
+}
+
+module.exports = function webkitGetAsEntryApi(dataTransfer) {
+  var files = [];
+
+  var rootPromises = [];
+
+  toArray(dataTransfer.items).forEach(function (item) {
+    var entry = item.webkitGetAsEntry();
+    // :entry can be null when we drop the url e.g.
+    if (entry) {
+      rootPromises.push(createPromiseToAddFileOrParseDirectory(files, entry));
+    }
+  });
+
+  return Promise.all(rootPromises).then(function () {
+    return files;
+  });
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getFileNameAndExtension.js":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getFileNameAndExtension.js ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+* Takes a full filename string and returns an object {name, extension}
+*
+* @param {string} fullFileName
+* @return {object} {name, extension}
+*/
+module.exports = function getFileNameAndExtension(fullFileName) {
+  var re = /(?:\.([^.]+))?$/;
+  var fileExt = re.exec(fullFileName)[1];
+  var fileName = fullFileName.replace('.' + fileExt, '');
+  return {
+    name: fileName,
+    extension: fileExt
+  };
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getSpeed.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/getSpeed.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function getSpeed(fileProgress) {
+  if (!fileProgress.bytesUploaded) return 0;
+
+  var timeElapsed = new Date() - fileProgress.uploadStarted;
+  var uploadSpeed = fileProgress.bytesUploaded / (timeElapsed / 1000);
+  return uploadSpeed;
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/isDOMElement.js":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/isDOMElement.js ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * Check if an object is a DOM element. Duck-typing based on `nodeType`.
+ *
+ * @param {*} obj
+ */
+module.exports = function isDOMElement(obj) {
+  return obj && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && obj.nodeType === Node.ELEMENT_NODE;
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/isTouchDevice.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/isTouchDevice.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function isTouchDevice() {
+  return 'ontouchstart' in window || // works on most browsers
+  navigator.maxTouchPoints; // works on IE10/11 and Surface
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/prettyETA.js":
+/*!********************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/prettyETA.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var secondsToTime = __webpack_require__(/*! ./secondsToTime */ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/secondsToTime.js");
+
+module.exports = function prettyETA(seconds) {
+  var time = secondsToTime(seconds);
+
+  // Only display hours and minutes if they are greater than 0 but always
+  // display minutes if hours is being displayed
+  // Display a leading zero if the there is a preceding unit: 1m 05s, but 5s
+  var hoursStr = time.hours ? time.hours + 'h ' : '';
+  var minutesVal = time.hours ? ('0' + time.minutes).substr(-2) : time.minutes;
+  var minutesStr = minutesVal ? minutesVal + 'm ' : '';
+  var secondsVal = minutesVal ? ('0' + time.seconds).substr(-2) : time.seconds;
+  var secondsStr = secondsVal + 's';
+
+  return '' + hoursStr + minutesStr + secondsStr;
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/secondsToTime.js":
+/*!************************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/secondsToTime.js ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function secondsToTime(rawSeconds) {
+  var hours = Math.floor(rawSeconds / 3600) % 24;
+  var minutes = Math.floor(rawSeconds / 60) % 60;
+  var seconds = Math.floor(rawSeconds % 60);
+
+  return { hours: hours, minutes: minutes, seconds: seconds };
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/toArray.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@uppy/dashboard/node_modules/@uppy/utils/lib/toArray.js ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Converts list into array
+*/
+module.exports = function toArray(list) {
+  return Array.prototype.slice.call(list || [], 0);
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/informer/lib/index.js":
+/*!**************************************************!*\
+  !*** ./node_modules/@uppy/informer/lib/index.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _require = __webpack_require__(/*! @uppy/core */ "./node_modules/@uppy/core/lib/index.js"),
+    Plugin = _require.Plugin;
+
+var _require2 = __webpack_require__(/*! preact */ "./node_modules/preact/dist/preact.mjs"),
+    h = _require2.h;
+
+/**
+ * Informer
+ * Shows rad message bubbles
+ * used like this: `uppy.info('hello world', 'info', 5000)`
+ * or for errors: `uppy.info('Error uploading img.jpg', 'error', 5000)`
+ *
+ */
+
+
+module.exports = function (_Plugin) {
+  _inherits(Informer, _Plugin);
+
+  function Informer(uppy, opts) {
+    _classCallCheck(this, Informer);
+
+    var _this = _possibleConstructorReturn(this, _Plugin.call(this, uppy, opts));
+
+    _this.type = 'progressindicator';
+    _this.id = _this.opts.id || 'Informer';
+    _this.title = 'Informer';
+
+    // set default options
+    var defaultOptions = {
+      typeColors: {
+        info: {
+          text: '#fff',
+          bg: '#000'
+        },
+        warning: {
+          text: '#fff',
+          bg: '#F6A623'
+        },
+        error: {
+          text: '#fff',
+          bg: '#D32F2F'
+        },
+        success: {
+          text: '#fff',
+          bg: '#1BB240'
+        }
+      }
+
+      // merge default options with the ones set by user
+    };_this.opts = _extends({}, defaultOptions, opts);
+
+    _this.render = _this.render.bind(_this);
+    return _this;
+  }
+
+  Informer.prototype.render = function render(state) {
+    var _state$info = state.info,
+        isHidden = _state$info.isHidden,
+        message = _state$info.message,
+        details = _state$info.details;
+    // const style = {
+    //   backgroundColor: this.opts.typeColors[type].bg,
+    //   color: this.opts.typeColors[type].text
+    // }
+
+    return h(
+      'div',
+      { 'class': 'uppy uppy-Informer',
+        'aria-hidden': isHidden },
+      h(
+        'p',
+        { role: 'alert' },
+        message,
+        ' ',
+        details && h(
+          'span',
+          {
+            'aria-label': details,
+            'data-microtip-position': 'top-left',
+            'data-microtip-size': 'medium',
+            role: 'tooltip' },
+          '?'
+        )
+      )
+    );
+  };
+
+  Informer.prototype.install = function install() {
+    var target = this.opts.target;
+    if (target) {
+      this.mount(target, this);
+    }
+  };
+
+  return Informer;
+}(Plugin);
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/locales/lib/fa_IR.js":
+/*!*************************************************!*\
+  !*** ./node_modules/@uppy/locales/lib/fa_IR.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* eslint camelcase: 0 */
+var fa_IR = {};
+fa_IR.strings = {
+  addMoreFiles: 'افزودن فایل‌های بیشتر',
+  addingMoreFiles: 'درحال افزودن فایل‌ها',
+  allowAccessDescription: 'برای استفاده از دوربین جهت عکس و فیلمبرداری، لطفا به این سایت اجازه‌ی دسترسی به دوربین را بدهید',
+  allowAccessTitle: 'لطفا به دوربین اجازه‌ی دسترسی بدهید',
+  authenticateWith: 'در حال اتصال به %{pluginName}',
+  authenticateWithTitle: 'احراز هویت %{pluginName} برای انتخاب فایل ضروریست!',
+  back: 'بازگشت',
+  browse: 'از رایانه',
+  cancel: 'انصراف',
+  cancelUpload: 'لغو بارگذاری',
+  chooseFiles: 'انتخاب فایل',
+  closeModal: 'بستن پنجره',
+  companionAuthError: 'نیازمند تایید هویت',
+  companionError: 'Connection with Companion failed',
+  complete: 'کامل شد',
+  connectedToInternet: 'م به شبکه اینترنت متصل شد',
+  copyLink: 'کپی پیوند',
+  copyLinkToClipboardFallback: 'پیوند زیر را کپی کنید',
+  copyLinkToClipboardSuccess: 'پیوند به حافظه‌ی موقت منتقل شد',
+  creatingAssembly: 'درحال آماده سازی برای بارگذاری',
+  creatingAssemblyFailed: 'Transloadit: Could not create Assembly',
+  dashboardTitle: 'بارگذاری فایل',
+  dashboardWindowTitle: 'پنجره بارگذاری فایل. برای لغو کلید esc را بفشارید',
+  dataUploadedOfTotal: '%{complete} از %{total}',
+  done: 'انجام شد',
+  dropHereOr: 'فایل را بکشید و اینجا رها کنید یا  %{browse}',
+  dropHint: 'فایل‌ها را بکشید و اینجا رها کنید',
+  dropPaste: 'فایلها اینجا رها کنید، بچسبانید یا  %{browse}',
+  dropPasteImport: 'فایلها را اینجا رها کنید، بچسبانید یا %{browse} انتخاب کنید',
+  edit: 'ویرایش',
+  editFile: 'ویرایش فایل',
+  editing: 'در حال ویرایش %{file}',
+  emptyFolderAdded: 'از پوشه‌ی خالی هیچ فایلی افزوده نشد',
+  encoding: 'رمزگذاری...',
+  enterCorrectUrl: 'آدرس نامعتبر. لطفا مطمئن شوید که آدرس مستقیم به یک فایل را انتخاب کرده‌اید.',
+  enterUrlToImport: 'آدرس فایل را برای بارگذاری بنویسید',
+  exceedsSize: 'اندازه‌ی این فایل از حد مجاز بیشتر است!',
+  failedToFetch: 'Companion failed to fetch this URL, please make sure it’s correct',
+  failedToUpload: 'شکست در بارگذاری %{file}',
+  fileSource: 'منبع فایل: %{name}',
+  filesUploadedOfTotal: {
+    '0': '%{complete} از %{smart_count} فایل بارگذاری شد.',
+    '1': '%{complete} از %{smart_count} فایل بارگذاری شد.',
+    '2': '%{complete} از %{smart_count} فایل بارگذاری شد.'
+  },
+  filter: 'پالایش',
+  finishEditingFile: 'اتمام ویرایش فایل',
+  folderAdded: {
+    '0': '%{smart_count} فایل از %{folder} افزوده شد.',
+    '1': '%{smart_count} فایل از %{folder} افزوده شد.',
+    '2': '%{smart_count} فایل از %{folder} افزوده شد.'
+  },
+  import: 'واردکردن',
+  importFrom: 'واردکردن از %{name}',
+  link: 'پیوند',
+  loading: 'درحال بارگذاری',
+  logOut: 'خروج',
+  myDevice: 'دستگاه من',
+  noFilesFound: 'هیچ فایل یا پوشه‌ای اینجا ندارید',
+  noInternetConnection: 'عدم اتصال به اینترنت',
+  pause: 'توقف',
+  pauseUpload: 'توقف بارگذاری',
+  paused: 'متوقف شده',
+  poweredBy: 'قدرت گرفته از',
+  preparingUpload: 'درحال آماده سازی برای بارگذاری',
+  processingXFiles: {
+    '0': 'درحال پردازش %{smart_count} فایل',
+    '1': 'درحال پردازش %{smart_count} فایل',
+    '2': 'درحال پردازش %{smart_count} فایل'
+  },
+  removeFile: 'حذف فایل',
+  resetFilter: 'بازنشانی فیلتر',
+  resume: 'ادامه',
+  resumeUpload: 'ادامه بارگذاری',
+  retry: 'تلاش دوباره',
+  retryUpload: 'تلاش دوباره بارگذاری',
+  saveChanges: 'ذخیره‌ی تغییرات',
+  selectXFiles: {
+    '0': 'انتخاب %{smart_count} فایل',
+    '1': 'انتخاب %{smart_count} فایل',
+    '2': 'انتخاب %{smart_count} فایل'
+  },
+  smile: 'Smile!',
+  startRecording: 'آغاز تصویربرداری',
+  stopRecording: 'توقف تصویربرداری',
+  takePicture: 'عکس بگیرید',
+  timedOut: 'بارگذاری به مدت %{seconds} ثانیه متوقف شد, درحال متوقف کردن.',
+  upload: 'بارگذاری',
+  uploadComplete: 'بارگذاری انجام شد',
+  uploadFailed: 'بارگذاری شکست خورد',
+  uploadPaused: 'بارگذاری متوقف شد',
+  uploadXFiles: {
+    '0': 'بارگذاری %{smart_count} فایل',
+    '1': 'بارگذاری %{smart_count} فایل',
+    '2': 'بارگذاری %{smart_count} فایل'
+  },
+  uploadXNewFiles: {
+    '0': 'بارگذاری +%{smart_count} فایل',
+    '1': 'بارگذاری +%{smart_count} فایل',
+    '2': 'بارگذاری +%{smart_count} فایل'
+  },
+  uploading: 'بارگذاری',
+  uploadingXFiles: {
+    '0': 'بارگذاری %{smart_count} فایل',
+    '1': 'بارگذاری %{smart_count} فایل',
+    '2': 'بارگذاری %{smart_count} fiفایلles'
+  },
+  xFilesSelected: {
+    '0': '%{smart_count} فایل انتخاب شده',
+    '1': '%{smart_count} فایل انتخاب شده',
+    '2': '%{smart_count} فایل انتخاب شده'
+  },
+  xMoreFilesAdded: {
+    '0': '%{smart_count} فایل دیگر افزوده شد',
+    '1': '%{smart_count} فایل دیگر افزوده شد',
+    '2': '%{smart_count} فایل دیگر افزوده شد'
+  },
+  xTimeLeft: '%{time} left',
+  youCanOnlyUploadFileTypes: 'فایل‌های قابل قبول: %{types}',
+  youCanOnlyUploadX: {
+    '0': 'فقط می‌توانید %{smart_count} فایل انتخاب کنید',
+    '1': 'فقط می‌توانید %{smart_count} فایل انتخاب کنید',
+    '2': 'فقط می‌توانید %{smart_count} فایل انتخاب کنید'
+  },
+  youHaveToAtLeastSelectX: {
+    '0': 'می‌بایست حداقل %{smart_count} فایل انتخاب کنید',
+    '1': 'می‌بایست حداقل %{smart_count} فایل انتخاب کنید',
+    '2': 'می‌بایست حداقل %{smart_count} فایل انتخاب کنید'
+  }
+};
+
+fa_IR.pluralize = function (n) {
+  if (n === 1) {
+    return 0;
+  }
+
+  return 1;
+};
+
+if (typeof window !== 'undefined' && typeof window.Uppy !== 'undefined') {
+  window.Uppy.locales.fa_IR = fa_IR;
+}
+
+module.exports = fa_IR;
+
+/***/ }),
+
 /***/ "./node_modules/@uppy/store-default/lib/index.js":
 /*!*******************************************************!*\
   !*** ./node_modules/@uppy/store-default/lib/index.js ***!
@@ -5283,9 +6501,9 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var _require = __webpack_require__(/*! @uppy/core */ "./node_modules/@uppy/core/lib/index.js"),
     Plugin = _require.Plugin;
 
-var dataURItoBlob = __webpack_require__(/*! @uppy/utils/lib/dataURItoBlob */ "./node_modules/@uppy/utils/lib/dataURItoBlob.js");
-var isObjectURL = __webpack_require__(/*! @uppy/utils/lib/isObjectURL */ "./node_modules/@uppy/utils/lib/isObjectURL.js");
-var isPreviewSupported = __webpack_require__(/*! @uppy/utils/lib/isPreviewSupported */ "./node_modules/@uppy/utils/lib/isPreviewSupported.js");
+var dataURItoBlob = __webpack_require__(/*! @uppy/utils/lib/dataURItoBlob */ "./node_modules/@uppy/thumbnail-generator/node_modules/@uppy/utils/lib/dataURItoBlob.js");
+var isObjectURL = __webpack_require__(/*! @uppy/utils/lib/isObjectURL */ "./node_modules/@uppy/thumbnail-generator/node_modules/@uppy/utils/lib/isObjectURL.js");
+var isPreviewSupported = __webpack_require__(/*! @uppy/utils/lib/isPreviewSupported */ "./node_modules/@uppy/thumbnail-generator/node_modules/@uppy/utils/lib/isPreviewSupported.js");
 
 /**
  * The Thumbnail Generator plugin
@@ -5467,9 +6685,22 @@ module.exports = function (_Plugin) {
 
 
   ThumbnailGenerator.prototype.canvasToBlob = function canvasToBlob(canvas, type, quality) {
+    try {
+      canvas.getContext('2d').getImageData(0, 0, 1, 1);
+    } catch (err) {
+      if (err.code === 18) {
+        return Promise.reject(new Error('cannot read image, probably an svg with external resources'));
+      }
+    }
+
     if (canvas.toBlob) {
       return new Promise(function (resolve) {
         canvas.toBlob(resolve, type, quality);
+      }).then(function (blob) {
+        if (blob === null) {
+          throw new Error('cannot read image, probably an svg with external resources');
+        }
+        return blob;
       });
     }
     return Promise.resolve().then(function () {
@@ -5519,7 +6750,7 @@ module.exports = function (_Plugin) {
         _this4.uppy.log('[ThumbnailGenerator] Generated thumbnail for ' + file.id);
         _this4.uppy.emit('thumbnail:generated', _this4.uppy.getFile(file.id), preview);
       }).catch(function (err) {
-        _this4.uppy.log('[ThumbnailGenerator] Failed thumbnail for ' + file.id);
+        _this4.uppy.log('[ThumbnailGenerator] Failed thumbnail for ' + file.id + ':', 'warning');
         _this4.uppy.log(err, 'warning');
         _this4.uppy.emit('thumbnail:error', _this4.uppy.getFile(file.id), err);
       });
@@ -5579,10 +6810,661 @@ module.exports = function (_Plugin) {
 
 /***/ }),
 
-/***/ "./node_modules/@uppy/utils/lib/Translator.js":
+/***/ "./node_modules/@uppy/thumbnail-generator/node_modules/@uppy/utils/lib/dataURItoBlob.js":
+/*!**********************************************************************************************!*\
+  !*** ./node_modules/@uppy/thumbnail-generator/node_modules/@uppy/utils/lib/dataURItoBlob.js ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function dataURItoBlob(dataURI, opts, toFile) {
+  // get the base64 data
+  var data = dataURI.split(',')[1];
+
+  // user may provide mime type, if not get it from data URI
+  var mimeType = opts.mimeType || dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+  // default to plain/text if data URI has no mimeType
+  if (mimeType == null) {
+    mimeType = 'plain/text';
+  }
+
+  var binary = atob(data);
+  var array = [];
+  for (var i = 0; i < binary.length; i++) {
+    array.push(binary.charCodeAt(i));
+  }
+
+  // Convert to a File?
+  if (toFile) {
+    return new File([new Uint8Array(array)], opts.name || '', { type: mimeType });
+  }
+
+  return new Blob([new Uint8Array(array)], { type: mimeType });
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/thumbnail-generator/node_modules/@uppy/utils/lib/isObjectURL.js":
+/*!********************************************************************************************!*\
+  !*** ./node_modules/@uppy/thumbnail-generator/node_modules/@uppy/utils/lib/isObjectURL.js ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/**
+ * Check if a URL string is an object URL from `URL.createObjectURL`.
+ *
+ * @param {string} url
+ * @return {boolean}
+ */
+module.exports = function isObjectURL(url) {
+  return url.indexOf('blob:') === 0;
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/thumbnail-generator/node_modules/@uppy/utils/lib/isPreviewSupported.js":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/@uppy/thumbnail-generator/node_modules/@uppy/utils/lib/isPreviewSupported.js ***!
+  \***************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = function isPreviewSupported(fileType) {
+  if (!fileType) return false;
+  var fileTypeSpecific = fileType.split('/')[1];
+  // list of images that browsers can preview
+  if (/^(jpe?g|gif|png|svg|svg\+xml|bmp)$/.test(fileTypeSpecific)) {
+    return true;
+  }
+  return false;
+};
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/xhr-upload/lib/index.js":
 /*!****************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/Translator.js ***!
+  !*** ./node_modules/@uppy/xhr-upload/lib/index.js ***!
   \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _require = __webpack_require__(/*! @uppy/core */ "./node_modules/@uppy/core/lib/index.js"),
+    Plugin = _require.Plugin;
+
+var cuid = __webpack_require__(/*! cuid */ "./node_modules/cuid/index.js");
+var Translator = __webpack_require__(/*! @uppy/utils/lib/Translator */ "./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/Translator.js");
+
+var _require2 = __webpack_require__(/*! @uppy/companion-client */ "./node_modules/@uppy/companion-client/lib/index.js"),
+    Provider = _require2.Provider,
+    RequestClient = _require2.RequestClient,
+    Socket = _require2.Socket;
+
+var emitSocketProgress = __webpack_require__(/*! @uppy/utils/lib/emitSocketProgress */ "./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/emitSocketProgress.js");
+var getSocketHost = __webpack_require__(/*! @uppy/utils/lib/getSocketHost */ "./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/getSocketHost.js");
+var settle = __webpack_require__(/*! @uppy/utils/lib/settle */ "./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/settle.js");
+var limitPromises = __webpack_require__(/*! @uppy/utils/lib/limitPromises */ "./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/limitPromises.js");
+
+function buildResponseError(xhr, error) {
+  // No error message
+  if (!error) error = new Error('Upload error');
+  // Got an error message string
+  if (typeof error === 'string') error = new Error(error);
+  // Got something else
+  if (!(error instanceof Error)) {
+    error = _extends(new Error('Upload error'), { data: error });
+  }
+
+  error.request = xhr;
+  return error;
+}
+
+module.exports = function (_Plugin) {
+  _inherits(XHRUpload, _Plugin);
+
+  function XHRUpload(uppy, opts) {
+    _classCallCheck(this, XHRUpload);
+
+    var _this = _possibleConstructorReturn(this, _Plugin.call(this, uppy, opts));
+
+    _this.type = 'uploader';
+    _this.id = 'XHRUpload';
+    _this.title = 'XHRUpload';
+
+    _this.defaultLocale = {
+      strings: {
+        timedOut: 'Upload stalled for %{seconds} seconds, aborting.'
+      }
+
+      // Default options
+    };var defaultOptions = {
+      formData: true,
+      fieldName: 'files[]',
+      method: 'post',
+      metaFields: null,
+      responseUrlFieldName: 'url',
+      bundle: false,
+      headers: {},
+      timeout: 30 * 1000,
+      limit: 0,
+      withCredentials: false,
+      responseType: '',
+      /**
+       * @typedef respObj
+       * @property {string} responseText
+       * @property {number} status
+       * @property {string} statusText
+       * @property {Object.<string, string>} headers
+       *
+       * @param {string} responseText the response body string
+       * @param {XMLHttpRequest | respObj} response the response object (XHR or similar)
+       */
+      getResponseData: function getResponseData(responseText, response) {
+        var parsedResponse = {};
+        try {
+          parsedResponse = JSON.parse(responseText);
+        } catch (err) {
+          console.log(err);
+        }
+
+        return parsedResponse;
+      },
+
+      /**
+       *
+       * @param {string} responseText the response body string
+       * @param {XMLHttpRequest | respObj} response the response object (XHR or similar)
+       */
+      getResponseError: function getResponseError(responseText, response) {
+        return new Error('Upload error');
+      },
+
+      /**
+       * @param {number} status the response status code
+       * @param {string} responseText the response body string
+       * @param {XMLHttpRequest | respObj} response the response object (XHR or similar)
+       */
+      validateStatus: function validateStatus(status, responseText, response) {
+        return status >= 200 && status < 300;
+      }
+    };
+
+    // Merge default options with the ones set by user
+    _this.opts = _extends({}, defaultOptions, opts);
+
+    // i18n
+    _this.translator = new Translator([_this.defaultLocale, _this.uppy.locale, _this.opts.locale]);
+    _this.i18n = _this.translator.translate.bind(_this.translator);
+    _this.i18nArray = _this.translator.translateArray.bind(_this.translator);
+
+    _this.handleUpload = _this.handleUpload.bind(_this);
+
+    // Simultaneous upload limiting is shared across all uploads with this plugin.
+    if (typeof _this.opts.limit === 'number' && _this.opts.limit !== 0) {
+      _this.limitUploads = limitPromises(_this.opts.limit);
+    } else {
+      _this.limitUploads = function (fn) {
+        return fn;
+      };
+    }
+
+    if (_this.opts.bundle && !_this.opts.formData) {
+      throw new Error('`opts.formData` must be true when `opts.bundle` is enabled.');
+    }
+    return _this;
+  }
+
+  XHRUpload.prototype.getOptions = function getOptions(file) {
+    var overrides = this.uppy.getState().xhrUpload;
+    var opts = _extends({}, this.opts, overrides || {}, file.xhrUpload || {});
+    opts.headers = {};
+    _extends(opts.headers, this.opts.headers);
+    if (overrides) {
+      _extends(opts.headers, overrides.headers);
+    }
+    if (file.xhrUpload) {
+      _extends(opts.headers, file.xhrUpload.headers);
+    }
+
+    return opts;
+  };
+
+  // Helper to abort upload requests if there has not been any progress for `timeout` ms.
+  // Create an instance using `timer = createProgressTimeout(10000, onTimeout)`
+  // Call `timer.progress()` to signal that there has been progress of any kind.
+  // Call `timer.done()` when the upload has completed.
+
+
+  XHRUpload.prototype.createProgressTimeout = function createProgressTimeout(timeout, timeoutHandler) {
+    var uppy = this.uppy;
+    var self = this;
+    var isDone = false;
+
+    function onTimedOut() {
+      uppy.log('[XHRUpload] timed out');
+      var error = new Error(self.i18n('timedOut', { seconds: Math.ceil(timeout / 1000) }));
+      timeoutHandler(error);
+    }
+
+    var aliveTimer = null;
+    function progress() {
+      // Some browsers fire another progress event when the upload is
+      // cancelled, so we have to ignore progress after the timer was
+      // told to stop.
+      if (isDone) return;
+
+      if (timeout > 0) {
+        if (aliveTimer) clearTimeout(aliveTimer);
+        aliveTimer = setTimeout(onTimedOut, timeout);
+      }
+    }
+
+    function done() {
+      uppy.log('[XHRUpload] timer done');
+      if (aliveTimer) {
+        clearTimeout(aliveTimer);
+        aliveTimer = null;
+      }
+      isDone = true;
+    }
+
+    return {
+      progress: progress,
+      done: done
+    };
+  };
+
+  XHRUpload.prototype.createFormDataUpload = function createFormDataUpload(file, opts) {
+    var formPost = new FormData();
+
+    var metaFields = Array.isArray(opts.metaFields) ? opts.metaFields
+    // Send along all fields by default.
+    : Object.keys(file.meta);
+    metaFields.forEach(function (item) {
+      formPost.append(item, file.meta[item]);
+    });
+
+    if (file.name) {
+      formPost.append(opts.fieldName, file.data, file.name);
+    } else {
+      formPost.append(opts.fieldName, file.data);
+    }
+
+    return formPost;
+  };
+
+  XHRUpload.prototype.createBareUpload = function createBareUpload(file, opts) {
+    return file.data;
+  };
+
+  XHRUpload.prototype.upload = function upload(file, current, total) {
+    var _this2 = this;
+
+    var opts = this.getOptions(file);
+
+    this.uppy.log('uploading ' + current + ' of ' + total);
+    return new Promise(function (resolve, reject) {
+      var data = opts.formData ? _this2.createFormDataUpload(file, opts) : _this2.createBareUpload(file, opts);
+
+      var timer = _this2.createProgressTimeout(opts.timeout, function (error) {
+        xhr.abort();
+        _this2.uppy.emit('upload-error', file, error);
+        reject(error);
+      });
+
+      var xhr = new XMLHttpRequest();
+
+      var id = cuid();
+
+      xhr.upload.addEventListener('loadstart', function (ev) {
+        _this2.uppy.log('[XHRUpload] ' + id + ' started');
+      });
+
+      xhr.upload.addEventListener('progress', function (ev) {
+        _this2.uppy.log('[XHRUpload] ' + id + ' progress: ' + ev.loaded + ' / ' + ev.total);
+        // Begin checking for timeouts when progress starts, instead of loading,
+        // to avoid timing out requests on browser concurrency queue
+        timer.progress();
+
+        if (ev.lengthComputable) {
+          _this2.uppy.emit('upload-progress', file, {
+            uploader: _this2,
+            bytesUploaded: ev.loaded,
+            bytesTotal: ev.total
+          });
+        }
+      });
+
+      xhr.addEventListener('load', function (ev) {
+        _this2.uppy.log('[XHRUpload] ' + id + ' finished');
+        timer.done();
+
+        if (opts.validateStatus(ev.target.status, xhr.responseText, xhr)) {
+          var body = opts.getResponseData(xhr.responseText, xhr);
+          var uploadURL = body[opts.responseUrlFieldName];
+
+          var uploadResp = {
+            status: ev.target.status,
+            body: body,
+            uploadURL: uploadURL
+          };
+
+          _this2.uppy.emit('upload-success', file, uploadResp);
+
+          if (uploadURL) {
+            _this2.uppy.log('Download ' + file.name + ' from ' + file.uploadURL);
+          }
+
+          return resolve(file);
+        } else {
+          var _body = opts.getResponseData(xhr.responseText, xhr);
+          var error = buildResponseError(xhr, opts.getResponseError(xhr.responseText, xhr));
+
+          var response = {
+            status: ev.target.status,
+            body: _body
+          };
+
+          _this2.uppy.emit('upload-error', file, error, response);
+          return reject(error);
+        }
+      });
+
+      xhr.addEventListener('error', function (ev) {
+        _this2.uppy.log('[XHRUpload] ' + id + ' errored');
+        timer.done();
+
+        var error = buildResponseError(xhr, opts.getResponseError(xhr.responseText, xhr));
+        _this2.uppy.emit('upload-error', file, error);
+        return reject(error);
+      });
+
+      xhr.open(opts.method.toUpperCase(), opts.endpoint, true);
+      // IE10 does not allow setting `withCredentials` and `responseType`
+      // before `open()` is called.
+      xhr.withCredentials = opts.withCredentials;
+      if (opts.responseType !== '') {
+        xhr.responseType = opts.responseType;
+      }
+
+      Object.keys(opts.headers).forEach(function (header) {
+        xhr.setRequestHeader(header, opts.headers[header]);
+      });
+
+      xhr.send(data);
+
+      _this2.uppy.on('file-removed', function (removedFile) {
+        if (removedFile.id === file.id) {
+          timer.done();
+          xhr.abort();
+          reject(new Error('File removed'));
+        }
+      });
+
+      _this2.uppy.on('cancel-all', function () {
+        timer.done();
+        xhr.abort();
+        reject(new Error('Upload cancelled'));
+      });
+    });
+  };
+
+  XHRUpload.prototype.uploadRemote = function uploadRemote(file, current, total) {
+    var _this3 = this;
+
+    var opts = this.getOptions(file);
+    return new Promise(function (resolve, reject) {
+      var fields = {};
+      var metaFields = Array.isArray(opts.metaFields) ? opts.metaFields
+      // Send along all fields by default.
+      : Object.keys(file.meta);
+
+      metaFields.forEach(function (name) {
+        fields[name] = file.meta[name];
+      });
+
+      var Client = file.remote.providerOptions.provider ? Provider : RequestClient;
+      var client = new Client(_this3.uppy, file.remote.providerOptions);
+      client.post(file.remote.url, _extends({}, file.remote.body, {
+        endpoint: opts.endpoint,
+        size: file.data.size,
+        fieldname: opts.fieldName,
+        metadata: fields,
+        headers: opts.headers
+      })).then(function (res) {
+        var token = res.token;
+        var host = getSocketHost(file.remote.companionUrl);
+        var socket = new Socket({ target: host + '/api/' + token });
+
+        socket.on('progress', function (progressData) {
+          return emitSocketProgress(_this3, progressData, file);
+        });
+
+        socket.on('success', function (data) {
+          var body = opts.getResponseData(data.response.responseText, data.response);
+          var uploadURL = body[opts.responseUrlFieldName];
+
+          var uploadResp = {
+            status: data.response.status,
+            body: body,
+            uploadURL: uploadURL
+          };
+
+          _this3.uppy.emit('upload-success', file, uploadResp);
+          socket.close();
+          return resolve();
+        });
+
+        socket.on('error', function (errData) {
+          var resp = errData.response;
+          var error = resp ? opts.getResponseError(resp.responseText, resp) : _extends(new Error(errData.error.message), { cause: errData.error });
+          _this3.uppy.emit('upload-error', file, error);
+          reject(error);
+        });
+      });
+    });
+  };
+
+  XHRUpload.prototype.uploadBundle = function uploadBundle(files) {
+    var _this4 = this;
+
+    return new Promise(function (resolve, reject) {
+      var endpoint = _this4.opts.endpoint;
+      var method = _this4.opts.method;
+
+      var formData = new FormData();
+      files.forEach(function (file, i) {
+        var opts = _this4.getOptions(file);
+        formData.append(opts.fieldName, file.data);
+      });
+
+      var xhr = new XMLHttpRequest();
+
+      var timer = _this4.createProgressTimeout(_this4.opts.timeout, function (error) {
+        xhr.abort();
+        emitError(error);
+        reject(error);
+      });
+
+      var emitError = function emitError(error) {
+        files.forEach(function (file) {
+          _this4.uppy.emit('upload-error', file, error);
+        });
+      };
+
+      xhr.upload.addEventListener('loadstart', function (ev) {
+        _this4.uppy.log('[XHRUpload] started uploading bundle');
+        timer.progress();
+      });
+
+      xhr.upload.addEventListener('progress', function (ev) {
+        timer.progress();
+
+        if (!ev.lengthComputable) return;
+
+        files.forEach(function (file) {
+          _this4.uppy.emit('upload-progress', file, {
+            uploader: _this4,
+            bytesUploaded: ev.loaded / ev.total * file.size,
+            bytesTotal: file.size
+          });
+        });
+      });
+
+      xhr.addEventListener('load', function (ev) {
+        timer.done();
+
+        if (_this4.opts.validateStatus(ev.target.status, xhr.responseText, xhr)) {
+          var body = _this4.opts.getResponseData(xhr.responseText, xhr);
+          var uploadResp = {
+            status: ev.target.status,
+            body: body
+          };
+          files.forEach(function (file) {
+            _this4.uppy.emit('upload-success', file, uploadResp);
+          });
+          return resolve();
+        }
+
+        var error = _this4.opts.getResponseError(xhr.responseText, xhr) || new Error('Upload error');
+        error.request = xhr;
+        emitError(error);
+        return reject(error);
+      });
+
+      xhr.addEventListener('error', function (ev) {
+        timer.done();
+
+        var error = _this4.opts.getResponseError(xhr.responseText, xhr) || new Error('Upload error');
+        emitError(error);
+        return reject(error);
+      });
+
+      _this4.uppy.on('cancel-all', function () {
+        timer.done();
+        xhr.abort();
+      });
+
+      xhr.open(method.toUpperCase(), endpoint, true);
+      // IE10 does not allow setting `withCredentials` and `responseType`
+      // before `open()` is called.
+      xhr.withCredentials = _this4.opts.withCredentials;
+      if (_this4.opts.responseType !== '') {
+        xhr.responseType = _this4.opts.responseType;
+      }
+
+      Object.keys(_this4.opts.headers).forEach(function (header) {
+        xhr.setRequestHeader(header, _this4.opts.headers[header]);
+      });
+
+      xhr.send(formData);
+
+      files.forEach(function (file) {
+        _this4.uppy.emit('upload-started', file);
+      });
+    });
+  };
+
+  XHRUpload.prototype.uploadFiles = function uploadFiles(files) {
+    var _this5 = this;
+
+    var actions = files.map(function (file, i) {
+      var current = parseInt(i, 10) + 1;
+      var total = files.length;
+
+      if (file.error) {
+        return function () {
+          return Promise.reject(new Error(file.error));
+        };
+      } else if (file.isRemote) {
+        // We emit upload-started here, so that it's also emitted for files
+        // that have to wait due to the `limit` option.
+        _this5.uppy.emit('upload-started', file);
+        return _this5.uploadRemote.bind(_this5, file, current, total);
+      } else {
+        _this5.uppy.emit('upload-started', file);
+        return _this5.upload.bind(_this5, file, current, total);
+      }
+    });
+
+    var promises = actions.map(function (action) {
+      var limitedAction = _this5.limitUploads(action);
+      return limitedAction();
+    });
+
+    return settle(promises);
+  };
+
+  XHRUpload.prototype.handleUpload = function handleUpload(fileIDs) {
+    var _this6 = this;
+
+    if (fileIDs.length === 0) {
+      this.uppy.log('[XHRUpload] No files to upload!');
+      return Promise.resolve();
+    }
+
+    this.uppy.log('[XHRUpload] Uploading...');
+    var files = fileIDs.map(function (fileID) {
+      return _this6.uppy.getFile(fileID);
+    });
+
+    if (this.opts.bundle) {
+      return this.uploadBundle(files);
+    }
+
+    return this.uploadFiles(files).then(function () {
+      return null;
+    });
+  };
+
+  XHRUpload.prototype.install = function install() {
+    if (this.opts.bundle) {
+      var _uppy$getState = this.uppy.getState(),
+          capabilities = _uppy$getState.capabilities;
+
+      this.uppy.setState({
+        capabilities: _extends({}, capabilities, {
+          individualCancellation: false
+        })
+      });
+    }
+
+    this.uppy.addUploader(this.handleUpload);
+  };
+
+  XHRUpload.prototype.uninstall = function uninstall() {
+    if (this.opts.bundle) {
+      var _uppy$getState2 = this.uppy.getState(),
+          capabilities = _uppy$getState2.capabilities;
+
+      this.uppy.setState({
+        capabilities: _extends({}, capabilities, {
+          individualCancellation: true
+        })
+      });
+    }
+
+    this.uppy.removeUploader(this.handleUpload);
+  };
+
+  return XHRUpload;
+}(Plugin);
+
+/***/ }),
+
+/***/ "./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/Translator.js":
+/*!**********************************************************************************!*\
+  !*** ./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/Translator.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -5733,45 +7615,10 @@ module.exports = function () {
 
 /***/ }),
 
-/***/ "./node_modules/@uppy/utils/lib/dataURItoBlob.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/dataURItoBlob.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function dataURItoBlob(dataURI, opts, toFile) {
-  // get the base64 data
-  var data = dataURI.split(',')[1];
-
-  // user may provide mime type, if not get it from data URI
-  var mimeType = opts.mimeType || dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-  // default to plain/text if data URI has no mimeType
-  if (mimeType == null) {
-    mimeType = 'plain/text';
-  }
-
-  var binary = atob(data);
-  var array = [];
-  for (var i = 0; i < binary.length; i++) {
-    array.push(binary.charCodeAt(i));
-  }
-
-  // Convert to a File?
-  if (toFile) {
-    return new File([new Uint8Array(array)], opts.name || '', { type: mimeType });
-  }
-
-  return new Blob([new Uint8Array(array)], { type: mimeType });
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/emitSocketProgress.js":
-/*!************************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/emitSocketProgress.js ***!
-  \************************************************************/
+/***/ "./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/emitSocketProgress.js":
+/*!******************************************************************************************!*\
+  !*** ./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/emitSocketProgress.js ***!
+  \******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5796,302 +7643,28 @@ module.exports = throttle(_emitSocketProgress, 300, { leading: true, trailing: t
 
 /***/ }),
 
-/***/ "./node_modules/@uppy/utils/lib/findAllDOMElements.js":
-/*!************************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/findAllDOMElements.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var isDOMElement = __webpack_require__(/*! ./isDOMElement */ "./node_modules/@uppy/utils/lib/isDOMElement.js");
-
-/**
- * Find one or more DOM elements.
- *
- * @param {string} element
- * @return {Array|null}
- */
-module.exports = function findAllDOMElements(element) {
-  if (typeof element === 'string') {
-    var elements = [].slice.call(document.querySelectorAll(element));
-    return elements.length > 0 ? elements : null;
-  }
-
-  if ((typeof element === 'undefined' ? 'undefined' : _typeof(element)) === 'object' && isDOMElement(element)) {
-    return [element];
-  }
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/findDOMElement.js":
-/*!********************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/findDOMElement.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var isDOMElement = __webpack_require__(/*! ./isDOMElement */ "./node_modules/@uppy/utils/lib/isDOMElement.js");
-
-/**
- * Find a DOM element.
- *
- * @param {Node|string} element
- * @return {Node|null}
- */
-module.exports = function findDOMElement(element) {
-  var context = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : document;
-
-  if (typeof element === 'string') {
-    return context.querySelector(element);
-  }
-
-  if ((typeof element === 'undefined' ? 'undefined' : _typeof(element)) === 'object' && isDOMElement(element)) {
-    return element;
-  }
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/generateFileID.js":
-/*!********************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/generateFileID.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Takes a file object and turns it into fileID, by converting file.name to lowercase,
- * removing extra characters and adding type, size and lastModified
- *
- * @param {Object} file
- * @return {String} the fileID
- *
- */
-module.exports = function generateFileID(file) {
-  // filter is needed to not join empty values with `-`
-  return ['uppy', file.name ? file.name.toLowerCase().replace(/[^A-Z0-9]/ig, '') : '', file.type, file.data.size, file.data.lastModified].filter(function (val) {
-    return val;
-  }).join('-');
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/getBytesRemaining.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/getBytesRemaining.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function getBytesRemaining(fileProgress) {
-  return fileProgress.bytesTotal - fileProgress.bytesUploaded;
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/getFileNameAndExtension.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/getFileNameAndExtension.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
-* Takes a full filename string and returns an object {name, extension}
-*
-* @param {string} fullFileName
-* @return {object} {name, extension}
-*/
-module.exports = function getFileNameAndExtension(fullFileName) {
-  var re = /(?:\.([^.]+))?$/;
-  var fileExt = re.exec(fullFileName)[1];
-  var fileName = fullFileName.replace('.' + fileExt, '');
-  return {
-    name: fileName,
-    extension: fileExt
-  };
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/getFileType.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/getFileType.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var getFileNameAndExtension = __webpack_require__(/*! ./getFileNameAndExtension */ "./node_modules/@uppy/utils/lib/getFileNameAndExtension.js");
-var mimeTypes = __webpack_require__(/*! ./mimeTypes */ "./node_modules/@uppy/utils/lib/mimeTypes.js");
-
-module.exports = function getFileType(file) {
-  var fileExtension = file.name ? getFileNameAndExtension(file.name).extension : null;
-  fileExtension = fileExtension ? fileExtension.toLowerCase() : null;
-
-  if (file.isRemote) {
-    // some remote providers do not support file types
-    return file.type ? file.type : mimeTypes[fileExtension];
-  }
-
-  // check if mime type is set in the file object
-  if (file.type) {
-    return file.type;
-  }
-
-  // see if we can map extension to a mime type
-  if (fileExtension && mimeTypes[fileExtension]) {
-    return mimeTypes[fileExtension];
-  }
-
-  // if all fails, fall back to a generic byte stream type
-  return 'application/octet-stream';
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/getSocketHost.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/getSocketHost.js ***!
-  \*******************************************************/
+/***/ "./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/getSocketHost.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/getSocketHost.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
 module.exports = function getSocketHost(url) {
   // get the host domain
-  var regex = /^(?:https?:\/\/|\/\/)?(?:[^@\n]+@)?(?:www\.)?([^\n]+)/;
+  var regex = /^(?:https?:\/\/|\/\/)?(?:[^@\n]+@)?(?:www\.)?([^\n]+)/i;
   var host = regex.exec(url)[1];
-  var socketProtocol = location.protocol === 'https:' ? 'wss' : 'ws';
+  var socketProtocol = /^http:\/\//i.test(url) ? 'ws' : 'wss';
 
   return socketProtocol + '://' + host;
 };
 
 /***/ }),
 
-/***/ "./node_modules/@uppy/utils/lib/getSpeed.js":
-/*!**************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/getSpeed.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function getSpeed(fileProgress) {
-  if (!fileProgress.bytesUploaded) return 0;
-
-  var timeElapsed = new Date() - fileProgress.uploadStarted;
-  var uploadSpeed = fileProgress.bytesUploaded / (timeElapsed / 1000);
-  return uploadSpeed;
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/getTimeStamp.js":
-/*!******************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/getTimeStamp.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Returns a timestamp in the format of `hours:minutes:seconds`
-*/
-module.exports = function getTimeStamp() {
-  var date = new Date();
-  var hours = pad(date.getHours().toString());
-  var minutes = pad(date.getMinutes().toString());
-  var seconds = pad(date.getSeconds().toString());
-  return hours + ':' + minutes + ':' + seconds;
-};
-
-/**
- * Adds zero to strings shorter than two characters
-*/
-function pad(str) {
-  return str.length !== 2 ? 0 + str : str;
-}
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/isDOMElement.js":
-/*!******************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/isDOMElement.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/**
- * Check if an object is a DOM element. Duck-typing based on `nodeType`.
- *
- * @param {*} obj
- */
-module.exports = function isDOMElement(obj) {
-  return obj && (typeof obj === 'undefined' ? 'undefined' : _typeof(obj)) === 'object' && obj.nodeType === Node.ELEMENT_NODE;
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/isObjectURL.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/isObjectURL.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Check if a URL string is an object URL from `URL.createObjectURL`.
- *
- * @param {string} url
- * @return {boolean}
- */
-module.exports = function isObjectURL(url) {
-  return url.indexOf('blob:') === 0;
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/isPreviewSupported.js":
-/*!************************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/isPreviewSupported.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function isPreviewSupported(fileType) {
-  if (!fileType) return false;
-  var fileTypeSpecific = fileType.split('/')[1];
-  // list of images that browsers can preview
-  if (/^(jpe?g|gif|png|svg|svg\+xml|bmp)$/.test(fileTypeSpecific)) {
-    return true;
-  }
-  return false;
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/isTouchDevice.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/isTouchDevice.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function isTouchDevice() {
-  return 'ontouchstart' in window || // works on most browsers
-  navigator.maxTouchPoints; // works on IE10/11 and Surface
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/limitPromises.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/limitPromises.js ***!
-  \*******************************************************/
+/***/ "./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/limitPromises.js":
+/*!*************************************************************************************!*\
+  !*** ./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/limitPromises.js ***!
+  \*************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -6138,99 +7711,10 @@ module.exports = function limitPromises(limit) {
 
 /***/ }),
 
-/***/ "./node_modules/@uppy/utils/lib/mimeTypes.js":
-/*!***************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/mimeTypes.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = {
-  'md': 'text/markdown',
-  'markdown': 'text/markdown',
-  'mp4': 'video/mp4',
-  'mp3': 'audio/mp3',
-  'svg': 'image/svg+xml',
-  'jpg': 'image/jpeg',
-  'png': 'image/png',
-  'gif': 'image/gif',
-  'yaml': 'text/yaml',
-  'yml': 'text/yaml',
-  'csv': 'text/csv',
-  'avi': 'video/x-msvideo',
-  'mks': 'video/x-matroska',
-  'mkv': 'video/x-matroska',
-  'mov': 'video/quicktime',
-  'doc': 'application/msword',
-  'docm': 'application/vnd.ms-word.document.macroenabled.12',
-  'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  'dot': 'application/msword',
-  'dotm': 'application/vnd.ms-word.template.macroenabled.12',
-  'dotx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.template',
-  'xla': 'application/vnd.ms-excel',
-  'xlam': 'application/vnd.ms-excel.addin.macroenabled.12',
-  'xlc': 'application/vnd.ms-excel',
-  'xlf': 'application/x-xliff+xml',
-  'xlm': 'application/vnd.ms-excel',
-  'xls': 'application/vnd.ms-excel',
-  'xlsb': 'application/vnd.ms-excel.sheet.binary.macroenabled.12',
-  'xlsm': 'application/vnd.ms-excel.sheet.macroenabled.12',
-  'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-  'xlt': 'application/vnd.ms-excel',
-  'xltm': 'application/vnd.ms-excel.template.macroenabled.12',
-  'xltx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.template',
-  'xlw': 'application/vnd.ms-excel'
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/prettyETA.js":
-/*!***************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/prettyETA.js ***!
-  \***************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var secondsToTime = __webpack_require__(/*! ./secondsToTime */ "./node_modules/@uppy/utils/lib/secondsToTime.js");
-
-module.exports = function prettyETA(seconds) {
-  var time = secondsToTime(seconds);
-
-  // Only display hours and minutes if they are greater than 0 but always
-  // display minutes if hours is being displayed
-  // Display a leading zero if the there is a preceding unit: 1m 05s, but 5s
-  var hoursStr = time.hours ? time.hours + 'h ' : '';
-  var minutesVal = time.hours ? ('0' + time.minutes).substr(-2) : time.minutes;
-  var minutesStr = minutesVal ? minutesVal + 'm ' : '';
-  var secondsVal = minutesVal ? ('0' + time.seconds).substr(-2) : time.seconds;
-  var secondsStr = secondsVal + 's';
-
-  return '' + hoursStr + minutesStr + secondsStr;
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/secondsToTime.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/secondsToTime.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function secondsToTime(rawSeconds) {
-  var hours = Math.floor(rawSeconds / 3600) % 24;
-  var minutes = Math.floor(rawSeconds / 60) % 60;
-  var seconds = Math.floor(rawSeconds % 60);
-
-  return { hours: hours, minutes: minutes, seconds: seconds };
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/settle.js":
-/*!************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/settle.js ***!
-  \************************************************/
+/***/ "./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/settle.js":
+/*!******************************************************************************!*\
+  !*** ./node_modules/@uppy/xhr-upload/node_modules/@uppy/utils/lib/settle.js ***!
+  \******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -6255,584 +7739,6 @@ module.exports = function settle(promises) {
     };
   });
 };
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/utils/lib/toArray.js":
-/*!*************************************************!*\
-  !*** ./node_modules/@uppy/utils/lib/toArray.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Converts list into array
-*/
-module.exports = function toArray(list) {
-  return Array.prototype.slice.call(list || [], 0);
-};
-
-/***/ }),
-
-/***/ "./node_modules/@uppy/xhr-upload/lib/index.js":
-/*!****************************************************!*\
-  !*** ./node_modules/@uppy/xhr-upload/lib/index.js ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _require = __webpack_require__(/*! @uppy/core */ "./node_modules/@uppy/core/lib/index.js"),
-    Plugin = _require.Plugin;
-
-var cuid = __webpack_require__(/*! cuid */ "./node_modules/cuid/index.js");
-var Translator = __webpack_require__(/*! @uppy/utils/lib/Translator */ "./node_modules/@uppy/utils/lib/Translator.js");
-
-var _require2 = __webpack_require__(/*! @uppy/companion-client */ "./node_modules/@uppy/companion-client/lib/index.js"),
-    Provider = _require2.Provider,
-    Socket = _require2.Socket;
-
-var emitSocketProgress = __webpack_require__(/*! @uppy/utils/lib/emitSocketProgress */ "./node_modules/@uppy/utils/lib/emitSocketProgress.js");
-var getSocketHost = __webpack_require__(/*! @uppy/utils/lib/getSocketHost */ "./node_modules/@uppy/utils/lib/getSocketHost.js");
-var settle = __webpack_require__(/*! @uppy/utils/lib/settle */ "./node_modules/@uppy/utils/lib/settle.js");
-var limitPromises = __webpack_require__(/*! @uppy/utils/lib/limitPromises */ "./node_modules/@uppy/utils/lib/limitPromises.js");
-
-function buildResponseError(xhr, error) {
-  // No error message
-  if (!error) error = new Error('Upload error');
-  // Got an error message string
-  if (typeof error === 'string') error = new Error(error);
-  // Got something else
-  if (!(error instanceof Error)) {
-    error = _extends(new Error('Upload error'), { data: error });
-  }
-
-  error.request = xhr;
-  return error;
-}
-
-module.exports = function (_Plugin) {
-  _inherits(XHRUpload, _Plugin);
-
-  function XHRUpload(uppy, opts) {
-    _classCallCheck(this, XHRUpload);
-
-    var _this = _possibleConstructorReturn(this, _Plugin.call(this, uppy, opts));
-
-    _this.type = 'uploader';
-    _this.id = 'XHRUpload';
-    _this.title = 'XHRUpload';
-
-    var defaultLocale = {
-      strings: {
-        timedOut: 'Upload stalled for %{seconds} seconds, aborting.'
-      }
-
-      // Default options
-    };var defaultOptions = {
-      formData: true,
-      fieldName: 'files[]',
-      method: 'post',
-      metaFields: null,
-      responseUrlFieldName: 'url',
-      bundle: false,
-      headers: {},
-      locale: defaultLocale,
-      timeout: 30 * 1000,
-      limit: 0,
-      withCredentials: false,
-      responseType: '',
-      /**
-       * @typedef respObj
-       * @property {string} responseText
-       * @property {number} status
-       * @property {string} statusText
-       * @property {Object.<string, string>} headers
-       *
-       * @param {string} responseText the response body string
-       * @param {XMLHttpRequest | respObj} response the response object (XHR or similar)
-       */
-      getResponseData: function getResponseData(responseText, response) {
-        var parsedResponse = {};
-        try {
-          parsedResponse = JSON.parse(responseText);
-        } catch (err) {
-          console.log(err);
-        }
-
-        return parsedResponse;
-      },
-
-      /**
-       *
-       * @param {string} responseText the response body string
-       * @param {XMLHttpRequest | respObj} response the response object (XHR or similar)
-       */
-      getResponseError: function getResponseError(responseText, response) {
-        return new Error('Upload error');
-      }
-    };
-
-    // Merge default options with the ones set by user
-    _this.opts = _extends({}, defaultOptions, opts);
-
-    // i18n
-    _this.translator = new Translator([defaultLocale, _this.uppy.locale, _this.opts.locale]);
-    _this.i18n = _this.translator.translate.bind(_this.translator);
-    _this.i18nArray = _this.translator.translateArray.bind(_this.translator);
-
-    _this.handleUpload = _this.handleUpload.bind(_this);
-
-    // Simultaneous upload limiting is shared across all uploads with this plugin.
-    if (typeof _this.opts.limit === 'number' && _this.opts.limit !== 0) {
-      _this.limitUploads = limitPromises(_this.opts.limit);
-    } else {
-      _this.limitUploads = function (fn) {
-        return fn;
-      };
-    }
-
-    if (_this.opts.bundle && !_this.opts.formData) {
-      throw new Error('`opts.formData` must be true when `opts.bundle` is enabled.');
-    }
-    return _this;
-  }
-
-  XHRUpload.prototype.getOptions = function getOptions(file) {
-    var overrides = this.uppy.getState().xhrUpload;
-    var opts = _extends({}, this.opts, overrides || {}, file.xhrUpload || {});
-    opts.headers = {};
-    _extends(opts.headers, this.opts.headers);
-    if (overrides) {
-      _extends(opts.headers, overrides.headers);
-    }
-    if (file.xhrUpload) {
-      _extends(opts.headers, file.xhrUpload.headers);
-    }
-
-    return opts;
-  };
-
-  // Helper to abort upload requests if there has not been any progress for `timeout` ms.
-  // Create an instance using `timer = createProgressTimeout(10000, onTimeout)`
-  // Call `timer.progress()` to signal that there has been progress of any kind.
-  // Call `timer.done()` when the upload has completed.
-
-
-  XHRUpload.prototype.createProgressTimeout = function createProgressTimeout(timeout, timeoutHandler) {
-    var uppy = this.uppy;
-    var self = this;
-    var isDone = false;
-
-    function onTimedOut() {
-      uppy.log('[XHRUpload] timed out');
-      var error = new Error(self.i18n('timedOut', { seconds: Math.ceil(timeout / 1000) }));
-      timeoutHandler(error);
-    }
-
-    var aliveTimer = null;
-    function progress() {
-      // Some browsers fire another progress event when the upload is
-      // cancelled, so we have to ignore progress after the timer was
-      // told to stop.
-      if (isDone) return;
-
-      if (timeout > 0) {
-        if (aliveTimer) clearTimeout(aliveTimer);
-        aliveTimer = setTimeout(onTimedOut, timeout);
-      }
-    }
-
-    function done() {
-      uppy.log('[XHRUpload] timer done');
-      if (aliveTimer) {
-        clearTimeout(aliveTimer);
-        aliveTimer = null;
-      }
-      isDone = true;
-    }
-
-    return {
-      progress: progress,
-      done: done
-    };
-  };
-
-  XHRUpload.prototype.createFormDataUpload = function createFormDataUpload(file, opts) {
-    var formPost = new FormData();
-
-    var metaFields = Array.isArray(opts.metaFields) ? opts.metaFields
-    // Send along all fields by default.
-    : Object.keys(file.meta);
-    metaFields.forEach(function (item) {
-      formPost.append(item, file.meta[item]);
-    });
-
-    if (file.name) {
-      formPost.append(opts.fieldName, file.data, file.name);
-    } else {
-      formPost.append(opts.fieldName, file.data);
-    }
-
-    return formPost;
-  };
-
-  XHRUpload.prototype.createBareUpload = function createBareUpload(file, opts) {
-    return file.data;
-  };
-
-  XHRUpload.prototype.upload = function upload(file, current, total) {
-    var _this2 = this;
-
-    var opts = this.getOptions(file);
-
-    this.uppy.log('uploading ' + current + ' of ' + total);
-    return new Promise(function (resolve, reject) {
-      var data = opts.formData ? _this2.createFormDataUpload(file, opts) : _this2.createBareUpload(file, opts);
-
-      var timer = _this2.createProgressTimeout(opts.timeout, function (error) {
-        xhr.abort();
-        _this2.uppy.emit('upload-error', file, error);
-        reject(error);
-      });
-
-      var xhr = new XMLHttpRequest();
-
-      var id = cuid();
-
-      xhr.upload.addEventListener('loadstart', function (ev) {
-        _this2.uppy.log('[XHRUpload] ' + id + ' started');
-      });
-
-      xhr.upload.addEventListener('progress', function (ev) {
-        _this2.uppy.log('[XHRUpload] ' + id + ' progress: ' + ev.loaded + ' / ' + ev.total);
-        // Begin checking for timeouts when progress starts, instead of loading,
-        // to avoid timing out requests on browser concurrency queue
-        timer.progress();
-
-        if (ev.lengthComputable) {
-          _this2.uppy.emit('upload-progress', file, {
-            uploader: _this2,
-            bytesUploaded: ev.loaded,
-            bytesTotal: ev.total
-          });
-        }
-      });
-
-      xhr.addEventListener('load', function (ev) {
-        _this2.uppy.log('[XHRUpload] ' + id + ' finished');
-        timer.done();
-
-        if (ev.target.status >= 200 && ev.target.status < 300) {
-          var body = opts.getResponseData(xhr.responseText, xhr);
-          var uploadURL = body[opts.responseUrlFieldName];
-
-          var uploadResp = {
-            status: ev.target.status,
-            body: body,
-            uploadURL: uploadURL
-          };
-
-          _this2.uppy.emit('upload-success', file, uploadResp);
-
-          if (uploadURL) {
-            _this2.uppy.log('Download ' + file.name + ' from ' + file.uploadURL);
-          }
-
-          return resolve(file);
-        } else {
-          var _body = opts.getResponseData(xhr.responseText, xhr);
-          var error = buildResponseError(xhr, opts.getResponseError(xhr.responseText, xhr));
-
-          var response = {
-            status: ev.target.status,
-            body: _body
-          };
-
-          _this2.uppy.emit('upload-error', file, error, response);
-          return reject(error);
-        }
-      });
-
-      xhr.addEventListener('error', function (ev) {
-        _this2.uppy.log('[XHRUpload] ' + id + ' errored');
-        timer.done();
-
-        var error = buildResponseError(xhr, opts.getResponseError(xhr.responseText, xhr));
-        _this2.uppy.emit('upload-error', file, error);
-        return reject(error);
-      });
-
-      xhr.open(opts.method.toUpperCase(), opts.endpoint, true);
-      // IE10 does not allow setting `withCredentials` and `responseType`
-      // before `open()` is called.
-      xhr.withCredentials = opts.withCredentials;
-      if (opts.responseType !== '') {
-        xhr.responseType = opts.responseType;
-      }
-
-      Object.keys(opts.headers).forEach(function (header) {
-        xhr.setRequestHeader(header, opts.headers[header]);
-      });
-
-      xhr.send(data);
-
-      _this2.uppy.on('file-removed', function (removedFile) {
-        if (removedFile.id === file.id) {
-          timer.done();
-          xhr.abort();
-          reject(new Error('File removed'));
-        }
-      });
-
-      _this2.uppy.on('cancel-all', function () {
-        timer.done();
-        xhr.abort();
-        reject(new Error('Upload cancelled'));
-      });
-    });
-  };
-
-  XHRUpload.prototype.uploadRemote = function uploadRemote(file, current, total) {
-    var _this3 = this;
-
-    var opts = this.getOptions(file);
-    return new Promise(function (resolve, reject) {
-      var fields = {};
-      var metaFields = Array.isArray(opts.metaFields) ? opts.metaFields
-      // Send along all fields by default.
-      : Object.keys(file.meta);
-
-      metaFields.forEach(function (name) {
-        fields[name] = file.meta[name];
-      });
-
-      var provider = new Provider(_this3.uppy, file.remote.providerOptions);
-      provider.post(file.remote.url, _extends({}, file.remote.body, {
-        endpoint: opts.endpoint,
-        size: file.data.size,
-        fieldname: opts.fieldName,
-        metadata: fields,
-        headers: opts.headers
-      })).then(function (res) {
-        var token = res.token;
-        var host = getSocketHost(file.remote.serverUrl);
-        var socket = new Socket({ target: host + '/api/' + token });
-
-        socket.on('progress', function (progressData) {
-          return emitSocketProgress(_this3, progressData, file);
-        });
-
-        socket.on('success', function (data) {
-          var body = opts.getResponseData(data.response.responseText, data.response);
-          var uploadURL = body[opts.responseUrlFieldName];
-
-          var uploadResp = {
-            status: data.response.status,
-            body: body,
-            uploadURL: uploadURL
-          };
-
-          _this3.uppy.emit('upload-success', file, uploadResp);
-          socket.close();
-          return resolve();
-        });
-
-        socket.on('error', function (errData) {
-          var resp = errData.response;
-          var error = resp ? opts.getResponseError(resp.responseText, resp) : _extends(new Error(errData.error.message), { cause: errData.error });
-          _this3.uppy.emit('upload-error', file, error);
-          reject(error);
-        });
-      });
-    });
-  };
-
-  XHRUpload.prototype.uploadBundle = function uploadBundle(files) {
-    var _this4 = this;
-
-    return new Promise(function (resolve, reject) {
-      var endpoint = _this4.opts.endpoint;
-      var method = _this4.opts.method;
-
-      var formData = new FormData();
-      files.forEach(function (file, i) {
-        var opts = _this4.getOptions(file);
-        formData.append(opts.fieldName, file.data);
-      });
-
-      var xhr = new XMLHttpRequest();
-
-      var timer = _this4.createProgressTimeout(_this4.opts.timeout, function (error) {
-        xhr.abort();
-        emitError(error);
-        reject(error);
-      });
-
-      var emitError = function emitError(error) {
-        files.forEach(function (file) {
-          _this4.uppy.emit('upload-error', file, error);
-        });
-      };
-
-      xhr.upload.addEventListener('loadstart', function (ev) {
-        _this4.uppy.log('[XHRUpload] started uploading bundle');
-        timer.progress();
-      });
-
-      xhr.upload.addEventListener('progress', function (ev) {
-        timer.progress();
-
-        if (!ev.lengthComputable) return;
-
-        files.forEach(function (file) {
-          _this4.uppy.emit('upload-progress', file, {
-            uploader: _this4,
-            bytesUploaded: ev.loaded / ev.total * file.size,
-            bytesTotal: file.size
-          });
-        });
-      });
-
-      xhr.addEventListener('load', function (ev) {
-        timer.done();
-
-        if (ev.target.status >= 200 && ev.target.status < 300) {
-          var body = _this4.opts.getResponseData(xhr.responseText, xhr);
-          var uploadResp = {
-            status: ev.target.status,
-            body: body
-          };
-          files.forEach(function (file) {
-            _this4.uppy.emit('upload-success', file, uploadResp);
-          });
-          return resolve();
-        }
-
-        var error = _this4.opts.getResponseError(xhr.responseText, xhr) || new Error('Upload error');
-        error.request = xhr;
-        emitError(error);
-        return reject(error);
-      });
-
-      xhr.addEventListener('error', function (ev) {
-        timer.done();
-
-        var error = _this4.opts.getResponseError(xhr.responseText, xhr) || new Error('Upload error');
-        emitError(error);
-        return reject(error);
-      });
-
-      _this4.uppy.on('cancel-all', function () {
-        timer.done();
-        xhr.abort();
-      });
-
-      xhr.open(method.toUpperCase(), endpoint, true);
-      // IE10 does not allow setting `withCredentials` and `responseType`
-      // before `open()` is called.
-      xhr.withCredentials = _this4.opts.withCredentials;
-      if (_this4.opts.responseType !== '') {
-        xhr.responseType = _this4.opts.responseType;
-      }
-
-      Object.keys(_this4.opts.headers).forEach(function (header) {
-        xhr.setRequestHeader(header, _this4.opts.headers[header]);
-      });
-
-      xhr.send(formData);
-
-      files.forEach(function (file) {
-        _this4.uppy.emit('upload-started', file);
-      });
-    });
-  };
-
-  XHRUpload.prototype.uploadFiles = function uploadFiles(files) {
-    var _this5 = this;
-
-    var actions = files.map(function (file, i) {
-      var current = parseInt(i, 10) + 1;
-      var total = files.length;
-
-      if (file.error) {
-        return function () {
-          return Promise.reject(new Error(file.error));
-        };
-      } else if (file.isRemote) {
-        // We emit upload-started here, so that it's also emitted for files
-        // that have to wait due to the `limit` option.
-        _this5.uppy.emit('upload-started', file);
-        return _this5.uploadRemote.bind(_this5, file, current, total);
-      } else {
-        _this5.uppy.emit('upload-started', file);
-        return _this5.upload.bind(_this5, file, current, total);
-      }
-    });
-
-    var promises = actions.map(function (action) {
-      var limitedAction = _this5.limitUploads(action);
-      return limitedAction();
-    });
-
-    return settle(promises);
-  };
-
-  XHRUpload.prototype.handleUpload = function handleUpload(fileIDs) {
-    var _this6 = this;
-
-    if (fileIDs.length === 0) {
-      this.uppy.log('[XHRUpload] No files to upload!');
-      return Promise.resolve();
-    }
-
-    this.uppy.log('[XHRUpload] Uploading...');
-    var files = fileIDs.map(function (fileID) {
-      return _this6.uppy.getFile(fileID);
-    });
-
-    if (this.opts.bundle) {
-      return this.uploadBundle(files);
-    }
-
-    return this.uploadFiles(files).then(function () {
-      return null;
-    });
-  };
-
-  XHRUpload.prototype.install = function install() {
-    if (this.opts.bundle) {
-      this.uppy.setState({
-        capabilities: _extends({}, this.uppy.getState().capabilities, {
-          bundled: true
-        })
-      });
-    }
-
-    this.uppy.addUploader(this.handleUpload);
-  };
-
-  XHRUpload.prototype.uninstall = function uninstall() {
-    if (this.opts.bundle) {
-      this.uppy.setState({
-        capabilities: _extends({}, this.uppy.getState().capabilities, {
-          bundled: true
-        })
-      });
-    }
-
-    this.uppy.removeUploader(this.handleUpload);
-  };
-
-  return XHRUpload;
-}(Plugin);
 
 /***/ }),
 
@@ -8558,10 +9464,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownContent.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DropdownContent.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dropdown.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dropdown.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -8573,68 +9479,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    this.element = this.$el;
-  },
+  props: ['classes'],
   data: function data() {
     return {
-      element: null
+      isOpen: false
     };
   },
-  methods: {
-    hide: function hide() {
-      this.$emit('hideDropdown');
+  watch: {
+    isOpen: function isOpen(_isOpen) {
+      if (_isOpen) {
+        document.addEventListener('click', this.closeOpenedDropdown);
+      }
     }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownItem.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DropdownItem.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['href']
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownToggler.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DropdownToggler.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['visible'],
+  },
   methods: {
-    click: function click() {
-      this.$emit('toggle');
+    closeOpenedDropdown: function closeOpenedDropdown(event) {
+      if (!event.target.closest('.dropdown')) {
+        this.isOpen = false;
+      }
     }
   }
 });
@@ -8698,20 +9569,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['message'],
   data: function data() {
     return {
-      body: '',
+      body: this.message,
       level: 'success',
-      show: false
+      show: false,
+      speed: 5000
     };
   },
   created: function created() {
     var _this = this;
 
+    console.log(this.level);
+
     if (this.message) {
-      this.flash(this.message);
+      this.flash();
     }
 
     window.events.$on('flash', function (data) {
@@ -8720,8 +9599,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     flash: function flash(data) {
-      this.body = data.message;
-      this.level = data.level;
+      if (data) {
+        this.body = data.message;
+        this.level = data.level;
+      }
+
       this.show = true;
       this.hide();
     },
@@ -8730,7 +9612,7 @@ __webpack_require__.r(__webpack_exports__);
 
       setTimeout(function () {
         _this2.show = false;
-      }, 3000);
+      }, this.speed);
     }
   }
 });
@@ -8764,124 +9646,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     onClose: function onClose() {
       this.$emit('closeModal');
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NavbarDropdown.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NavbarDropdown.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DropdownToggler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DropdownToggler */ "./resources/js/components/DropdownToggler.vue");
-/* harmony import */ var _DropdownContent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DropdownContent */ "./resources/js/components/DropdownContent.vue");
-/* harmony import */ var _DropdownItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DropdownItem */ "./resources/js/components/DropdownItem.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    DropdownToggler: _DropdownToggler__WEBPACK_IMPORTED_MODULE_0__["default"],
-    DropdownContent: _DropdownContent__WEBPACK_IMPORTED_MODULE_1__["default"],
-    DropdownItem: _DropdownItem__WEBPACK_IMPORTED_MODULE_2__["default"]
-  },
-  data: function data() {
-    return {
-      user: false,
-      isSignedIn: false,
-      show: false,
-      token: null,
-      data: null
-    };
-  },
-  created: function created() {
-    var _this = this;
-
-    this.token = document.querySelector('meta[name="csrf-token"]').content;
-    this.isSignedIn = this.signedIn;
-    this.user = this.signedInUser;
-    window.events.$on('userCreated', function (data) {
-      return _this.showUser(data);
-    });
-  },
-  computed: {
-    signedIn: function signedIn() {
-      return window.Redpencilit.signed;
-    },
-    signedInUser: function signedInUser() {
-      return window.Redpencilit.user;
-    },
-    dashboard: function dashboard() {
-      return '/dashboard/' + this.user.username;
-    }
-  },
-  methods: {
-    toggleDropdown: function toggleDropdown() {
-      this.show = !this.show;
-    },
-    closeDropdown: function closeDropdown() {
-      this.show = false;
-    },
-    logout: function logout() {
-      document.getElementById('logout-form').submit();
-    },
-    showUser: function showUser(data) {
-      this.user = data.user;
-      this.token = data.token;
-      this.isSignedIn = true;
     }
   }
 });
@@ -9108,6 +9876,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -9118,22 +9887,27 @@ __webpack_require__.r(__webpack_exports__);
       password: '',
       password_confirmation: '',
       phone: '',
-      errors: new _Errors_js__WEBPACK_IMPORTED_MODULE_0__["default"]()
+      errors: new _Errors_js__WEBPACK_IMPORTED_MODULE_0__["default"](),
+      buttonText: 'تائید'
     };
   },
   methods: {
     submitForm: function submitForm() {
       var _this = this;
 
+      this.buttonText = '<img src="/images/three-dots.svg" class="loader">';
       axios.post('/register', this.$data).then(function (response) {
-        flash('حساب شما با موفقیت ایجاد شد.');
+        flash('حساب شما با موفقیت ایجاد شد. لطفا قبل از بارگذاری فایل‌ها، وارد ایمیلتان شوید و حساب خودتان را فعال کنید.');
 
         if (response.data.status === 200) {
+          _this.buttonText = '<i class="fas fa-check">';
           window.events.$emit('userCreated', response.data);
 
           _this.$emit('userRegistered', response.data);
         }
       }).catch(function (error) {
+        _this.buttonText = 'تائید';
+
         _this.errors.record(error.response.data.errors);
       });
     }
@@ -9151,14 +9925,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _uppy_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @uppy/core */ "./node_modules/@uppy/core/lib/index.js");
-/* harmony import */ var _uppy_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_uppy_core__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _uppy_dashboard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @uppy/dashboard */ "./node_modules/@uppy/dashboard/lib/index.js");
-/* harmony import */ var _uppy_dashboard__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_uppy_dashboard__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _uppy_xhr_upload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @uppy/xhr-upload */ "./node_modules/@uppy/xhr-upload/lib/index.js");
-/* harmony import */ var _uppy_xhr_upload__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_uppy_xhr_upload__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _settings_uppy_dashboard__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../settings/uppy-dashboard */ "./resources/js/settings/uppy-dashboard.js");
-/* harmony import */ var _settings_uppy__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../settings/uppy */ "./resources/js/settings/uppy.js");
+/* harmony import */ var _settings_uppy_dashboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../settings/uppy-dashboard */ "./resources/js/settings/uppy-dashboard.js");
+/* harmony import */ var _settings_uppy__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../settings/uppy */ "./resources/js/settings/uppy.js");
 //
 //
 //
@@ -9167,8 +9935,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+var Uppy = __webpack_require__(/*! @uppy/core */ "./node_modules/@uppy/core/lib/index.js");
 
+var XHRUpload = __webpack_require__(/*! @uppy/xhr-upload */ "./node_modules/@uppy/xhr-upload/lib/index.js");
 
+var Dashboard = __webpack_require__(/*! @uppy/dashboard */ "./node_modules/@uppy/dashboard/lib/index.js");
 
 
 
@@ -9177,26 +9948,25 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       uppy: null,
-      articles: [],
-      test: false,
+      documents: [],
       endpoint: null
     };
   },
   created: function created() {
     if (!this.user) {
-      this.endpoint = "/users/".concat(window.Redpencilit.user.username, "/documents");
+      this.endpoint = "/users/".concat(window.Redpencilit.user.username, "/orders");
     } else {
-      this.endpoint = "/users/".concat(this.user.username, "/documents");
+      this.endpoint = "/users/".concat(this.user.username, "/orders");
     }
   },
   mounted: function mounted() {
     var _this = this;
 
     var token = this.token ? this.token : document.getElementById('csrf').getAttribute('content');
-    var uppy = _uppy_core__WEBPACK_IMPORTED_MODULE_0___default()(_settings_uppy__WEBPACK_IMPORTED_MODULE_4__["uppy_settings"]).use(_uppy_dashboard__WEBPACK_IMPORTED_MODULE_1___default.a, _settings_uppy_dashboard__WEBPACK_IMPORTED_MODULE_3__["dashboard_settings"]).use(_uppy_xhr_upload__WEBPACK_IMPORTED_MODULE_2___default.a, {
+    var uppy = Uppy(_settings_uppy__WEBPACK_IMPORTED_MODULE_1__["uppy_settings"]).use(Dashboard, _settings_uppy_dashboard__WEBPACK_IMPORTED_MODULE_0__["dashboard_settings"]).use(XHRUpload, {
       endpoint: this.endpoint,
       bundle: true,
-      fieldName: 'articles[]',
+      fieldName: 'documents[]',
       headers: {
         'X-CSRF-TOKEN': token
       },
@@ -9206,7 +9976,7 @@ __webpack_require__.r(__webpack_exports__);
     });
     this.uppy = uppy;
     uppy.on('upload-success', function (file, response) {
-      _this.$emit('fileUploaded', response.body);
+      _this.$emit('fileUploaded', response.body.data);
     });
   }
 });
@@ -9591,8 +10361,62 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jalali_moment__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(jalali_moment__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _PersianNumber_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../PersianNumber.js */ "./resources/js/PersianNumber.js");
 /* harmony import */ var _components_Modal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Modal */ "./resources/js/components/Modal.vue");
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -9799,13 +10623,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.selected && this.words;
     }
   },
-  created: function created() {
+  mounted: function mounted() {
     this.options = this.services;
     this.step = window.Redpencilit.signed ? 2 : 1;
     this.user = window.Redpencilit.user ? window.Redpencilit.user : null;
   },
   data: function data() {
-    return _defineProperty({
+    return {
       selected: '',
       words: 0,
       options: null,
@@ -9817,16 +10641,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       step: 1,
       price: 0,
       persianNumber: new _PersianNumber_js__WEBPACK_IMPORTED_MODULE_5__["default"](),
-      modal: false
-    }, "token", null);
+      modal: false,
+      order: null,
+      documents: []
+    };
   },
   methods: {
-    setWords: function setWords(data) {
-      var m = jalali_moment__WEBPACK_IMPORTED_MODULE_4___default()(data.date_available);
+    generateSettings: function generateSettings(order) {
+      this.order = order;
+      this.words = this.order.total_words;
+      this.price = this.order.price;
+      var m = jalali_moment__WEBPACK_IMPORTED_MODULE_4___default()(order.delivery_date);
       m.locale('fa');
-      this.words = data.words;
-      this.price = data.price;
-      this.token = data.token;
       this.deliverDate = m.format('DD') + ' ' + m.format('MMMM') + ' ' + m.format('YYYY');
     },
     onSelect: function onSelect() {
@@ -9841,17 +10667,69 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.login = true;
       this.user = data.user;
       this.token = data.token;
+      this.step = 2;
+      window.axios.defaults.headers.common = {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': data.token
+      };
     },
     requestToCancel: function requestToCancel() {
       this.modal = true;
     },
     cancelIt: function cancelIt() {
-      axios.delete("/users/".concat(this.user.username, "/documents/").concat(this.token)).then(function (response) {
+      axios.delete("/users/".concat(this.user.username, "/orders/").concat(this.order.id)).then(function (response) {
         if (response.data.status === 200) {
           window.location.reload();
         }
       }).catch(function (error) {
-        flash('با عرض پوزش سیستم با خطا مواجه شد. لطفا دوباره سعی کنید.');
+        flash('با عرض پوزش سیستم با خطا مواجه شد. لطفا دوباره سعی کنید.', 'danger');
+      });
+    },
+    service: function service(selected) {
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        for (var _iterator = this.services[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var item = _step.value;
+
+          if (item.id === parseInt(selected)) {
+            return item.name;
+          }
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return != null) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+    },
+    saveSecondStep: function saveSecondStep() {
+      var _this2 = this;
+
+      var formData = new FormData();
+      formData.append('service', this.service);
+      axios.post("/users/".concat(this.user.username, "/drafts"), {
+        'service_id': this.selected,
+        'order_id': this.order.id
+      }).then(function (res) {
+        if (res.status === 200) {
+          flash('مرحله دوم با موفقیت به اتمام رسید.ِ');
+        }
+
+        _this2.step++;
+      }).catch(function (error) {
+        flash('متاسفانه مشکلی در ذخیره سازی اطلاعات پیش‌ آمد. لطفا مجددا سعی کنید.', 'danger');
+        return;
       });
     }
   }
@@ -10020,6 +10898,25 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dropdown.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dropdown.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".collapse-enter-active,\n.collapse-leave-active {\n  transition: all .5s;\n  -webkit-transform: translateY(0);\n          transform: translateY(0);\n}\n.collapse-enter,\n.collapse-leave-to {\n  opacity: 0;\n  -webkit-transform: translateY(7px);\n          transform: translateY(7px);\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Flash.vue?vue&type=style&index=0&lang=css&":
 /*!***********************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Flash.vue?vue&type=style&index=0&lang=css& ***!
@@ -10032,7 +10929,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".alert {\n  border-bottom: 1px solid white;\n}\n", ""]);
+exports.push([module.i, ".alert {\n  border-bottom: 1px solid white;\n}\n.alert::before {\n  content: '';\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  height: 3px;\n  width: 100%;\n}\n.alert--success::before {\n  background-color: #b2f5ea;\n}\n.alert--danger::before {\n  background-color: #fed7d7;\n}\n.alert::after {\n  content: '';\n  position: absolute;\n  right: 0;\n  bottom: 0;\n  height: 3px;\n  width: 0;\n}\n.alert::after {\n  -webkit-animation: slide 5s ease-in;\n          animation: slide 5s ease-in;\n}\n.alert--success::after {\n  background-color: #4fd1c5;\n}\n.alert--danger::after {\n  background-color: #f56565;\n}\n@-webkit-keyframes slide {\nfrom {\n    width: 0;\n}\nto {\n    width: 100%;\n}\n}\n@keyframes slide {\nfrom {\n    width: 0;\n}\nto {\n    width: 100%;\n}\n}\n", ""]);
 
 // exports
 
@@ -10280,243 +11177,6 @@ module.exports = getRandomValue;
 module.exports = function pad (num, size) {
   var s = '000000000' + num;
   return s.substr(s.length - size);
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/drag-drop/index.js":
-/*!*****************************************!*\
-  !*** ./node_modules/drag-drop/index.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = dragDrop
-
-var flatten = __webpack_require__(/*! flatten */ "./node_modules/flatten/index.js")
-var parallel = __webpack_require__(/*! run-parallel */ "./node_modules/run-parallel/index.js")
-
-function dragDrop (elem, listeners) {
-  if (typeof elem === 'string') {
-    var selector = elem
-    elem = window.document.querySelector(elem)
-    if (!elem) {
-      throw new Error('"' + selector + '" does not match any HTML elements')
-    }
-  }
-
-  if (!elem) {
-    throw new Error('"' + elem + '" is not a valid HTML element')
-  }
-
-  if (typeof listeners === 'function') {
-    listeners = { onDrop: listeners }
-  }
-
-  var timeout
-
-  elem.addEventListener('dragenter', onDragEnter, false)
-  elem.addEventListener('dragover', onDragOver, false)
-  elem.addEventListener('dragleave', onDragLeave, false)
-  elem.addEventListener('drop', onDrop, false)
-
-  // Function to remove drag-drop listeners
-  return function remove () {
-    removeDragClass()
-    elem.removeEventListener('dragenter', onDragEnter, false)
-    elem.removeEventListener('dragover', onDragOver, false)
-    elem.removeEventListener('dragleave', onDragLeave, false)
-    elem.removeEventListener('drop', onDrop, false)
-  }
-
-  function onDragEnter (e) {
-    if (listeners.onDragEnter) {
-      listeners.onDragEnter(e)
-    }
-
-    // Prevent event
-    e.stopPropagation()
-    e.preventDefault()
-    return false
-  }
-
-  function onDragOver (e) {
-    e.stopPropagation()
-    e.preventDefault()
-    if (e.dataTransfer.items) {
-      // Only add "drag" class when `items` contains items that are able to be
-      // handled by the registered listeners (files vs. text)
-      var items = toArray(e.dataTransfer.items)
-      var fileItems = items.filter(function (item) { return item.kind === 'file' })
-      var textItems = items.filter(function (item) { return item.kind === 'string' })
-
-      if (fileItems.length === 0 && !listeners.onDropText) return
-      if (textItems.length === 0 && !listeners.onDrop) return
-      if (fileItems.length === 0 && textItems.length === 0) return
-    }
-
-    elem.classList.add('drag')
-    clearTimeout(timeout)
-
-    if (listeners.onDragOver) {
-      listeners.onDragOver(e)
-    }
-
-    e.dataTransfer.dropEffect = 'copy'
-    return false
-  }
-
-  function onDragLeave (e) {
-    e.stopPropagation()
-    e.preventDefault()
-
-    if (listeners.onDragLeave) {
-      listeners.onDragLeave(e)
-    }
-
-    clearTimeout(timeout)
-    timeout = setTimeout(removeDragClass, 50)
-
-    return false
-  }
-
-  function onDrop (e) {
-    e.stopPropagation()
-    e.preventDefault()
-
-    if (listeners.onDragLeave) {
-      listeners.onDragLeave(e)
-    }
-
-    clearTimeout(timeout)
-    removeDragClass()
-
-    var pos = {
-      x: e.clientX,
-      y: e.clientY
-    }
-
-    // text drop support
-    var text = e.dataTransfer.getData('text')
-    if (text && listeners.onDropText) {
-      listeners.onDropText(text, pos)
-    }
-
-    // file drop support
-    if (e.dataTransfer.items) {
-      // Handle directories in Chrome using the proprietary FileSystem API
-      var items = toArray(e.dataTransfer.items).filter(function (item) {
-        return item.kind === 'file'
-      })
-
-      if (items.length === 0) return
-
-      parallel(items.map(function (item) {
-        return function (cb) {
-          processEntry(item.webkitGetAsEntry(), cb)
-        }
-      }), function (err, results) {
-        // This catches permission errors with file:// in Chrome. This should never
-        // throw in production code, so the user does not need to use try-catch.
-        if (err) throw err
-        if (listeners.onDrop) {
-          listeners.onDrop(flatten(results), pos)
-        }
-      })
-    } else {
-      var files = toArray(e.dataTransfer.files)
-
-      if (files.length === 0) return
-
-      files.forEach(function (file) {
-        file.fullPath = '/' + file.name
-      })
-
-      if (listeners.onDrop) {
-        listeners.onDrop(files, pos)
-      }
-    }
-
-    return false
-  }
-
-  function removeDragClass () {
-    elem.classList.remove('drag')
-  }
-}
-
-function processEntry (entry, cb) {
-  var entries = []
-
-  if (entry.isFile) {
-    entry.file(function (file) {
-      file.fullPath = entry.fullPath // preserve pathing for consumer
-      cb(null, file)
-    }, function (err) {
-      cb(err)
-    })
-  } else if (entry.isDirectory) {
-    var reader = entry.createReader()
-    readEntries()
-  }
-
-  function readEntries () {
-    reader.readEntries(function (entries_) {
-      if (entries_.length > 0) {
-        entries = entries.concat(toArray(entries_))
-        readEntries() // continue reading entries until `readEntries` returns no more
-      } else {
-        doneEntries()
-      }
-    })
-  }
-
-  function doneEntries () {
-    parallel(entries.map(function (entry) {
-      return function (cb) {
-        processEntry(entry, cb)
-      }
-    }), cb)
-  }
-}
-
-function toArray (list) {
-  return Array.prototype.slice.call(list || [], 0)
-}
-
-
-/***/ }),
-
-/***/ "./node_modules/flatten/index.js":
-/*!***************************************!*\
-  !*** ./node_modules/flatten/index.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = function flatten(list, depth) {
-  depth = (typeof depth == 'number') ? depth : Infinity;
-
-  if (!depth) {
-    if (Array.isArray(list)) {
-      return list.map(function(i) { return i; });
-    }
-    return list;
-  }
-
-  return _flatten(list, 1);
-
-  function _flatten(list, d) {
-    return list.reduce(function (acc, item) {
-      if (Array.isArray(item) && d < depth) {
-        return acc.concat(_flatten(item, d + 1));
-      }
-      else {
-        return acc.concat(item);
-      }
-    }, []);
-  }
 };
 
 
@@ -49723,66 +50383,6 @@ var index = (function () {
 
 /***/ }),
 
-/***/ "./node_modules/run-parallel/index.js":
-/*!********************************************!*\
-  !*** ./node_modules/run-parallel/index.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {module.exports = runParallel
-
-function runParallel (tasks, cb) {
-  var results, pending, keys
-  var isSync = true
-
-  if (Array.isArray(tasks)) {
-    results = []
-    pending = tasks.length
-  } else {
-    keys = Object.keys(tasks)
-    results = {}
-    pending = keys.length
-  }
-
-  function done (err) {
-    function end () {
-      if (cb) cb(err, results)
-      cb = null
-    }
-    if (isSync) process.nextTick(end)
-    else end()
-  }
-
-  function each (i, err, result) {
-    results[i] = result
-    if (--pending === 0 || err) {
-      done(err)
-    }
-  }
-
-  if (!pending) {
-    // empty
-    done(null)
-  } else if (keys) {
-    // object
-    keys.forEach(function (key) {
-      tasks[key](function (err, result) { each(key, err, result) })
-    })
-  } else {
-    // array
-    tasks.forEach(function (task, i) {
-      task(function (err, result) { each(i, err, result) })
-    })
-  }
-
-  isSync = false
-}
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../process/browser.js */ "./node_modules/process/browser.js")))
-
-/***/ }),
-
 /***/ "./node_modules/setimmediate/setImmediate.js":
 /*!***************************************************!*\
   !*** ./node_modules/setimmediate/setImmediate.js ***!
@@ -49978,6 +50578,36 @@ function runParallel (tasks, cb) {
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ "./node_modules/webpack/buildin/global.js"), __webpack_require__(/*! ./../process/browser.js */ "./node_modules/process/browser.js")))
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dropdown.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dropdown.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Dropdown.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dropdown.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
 
 /***/ }),
 
@@ -50638,10 +51268,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownContent.vue?vue&type=template&id=8a7388e6&":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DropdownContent.vue?vue&type=template&id=8a7388e6& ***!
-  \******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dropdown.vue?vue&type=template&id=ef782e08&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Dropdown.vue?vue&type=template&id=ef782e08& ***!
+  \***********************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -50654,84 +51284,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "ul",
-    {
-      directives: [
-        {
-          name: "dropdown-outside-click",
-          rawName: "v-dropdown-outside-click",
-          value: { ref: "dropdown", method: "hide" },
-          expression: "{ ref: 'dropdown', method: 'hide' }"
-        }
-      ],
-      staticClass: "mt-3"
-    },
-    [_vm._t("default")],
-    2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownItem.vue?vue&type=template&id=1bc796a2&":
-/*!***************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DropdownItem.vue?vue&type=template&id=1bc796a2& ***!
-  \***************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("li", [
-    _c("a", { attrs: { href: _vm.href } }, [_vm._t("default")], 2)
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownToggler.vue?vue&type=template&id=a708c79c&":
-/*!******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/DropdownToggler.vue?vue&type=template&id=a708c79c& ***!
-  \******************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "button",
-    {
-      staticClass:
-        "button button--outline button--outline--danger dropdown-toggler",
-      attrs: { id: "dropdown" },
-      on: { click: _vm.click }
-    },
+    "div",
+    { staticClass: "dropdown", class: _vm.classes },
     [
-      _vm._t("default"),
+      _c(
+        "div",
+        {
+          on: {
+            click: function($event) {
+              _vm.isOpen = !_vm.isOpen
+            }
+          }
+        },
+        [_vm._t("toggler")],
+        2
+      ),
       _vm._v(" "),
-      _c("i", { staticClass: "fas fa-caret-down" })
+      _c("transition", { attrs: { name: "collapse" } }, [
+        _vm.isOpen ? _c("div", [_vm._t("default")], 2) : _vm._e()
+      ])
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -50815,16 +51388,24 @@ var render = function() {
           [
             _vm.level === "success"
               ? _c("span", { staticClass: "alert__mark" }, [
-                  _c("i", { staticClass: "fas fa-check" })
+                  _c("img", {
+                    attrs: { src: "/images/success.svg", alt: "astronant" }
+                  })
                 ])
               : _vm._e(),
             _vm._v(" "),
             _vm.level === "danger"
               ? _c("span", { staticClass: "alert__mark" }, [
-                  _c("i", { staticClass: "fas fa-times" })
+                  _c("img", {
+                    attrs: {
+                      src: "/images/warning.svg",
+                      alt: "a woman show warning"
+                    }
+                  })
                 ])
               : _vm._e(),
-            _vm._v("\n\n        " + _vm._s(_vm.body) + "\n    ")
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.body))])
           ]
         )
       : _vm._e()
@@ -50854,7 +51435,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "modal" }, [
     _c("span", { staticClass: "modal__close" }, [
-      _c("i", { staticClass: "fas fa-times", on: { click: _vm.onClose } })
+      _c("img", {
+        attrs: { src: "/images/cross-out.svg", alt: "cross out icon" },
+        on: { click: _vm.onClose }
+      })
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "modal__wrapper" }, [
@@ -50863,126 +51447,6 @@ var render = function() {
       _c("div", { staticClass: "modal__footer" }, [_vm._t("footer")], 2)
     ])
   ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NavbarDropdown.vue?vue&type=template&id=5fabd228&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/NavbarDropdown.vue?vue&type=template&id=5fabd228& ***!
-  \*****************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "text-left dropdown" },
-    [
-      _c(
-        "dropdown-toggler",
-        { attrs: { visibile: "show" }, on: { toggle: _vm.toggleDropdown } },
-        [
-          _vm._v(
-            "\n        " +
-              _vm._s(_vm.user ? _vm.user.name : "حساب کاربری") +
-              "\n    "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.show,
-              expression: "show"
-            }
-          ],
-          staticClass: "dropdown__content dropdown__content--left"
-        },
-        [
-          !_vm.isSignedIn
-            ? _c(
-                "dropdown-content",
-                { on: { hideDropdown: _vm.closeDropdown } },
-                [
-                  _c("dropdown-item", { attrs: { href: "/login" } }, [
-                    _c("i", { staticClass: "fas fa-sign-out-alt" }),
-                    _vm._v(
-                      "\n                ورود به حساب کاربری\n            "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("dropdown-item", { attrs: { href: "/register" } }, [
-                    _c("i", { staticClass: "fas fa-user-plus" }),
-                    _vm._v("\n                ثبت‌نام\n            ")
-                  ])
-                ],
-                1
-              )
-            : _c(
-                "dropdown-content",
-                { on: { hideDropdown: _vm.closeDropdown } },
-                [
-                  _c("dropdown-item", { attrs: { href: _vm.dashboard } }, [
-                    _c("i", { staticClass: "fas fa-tachometer-alt" }),
-                    _vm._v("\n               داشبورد\n            ")
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { on: { click: _vm.logout } },
-                    [
-                      _c("dropdown-item", { attrs: { href: "#" } }, [
-                        _c("i", { staticClass: "fas fa-sign-out-alt" }),
-                        _vm._v(
-                          "\n                    خروج از حساب کاربری\n\n                    "
-                        ),
-                        _c(
-                          "form",
-                          {
-                            staticStyle: { display: "none" },
-                            attrs: {
-                              id: "logout-form",
-                              action: "/logout",
-                              method: "POST"
-                            }
-                          },
-                          [
-                            _c("input", {
-                              attrs: { type: "hidden", name: "_token" },
-                              domProps: { value: _vm.token }
-                            })
-                          ]
-                        )
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-        ],
-        1
-      )
-    ],
-    1
-  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -51441,14 +51905,11 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "form-group" }, [
-      _c(
-        "button",
-        {
-          staticClass: "button button--primary button--block",
-          on: { click: _vm.submitForm }
-        },
-        [_vm._v("تائید")]
-      )
+      _c("button", {
+        staticClass: "button button--primary button--block",
+        domProps: { innerHTML: _vm._s(_vm.buttonText) },
+        on: { click: _vm.submitForm }
+      })
     ])
   ])
 }
@@ -52419,7 +52880,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "بله\n                    مطمئنم.\n                    حذف\n                    کن!"
+                              "بله\n                    مطمئنم.\n                    حذف\n                    کن!\n                "
                             )
                           ]
                         )
@@ -52554,7 +53015,7 @@ var render = function() {
                 _c("uploader-file", {
                   staticClass: "mb-12",
                   attrs: { user: _vm.user, token: _vm.token },
-                  on: { fileUploaded: _vm.setWords }
+                  on: { fileUploaded: _vm.generateSettings }
                 }),
                 _vm._v(" "),
                 _c(
@@ -52639,7 +53100,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "برای کتاب، محاسبه قیمت و زمان به صورت توافقی می‌باشد. لطفا\n                            در مرحله‌ بعد\n                            آدرس ایمیل و\n                            شماره\n                            تماس خود را وارد کنید تا در اسرع وقت برای هماهنگی‌های لازم با شما ارتباط برقرار شود. پبشاپیش\n                            از شکیبایی شما متشکریم."
+                              "برای کتاب، محاسبه قیمت و زمان به صورت توافقی\n                            می‌باشد. لطفا در مرحله‌ بعد آدرس ایمیل و شماره\n                            تماس خود را وارد کنید تا در اسرع وقت برای هماهنگی‌های لازم با شما ارتباط برقرار شود.\n                            پبشاپیش از شکیبایی شما متشکریم."
                             )
                           ]
                         )
@@ -52698,7 +53159,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "اگر زمان مورد نظر فراتر از انتظار شماست، می‌توانید\n                    جهت\n                    هماهنگی، با\n                    پشتیبانی\n                    تماس حاصل فرمایید."
+                            "اگر زمان مورد نظر فراتر از انتظار شماست،\n                        می‌توانید جهت هماهنگی، با پشتیبانی تماس حاصل فرمایید."
                           )
                         ]
                       ),
@@ -52809,11 +53270,7 @@ var render = function() {
                             "button",
                             {
                               staticClass: "button button--primary mb-3",
-                              on: {
-                                click: function($event) {
-                                  _vm.step++
-                                }
-                              }
+                              on: { click: _vm.saveSecondStep }
                             },
                             [_vm._v("مرحله بعد")]
                           ),
@@ -52824,7 +53281,6 @@ var render = function() {
                               {
                                 staticClass:
                                   "text-grey-dark text-sm no-underline",
-                                attrs: { href: "#" },
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
@@ -52832,7 +53288,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("\n                        انصراف")]
+                              [
+                                _vm._v(
+                                  "\n                            انصراف\n                        "
+                                )
+                              ]
                             )
                           ])
                         ])
@@ -52846,7 +53306,147 @@ var render = function() {
         _vm._v(" "),
         _vm.step === 3
           ? _c("div", { staticClass: "upload-section" }, [
-              _c("div", { staticClass: "flex w-3/4 mx-auto" })
+              _c(
+                "div",
+                { staticClass: "w-3/4 mx-auto bg-white pt-6 pb-3 mb-12" },
+                [
+                  _vm._m(5),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "flex" }, [
+                    _c(
+                      "section",
+                      {
+                        staticClass:
+                          "px-6 w-1/3 text-center border-l border-grey-lighter"
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "mb-3 h-24",
+                          attrs: {
+                            src: "/images/uploaded-articles.svg",
+                            alt: "vector two people and monitor"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("h3", { staticClass: "text-grey-dark mb-3" }, [
+                          _vm._v("تعداد فایل‌های آپلود شده")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "list" }, [
+                          _c("li", [
+                            _vm._v(
+                              _vm._s(
+                                _vm.persianNumber.toPersian(
+                                  this.order.details.length
+                                )
+                              ) + " فایل"
+                            )
+                          ])
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "section",
+                      {
+                        staticClass:
+                          "px-6 w-1/3 text-center border-l border-grey-lighter"
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "mb-3 h-24",
+                          attrs: {
+                            src: "/images/selected-services.svg",
+                            alt: "vector girl and rounded icons"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("h3", { staticClass: "text-grey-dark mb-3" }, [
+                          _vm._v("سرویس‌های انتخاب شده")
+                        ]),
+                        _vm._v(" "),
+                        _c("ul", { staticClass: "list" }, [
+                          _c("li", {
+                            domProps: {
+                              textContent: _vm._s(_vm.service(_vm.selected))
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("li", [
+                            _vm._v(
+                              "تاریخ تحویل: " +
+                                _vm._s(
+                                  _vm.persianNumber.toPersian(_vm.deliverDate)
+                                )
+                            )
+                          ])
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("section", { staticClass: "px-6 w-1/3 text-center" }, [
+                      _c("img", {
+                        staticClass: "mb-3 h-24",
+                        attrs: {
+                          src: "/images/price.svg",
+                          alt: "vector payment cart"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("h3", { staticClass: "text-grey-dark mb-3" }, [
+                        _vm._v("هزینه قابل پرداخت")
+                      ]),
+                      _vm._v(" "),
+                      _c("ul", { staticClass: "list" }, [
+                        _c("li", [
+                          _vm._v(
+                            _vm._s(_vm.persianNumber.toPersian(_vm.words)) +
+                              " کلمه"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _vm._v(
+                            _vm._s(_vm.persianNumber.toPersian(_vm.price)) +
+                              " تومان"
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "w-3/4 mx-auto flex mb-12",
+                  staticStyle: { "min-height": "240px" }
+                },
+                [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "w-3/5 flex items-center justify-center" },
+                    [
+                      _c("div", { staticClass: "text-center w-1/2" }, [
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "no-underline text-gery",
+                            attrs: { href: "#" },
+                            on: { click: _vm.requestToCancel }
+                          },
+                          [_vm._v("انصراف")]
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              )
             ])
           : _vm._e()
       ])
@@ -52902,6 +53502,45 @@ var staticRenderFns = [
         _vm._v("سرویس مورد نظر خود را انتخاب کنید")
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center" }, [
+      _c("img", {
+        staticClass: "w-1/3",
+        attrs: { src: "/images/checkmark.svg", alt: "checkmark icon" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "title-custom-bg w-2/5" }, [
+      _c("h3", { staticClass: "w-1/2 leading-normal pt-24" }, [
+        _vm._v("تایید نهایی و پرداخت")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "button button--primary button--block mb-6",
+        attrs: { href: "#" }
+      },
+      [
+        _vm._v(
+          "\n                            پرداخت\n                            "
+        ),
+        _c("i", { staticClass: "fas fa-arrow-left mr-3" })
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -65251,7 +65890,7 @@ Vue.directive('dropdown-outside-click', {
   }
 });
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue").default);
-Vue.component('navbar-dropdown', __webpack_require__(/*! ./components/NavbarDropdown.vue */ "./resources/js/components/NavbarDropdown.vue").default);
+Vue.component('dropdown', __webpack_require__(/*! ./components/Dropdown.vue */ "./resources/js/components/Dropdown.vue").default);
 Vue.component('avatar', __webpack_require__(/*! ./components/Avatar.vue */ "./resources/js/components/Avatar.vue").default);
 Vue.component('upload-view', __webpack_require__(/*! ./pages/UploadView.vue */ "./resources/js/pages/UploadView.vue").default);
 Vue.component('user-account-form', __webpack_require__(/*! ./pages/UserAccountForm.vue */ "./resources/js/pages/UserAccountForm.vue").default);
@@ -65397,18 +66036,20 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/DropdownContent.vue":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/DropdownContent.vue ***!
-  \*****************************************************/
+/***/ "./resources/js/components/Dropdown.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/Dropdown.vue ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DropdownContent_vue_vue_type_template_id_8a7388e6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DropdownContent.vue?vue&type=template&id=8a7388e6& */ "./resources/js/components/DropdownContent.vue?vue&type=template&id=8a7388e6&");
-/* harmony import */ var _DropdownContent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DropdownContent.vue?vue&type=script&lang=js& */ "./resources/js/components/DropdownContent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Dropdown_vue_vue_type_template_id_ef782e08___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dropdown.vue?vue&type=template&id=ef782e08& */ "./resources/js/components/Dropdown.vue?vue&type=template&id=ef782e08&");
+/* harmony import */ var _Dropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dropdown.vue?vue&type=script&lang=js& */ "./resources/js/components/Dropdown.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Dropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dropdown.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Dropdown.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -65416,10 +66057,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _DropdownContent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _DropdownContent_vue_vue_type_template_id_8a7388e6___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _DropdownContent_vue_vue_type_template_id_8a7388e6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Dropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Dropdown_vue_vue_type_template_id_ef782e08___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Dropdown_vue_vue_type_template_id_ef782e08___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -65429,176 +66070,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/DropdownContent.vue"
+component.options.__file = "resources/js/components/Dropdown.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/DropdownContent.vue?vue&type=script&lang=js&":
-/*!******************************************************************************!*\
-  !*** ./resources/js/components/DropdownContent.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************/
+/***/ "./resources/js/components/Dropdown.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/Dropdown.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownContent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DropdownContent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownContent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownContent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Dropdown.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dropdown.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/DropdownContent.vue?vue&type=template&id=8a7388e6&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/DropdownContent.vue?vue&type=template&id=8a7388e6& ***!
-  \************************************************************************************/
+/***/ "./resources/js/components/Dropdown.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/Dropdown.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Dropdown.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dropdown.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Dropdown.vue?vue&type=template&id=ef782e08&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/Dropdown.vue?vue&type=template&id=ef782e08& ***!
+  \*****************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownContent_vue_vue_type_template_id_8a7388e6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./DropdownContent.vue?vue&type=template&id=8a7388e6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownContent.vue?vue&type=template&id=8a7388e6&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownContent_vue_vue_type_template_id_8a7388e6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_template_id_ef782e08___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Dropdown.vue?vue&type=template&id=ef782e08& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Dropdown.vue?vue&type=template&id=ef782e08&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_template_id_ef782e08___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownContent_vue_vue_type_template_id_8a7388e6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/DropdownItem.vue":
-/*!**************************************************!*\
-  !*** ./resources/js/components/DropdownItem.vue ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DropdownItem_vue_vue_type_template_id_1bc796a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DropdownItem.vue?vue&type=template&id=1bc796a2& */ "./resources/js/components/DropdownItem.vue?vue&type=template&id=1bc796a2&");
-/* harmony import */ var _DropdownItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DropdownItem.vue?vue&type=script&lang=js& */ "./resources/js/components/DropdownItem.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _DropdownItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _DropdownItem_vue_vue_type_template_id_1bc796a2___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _DropdownItem_vue_vue_type_template_id_1bc796a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/DropdownItem.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/DropdownItem.vue?vue&type=script&lang=js&":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/DropdownItem.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DropdownItem.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownItem.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownItem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/DropdownItem.vue?vue&type=template&id=1bc796a2&":
-/*!*********************************************************************************!*\
-  !*** ./resources/js/components/DropdownItem.vue?vue&type=template&id=1bc796a2& ***!
-  \*********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownItem_vue_vue_type_template_id_1bc796a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./DropdownItem.vue?vue&type=template&id=1bc796a2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownItem.vue?vue&type=template&id=1bc796a2&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownItem_vue_vue_type_template_id_1bc796a2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownItem_vue_vue_type_template_id_1bc796a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/DropdownToggler.vue":
-/*!*****************************************************!*\
-  !*** ./resources/js/components/DropdownToggler.vue ***!
-  \*****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DropdownToggler_vue_vue_type_template_id_a708c79c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DropdownToggler.vue?vue&type=template&id=a708c79c& */ "./resources/js/components/DropdownToggler.vue?vue&type=template&id=a708c79c&");
-/* harmony import */ var _DropdownToggler_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DropdownToggler.vue?vue&type=script&lang=js& */ "./resources/js/components/DropdownToggler.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _DropdownToggler_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _DropdownToggler_vue_vue_type_template_id_a708c79c___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _DropdownToggler_vue_vue_type_template_id_a708c79c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/DropdownToggler.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/DropdownToggler.vue?vue&type=script&lang=js&":
-/*!******************************************************************************!*\
-  !*** ./resources/js/components/DropdownToggler.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownToggler_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./DropdownToggler.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownToggler.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownToggler_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/DropdownToggler.vue?vue&type=template&id=a708c79c&":
-/*!************************************************************************************!*\
-  !*** ./resources/js/components/DropdownToggler.vue?vue&type=template&id=a708c79c& ***!
-  \************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownToggler_vue_vue_type_template_id_a708c79c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./DropdownToggler.vue?vue&type=template&id=a708c79c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/DropdownToggler.vue?vue&type=template&id=a708c79c&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownToggler_vue_vue_type_template_id_a708c79c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DropdownToggler_vue_vue_type_template_id_a708c79c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Dropdown_vue_vue_type_template_id_ef782e08___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -65824,75 +66343,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Modal_vue_vue_type_template_id_53ab54d2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Modal_vue_vue_type_template_id_53ab54d2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/NavbarDropdown.vue":
-/*!****************************************************!*\
-  !*** ./resources/js/components/NavbarDropdown.vue ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _NavbarDropdown_vue_vue_type_template_id_5fabd228___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NavbarDropdown.vue?vue&type=template&id=5fabd228& */ "./resources/js/components/NavbarDropdown.vue?vue&type=template&id=5fabd228&");
-/* harmony import */ var _NavbarDropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavbarDropdown.vue?vue&type=script&lang=js& */ "./resources/js/components/NavbarDropdown.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _NavbarDropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _NavbarDropdown_vue_vue_type_template_id_5fabd228___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _NavbarDropdown_vue_vue_type_template_id_5fabd228___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/NavbarDropdown.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/NavbarDropdown.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/NavbarDropdown.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarDropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./NavbarDropdown.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NavbarDropdown.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarDropdown_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/NavbarDropdown.vue?vue&type=template&id=5fabd228&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/NavbarDropdown.vue?vue&type=template&id=5fabd228& ***!
-  \***********************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarDropdown_vue_vue_type_template_id_5fabd228___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./NavbarDropdown.vue?vue&type=template&id=5fabd228& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/NavbarDropdown.vue?vue&type=template&id=5fabd228&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarDropdown_vue_vue_type_template_id_5fabd228___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NavbarDropdown_vue_vue_type_template_id_5fabd228___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -66229,7 +66679,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************************************!*\
   !*** ./resources/js/pages/Services.vue?vue&type=template&id=9ad48832& ***!
   \************************************************************************/
-/*! no static exports found */
+/*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66460,10 +66910,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dashboard_settings", function() { return dashboard_settings; });
-var _strings;
+var Persian = __webpack_require__(/*! @uppy/locales/lib/fa_IR */ "./node_modules/@uppy/locales/lib/fa_IR.js");
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
+Persian.strings.dropPaste = 'فایلها را اینجا رها کنید، یا  %{browse} بارگذاری کنید.';
 var dashboard_settings = {
   id: 'file-uploader',
   disableStatusBar: false,
@@ -66479,45 +66928,7 @@ var dashboard_settings = {
   hideProgressAfterFinish: false,
   proudlyDisplayPoweredByUppy: false,
   replaceTargetContent: true,
-  locale: {
-    strings: (_strings = {
-      addingMoreFiles: 'اضافه نمودن فایل‌های بیشتر',
-      complete: 'عملیات بارگذاری تکمیل شد',
-      uploadError: 'خطا در آپلود',
-      dropPaste: 'فایل‌های خود را به داخل کادر کشیده و یا با کلیک روی %{browse} آن‌ها را ' + 'بارگذاری کنید.',
-      dropPasteImport: 'فایل‌های خود را به داخل کادر کشیده و یا با کلیک روی %{browse} آن‌ها را ' + 'بارگذاری کنید.',
-      browse: 'انتخاب فایل',
-      addMoreFiles: 'اضافه نمودن فایل',
-      dashboardTitle: 'داشبورد آپلود فایل',
-      copyLinkToClipboardSuccess: 'لینک در کلیپ‌ بورد ذخیره شد',
-      copyLinkToClipboardFallback: 'آدرس زیر را کپی کنید',
-      copyLink: 'لینک را کپی کنید',
-      done: 'انجام شد',
-      removeFile: 'حذف فایل',
-      editFile: 'ویرایش فایل',
-      editing: 'ویرایش %{file}',
-      edit: 'ویرایش',
-      finishEditingFile: 'اتمام ویرایش فایل',
-      uploadComplete: 'آپلود فایل با موفقیت به اتمام رسید',
-      resumeUpload: 'ادامه‌',
-      pauseUpload: 'توقف',
-      retryUpload: 'بارگذاری مجدد',
-      xFilesSelected: {
-        0: '%{smart_count} فایل انتخاب شد',
-        1: '%{smart_count} فایل انتخاب شد'
-      },
-      cancel: 'لغو عملیات',
-      uploading: 'در حال بارگذاری',
-      uploadFailed: 'عملیات بارگذاری انجام نشد!',
-      pleasePressRetry: 'لطفا روی گزینه آپلود مجدد کلیک کنید.',
-      paused: 'موقتا متوقف شد',
-      error: 'خطا',
-      retry: 'تلاش مجدد'
-    }, _defineProperty(_strings, "cancel", 'لفو'), _defineProperty(_strings, "retryUpload", 'دوباره آپلود کن'), _defineProperty(_strings, "pauseUpload", 'عملیات آپلود موقتا متوقف شد'), _defineProperty(_strings, "resumeUpload", 'ادامه‌ی آپلود'), _defineProperty(_strings, "cancelUpload", 'لفو آپلود'), _defineProperty(_strings, "back", 'بازگشت'), _defineProperty(_strings, "uploadXFiles", {
-      0: 'آپلود فایل',
-      1: 'آپلود فایل‌ها'
-    }), _strings)
-  }
+  locale: Persian
 };
 
 
@@ -66533,6 +66944,9 @@ var dashboard_settings = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "uppy_settings", function() { return uppy_settings; });
+var Persian = __webpack_require__(/*! @uppy/locales/lib/fa_IR */ "./node_modules/@uppy/locales/lib/fa_IR.js");
+
+Persian.strings.youCanOnlyUploadFileTypes = 'فرمت‌ فایل صحیح نیست. لطفا از فرمت docx استفاده کنید.';
 var uppy_settings = {
   restrictions: {
     allowMultipleUploads: false,
@@ -66541,19 +66955,7 @@ var uppy_settings = {
     target: '#file-uploader',
     allowedFileTypes: ['application/vnd.openxmlformats-officedocument.wordprocessingml.document']
   },
-  locale: {
-    strings: {
-      youCanOnlyUploadFileTypes: 'فرمت‌های مجاز:',
-      youCanOnlyUploadX: {
-        0: 'حداکثر تعداد فایل‌های مجاز: ‌%{smart_count} فایل',
-        1: 'حداکثر تعداد فایل‌های مجاز: ‌%{smart_count} فایل'
-      },
-      youHaveToAtLeastSelectX: {
-        0: 'هیچ فایلی آپلود نشده است.',
-        1: 'هیچ فایلی آپلود نشده است.'
-      }
-    }
-  }
+  locale: Persian
 };
 
 

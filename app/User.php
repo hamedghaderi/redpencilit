@@ -2,55 +2,154 @@
 
 namespace App;
 
+use App\Permissions\HasPermission;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
+    
+    use Notifiable, SoftDeletes;
+    
+    protected $fillable
+        = [
+            'name',
+            'email',
+            'password',
+            'avatar',
+            'phone',
+            'username',
+            'confirmed'
+        ];
+    
+    protected $hidden
+        = [
+            'password',
+            'remember_token',
+            'email',
+            'email_verified_at',
+            'created_at',
+            'updated_at'
+        ];
+    
+    protected $casts
+        = [
+            'confirmed' => 'boolean'
+        ];
+    
     /**
-     * The attributes that are mass assignable.
+     * Use 'username' as users route key name.
      *
-     * @var array
+     * @return string
      */
-    protected $fillable = [
-        'name', 'email', 'password', 'avatar', 'phone', 'username'
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password', 'remember_token', 'email', 'email_verified_at', 'created_at', 'updated_at'
-    ];
-
     public function getRouteKeyName()
     {
         return 'username';
     }
-
+    
+    /**
+     * Confirm user email address.
+     */
+    public function confirm()
+    {
+        $this->confirmed = true;
+        
+        $this->save();
+    }
+    
+    /**
+     * Each user may have many settings.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function setting()
     {
-       return $this->hasOne(Setting::class, 'owner_id');
+        return $this->hasOne(Setting::class, 'owner_id');
     }
-
-    public function documents()
-    {
-       return $this->hasMany(DocumentDraft::class, 'owner_id');
-    }
-
+    
+    /**
+     * Each user may have many services.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function services()
     {
-       return $this->hasMany(Service::class, 'owner_id');
+        return $this->hasMany(Service::class);
     }
-
-    public function drafts()
+    
+    /**
+     * Each user may have many drafts.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function documents()
     {
-       return $this->hasMany(DocumentDraft::class, 'owner_id');
+        return $this->hasMany(Document::class, 'owner_id');
+    }
+    
+    /**
+     * Each user may have many orders.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'owner_id');
+    }
+    
+    /**
+     * A user may have many roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles()
+    {
+       return $this->belongsToMany(Role::class);
+    }
+    
+    /**
+     * Add a role to the current user.
+     *
+     * @param $role
+     *
+     * @return mixed
+     */
+    public function addRole($role)
+    {
+       return $this->roles()->save($role);
+    }
+    
+    /**
+     * Check if user has a role.
+     *
+     * @param $role
+     *
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+       if (is_string($role))  {
+          return $this->roles->contains('name', $role);
+       }
+       
+       if (is_a($role, Role::class)) {
+           return  $this->roles->contains($role);
+       }
+       
+       // if role is a collection.
+       return !! $role->intersect($this->roles)->count();
+    }
+    
+    /**
+     * Check if a user is super admin.
+     *
+     * @return mixed
+     */
+    public function isSuperAdmin()
+    {
+       return $this->roles->contains('name', 'super-admin') ;
     }
 }
 

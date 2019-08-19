@@ -2,50 +2,77 @@
 
 namespace Tests\Unit;
 
+use App\Order;
+use App\Role;
 use App\Setting;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
+
     use RefreshDatabase;
 
-    /** @test **/
+    /** @test * */
     public function it_has_many_settings()
-    {
-       $user = $this->signIn();
-
-       factory(Setting::class)->create(['owner_id' => $user->id]);
-
-       $this->assertInstanceOf(Setting::class, $user->setting);
-    }
-
-    /** @test **/
-    public function a_user_has_a_document()
     {
         $user = $this->signIn();
 
-        Storage::fake('local');
+        factory(Setting::class)->create(['owner_id' => $user->id]);
 
-        $files = [
-            UploadedFile::fake()->create('document1.docx'),
-        ];
-
-        $this->json('post', '/users/' . $user->username . '/documents', [
-            'articles' => $files
-        ]);
-
-        $this->assertInstanceOf(Collection::class, $user->documents);
+        $this->assertInstanceOf(Setting::class, $user->setting);
+    }
+    
+    /** @test **/
+    public function it_may_have_many_orders()
+    {
+       $user = create(User::class);
+       $order = create(Order::class, ['owner_id' => $user->id]);
+       
+       $this->assertInstanceOf(Collection::class, $user->orders);
     }
 
-    /** @test **/
+    /** @test * */
     public function a_user_may_set_many_services()
     {
-       $user = $this->signIn();
+        $user = $this->signIn();
 
-       $this->assertInstanceOf(Collection::class, $user->services);
+        $this->assertInstanceOf(Collection::class, $user->services);
+    }
+    
+    /** @test **/
+    public function it_can_add_role()
+    {
+       $user = create(User::class);
+       
+       $role = create(Role::class);
+       
+       $user->addRole($role);
+       
+       $this->assertCount(1, $user->roles);
+    }
+    
+    /** @test **/
+    public function it_can_check_his_role()
+    {
+       $user = create(User::class) ;
+       $role = create(Role::class);
+       
+       $user->addRole($role);
+       
+       $this->assertTrue($user->hasRole($role));
+    }
+    
+    /** @test **/
+    public function it_can_be_an_admin()
+    {
+       $user = create(User::class);
+       $role = create(Role::class, ['name' => 'super-admin']);
+       
+       $user->addRole($role);
+       
+       $this->assertTrue($user->isSuperAdmin());
     }
 }

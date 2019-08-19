@@ -20,5 +20,7 @@
 
   &__close {
     @apply text-white absolute pin-t pin-r pt-6 pr-6 text-4xl cursor-pointer;
+    height: 50px;
+    width: 50px;
   }
 }
