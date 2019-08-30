@@ -21,9 +21,13 @@ class OrdersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(User $user)
     {
-        //
+        $orders = $user->orders->each(function ($order) {
+          $order->load('details');
+        });
+        
+        return view('orders.index', compact('orders'));
     }
     
     /**

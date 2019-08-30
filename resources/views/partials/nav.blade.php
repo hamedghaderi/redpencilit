@@ -9,8 +9,8 @@
 
             <ul class="navbar__nav">
                 <li><a href="/">خانه</a></li>
-                <li><a href="#">درباره</a></li>
-                <li><a href="#">تماس با ما</a></li>
+                <li><a href="/about">درباره</a></li>
+                <li><a href="/contact">تماس با ما</a></li>
                 <li><a href="#">خدمات</a></li>
                 <li>
                     <a class="{{ request()->route()->getName() === 'new-order' ? 'active' : ''  }}"
