@@ -1,11 +1,11 @@
 <template>
     <div class="dropdown" :class="classes">
-        <div @click="isOpen = !isOpen">
+        <div @click.prevent="toggleDropdown">
             <slot name="toggler"></slot>
         </div>
 
         <transition name="collapse">
-            <div v-if="isOpen">
+            <div v-if="isOpen" class="dropdown-content">
                 <slot></slot>
             </div>
         </transition>
@@ -18,7 +18,7 @@
 
         data() {
             return {
-               isOpen: false
+                isOpen: false
             }
         },
 
@@ -32,9 +32,15 @@
 
         methods: {
             closeOpenedDropdown(event) {
-                if (! event.target.closest('.dropdown')) {
-                   this.isOpen = false;
+                if (!event.target.closest('.dropdown')) {
+                    this.isOpen = false;
+                    window.events.$emit('dropdownToggled', this.isOpen);
                 }
+            },
+
+            toggleDropdown() {
+                this.isOpen = !this.isOpen;
+                window.events.$emit('dropdownToggled', this.isOpen);
             }
         }
     }
@@ -45,8 +51,30 @@
         transition: all .5s;
         transform: translateY(0);
     }
+
     .collapse-enter, .collapse-leave-to {
         opacity: 0;
         transform: translateY(7px);
+    }
+
+    .dropdown-content {
+        position: absolute;
+        min-width: 100%;
+    }
+
+    .dropdown-left .collapse-enter-active,
+    .dropdown-left .collapse-leave-active {
+        transform: translateX(0);
+    }
+
+    .dropdown-left .dropdown-content {
+        top: 0;
+        right: 100%;
+        transform: translateX(0px);
+    }
+
+    .dropdown-left .collapse-enter, .dropdown-left .collapse-leave-to {
+        opacity: 0;
+        transform: translateX(-7px);
     }
 </style>

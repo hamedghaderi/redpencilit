@@ -11,6 +11,7 @@
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -80,5 +81,15 @@ Route::get('/register/emails', 'RegisterConfirmationController@index');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/*
+|--------------------------------------------------------------------------
+| Pages
+|--------------------------------------------------------------------------
+*/
+Route::get('/about', 'PagesController@about');
+Route::get('/contact', 'PagesController@contact');
+Route::post('/contacts', 'PagesController@store');
+
 
 

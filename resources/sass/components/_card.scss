@@ -1,3 +1,58 @@
 .card {
   @apply bg-white p-8 shadow rounded;
+
+  &-type-1 {
+    @apply bg-purple text-white relative;
+    z-index: -1;
+
+    &::before {
+      @apply absolute pin-l pin-t text-sm bg-purple-darker p-1 rounded mt-3 ml-3;
+      content: 'تائید شده';
+    }
+  }
+
+  &-type-2 {
+    @apply bg-orange text-white relative;
+
+    &::before {
+      @apply absolute pin-l pin-t text-sm bg-orange-darker p-1 rounded mt-3 ml-3;
+      content: 'پرداخت شد';
+    }
+  }
+
+  &-type-3 {
+    @apply bg-green text-white relative;
+    z-index: -1;
+
+    &::before {
+      @apply absolute pin-l pin-t text-sm bg-green-darker p-1 rounded mt-3 ml-3;
+      content: 'تحویل یافت';
+    }
+  }
+
+  &-type-1 &__title,
+  &-type-2 &__title,
+  &-type-3 &__title {
+    @apply text-white;
+  }
+
+  &-type-1 &__doc-icon,
+  &-type-2 &__doc-icon,
+  &-type-3 &__doc-icon {
+    @apply rounded-full text-center relative mb-6;
+    background: rgba(255, 255, 255, .3);
+
+    img {
+      @apply absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__price {
+    @apply text-2xl text-white border-white py-3;
+    border-top: 1px solid rgba(255, 255, 255, .3);
+    border-bottom: 1px solid rgba(255, 255, 255, .3);
+  }
 }

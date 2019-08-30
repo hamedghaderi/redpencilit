@@ -5,14 +5,6 @@
              role="alert"
              v-if="show"
         >
-            <span v-if="level === 'success'" class="alert__mark">
-				<img src="/images/success.svg" alt="astronant">
-            </span>
-
-            <span v-if="level === 'danger'" class="alert__mark">
-                <img src="/images/warning.svg" alt="a woman show warning">
-            </span>
-
             <p>{{ body }}</p>
         </div>
     </transition>
@@ -32,7 +24,6 @@
         },
 
         created() {
-            console.log(this.level);
             if (this.message) {
                 this.flash();
             }
@@ -43,8 +34,8 @@
         methods: {
             flash(data) {
                 if (data) {
-                    this.body = data.message;
-                    this.level = data.level;
+                        this.body = data.message;
+                    this.level = data.level ? data.level : this.level;
                 }
 
                 this.show = true;
@@ -62,56 +53,41 @@
 </script>
 
 <style>
-    .alert {
-        border-bottom: 1px solid white;
+    .alert::before,
+    .alert::after {
+        content: '';
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 3px;
     }
 
     .alert::before {
-        content: '';
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        height: 3px;
         width: 100%;
     }
 
-    .alert--success::before {
-        background-color: #B2F5EA;
-    }
-
-    .alert--danger::before {
-        background-color: #FED7D7;
-    }
-
     .alert::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        height: 3px;
+        background-color: white;
         width: 0;
+        animation: slide 5s ease-in;
     }
 
-    .alert::after {
-       animation: slide 5s ease-in;
+    .alert--warning::after {
+        background-color: #453411;
     }
 
-    .alert--success::after {
-        background-color: #4FD1C5;
+    .slide-enter-active, .slide-leave-active {
+        transition: all .5s;
+        transform: translateY(0);
     }
-
-    .alert--danger::after {
-        background-color: #F56565;
+    .slide-enter, .slide-leave-to {
+        opacity: 0;
+        transform: translateY(7px);
     }
-
 
     @keyframes slide {
-        from {
-            width: 0;
-        }
-        to {
-            width: 100%;
-        }
+        from {width: 0;}
+        to {width: 100%;}
     }
 </style>
 

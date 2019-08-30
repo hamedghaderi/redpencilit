@@ -24,4 +24,14 @@ class Order extends Model
     {
        return $this->hasMany(OrderDetail::class);
     }
+    
+    /**
+     * Each order belongs to a service.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function service()
+    {
+       return $this->belongsTo(Service::class);
+    }
 }

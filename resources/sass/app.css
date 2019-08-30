@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import "~@uppy/core/dist/style.css";
 @import "~@uppy/dashboard/dist/style.css";
 /**
@@ -72,6 +73,8 @@ hr {
 
 .container {
   @apply w-full mx-auto px-4;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 @screen sm {
@@ -147,6 +150,9 @@ hr {
   height: 60px !important;
 }
 
+.uppy-StatusBar {
+  @apply z-10;
+}
 .uppy-StatusBar.is-uploading {
   background-color: #E3F5FD !important;
 }
@@ -247,6 +253,15 @@ hr {
   color: #ff5a5d !important;
 }
 
+trix-editor {
+  @apply bg-white;
+  border: 1px solid #dae1e7 !important;
+  min-height: 300px !important;
+}
+trix-editor:focus {
+  @apply border-indigo;
+}
+
 .dashboard-title {
   @apply mb-3;
 }
@@ -264,6 +279,18 @@ hr {
   background-size: 250px 250px;
   background-repeat: no-repeat;
   background-position: center center;
+}
+
+.title {
+  @apply text-red relative inline-flex items-center mb-6;
+  padding-right: 100px;
+}
+.title::before {
+  content: "";
+  @apply absolute h-1 bg-red pin-r;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 80px;
 }
 
 .list {
@@ -388,8 +415,16 @@ hr {
   max-width: 40px;
 }
 
+.textarea {
+  @apply p-3 border text-sm w-full rounded;
+  min-height: 200px;
+}
+.textarea:focus {
+  @apply border-indigo;
+}
+
 .input {
-  @apply p-3 border text-sm;
+  @apply p-3 border text-sm rounded;
 }
 .input--right {
   padding-right: 2.5rem !important;
@@ -451,6 +486,9 @@ hr {
   background-position: center;
   background-repeat: no-repeat;
   outline: 0;
+}
+.label-check .check-custom:checked:disabled ~ .check-toggle {
+  @apply bg-grey border-grey;
 }
 
 .form-group label {
@@ -557,6 +595,47 @@ hr {
 .card {
   @apply bg-white p-8 shadow rounded;
 }
+.card-type-1 {
+  @apply bg-purple text-white relative;
+  z-index: -1;
+}
+.card-type-1::before {
+  @apply absolute pin-l pin-t text-sm bg-purple-darker p-1 rounded mt-3 ml-3;
+  content: "تائید شده";
+}
+.card-type-2 {
+  @apply bg-orange text-white relative;
+}
+.card-type-2::before {
+  @apply absolute pin-l pin-t text-sm bg-orange-darker p-1 rounded mt-3 ml-3;
+  content: "پرداخت شد";
+}
+.card-type-3 {
+  @apply bg-green text-white relative;
+  z-index: -1;
+}
+.card-type-3::before {
+  @apply absolute pin-l pin-t text-sm bg-green-darker p-1 rounded mt-3 ml-3;
+  content: "تحویل یافت";
+}
+.card-type-1 .card__title, .card-type-2 .card__title, .card-type-3 .card__title {
+  @apply text-white;
+}
+.card-type-1 .card__doc-icon, .card-type-2 .card__doc-icon, .card-type-3 .card__doc-icon {
+  @apply rounded-full text-center relative mb-6;
+  background: rgba(255, 255, 255, 0.3);
+}
+.card-type-1 .card__doc-icon img, .card-type-2 .card__doc-icon img, .card-type-3 .card__doc-icon img {
+  @apply absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.card__price {
+  @apply text-2xl text-white border-white py-3;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
 
 .feedback--invalid {
   @apply .bg-red-lightest px-3 .py-2 .text-red-dark rounded .border-r-4 .border-red text-xs .leading-normal;
@@ -579,20 +658,12 @@ hr {
 }
 
 .dashboard-nav {
-  @apply fixed pin-r pin-t bg-white h-full shadow;
+  @apply fixed pin-r pin-t bg-white h-full shadow z-50;
   width: 250px;
   max-width: 250px;
 }
 .dashboard-nav__parent {
   @apply relative;
-}
-.dashboard-nav__child {
-  @apply bg-white absolute list-reset z-10 shadow p-6 pin-t;
-  right: 100%;
-  min-width: 200px;
-}
-.dashboard-nav__child li:not(:last-child) {
-  @apply mb-6;
 }
 .dashboard-nav__user {
   @apply text-center pb-6 mb-6;
@@ -645,7 +716,6 @@ hr {
 
 .dropdown {
   @apply relative z-20;
-  min-width: 300px;
 }
 .dropdown ul {
   @apply list-reset shadow-md rounded py-6 text-sm bg-white;
@@ -817,6 +887,10 @@ hr {
 .tag--primary {
   @apply bg-indigo-lightest border-indigo text-indigo-darker;
 }
+.tag--transparent {
+  @apply border-none text-white shadow;
+  background: rgba(255, 255, 255, 0.3);
+}
 
 .tabs {
   @apply flex bg-white w-full relative rounded rounded-b-none;
@@ -842,20 +916,49 @@ hr {
 }
 
 .alert {
-  @apply text-center px-24 py-8 text-sm rounded bg-white shadow-md flex items-center fixed z-20 overflow-hidden;
+  @apply text-right px-8 py-4 text-sm rounded bg-white shadow-md flex items-center fixed z-50 overflow-hidden leading-loose;
   min-width: 300px;
   max-width: 500px;
   min-height: 40px;
 }
-.alert img {
-  width: 60px;
-  margin-right: 20px;
+.alert::before, .alert::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+}
+.alert::before {
+  width: 100%;
+}
+.alert::after {
+  background-color: white;
+  width: 0;
+  animation: slide 5s ease-in;
 }
 .alert--success {
-  @apply text-teal-darker;
+  @apply text-white bg-purple;
+}
+.alert--success::before {
+  @apply bg-purple-dark;
 }
 .alert--danger {
-  @apply text-red-darker;
+  @apply text-white bg-red;
+}
+.alert--danger::before {
+  @apply bg-red-dark;
+}
+.alert--warning {
+  @apply text-yellow-darker bg-yellow;
+}
+.alert--warning::before {
+  @apply bg-yellow-dark;
+}
+.alert--info {
+  @apply text-white bg-blue;
+}
+.alert--info::before {
+  @apply bg-blue-dark;
 }
 .alert--danger .alert__mark {
   @apply absolute pin-r inline-flex items-center justify-center;
@@ -889,6 +992,26 @@ hr {
   @apply text-white absolute pin-t pin-r pt-6 pr-6 text-4xl cursor-pointer;
   height: 50px;
   width: 50px;
+}
+
+.pagination {
+  @apply flex items-center justify-center w-full list-reset text-sm;
+}
+.pagination li {
+  @apply mx-2;
+}
+.pagination li a, .pagination li.page-caret i {
+  @apply text-grey-dark;
+}
+.pagination span.page-link {
+  @apply text-indigo;
+}
+
+/* Pages */
+.contact {
+  background-image: url("../images/contact.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /**

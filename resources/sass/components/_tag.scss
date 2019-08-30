@@ -16,4 +16,9 @@
   &--primary {
     @apply bg-indigo-lightest border-indigo text-indigo-darker;
   }
+
+  &--transparent {
+    @apply border-none text-white shadow;
+    background: rgba(255, 255, 255, .3);
+  }
 }

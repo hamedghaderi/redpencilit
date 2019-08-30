@@ -1,20 +1,58 @@
 .alert {
-  @apply text-center px-24 py-8 text-sm rounded bg-white shadow-md flex items-center fixed z-20 overflow-hidden;
+  @apply text-right px-8 py-4 text-sm rounded bg-white shadow-md flex items-center fixed z-50 overflow-hidden leading-loose;
   min-width: 300px;
   max-width: 500px;
   min-height: 40px;
 
-  img {
-    width: 60px;
-    margin-right: 20px;
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+  }
+
+  &::before {
+    width: 100%;
+  }
+
+  &::after {
+    background-color: white;
+    width: 0;
+    animation: slide 5s ease-in;
   }
 
   &--success {
-    @apply text-teal-darker;
+    @apply text-white bg-purple;
+
+    &::before {
+      @apply bg-purple-dark;
+    }
   }
 
   &--danger {
-    @apply text-red-darker;
+    @apply text-white bg-red;
+
+    &::before {
+      @apply bg-red-dark;
+    }
+  }
+
+  &--warning {
+    @apply text-yellow-darker bg-yellow;
+
+    &::before {
+      @apply bg-yellow-dark;
+    }
+  }
+
+  &--info {
+    @apply text-white bg-blue;
+
+    &::before {
+      @apply bg-blue-dark;
+    }
   }
 
   &--danger &__mark {

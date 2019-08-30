@@ -1,11 +1,24 @@
 import './bootstrap.js';
 
 window.Vue = require('vue');
+
+let authorizations = require('./authorizations');
+
 window.events = new Vue();
 
 window.flash = function (message, level = 'success') {
     window.events.$emit('flash', {message, level});
 }
+
+Vue.prototype.authorize = function (...params) {
+    if (!window.Redpencilit.signed) return false;
+
+    if (typeof params[0] === 'string') {
+        return authorizations[params[0]](params[1]);
+    }
+
+    return params[0](window.Redpencilit.user);
+};
 
 if (process.env.NODE_ENV === "production") {
     Vue.config.devtools = false;
@@ -35,13 +48,22 @@ Vue.directive('dropdown-outside-click', {
 });
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('nav-dropdown', require('./components/NavDropdown.vue').default);
 Vue.component('dropdown', require('./components/Dropdown.vue').default);
 Vue.component('avatar', require('./components/Avatar.vue').default);
+Vue.component('flash', require('./components/Flash.vue').default);
+Vue.component('flex-table', require('./components/FlexTable.vue').default);
+Vue.component('inner-modal', require('./components/InnerModal.vue').default);
+
+Vue.component('edit-role', require('./pages/EditRole.vue').default);
 Vue.component('upload-view', require('./pages/UploadView.vue').default);
+Vue.component('services', require('./pages/Services.vue').default);
 Vue.component('user-account-form', require('./pages/UserAccountForm.vue').default);
 Vue.component('update-general-settings', require('./pages/UpdateGeneralSettings.vue').default);
-Vue.component('flash', require('./components/Flash.vue').default);
-Vue.component('services', require('./pages/Services.vue').default);
+Vue.component('wysiwyg', require('./components/Wysiwyg.vue').default);
+
+Vue.config.ignoredElements = ['trix-editor'];
+
 
 Vue.component('upload-service', {
     data() {

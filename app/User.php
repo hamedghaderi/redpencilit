@@ -151,5 +151,15 @@ class User extends Authenticatable
     {
        return $this->roles->contains('name', 'super-admin') ;
     }
+    
+    /**
+     * A user may have many posts.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function posts()
+    {
+       return $this->hasMany(Post::class, 'owner_id');
+    }
 }
 

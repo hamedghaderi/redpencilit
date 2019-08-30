@@ -1,6 +1,5 @@
 .dropdown {
   @apply relative z-20;
-  min-width: 300px;
 
   ul {
     @apply list-reset shadow-md rounded py-6 text-sm bg-white;
@@ -19,7 +18,7 @@
 
     &--left {
       @apply pin-l;
-      top: 100%;
+      top: 100%
     }
 
     a {

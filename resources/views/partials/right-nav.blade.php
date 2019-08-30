@@ -4,31 +4,46 @@
     </div>
 
     <ul class="dashboard-nav__list">
-        <li class="dashboard-nav__parent">
-            <a href="#" class="has-icon">
-                <i class="fas fa-user-shield pl-3"></i>
-                مدیریت
-            </a>
-            
-            <ul class="dashboard-nav__child">
-                <li>
-                    <a href="{{ '/dashboard/' . auth()->user()->username . '/general_settings' }}">
-                        <i class="fa fa-list pl-3"></i>
-                        تنظیمات کلی
-                    </a>
-                </li>
+        @can('manage-all')
+            <li class="dashboard-nav__parent">
+                <dropdown classes="dropdown-left">
+                    <template v-slot:toggler>
+                        <a href="#" class="has-icon">
+                            <i class="fas fa-th-large pl-3"></i>
+                            مدیریت
 
-                <li>
-                    <a href="{{ '/dashboard/' . auth()->user()->username . '/general_settings' }}">
-                        <i class="fas fa-cog pl-3"></i>
-                        سرویس‌ها
-                    </a>
-                </li>
-            </ul>
-        </li>
+                            <i class="fas fa-caret-left mr-auto"></i>
+                        </a>
+                    </template>
+
+                    <ul>
+                        <li>
+                            <a href="{{ '/dashboard/' . auth()->user()->username . '/general_settings' }}">
+                                <i class="fa fa-list pl-3"></i>
+                                تنظیمات کلی
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ '/dashboard/' . auth()->user()->username . '/services' }}">
+                                <i class="fas fa-cog pl-3"></i>
+                                سرویس‌ها
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="/users">
+                                <i class="fas fa-users pl-3"></i>
+                                کاربران
+                            </a>
+                        </li>
+                    </ul>
+                </dropdown>
+            </li>
+        @endcan
 
         <li>
-            <a href="{{ '/dashboard/' . auth()->user()->username . '/drafts' }}" class="has-icon">
+            <a href="{{ '/users/' . auth()->user()->username . '/orders' }}" class="has-icon">
                 <i class="far fa-newspaper pl-3"></i>
                 مقالات آپلود شده
             </a>

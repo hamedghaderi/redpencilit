@@ -1,72 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1b36ddba-05a9-4468-b24a-714051e3f2d5" name="Default Changelist" comment="k">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/laravel-plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/laravel-plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/redpencilit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/redpencilit.iml" afterDir="false" />
+    <list default="true" id="1b36ddba-05a9-4468-b24a-714051e3f2d5" name="Default Changelist" comment="kk">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Delivery.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Delivery.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/DocumentDraft.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/DocumentWordCount.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/DocumentWordCount.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DocumentsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ServicesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ServicesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SettingsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserRolesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserRolesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Listeners/SendEmailConfirmationRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/SendEmailConfirmationRequest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Rules/MaxWord.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Rules/MaxWord.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Service.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Service.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Role.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/filesystems.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/filesystems.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/ServiceFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ServiceFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/UserFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/UserFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2014_10_12_000000_create_users_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_03_26_121649_create_document_drafts_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_03_26_132150_create_services_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_03_26_132150_create_services_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_03_30_170441_create_deliveries_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_03_30_170441_create_deliveries_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_04_01_162143_create_settings_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_04_01_162143_create_settings_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/PermissionFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/PermissionFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/RoleFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/RoleFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_11_182744_create_permission_role_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_08_11_182744_create_permission_role_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/alert-document.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/alert-document.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/vendors/dropzone.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/vendors/dropzone.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/authorizations.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/authorizations.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Dropdown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Dropdown.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/Flash.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Flash.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Modal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Modal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/NavbarDropdown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Dropdown.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/UploadRegisterForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UploadRegisterForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/UploaderFile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UploaderFile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/UploadView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/UploadView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/settings/uppy-dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/settings/uppy-dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/settings/uppy.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/settings/uppy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/fa/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/fa/validation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/components/_alert.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_alert.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_buttons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_buttons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/components/_card.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_card.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/components/_dropdown.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_dropdown.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_modal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_modal.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/components/_form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_form.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/components/_navbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_navbar.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/components/_tag.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_tag.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/global/_base.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/global/_base.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/global/_grid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/global/_grid.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/global/_overrides.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/global/_overrides.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/global/_typography.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/global/_typography.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboards/drafts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/orders/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/auth.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/auth.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/partials/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/nav.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ManageServices.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ManageServices.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/UploadDocumentTest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/TestCase.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/TestCase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/OrderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/OrderTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserRegisterTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserRegisterTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserRoleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserRoleTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/OrderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/OrderTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Unit/UserTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/UserTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -206,12 +187,14 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/tests/Feature" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/orders" />
+      <recent name="$PROJECT_DIR$/resources/js/pages" />
       <recent name="$PROJECT_DIR$/resources/views/confirm" />
       <recent name="$PROJECT_DIR$/resources/sass/global" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tests/Feature" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -226,25 +209,25 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="PHPUnit.UserTest.it_can_be_an_admin">
-    <configuration name="RoleTest (1)" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\RoleTest" file="$PROJECT_DIR$/tests/Feature/RoleTest.php" scope="Class" />
+  <component name="RunManager" selected="PHPUnit.ManagePostTest">
+    <configuration name="ManagePostTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\ManagePostTest" file="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" scope="Class" />
       <method v="2" />
     </configuration>
-    <configuration name="RoleTest.a_user_can_see_the_list_of_all_roles" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\RoleTest" file="$PROJECT_DIR$/tests/Feature/RoleTest.php" method="a_user_can_see_the_list_of_all_roles" scope="Method" />
+    <configuration name="ManagePostTest.a_post_requires_a_body" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\ManagePostTest" file="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" method="a_post_requires_a_body" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="UserRegisterTest.the_first_user_who_register_has_the_role_of_admin" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\UserRegisterTest" file="$PROJECT_DIR$/tests/Feature/UserRegisterTest.php" method="the_first_user_who_register_has_the_role_of_admin" scope="Method" />
+    <configuration name="ManagePostTest.a_writer_can_create_a_new_post" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\ManagePostTest" file="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" method="a_writer_can_create_a_new_post" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="UserRegisterTest.the_second_user_has_not_any_roles" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\UserRegisterTest" file="$PROJECT_DIR$/tests/Feature/UserRegisterTest.php" method="the_second_user_has_not_any_roles" scope="Method" />
+    <configuration name="ManagePostTest.an_admin_user_can_create_a_new_post" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\ManagePostTest" file="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" method="an_admin_user_can_create_a_new_post" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="UserTest.it_can_be_an_admin" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Unit\UserTest" file="$PROJECT_DIR$/tests/Unit/UserTest.php" method="it_can_be_an_admin" scope="Method" />
+    <configuration name="UserTest.it_can_have_posts" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Unit\UserTest" file="$PROJECT_DIR$/tests/Unit/UserTest.php" method="it_can_have_posts" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -253,11 +236,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.UserTest.it_can_be_an_admin" />
-        <item itemvalue="PHPUnit.RoleTest (1)" />
-        <item itemvalue="PHPUnit.RoleTest.a_user_can_see_the_list_of_all_roles" />
-        <item itemvalue="PHPUnit.UserRegisterTest.the_second_user_has_not_any_roles" />
-        <item itemvalue="PHPUnit.UserRegisterTest.the_first_user_who_register_has_the_role_of_admin" />
+        <item itemvalue="PHPUnit.ManagePostTest" />
+        <item itemvalue="PHPUnit.ManagePostTest.an_admin_user_can_create_a_new_post" />
+        <item itemvalue="PHPUnit.UserTest.it_can_have_posts" />
+        <item itemvalue="PHPUnit.ManagePostTest.a_writer_can_create_a_new_post" />
+        <item itemvalue="PHPUnit.ManagePostTest.a_post_requires_a_body" />
       </list>
     </recent_temporary>
   </component>
@@ -333,7 +316,10 @@
       <workItem from="1565522061499" duration="14891000" />
       <workItem from="1565597639965" duration="2637000" />
       <workItem from="1565936484801" duration="1583000" />
-      <workItem from="1566249698712" duration="5756000" />
+      <workItem from="1566249698712" duration="17176000" />
+      <workItem from="1566512237986" duration="27588000" />
+      <workItem from="1566648135307" duration="7518000" />
+      <workItem from="1567186034626" duration="9764000" />
     </task>
     <servers />
   </component>
