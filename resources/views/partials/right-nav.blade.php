@@ -41,6 +41,15 @@
             </a>
         </li>
 
+        @can('create-posts')
+            <li>
+                <a href="/posts/create" class="has-icon">
+                    <i class="fas fa-blog pl-3"></i>
+                    پست جدید
+                </a>
+            </li>
+        @endcan
+
         <li>
             <a href="#" class="has-icon" onclick="event.preventDefault(); document.getElementById('logout-form').submit
             ();">

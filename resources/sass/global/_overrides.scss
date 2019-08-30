@@ -54,7 +54,10 @@
   height: 60px !important;
 }
 
+
 .uppy-StatusBar {
+  @apply z-10;
+
   &.is-uploading {
     background-color: #E3F5FD !important;
 
@@ -176,4 +179,15 @@
   border-top: 3px solid #ff5a5d;
   border-radius: 4px !important;
   color: #ff5a5d !important;
+}
+
+// Trix
+trix-editor {
+  @apply  bg-white;
+  border: 1px solid #dae1e7 !important;
+  min-height: 300px !important;
+
+  &:focus {
+    @apply border-indigo;
+  }
 }

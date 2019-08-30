@@ -54,10 +54,20 @@ Route::middleware('auth')->group(function () {
         ->middleware('must-be-confirmed');
     Route::post('/users/{user}/drafts', 'DraftsController@store')
         ->middleware('must-be-confirmed');
+    
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Posts
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/posts/create', 'PostsController@create')->middleware('can:create-posts');
+    Route::post('/posts', 'PostsController@store')->middleware('can:create-posts');
 
     Route::patch('/users/{user}/update-services', 'DocumentServiceController@update');
     Route::delete('/users/{user}/documents', 'DocumentsController@destroy')->middleware('must-be-confirmed');
 });
+
 
 //Route::get('/roles', 'RolesController@index');
 Route::post('/roles', 'RolesController@store');
