@@ -38,7 +38,7 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
         
-        if (!$this->app->environment('testing')) {
+        if (! $this->app->environment('testing')) {
             foreach ($this->getPermissions() as $permission) {
                 Gate::define($permission->name, function ($user) use ($permission) {
                     return $user->hasRole($permission->roles);

@@ -133,8 +133,6 @@
 
                             this.$emit('userRegistered', response.data);
                         }
-
-
                     })
                     .catch(error => {
                         this.buttonText = 'تائید';

@@ -20,7 +20,7 @@ class UserRoleTest extends TestCase
        $role = create(Role::class);
        
        $this->post("/users/{$user->username}/roles", [
-           'role_id' => $role->id
+           'roles' => [$role->id]
        ]);
        
        $this->assertCount(1, $user->roles);

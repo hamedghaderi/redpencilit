@@ -15,6 +15,19 @@ class OrderTest extends TestCase
     
     use RefreshDatabase;
     
+    /** @test **/
+    public function a_user_can_visit_his_orders()
+    {
+        $user = $this->signIn();
+        
+        $user->confirmed = true;
+        
+        $order = create(Order::class, ['owner_id' => $user->id]) ;
+        
+        $this->get('/users/' . $user->username  . '/orders')->assertSee($order->total_words);
+        
+    }
+    
     /** @test * */
     public function a_user_can_upload_a_single_document()
     {

@@ -39,7 +39,7 @@ class UserRegisterTest extends TestCase
         
         $this->assertDatabaseHas('users', ['name' => $user->name]);
         
-        $this->assertTrue($user->isAdmin());
+        $this->assertTrue($user->isSuperAdmin());
     }
     
     /** @test **/
@@ -67,7 +67,7 @@ class UserRegisterTest extends TestCase
         $this->assertCount(0, $user->roles);
     
         $this->assertDatabaseHas('users', ['name' => $user->name]);
-        $this->assertFalse($user->isAdmin());
+        $this->assertFalse($user->isSuperAdmin());
        
     }
 }

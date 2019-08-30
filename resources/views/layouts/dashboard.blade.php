@@ -14,6 +14,8 @@
     <link href=" {{ asset('css/vendor/all.css') }}" rel="stylesheet" >
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    @yield('header')
+
     <script>
         window.Redpencilit = {!!
             json_encode([
@@ -32,7 +34,6 @@
             @yield('content')
         </div>
     </main>
-
     <flash message="{{ session('flash') }}"></flash>
 </div>
 

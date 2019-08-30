@@ -12,12 +12,13 @@ class UserRolesController extends Controller
     public function store(User $user)
     {
        request()->validate([
-           'role_id' => 'required|numeric|exists:roles,id'
+           'roles' => 'sometimes|array',
+           'roles.*' => 'sometimes|numeric|exists:roles,id'
        ]);
        
-       $role = Role::where('id', \request('role_id'))->first();
+       $roles = Role::whereIn('id', \request('roles'))->get();
        
-        $user->addRole($role);
+        $user->addRole($roles);
         
         return back();
     }

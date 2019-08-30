@@ -112,13 +112,13 @@ class User extends Authenticatable
     /**
      * Add a role to the current user.
      *
-     * @param $role
+     * @param $roles
      *
      * @return mixed
      */
-    public function addRole($role)
+    public function addRole($roles)
     {
-       return $this->roles()->save($role);
+       return $this->roles()->sync($roles);
     }
     
     /**

@@ -19,7 +19,7 @@
 }
 
 .dashboard-nav {
-  @apply fixed pin-r pin-t bg-white h-full shadow;
+  @apply fixed pin-r pin-t bg-white h-full shadow z-50;
   width: 250px;
   max-width: 250px;
 
@@ -27,15 +27,17 @@
     @apply relative;
   }
 
-  &__child {
-    @apply bg-white absolute list-reset z-10 shadow p-6 pin-t;
-    right: 100%;
-    min-width: 200px;
-
-    li:not(:last-child) {
-      @apply mb-6;
-    }
-  }
+  //&__child {
+  //  @apply absolute;
+  //  //@apply bg-white absolute list-reset z-10 shadow p-6 pin-t;
+  //  top: 0;
+  //  right: 100%;
+  //  min-width: 200px;
+  //
+  //  li:not(:last-child) {
+  //    @apply mb-6;
+  //  }
+  //}
 
   &__user {
     @apply text-center pb-6 mb-6;

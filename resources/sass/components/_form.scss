@@ -1,6 +1,15 @@
 // INPUTS
+.textarea {
+  @apply p-3 border text-sm w-full rounded;
+  min-height: 200px;
+
+  &:focus {
+    @apply border-indigo;
+  }
+}
+
 .input {
-  @apply p-3 border text-sm;
+  @apply p-3 border text-sm rounded;
 
   &--right {
     padding-right: 2.5rem !important;
@@ -51,8 +60,6 @@
   @apply block p-3 w-full;
 }
 
-
-
 // Custom Checkboxes
 .label-check {
   @apply overflow-hidden relative;
@@ -77,9 +84,12 @@
       background-repeat: no-repeat;
       outline: 0;
     }
+
+    &:checked:disabled ~ .check-toggle {
+      @apply bg-grey border-grey;
+    }
   }
 }
-
 
 // LABELS
 .form-group label {
@@ -90,19 +100,14 @@
   @apply mb-0;
 }
 
-
 .dashboard-label {
   @apply text-sm;
 }
-
-
 
 // FORM GROUPS
 .form-group  {
   @apply mb-6;
 }
-
-
 
 // SELECTS
 ::selection {

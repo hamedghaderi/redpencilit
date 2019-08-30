@@ -16,3 +16,17 @@
   background-repeat: no-repeat;
   background-position: center center;
 }
+
+.title {
+  @apply text-red relative inline-flex items-center mb-6;
+  padding-right: 100px;
+
+
+  &::before {
+    content: '';
+    @apply absolute h-1 bg-red pin-r;
+    top: 50%;
+    transform: translate(0, -50%);
+    width: 80px;
+  }
+}

@@ -8,9 +8,11 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class SendEmailConfirmationRequest
 {
+    
     /**
      * Create the event listener.
      *
@@ -20,22 +22,25 @@ class SendEmailConfirmationRequest
     {
         //
     }
-
+    
     /**
      * Handle the event.
      *
      * @param  Registered  $event
+     *
      * @return void
      */
     public function handle(Registered $event)
     {
         try {
-            Mail::to($event->user)->send(new PleaseConfirmYourEmail
-            ($event->user));
+            Mail::to($event->user)
+                ->queue(new PleaseConfirmYourEmail ($event->user));
         } catch (\Error $e) {
             DB::rollBack();
+    
+            throw new ProcessFailedException;
         }
-
+        
         DB::commit();
     }
 }

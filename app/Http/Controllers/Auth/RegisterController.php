@@ -52,7 +52,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255', 'min:3'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
             'phone' => ['required', 'string', 'regex:/^09\d{9}/','numeric'],
             'username' => ['required', 'string', 'unique:users,username', 'max:255', 'min:4'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
@@ -77,11 +77,14 @@ class RegisterController extends Controller
         ]);
         
         if ((int) User::all()->count() === 1)  {
-            $role = Role::create(['name' => 'super-admin', 'label' => 'Super Manger']);
-            
+            if ($role = Role::where('name', 'super-admin')->first()) {
+            }   else {
+                $role = Role::create(['name' => 'super-admin', 'label' => 'Super Manger']);
+            }
+    
             $user->addRole($role);
         }
-
+    
         return $user;
     }
 }

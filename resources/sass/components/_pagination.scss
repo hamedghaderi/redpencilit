@@ -1,0 +1,15 @@
+.pagination {
+  @apply flex items-center justify-center w-full list-reset text-sm;
+
+  li {
+    @apply mx-2;
+
+    a, &.page-caret i {
+      @apply text-grey-dark;
+    }
+  }
+
+  span.page-link {
+    @apply text-indigo;
+  }
+}

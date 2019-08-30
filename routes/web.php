@@ -33,12 +33,20 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard/{user}/settings', 'SettingsController@store');
     Route::patch('/dashboard/{user}/settings/{setting}', 'SettingsController@update');
 
-
+    /*
+    |--------------------------------------------------------------------------
+    | Users
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/users', 'UsersController@index')->middleware('can:read');
+    Route::delete('/users/{user}', 'UsersController@destroy')->middleware('can:delete');
+    
     /*
     |--------------------------------------------------------------------------
     | Orders
     |--------------------------------------------------------------------------
     */
+    Route::get('/users/{user}/orders', 'OrdersController@index');
     Route::post('/users/{user}/orders', 'OrdersController@store')
         ->name('orders')
         ->middleware('must-be-confirmed');

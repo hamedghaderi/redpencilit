@@ -13,6 +13,11 @@ class Role extends Model
        return $this->belongsToMany(Permission::class);
     }
     
+    /**
+     * Attach permissions to a role.
+     *
+     * @param $permissions
+     */
     public function attachPermissions($permissions)
     {
         return $this->permissions()->attach($permissions->pluck('id'));

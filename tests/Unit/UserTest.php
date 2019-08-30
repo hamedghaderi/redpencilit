@@ -75,4 +75,13 @@ class UserTest extends TestCase
        
        $this->assertTrue($user->isSuperAdmin());
     }
+    
+    /** @test **/
+    public function it_can_have_posts()
+    {
+        $this->withoutExceptionHandling();
+       $user = create(User::class);
+       
+       $this->assertInstanceOf(Collection::class, $user->posts);
+    }
 }
