@@ -67,6 +67,7 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('/users/{user}/update-services', 'DocumentServiceController@update');
     Route::delete('/users/{user}/documents', 'DocumentsController@destroy')->middleware('must-be-confirmed');
+    Route::post("/post-attachments", 'PostAttachmentsController@store');
 });
 
 

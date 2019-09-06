@@ -10,9 +10,29 @@
     import Trix from 'trix';
 
     export default {
-        props: ['name'],
+        props: ['name', 'host'],
 
         mounted() {
+            this.$refs.trix.addEventListener('trix-file-accept', (e) => {
+                let fileType = e.file.type;
+                let validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+
+                let found = validTypes.find(type => type === fileType);
+
+                if (!found) {
+                    flash('فرمت فایل وارد شده صحیح نیست.', 'danger');
+
+                    e.preventDefault();
+                }
+
+                if (e.file.size > 400000) {
+                    console.log(e.file.size);
+                    flash('حجم فایل نباید بیشتر از ۴۰۰ کیلوبایت باشد.', 'danger');
+
+                    e.preventDefault();
+                }
+            });
+
             this.$refs.trix.addEventListener('trix-attachment-add', (e) => {
                 if (e.attachment.file) {
                     this.uploadFileAttachment(e.attachment);
@@ -37,27 +57,41 @@
                 let key = this.createStorageKey(file);
                 let formData = this.createFormData(key, file);
 
-                axios.post('/post-attachments', formData).then(res => {
-                   console.log('response')
+                axios.post('/post-attachments', formData, {
+                    header: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+
+                    onUploadProgress: function (progressEvent) {
+                        let progress = progressEvent.loaded / progressEvent.total * 100;
+                        progressCallback(progress);
+                    },
+                }).then(res => {
+                    let attributes = {
+                        url: this.host + 'storage/blog/' + key,
+                        href: this.host + 'storage/blog/' + key + "?content-disposition=attachment"
+                    };
+                    successCallback(attributes);
                 }).catch(error => {
-                   console.log('error') ;
+                    flash(error.response.data.errors.attachment[0], 'danger');
+                    successCallback({});
                 });
-            },
-
-            createStorageKey(file) {
-                let date = new Date();
-                let day = date.toISOString().slice(0, 10);
-                let name = date.getTime() + '-' + file.name;
-
-                return ['tmp', day, name].join('/');
             },
 
             createFormData(key, file) {
                 let data = new FormData();
-                data.append("key", file);
+                data.append("key", key);
                 data.append("Content-Type", file.type);
-                data.append("file", file);
+                data.append("attachment", file);
+
                 return data;
+            },
+
+            createStorageKey(file) {
+                let date = new Date();
+                let name = date.getTime() + '-' + file.name;
+
+                return name;
             }
         }
     }

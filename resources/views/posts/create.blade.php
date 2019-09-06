@@ -30,7 +30,7 @@
 
         <div class="form-group">
             <label for="body">محتوای پست</label>
-            <wysiwyg name="body" class="mb-2"></wysiwyg>
+            <wysiwyg name="body" class="mb-2" host="{{ asset('/') }}"></wysiwyg>
 
             @if ($errors->has('body'))
                 <div class="feedback feedback--invalid">{{ $errors->first('body') }}</div>

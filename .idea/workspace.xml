@@ -1,54 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1b36ddba-05a9-4468-b24a-714051e3f2d5" name="Default Changelist" comment="kk">
+    <list default="true" id="1b36ddba-05a9-4468-b24a-714051e3f2d5" name="Default Changelist" comment="i">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserRolesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserRolesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Listeners/SendEmailConfirmationRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/SendEmailConfirmationRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Role.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Role.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/PermissionFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/PermissionFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/RoleFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/RoleFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_11_182744_create_permission_role_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_08_11_182744_create_permission_role_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/alert-document.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/alert-document.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/authorizations.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/authorizations.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Dropdown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Dropdown.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Flash.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Flash.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/UploadRegisterForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UploadRegisterForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_alert.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_alert.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_card.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_card.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_dropdown.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_dropdown.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_form.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_form.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_navbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_navbar.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_tag.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_tag.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/global/_grid.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/global/_grid.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/global/_overrides.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/global/_overrides.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/global/_typography.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/global/_typography.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/dashboards/drafts.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/orders/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/auth.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/auth.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/nav.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Wysiwyg.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Wysiwyg.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/fa/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/fa/validation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/posts/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/create.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/OrderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/OrderTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/UserRegisterTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserRegisterTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/UserRoleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserRoleTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/OrderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/OrderTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/UserTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/UserTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,25 +168,25 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="PHPUnit.ManagePostTest">
+  <component name="RunManager" selected="PHPUnit.UploadBlogImageTest.an_image_requires_a_key_name">
     <configuration name="ManagePostTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\ManagePostTest" file="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" scope="Class" />
-      <method v="2" />
-    </configuration>
-    <configuration name="ManagePostTest.a_post_requires_a_body" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\ManagePostTest" file="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" method="a_post_requires_a_body" scope="Method" />
-      <method v="2" />
-    </configuration>
-    <configuration name="ManagePostTest.a_writer_can_create_a_new_post" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\ManagePostTest" file="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" method="a_writer_can_create_a_new_post" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="ManagePostTest.an_admin_user_can_create_a_new_post" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\ManagePostTest" file="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" method="an_admin_user_can_create_a_new_post" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="UserTest.it_can_have_posts" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Unit\UserTest" file="$PROJECT_DIR$/tests/Unit/UserTest.php" method="it_can_have_posts" scope="Method" />
+    <configuration name="UploadBlogImageTest.admin_can_upload_images_for_its_blog_posts" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UploadBlogImageTest" file="$PROJECT_DIR$/tests/Feature/UploadBlogImageTest.php" method="admin_can_upload_images_for_its_blog_posts" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="UploadBlogImageTest.an_image_requires_a_key_name" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UploadBlogImageTest" file="$PROJECT_DIR$/tests/Feature/UploadBlogImageTest.php" method="an_image_requires_a_key_name" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="UploadBlogImageTest.image_should_be_in_valid_format" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\UploadBlogImageTest" file="$PROJECT_DIR$/tests/Feature/UploadBlogImageTest.php" method="image_should_be_in_valid_format" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -236,11 +195,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="PHPUnit.UploadBlogImageTest.an_image_requires_a_key_name" />
+        <item itemvalue="PHPUnit.UploadBlogImageTest.image_should_be_in_valid_format" />
+        <item itemvalue="PHPUnit.UploadBlogImageTest.admin_can_upload_images_for_its_blog_posts" />
         <item itemvalue="PHPUnit.ManagePostTest" />
         <item itemvalue="PHPUnit.ManagePostTest.an_admin_user_can_create_a_new_post" />
-        <item itemvalue="PHPUnit.UserTest.it_can_have_posts" />
-        <item itemvalue="PHPUnit.ManagePostTest.a_writer_can_create_a_new_post" />
-        <item itemvalue="PHPUnit.ManagePostTest.a_post_requires_a_body" />
       </list>
     </recent_temporary>
   </component>
@@ -319,7 +278,11 @@
       <workItem from="1566249698712" duration="17176000" />
       <workItem from="1566512237986" duration="27588000" />
       <workItem from="1566648135307" duration="7518000" />
-      <workItem from="1567186034626" duration="9764000" />
+      <workItem from="1567186034626" duration="9922000" />
+      <workItem from="1567276615784" duration="3225000" />
+      <workItem from="1567325532751" duration="60000" />
+      <workItem from="1567763143834" duration="5281000" />
+      <workItem from="1567773021275" duration="4755000" />
     </task>
     <servers />
   </component>

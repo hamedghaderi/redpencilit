@@ -10082,10 +10082,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['name'],
+  props: ['name', 'host'],
   mounted: function mounted() {
     var _this = this;
 
+    this.$refs.trix.addEventListener('trix-file-accept', function (e) {
+      var fileType = e.file.type;
+      var validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      var found = validTypes.find(function (type) {
+        return type === fileType;
+      });
+
+      if (!found) {
+        flash('فرمت فایل وارد شده صحیح نیست.', 'danger');
+        e.preventDefault();
+      }
+
+      if (e.file.size > 400000) {
+        console.log(e.file.size);
+        flash('حجم فایل نباید بیشتر از ۴۰۰ کیلوبایت باشد.', 'danger');
+        e.preventDefault();
+      }
+    });
     this.$refs.trix.addEventListener('trix-attachment-add', function (e) {
       if (e.attachment.file) {
         _this.uploadFileAttachment(e.attachment);
@@ -10105,26 +10123,40 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     uploadFile: function uploadFile(file, progressCallback, successCallback) {
+      var _this2 = this;
+
       var key = this.createStorageKey(file);
       var formData = this.createFormData(key, file);
-      axios.post('/post-attachments', formData).then(function (res) {
-        console.log('response');
+      axios.post('/post-attachments', formData, {
+        header: {
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: function onUploadProgress(progressEvent) {
+          var progress = progressEvent.loaded / progressEvent.total * 100;
+          progressCallback(progress);
+        }
+      }).then(function (res) {
+        var attributes = {
+          url: _this2.host + 'storage/blog/' + key,
+          href: _this2.host + 'storage/blog/' + key + "?content-disposition=attachment"
+        };
+        successCallback(attributes);
       }).catch(function (error) {
-        console.log('error');
+        flash(error.response.data.errors.attachment[0], 'danger');
+        successCallback({});
       });
-    },
-    createStorageKey: function createStorageKey(file) {
-      var date = new Date();
-      var day = date.toISOString().slice(0, 10);
-      var name = date.getTime() + '-' + file.name;
-      return ['tmp', day, name].join('/');
     },
     createFormData: function createFormData(key, file) {
       var data = new FormData();
-      data.append("key", file);
+      data.append("key", key);
       data.append("Content-Type", file.type);
-      data.append("file", file);
+      data.append("attachment", file);
       return data;
+    },
+    createStorageKey: function createStorageKey(file) {
+      var date = new Date();
+      var name = date.getTime() + '-' + file.name;
+      return name;
     }
   }
 });
