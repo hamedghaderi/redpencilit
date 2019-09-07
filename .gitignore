@@ -11,3 +11,5 @@ npm-debug.log
 yarn-error.log
 .idea/php.xml
 .idea/php.xml
+/storage/*.index
+.idea

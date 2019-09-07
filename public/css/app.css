@@ -5065,12 +5065,164 @@ select {
   color: #5a5dff;
 }
 
+.search-box {
+  position: relative;
+  height: 3rem;
+}
+
+.search-input {
+  width: 100%;
+  background-color: #f8fafc;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-radius: .25rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0;
+  padding-left: 2rem;
+  color: #b8c2cc;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
 /* Pages */
 
 .contact {
   background-image: url("../images/contact.svg");
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.post {
+  background-color: #f8fafc;
+  position: relative;
+  padding-top: 6rem;
+  padding-bottom: 3rem;
+  margin-bottom: 2rem;
+}
+
+.post__thumb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.post__body {
+  padding-right: 8rem;
+}
+
+.post__date {
+  position: absolute;
+  top: 0;
+  background-color: #ff5a5d;
+  color: #fff;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+  right: 100px;
+}
+
+.post__author {
+  font-weight: 700;
+  color: #8795a1;
+}
+
+.post__title {
+  font-size: 1.25rem;
+  position: relative;
+  margin-bottom: .5rem;
+  line-height: 2;
+}
+
+.post__title a {
+  color: #191e38;
+}
+
+.post__title::before {
+  content: "";
+  background-color: #ff5a5d;
+  position: absolute;
+  top: 0;
+  right: -30px;
+  width: 5px;
+  height: 100px;
+}
+
+.article {
+  color: #606f7b;
+  line-height: 2;
+}
+
+.article blockquote {
+  position: relative;
+  padding-right: 2rem;
+  font-style: italic;
+  border-right-width: 4px;
+  border-color: #21252a;
+  font-size: 1.125rem;
+  color: #21252a;
+}
+
+.hero {
+  width: 100%;
+  margin-bottom: 2rem;
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 400px;
+  background-position: center;
+}
+
+.hero:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  content: "";
+  background-color: rgba(0, 0, 0, .6);
+}
+
+.hero__title {
+  color: #fff;
+  z-index: 10;
+  font-size: 2.25rem;
+  text-align: center;
+  line-height: 2;
+  margin-bottom: 1rem;
+  position: relative;
+  max-width: 50%;
+}
+
+.hero__avatar {
+  border-radius: 9999px;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  width: 100px;
+  height: 100px;
+}
+
+.hero__avatar img {
+  width: 100%;
 }
 
 /**

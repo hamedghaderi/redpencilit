@@ -9,19 +9,20 @@
     <div class="flex mb-12">
         <div class="w-1/2">
             <div class="p-6">
-                <h3 class="dashboard-title">ایجاد پست جدید</h3>
+                <h3 class="dashboard-title">ویرایش پست</h3>
             </div>
         </div>
     </div>
 
     <hr>
 
-    <form method="POST" action="/posts" enctype="multipart/form-data">
+    <form method="POST" action="{{ $post->path() }}" enctype="multipart/form-data">
         @csrf
+        @method('PATCH')
 
         <div class="form-group">
-            <label for="title">عنوان پست جدید</label>
-            <input type="text" class="input mb-2" name="title" value="{{ old('title') }}">
+            <label for="title">عنوان پست</label>
+            <input type="text" class="input mb-2" name="title" value="{{ $post->title }}">
 
             @if ($errors->has('title'))
                 <div class="feedback feedback--invalid">{{ $errors->first('title') }}</div>
@@ -30,7 +31,7 @@
 
         <div class="form-group">
             <label for="body">محتوای پست</label>
-            <wysiwyg name="body" class="mb-2" host="{{ asset('/') }}" value="{{ old('body') }}"></wysiwyg>
+            <wysiwyg name="body" class="mb-2" host="{{ asset('/') }}" value="{{ $post->body  }}"></wysiwyg>
 
             @if ($errors->has('body'))
                 <div class="feedback feedback--invalid">{{ $errors->first('body') }}</div>
@@ -39,7 +40,7 @@
 
         <div class="form-group">
             <label for="thumbnail">آپلود عکس پیش‌فرض برای پست</label>
-            <input type="file" name="thumbnail" value="old('thumbnail')">
+            <input type="file" name="thumbnail">
 
             @if ($errors->has('thumbnail'))
                 <div class="feedback feedback--invalid">{{ $errors->first('thumbnail') }}</div>

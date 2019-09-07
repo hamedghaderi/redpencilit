@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input id="trix" type="hidden" :name="name">
+        <input id="trix" type="hidden" :name="name" :value="value">
 
         <trix-editor ref="trix" class="trix-content" input="trix"></trix-editor>
     </div>
@@ -10,7 +10,7 @@
     import Trix from 'trix';
 
     export default {
-        props: ['name', 'host'],
+        props: ['name', 'host', 'value'],
 
         mounted() {
             this.$refs.trix.addEventListener('trix-file-accept', (e) => {
@@ -25,9 +25,9 @@
                     e.preventDefault();
                 }
 
-                if (e.file.size > 400000) {
+                if (e.file.size > 10024000) {
                     console.log(e.file.size);
-                    flash('حجم فایل نباید بیشتر از ۴۰۰ کیلوبایت باشد.', 'danger');
+                    flash('حجم فایل نباید بیشتر از ۱ مگابایت باشد.', 'danger');
 
                     e.preventDefault();
                 }
@@ -68,8 +68,8 @@
                     },
                 }).then(res => {
                     let attributes = {
-                        url: this.host + 'storage/blog/' + key,
-                        href: this.host + 'storage/blog/' + key + "?content-disposition=attachment"
+                        url: this.host + 'blog/' + key,
+                        href: this.host + 'blog/' + key + "?content-disposition=attachment"
                     };
                     successCallback(attributes);
                 }).catch(error => {

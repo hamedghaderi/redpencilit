@@ -64,12 +64,14 @@ Route::middleware('auth')->group(function () {
     */
     Route::get('/posts/create', 'PostsController@create')->middleware('can:create-posts');
     Route::post('/posts', 'PostsController@store')->middleware('can:create-posts');
+    Route::get('/posts/{post}/edit', 'PostsController@edit')->middleware('can:create-posts');
+    Route::patch('/posts/{post}', 'PostsController@update')->middleware('can:create-posts');
+    Route::delete('/posts/{post}', 'PostsController@destroy')->middleware('can:create-posts');
 
     Route::patch('/users/{user}/update-services', 'DocumentServiceController@update');
     Route::delete('/users/{user}/documents', 'DocumentsController@destroy')->middleware('must-be-confirmed');
     Route::post("/post-attachments", 'PostAttachmentsController@store');
 });
-
 
 //Route::get('/roles', 'RolesController@index');
 Route::post('/roles', 'RolesController@store');
@@ -91,6 +93,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 Route::post('/contacts', 'PagesController@store');
+
+
+/*
+|--------------------------------------------------------------------------
+| Posts
+|--------------------------------------------------------------------------
+*/
+Route::get('/posts', 'PostsController@index');
+Route::get('/posts/{post}', 'PostsController@show');
 
 
 

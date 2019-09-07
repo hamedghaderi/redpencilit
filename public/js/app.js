@@ -10082,7 +10082,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['name', 'host'],
+  props: ['name', 'host', 'value'],
   mounted: function mounted() {
     var _this = this;
 
@@ -10098,9 +10098,9 @@ __webpack_require__.r(__webpack_exports__);
         e.preventDefault();
       }
 
-      if (e.file.size > 400000) {
+      if (e.file.size > 10024000) {
         console.log(e.file.size);
-        flash('حجم فایل نباید بیشتر از ۴۰۰ کیلوبایت باشد.', 'danger');
+        flash('حجم فایل نباید بیشتر از ۱ مگابایت باشد.', 'danger');
         e.preventDefault();
       }
     });
@@ -10137,8 +10137,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         var attributes = {
-          url: _this2.host + 'storage/blog/' + key,
-          href: _this2.host + 'storage/blog/' + key + "?content-disposition=attachment"
+          url: _this2.host + 'blog/' + key,
+          href: _this2.host + 'blog/' + key + "?content-disposition=attachment"
         };
         successCallback(attributes);
       }).catch(function (error) {
@@ -52589,7 +52589,10 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("input", { attrs: { id: "trix", type: "hidden", name: _vm.name } }),
+      _c("input", {
+        attrs: { id: "trix", type: "hidden", name: _vm.name },
+        domProps: { value: _vm.value }
+      }),
       _vm._v(" "),
       _c("trix-editor", {
         ref: "trix",

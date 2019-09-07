@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Role;
 use App\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Http\UploadedFile;
@@ -18,7 +19,23 @@ abstract class TestCase extends BaseTestCase
 
        return $user;
     }
-
+    
+    /**
+     * Generate a super admin user.
+     *
+     * @return mixed|null
+     */
+    public function makeAdmin()
+    {
+        $user = $this->signIn();
+    
+        $role = create(Role::class, ['name' => 'super-admin']);
+    
+        $user->addRole($role);
+        
+        return $user;
+    }
+    
     /**
      * Make a test file form a given file.
      *

@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->string('title', 255);
             $table->text('body');
             $table->unsignedInteger('owner_id');
+            $table->string('thumbnail', '255')->nullable();
             $table->timestamps();
             $table->softDeletes();
             

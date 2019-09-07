@@ -1,0 +1,13 @@
+.search-box {
+  @apply relative h-12;
+}
+
+.search-input {
+  @apply w-full bg-grey-lightest px-8 py-4 rounded absolute pin-r pin-t;
+}
+
+.search-icon {
+  @apply absolute pin-l pl-8 text-grey;
+  top: 50%;
+  transform: translateY(-50%);
+}

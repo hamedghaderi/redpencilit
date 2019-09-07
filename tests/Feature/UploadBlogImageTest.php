@@ -3,11 +3,9 @@
 namespace Tests\Feature;
 
 use App\Role;
-use App\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UploadBlogImageTest extends TestCase

@@ -15,7 +15,7 @@ class PostAttachmentsController extends Controller
     {
         \request()->validate([
             'key' => 'required|string|max:255|min:3',
-            'attachment' => 'required|image|max:400'
+            'attachment' => 'required|image|max:1024'
         ]);
         
         $file = \request()->file('attachment');
