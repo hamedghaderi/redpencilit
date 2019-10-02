@@ -19,7 +19,7 @@ class UserRoleTest extends TestCase
        
        $role = create(Role::class);
        
-       $this->post("/users/{$user->username}/roles", [
+       $this->post("/users/{$user->id}/roles", [
            'roles' => [$role->id]
        ]);
        

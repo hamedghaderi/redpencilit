@@ -26,7 +26,6 @@ $factory->define(App\User::class, function (Faker $faker) {
 
     return [
         'name' => $name,
-        'username' => $username,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'phone' => '09123456789',

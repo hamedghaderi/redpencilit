@@ -80,7 +80,7 @@
             },
 
             dashboard() {
-                return '/dashboard/' + this.user.username;
+                return '/dashboard/' + this.user.id;
             }
         },
 

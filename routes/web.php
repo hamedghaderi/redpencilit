@@ -19,11 +19,11 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     // Services
-    Route::get('dashboard/{user}/services', 'ServicesController@index')->name('services');
-    Route::get('dashboard/{user}/services/{service}', 'ServicesController@show');
-    Route::post('dashboard/{user}/services', 'ServicesController@store')->name('services.store');
-    Route::patch('dashboard/{user}/services/{service}', 'ServicesController@update')->name('services.update');
-    Route::delete('dashboard/{user}/services/{service}', 'ServicesController@destroy')->name('services.delete');
+    Route::get('dashboard/services', 'ServicesController@index')->name('services');
+    Route::get('dashboard/services/{service}', 'ServicesController@show');
+    Route::post('dashboard/services', 'ServicesController@store')->name('services.store');
+    Route::patch('dashboard/services/{service}', 'ServicesController@update')->name('services.update');
+    Route::delete('dashboard/services/{service}', 'ServicesController@destroy')->name('services.delete');
 
     Route::post('/users/{user}/roles', 'UserRolesController@store');
 
@@ -39,8 +39,8 @@ Route::middleware('auth')->group(function () {
     | Users
     |--------------------------------------------------------------------------
     */
-    Route::get('/users', 'UsersController@index')->middleware('can:read');
-    Route::delete('/users/{user}', 'UsersController@destroy')->middleware('can:delete');
+    Route::get('/users', 'UsersController@index')->middleware('can:read-users');
+    Route::delete('/users/{user}', 'UsersController@destroy')->middleware('can:delete-users');
     
     /*
     |--------------------------------------------------------------------------

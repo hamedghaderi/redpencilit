@@ -41,7 +41,7 @@
 
         methods: {
            submitRoles() {
-               axios.post('/users/' + this.user.username + '/roles', {
+               axios.post('/users/' + this.user.id + '/roles', {
                    'roles': this.roleIds,
                }).then(response => {
                     document.location = '/users';

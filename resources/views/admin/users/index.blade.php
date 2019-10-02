@@ -16,7 +16,25 @@
     <hr>
 
     <div class="p-6">
-        <h3 class="dashboard-title mb-8">لیست کاربران</h3>
+        <div class="flex items-center">
+            <h3 class="dashboard-title">لیست کاربران</h3>
+
+            <div class="w-1/3 mr-auto">
+                <form method="GET" action="/users" onchange="this.submit()" class="flex w-full items-center">
+                    <label for="type" name="type" class="text-grey-darker ml-3">فیلتر بر اساس</label>
+                    <div class="select flex-1">
+                        <select name="type" id="type">
+                            <option value="all" {{ request('type') === 'all' ? 'selected' : '' }}>همه‌</option>
+                            <option value="coworkers" {{ request('type') === 'coworkers' ? 'selected' : ""}}>همکاران</option>
+                            <option value="customers" {{ request('type') === 'customers' ? 'selected' : "" }}>مشتریان</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+
         <div class="row px-6 mb-2 flex">
             <div class="w-1/4 text-sm text-grey-dark">نام</div>
             <div class="w-1/4 text-sm text-grey-dark">ایمیل</div>
@@ -45,7 +63,7 @@
                             <edit-role :user="{{$user}}" :roles="{{$roles}}"></edit-role>
                         </inner-modal>
 
-                        <form action="{{ '/users/' . $user->username }}" method="post" class="mr-auto">
+                        <form action="{{ '/users/' . $user->id }}" method="post" class="mr-auto">
                             @csrf
                             @method('DELETE')
 
@@ -57,7 +75,7 @@
         @endforeach
     </div>
 
-        {{ $users->links('vendor.pagination.paginator') }}
+    {{ $users->links('vendor.pagination.paginator') }}
     </div>  <!-- .p-6 -->
 
 

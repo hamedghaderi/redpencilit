@@ -25,7 +25,7 @@
                         </li>
 
                         <li>
-                            <a href="{{ '/dashboard/' . auth()->user()->username . '/services' }}">
+                            <a href="{{ '/dashboard/services' }}">
                                 <i class="fas fa-cog pl-3"></i>
                                 سرویس‌ها
                             </a>

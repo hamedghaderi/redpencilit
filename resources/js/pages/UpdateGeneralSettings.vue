@@ -27,10 +27,12 @@
                     <input
                             class="w-full"
                             type="text"
-                            v-model="formSetting.upload_articles_per_day"
+                            :value="formSetting.upload_articles_per_day"
+                            @input="sanitizeNumber"
                             name="upload_articles_per_day"
                             :readonly="!showEdit"
-                            :class="{ 'dashboard-input': showEdit }">
+                            :class="{ 'dashboard-input': showEdit }"
+                    >
 
                     <p class="feedback feedback--invalid my-2" v-if="errors.has('upload_articles_per_day')">
                         {{ this.errors.get('upload_articles_per_day') }}
@@ -43,7 +45,8 @@
                     <input
                             class="w-full"
                             type="text"
-                            v-model="formSetting.upload_words_per_day"
+                            :value="formSetting.upload_words_per_day"
+                            @input="sanitizeNumber"
                             name="upload_words_per_day"
                             :readonly="!showEdit"
                             :class="{ 'dashboard-input': showEdit }">
@@ -57,7 +60,8 @@
                     <input
                             class="w-full"
                             type="text"
-                            v-model="formSetting.price_per_word"
+                            :value="formSetting.price_per_word"
+                            @input="sanitizeNumber"
                             name="price_per_word"
                             :readonly="!showEdit"
                             :class="{ 'dashboard-input': showEdit }">
@@ -68,14 +72,14 @@
             </div>
 
             <div class="flex">
-
                 <div class="w-1/3" :class="{ 'form-group': showEdit, 'pl-6': showEdit }">
                     <label for="base_price_for_docs" class="text-grey block mb-4">قیمت پایه برای فایل‌های کم حجم
                         (تومان)</label>
                     <input
                             class="w-full"
                             type="text"
-                            v-model="formSetting.base_price_for_docs"
+                            :value="formSetting.base_price_for_docs"
+                            @input="sanitizeNumber"
                             name="base_price_for_docs"
                             :readonly="!showEdit"
                             :class="{ 'dashboard-input': showEdit }">
@@ -99,8 +103,12 @@
 
     export default {
         props: [
-            'setting'
+            'setting',
         ],
+
+        mounted() {
+            localStorage.clear('setting');
+        },
 
         created() {
             this.reset();
@@ -110,12 +118,7 @@
             return {
                 showEdit: false,
                 errors: new Errors(),
-                formSetting: {
-                    upload_articles_per_day: '',
-                    base_price_for_docs: '',
-                    price_per_word: '',
-                    upload_words_per_day: ''
-                }
+                formSetting: {}
             }
         },
 
@@ -131,26 +134,29 @@
             },
 
             reset() {
-                if (this.setting) {
-                    this.formSetting.upload_articles_per_day = this.setting.upload_articles_per_day;
-                    this.formSetting.base_price_for_docs = this.setting.base_price_for_docs;
-                    this.formSetting.price_per_word = this.setting.price_per_word;
-                    this.formSetting.upload_words_per_day = this.setting.upload_words_per_day;
-                } else {
-                    this.formSetting = {
-                        upload_articles_per_day: '',
-                        base_price_for_docs: '',
-                        price_per_word: '',
-                        upload_words_per_day: ''
-                    };
+                if (localStorage.hasOwnProperty('setting')) {
+                    this.formSetting = JSON.parse(localStorage.getItem('setting'));
+                    return;
                 }
+
+                if (this.setting) {
+                    this.formSetting = this.setting;
+
+                    return;
+                }
+
+                this.formSetting = {
+                    upload_articles_per_day: '',
+                    base_price_for_docs: '',
+                    price_per_word: '',
+                    upload_words_per_day: ''
+                };
             },
 
             submit() {
-                let uri = this.setting ? `/settings/${this.setting.id}` : `/settings`;
-                let method = this.setting ? 'patch' : 'post';
-                axios[method](uri, this.formSetting).then(response => {
+                axios[this.method()](this.uri(), this.formSetting).then(response => {
                     flash('اطلاعات با موفقیت به روز رسانی شد.');
+                    localStorage.setItem('setting', JSON.stringify(response.data));
 
                     this.formSetting = response.data;
                     this.showEdit = false;
@@ -161,9 +167,29 @@
                 });
             },
 
+            uri() {
+                if (localStorage.hasOwnProperty('setting'))    {
+                    return '/settings/' +  JSON.parse(localStorage.getItem('setting')).id;
+                }
+
+                if (this.setting) {
+                    return '/settings/' + this.setting.id;
+                }
+
+                return '/settings';
+            },
+
+            method() {
+                if (localStorage.hasOwnProperty('setting') || this.setting)    {
+                    return 'patch';
+                }
+
+               return 'post' ;
+            },
+
             resetError(event) {
                 this.errors.reset(event.target.name);
-            }
+            },
         }
     }
 </script>

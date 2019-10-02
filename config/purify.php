@@ -67,7 +67,7 @@ return [
         |
         */
         
-        'HTML.Allowed' => 'figure[inline,Inline,Common],figcaption[class,Text],blockquote,br,h1,h2,h3,h4,h5,h6,b,strong,i,em,a[href|title],ul,ol,li,p[style],br,span[class],img[width|height|alt|src|data-filename]',
+        'HTML.Allowed' => 'blockquote,br,h1,h2,h3,h4,h5,h6,b,strong,i,em,a[href|title],ul,ol,li,p[style],br,span[class],img[width|height|alt|src]',
         
         /*
         |--------------------------------------------------------------------------

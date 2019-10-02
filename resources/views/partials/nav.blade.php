@@ -19,7 +19,7 @@
                     </a>
                 </li>
                 @if (auth()->check())
-                    <li><a href="{{ '/users/' . auth()->user()->username . '/orders' }}">لیست سفارشات</a></li>
+                    <li><a href="{{ '/users/' . auth()->id() . '/orders' }}">لیست سفارشات</a></li>
                 @endif
             </ul>
 

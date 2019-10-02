@@ -14,11 +14,11 @@ class UserRegisterTest extends TestCase
     /** @test * */
     public function a_user_can_register_with_a_new_account()
     {
+        $this->withoutExceptionHandling();
         $user = make(User::class);
         $user->password_confirmation = $user->password;
         
-        $response = $this->postJson(
-            '/register',
+        $response = $this->postJson('/register',
             $user->makeVisible('password')->makeVisible('email')->toArray()
         );
         

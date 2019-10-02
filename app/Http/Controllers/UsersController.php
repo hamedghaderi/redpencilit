@@ -16,7 +16,13 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
+        if (request()->has('type') && request('type') === 'coworkers') {
+            $users = User::whereHas('roles')->paginate(10);
+        } else if (request()->has('type') && request('type') === 'customers') {
+            $users = User::whereDoesntHave('roles')->paginate(10);
+        } else {
+            $users = User::paginate(10);
+        }
         
         $roles = Role::all();
         

@@ -25,7 +25,7 @@ class AdminTest extends TestCase
        
        $this->assertCount(2, User::all());
        
-       $this->delete('/users/' . $john->username)
+       $this->delete('/users/' . $john->id)
            ->assertRedirect('/users');
        
        $this->assertCount(1, User::all());
@@ -45,7 +45,7 @@ class AdminTest extends TestCase
        
        $david = create(User::class);
        
-       $this->delete('/users/' . $david->username)
+       $this->delete('/users/' . $david->id)
            ->assertStatus(403);
     }
     

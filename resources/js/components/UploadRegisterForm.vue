@@ -20,22 +20,6 @@
 
         <div class="form-group">
             <div class="relative flex">
-                <input type="text" name="username" placeholder="نام کاربری"
-                       class="input input--rounded input--right"
-                       v-model="username">
-
-                <span class="input-icon input-icon--no-border input-icon--right">
-                     <i class="far fa-id-card"></i>
-                 </span>
-            </div>
-
-            <div class="feedback feedback--invalid my-2" v-show="errors.has('username')">
-                <p>{{ errors.get('username') }}</p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="relative flex">
                 <input type="email" name="email" placeholder="آدرس ایمیل"
                        class="input input--rounded input--right"
                        v-model="email">
@@ -110,7 +94,6 @@
             return {
                 name: '',
                 email: '',
-                username: '',
                 password: '',
                 password_confirmation: '',
                 phone: '',

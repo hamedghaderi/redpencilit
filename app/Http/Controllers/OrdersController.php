@@ -23,9 +23,10 @@ class OrdersController extends Controller
      */
     public function index(User $user)
     {
-        $orders = $user->orders->each(function ($order) {
-          $order->load('details');
-        });
+        $orders = $user->orders->each(
+            function ($order) {
+                $order->load('details');
+            });
         
         return view('orders.index', compact('orders'));
     }
@@ -82,21 +83,19 @@ class OrdersController extends Controller
             ]);
         
         foreach (request()->documents as $document) {
-            $path = $document->store(auth()->user()->username, 'documents');
+            $path = $document->store(auth()->user()->id, 'documents');
             
-            $order->details()->create(
-                [
-                    'name' => $document->getClientOriginalName(),
-                    'path' => $path,
-                    'words' => DocumentWordCount::file($document)->countWords(),
-                ]);
+            $order->details()->create([
+                'name' => $document->getClientOriginalName(),
+                'path' => $path,
+                'words' => DocumentWordCount::file($document)->countWords(),
+            ]);
         }
         
-        return response()->json(
-            [
-                'status' => 200,
-                'data' => $order->load('details')
-            ]);
+        return response()->json([
+            'status' => 200,
+            'data' => $order->load('details')
+        ]);
     }
     
     /**
@@ -158,9 +157,10 @@ class OrdersController extends Controller
         $order->delete();
         $order->details()->delete();
         
-        return response()->json([
-            'status' => 200,
-        ]);
+        return response()->json(
+            [
+                'status' => 200,
+            ]);
     }
     
     /**

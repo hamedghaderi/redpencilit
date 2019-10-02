@@ -45,9 +45,7 @@ class OrderTest extends TestCase
             'upload_articles_per_day' => 4
         ]);
         
-        $response = $this->json(
-            'post',
-            '/users/'.$user->username.'/orders', [
+        $response = $this->json('post', '/users/'.$user->id.'/orders', [
             'documents' => [
                 0 => $file = $this->makeTestFile('951')
             ]
@@ -61,7 +59,7 @@ class OrderTest extends TestCase
         
         $this->assertDatabaseHas(
             'order_details', [
-            'path' => $user->username.'/'.$file->hashName()
+            'path' => $user->id.'/'.$file->hashName()
         ]);
     }
     
@@ -84,7 +82,7 @@ class OrderTest extends TestCase
         
         $response = $this->json(
             'post',
-            '/users/'.$user->username.'/orders', [
+            '/users/'.$user->id.'/orders', [
             'documents' => [
                 0 => $files[0] = $this->makeTestFile('951'),
                 1 => $file[1] = $this->makeTestFile('1')
@@ -106,7 +104,7 @@ class OrderTest extends TestCase
     }
     
     /** @test * */
-    public function singed_in_users_can_not_upload_documents_until_verified()
+    public function signed_in_users_can_not_upload_documents_until_verified()
     {
         Storage::fake('documents');
         
@@ -121,7 +119,7 @@ class OrderTest extends TestCase
         ]);
         
         $response = $this->json(
-            'post', '/users/'.$user->username.'/orders', [
+            'post', '/users/'.$user->id.'/orders', [
             'documents' => [
                 0 => $files[0] = $this->makeTestFile('951'),
             ]
@@ -145,7 +143,7 @@ class OrderTest extends TestCase
         ]);
         
         $this->json(
-            'post', '/users/'.$user->username.'/orders', [
+            'post', '/users/'.$user->id.'/orders', [
             'documents' => [
                 0 => $files[0] = $this->makeTestFile('951'),
                 1 => UploadedFile::fake()->create('2.docx'),
@@ -170,7 +168,7 @@ class OrderTest extends TestCase
         ]);
         
         $this->json(
-            'post', '/users/'.$user->username.'/orders', [
+            'post', '/users/'.$user->id.'/orders', [
             'documents' => [
                 0 => $files[0] = $this->makeTestFile('951'),
             ]
@@ -192,7 +190,7 @@ class OrderTest extends TestCase
         ]);
         
         $this->json(
-            'post', '/users/'.$user->username.'/orders', [
+            'post', '/users/'.$user->id.'/orders', [
             'documents' => [
                 0 => $this->makeTestFile('951')
             ]
@@ -216,7 +214,7 @@ class OrderTest extends TestCase
         ]);
         
         $this->json(
-            'post', '/users/'.$user->username.'/orders', [
+            'post', '/users/'.$user->id.'/orders', [
             'documents' => [
                 0 => $this->makeTestFile('951')
             ]
@@ -237,7 +235,7 @@ class OrderTest extends TestCase
         
         $setting = create(Setting::class);
         
-        $this->json('post', '/users/' . $user->username . '/orders/', [
+        $this->json('post', '/users/' . $user->id . '/orders/', [
             'documents' => [
                 0 => $this->makeTestFile('951')
             ]
@@ -245,7 +243,7 @@ class OrderTest extends TestCase
         
         $this->assertEquals(1, count(Storage::disk('documents')->allFiles()));
         
-        $this->json('delete', "/users/{$user->username}/orders/1");
+        $this->json('delete', "/users/{$user->id}/orders/1");
         
         $this->assertEquals(0, count(Storage::disk('documents')->allFiles()));
         $this->assertCount(0, Order::all());

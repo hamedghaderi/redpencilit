@@ -25,7 +25,7 @@ class UserProfileTest extends TestCase
            'phone' => '09360000000'
        ];
 
-       $this->patch('/dashboard/' . $user->username, $attributes);
+       $this->patch('/dashboard/' . $user->id, $attributes);
 
       $this->assertDatabaseHas('users', $attributes);
    }
@@ -40,17 +40,21 @@ class UserProfileTest extends TestCase
     public function update_user_account_requires_valid_phone_number()
     {
         $user = $this->signIn(
-            factory(User::class)->create(['name' => 'Jane', 'email' => 'jane@doe.com', 'phone' => '09369396387'])
+            factory(User::class)->create([
+                'name' => 'Jane',
+                'email' => 'jane@doe.com',
+                'phone' => '09369396387'
+            ])
         );
 
         $attributes = ['phone' => null];
 
-        $this->patch('/dashboard/' . $user->username, $attributes)
+        $this->patch('/dashboard/' . $user->id, $attributes)
             ->assertSessionHasErrors('phone');
 
         $attributes = ['phone' => '9023920342039'];
 
-        $this->patch('/dashboard/' . $user->username, $attributes)
+        $this->patch('/dashboard/' . $user->id, $attributes)
             ->assertSessionHasErrors('phone');
     }
 
@@ -58,14 +62,18 @@ class UserProfileTest extends TestCase
     public function update_user_account_requires_valid_email_address()
     {
         $user = $this->signIn(
-            factory(User::class)->create(['name' => 'Jane', 'email' => 'jane@doe.com', 'phone' => '09369396387'])
+            factory(User::class)->create([
+                'name' => 'Jane',
+                'email' => 'jane@doe.com',
+                'phone' => '09369396387'
+            ])
         );
 
         $attributes = [
             'email' => null
         ];
 
-        $this->patch('/dashboard/' . $user->username, $attributes)
+        $this->patch('/dashboard/' . $user->id, $attributes)
             ->assertSessionHasErrors('email');
 
 
@@ -81,14 +89,18 @@ class UserProfileTest extends TestCase
     public function update_user_account_requires_valid_name()
     {
         $user = $this->signIn(
-            factory(User::class)->create(['name' => 'Jane', 'email' => 'jane@doe.com', 'phone' => '09369396387'])
+            factory(User::class)->create([
+                'name' => 'Jane',
+                'email' => 'jane@doe.com',
+                'phone' => '09369396387'
+            ])
         );
 
         $attributes = [
             'name' => null
         ];
 
-        $this->patch('/dashboard/' . $user->username, $attributes)
+        $this->patch('/dashboard/' . $user->id, $attributes)
             ->assertSessionHasErrors('name');
 
 

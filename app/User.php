@@ -34,20 +34,7 @@ class User extends Authenticatable
             'updated_at'
         ];
     
-    protected $casts
-        = [
-            'confirmed' => 'boolean'
-        ];
-    
-    /**
-     * Use 'username' as users route key name.
-     *
-     * @return string
-     */
-    public function getRouteKeyName()
-    {
-        return 'username';
-    }
+    protected $casts = ['confirmed' => 'boolean'];
     
     /**
      * Confirm user email address.

@@ -72,7 +72,7 @@ class ServicesController extends Controller
             ];
         }
 
-        return redirect('dashboard/'.$user->username.'/services');
+        return redirect(route('services'));
     }
 
     /**
@@ -122,7 +122,7 @@ class ServicesController extends Controller
             ]);
         }
 
-        return redirect(route('services', $user));
+        return redirect(route('services'));
     }
 
     /**
@@ -144,6 +144,6 @@ class ServicesController extends Controller
             return Service::latest()->get();
         }
 
-        return redirect(route('services', $user));
+        return redirect(route('services'));
     }
 }

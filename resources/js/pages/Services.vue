@@ -177,7 +177,7 @@
         },
 
         mounted() {
-            axios.get(`/dashboard/${this.user.username}/services`).then(response => {
+            axios.get(`/dashboard/services`).then(response => {
                 this.services = response.data;
             });
 
@@ -186,7 +186,7 @@
 
         methods: {
             saveService() {
-                axios.post(`/dashboard/${this.user.username}/services`, {
+                axios.post(`/dashboard/services`, {
                     name: this.name,
                     negotiable: this.negotiable
                 }).then(response => {
@@ -202,14 +202,14 @@
             },
 
             deleteService(id) {
-              axios.delete(`/dashboard/${this.user.username}/services/${id}`)
+              axios.delete(`/dashboard/services/${id}`)
                   .then(response => {
                       this.services = response.data
                   });
             },
 
             openEdit(id) {
-                axios.get(`/dashboard/${this.user.username}/services/${id}`)
+                axios.get(`/dashboard/services/${id}`)
                     .then(response => {
                         if (response.data.status === 200) {
                             this.serviceForUpdate = response.data.service;
@@ -221,14 +221,14 @@
             },
 
             updateService(service){
-                axios.patch(`/dashboard/${this.user.username}/services/${service.id}`, {
+                axios.patch(`/dashboard/services/${service.id}`, {
                     name: this.updatedName,
                     negotiable: this.updatedNegotiable
                 }).then(response => {
                     if (response.data.status === 200) {
                         this.modal = false;
 
-                        axios.get(`/dashboard/${this.user.username}/services`).then(response => {
+                        axios.get(`/dashboard/services`).then(response => {
                             this.services = response.data;
                         });
 
