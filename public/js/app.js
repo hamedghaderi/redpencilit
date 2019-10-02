@@ -9506,6 +9506,65 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Favorite.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Favorite.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['post'],
+  created: function created() {
+    this.favorited = this.post.isFavorited;
+  },
+  data: function data() {
+    return {
+      favorited: false
+    };
+  },
+  methods: {
+    favorite: function favorite() {
+      var _this = this;
+
+      var url = "/posts/".concat(this.post.id, "/favorite");
+      axios.post(url).then(function (res) {
+        flash('پست را پسندیدم!');
+        _this.favorited = true;
+      }).catch(function (error) {
+        flash('لایک شما ثبت نشد. لطفا مجددا سعی کنید.!', 'danger');
+      });
+    },
+    disfavor: function disfavor() {
+      var _this2 = this;
+
+      var url = "/posts/".concat(this.post.id, "/disfavor");
+      axios.delete(url).then(function (res) {
+        flash('پشیمان شدم :(!');
+        _this2.favorited = false;
+      }).catch(function (error) {
+        flash('متاسفانه عملیات با موفقیت ثبت نشد. لطفا مجددا سعی کنید.', 'danger');
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Flash.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Flash.vue?vue&type=script&lang=js& ***!
@@ -10488,6 +10547,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Errors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Errors */ "./resources/js/Errors.js");
 //
 //
 //
@@ -10566,11 +10626,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['upload_articles_per_day', 'upload_words_per_day', 'price_per_word', 'base_price_for_docs'],
+  props: ['setting'],
+  created: function created() {
+    this.reset();
+  },
   data: function data() {
     return {
-      showEdit: false
+      showEdit: false,
+      errors: new _Errors__WEBPACK_IMPORTED_MODULE_0__["default"](),
+      formSetting: {
+        upload_articles_per_day: '',
+        base_price_for_docs: '',
+        price_per_word: '',
+        upload_words_per_day: ''
+      }
     };
   },
   methods: {
@@ -10579,6 +10668,41 @@ __webpack_require__.r(__webpack_exports__);
     },
     onCancelEdit: function onCancelEdit() {
       this.showEdit = false;
+      this.errors.clear();
+      this.reset();
+    },
+    reset: function reset() {
+      if (this.setting) {
+        this.formSetting.upload_articles_per_day = this.setting.upload_articles_per_day;
+        this.formSetting.base_price_for_docs = this.setting.base_price_for_docs;
+        this.formSetting.price_per_word = this.setting.price_per_word;
+        this.formSetting.upload_words_per_day = this.setting.upload_words_per_day;
+      } else {
+        this.formSetting = {
+          upload_articles_per_day: '',
+          base_price_for_docs: '',
+          price_per_word: '',
+          upload_words_per_day: ''
+        };
+      }
+    },
+    submit: function submit() {
+      var _this = this;
+
+      var uri = this.setting ? "/settings/".concat(this.setting.id) : "/settings";
+      var method = this.setting ? 'patch' : 'post';
+      axios[method](uri, this.formSetting).then(function (response) {
+        flash('اطلاعات با موفقیت به روز رسانی شد.');
+        _this.formSetting = response.data;
+        _this.showEdit = false;
+      }).catch(function (error) {
+        flash('به روز رسانی انجام نشد!', 'danger');
+
+        _this.errors.record(error.response.data.errors);
+      });
+    },
+    resetError: function resetError(event) {
+      this.errors.reset(event.target.name);
     }
   }
 });
@@ -51717,6 +51841,52 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Favorite.vue?vue&type=template&id=3982b107&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Favorite.vue?vue&type=template&id=3982b107& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "flex items-center" }, [
+    !_vm.favorited
+      ? _c("p", { staticClass: "text-sm text-grey-darker" }, [
+          _vm._v(
+            "در صورتیکه از این پست خوشتان آمده لطفا آن را لایک کنید\n        ."
+          )
+        ])
+      : _c("p", { staticClass: "text-sm text-grey-darker" }, [
+          _vm._v("شما این پست را پسندیده‌اید.")
+        ]),
+    _vm._v(" "),
+    _c("span", { staticClass: "mr-auto cursor-pointer" }, [
+      !_vm.favorited
+        ? _c("i", {
+            staticClass: "far fa-heart text-grey-dark",
+            on: { click: _vm.favorite }
+          })
+        : _c("i", {
+            staticClass: "fas fa-heart text-red",
+            on: { click: _vm.disfavor }
+          })
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Flash.vue?vue&type=template&id=e4161ed6&":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Flash.vue?vue&type=template&id=e4161ed6& ***!
@@ -53283,150 +53453,291 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "flex mb-12" }, [
-      _c(
-        "div",
-        {
-          staticClass: "w-1/3",
-          class: { "form-group": _vm.showEdit, "pl-6": _vm.showEdit }
-        },
-        [
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+          },
+          keydown: _vm.resetError
+        }
+      },
+      [
+        _c("div", { staticClass: "flex mb-12" }, [
           _c(
-            "label",
+            "div",
             {
-              staticClass: "text-grey block mb-4",
-              attrs: { for: "upload_articles_per_day" }
+              staticClass: "w-1/3",
+              class: { "form-group": _vm.showEdit, "pl-6": _vm.showEdit }
             },
-            [_vm._v("حداکثر تعداد آپلود مقاله در\n                روز")]
+            [
+              _c(
+                "label",
+                {
+                  staticClass: "text-grey block mb-4",
+                  attrs: { for: "upload_articles_per_day" }
+                },
+                [_vm._v("حداکثر تعداد آپلود مقاله در\n                    روز")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.formSetting.upload_articles_per_day,
+                    expression: "formSetting.upload_articles_per_day"
+                  }
+                ],
+                staticClass: "w-full",
+                class: { "dashboard-input": _vm.showEdit },
+                attrs: {
+                  type: "text",
+                  name: "upload_articles_per_day",
+                  readonly: !_vm.showEdit
+                },
+                domProps: { value: _vm.formSetting.upload_articles_per_day },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.formSetting,
+                      "upload_articles_per_day",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors.has("upload_articles_per_day")
+                ? _c("p", { staticClass: "feedback feedback--invalid my-2" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(this.errors.get("upload_articles_per_day")) +
+                        "\n                "
+                    )
+                  ])
+                : _vm._e()
+            ]
           ),
           _vm._v(" "),
-          _c("input", {
-            staticClass: "w-full",
-            class: { "dashboard-input": _vm.showEdit },
-            attrs: {
-              type: "text",
-              name: "upload_articles_per_day",
-              readonly: !_vm.showEdit
-            },
-            domProps: { value: _vm.upload_articles_per_day }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "w-1/3",
-          class: { "form-group": _vm.showEdit, "pl-6": _vm.showEdit }
-        },
-        [
           _c(
-            "label",
+            "div",
             {
-              staticClass: "text-grey block mb-4",
-              attrs: { for: "upload_words_per_day" }
+              staticClass: "w-1/3",
+              class: { "form-group": _vm.showEdit, "pl-6": _vm.showEdit }
             },
-            [_vm._v("حداکثر تعداد کلمات قابل پذیرش در\n                روز")]
+            [
+              _c(
+                "label",
+                {
+                  staticClass: "text-grey block mb-4",
+                  attrs: { for: "upload_words_per_day" }
+                },
+                [
+                  _vm._v(
+                    "حداکثر تعداد کلمات قابل پذیرش در\n                    روز"
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.formSetting.upload_words_per_day,
+                    expression: "formSetting.upload_words_per_day"
+                  }
+                ],
+                staticClass: "w-full",
+                class: { "dashboard-input": _vm.showEdit },
+                attrs: {
+                  type: "text",
+                  name: "upload_words_per_day",
+                  readonly: !_vm.showEdit
+                },
+                domProps: { value: _vm.formSetting.upload_words_per_day },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.formSetting,
+                      "upload_words_per_day",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors.has("upload_words_per_day")
+                ? _c("p", { staticClass: "feedback feedback--invalid my-2" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(this.errors.get("upload_words_per_day")) +
+                        "\n                "
+                    )
+                  ])
+                : _vm._e()
+            ]
           ),
           _vm._v(" "),
-          _c("input", {
-            staticClass: "w-full",
-            class: { "dashboard-input": _vm.showEdit },
-            attrs: {
-              type: "text",
-              name: "upload_words_per_day",
-              readonly: !_vm.showEdit
-            },
-            domProps: { value: _vm.upload_words_per_day }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "w-1/3",
-          class: { "form-group": _vm.showEdit, "pl-6": _vm.showEdit }
-        },
-        [
           _c(
-            "label",
+            "div",
             {
-              staticClass: "text-grey block mb-4",
-              attrs: { for: "price_per_word" }
+              staticClass: "w-1/3",
+              class: { "form-group": _vm.showEdit, "pl-6": _vm.showEdit }
             },
-            [_vm._v("قیمت هر کلمه در واحد تومان")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "w-full",
-            class: { "dashboard-input": _vm.showEdit },
-            attrs: {
-              type: "text",
-              name: "price_per_word",
-              readonly: !_vm.showEdit
-            },
-            domProps: { value: _vm.price_per_word }
-          })
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "flex" }, [
-      _c(
-        "div",
-        {
-          staticClass: "w-1/3",
-          class: { "form-group": _vm.showEdit, "pl-6": _vm.showEdit }
-        },
-        [
-          _c(
-            "label",
-            {
-              staticClass: "text-grey block mb-4",
-              attrs: { for: "base_price_for_docs" }
-            },
-            [_vm._v("قیمت پایه برای فایل‌های کم حجم\n                (تومان)")]
-          ),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "w-full",
-            class: { "dashboard-input": _vm.showEdit },
-            attrs: {
-              type: "text",
-              name: "base_price_for_docs",
-              readonly: !_vm.showEdit
-            },
-            domProps: { value: _vm.base_price_for_docs }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.showEdit,
-              expression: "showEdit"
-            }
-          ],
-          staticClass: "w-2/3 text-left self-center"
-        },
-        [
-          _c(
-            "button",
-            {
-              staticClass: "button button--primary",
-              attrs: { type: "submit" }
-            },
-            [_vm._v("ذخیره تنظیمات")]
+            [
+              _c(
+                "label",
+                {
+                  staticClass: "text-grey block mb-4",
+                  attrs: { for: "price_per_word" }
+                },
+                [_vm._v("قیمت هر کلمه در واحد تومان")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.formSetting.price_per_word,
+                    expression: "formSetting.price_per_word"
+                  }
+                ],
+                staticClass: "w-full",
+                class: { "dashboard-input": _vm.showEdit },
+                attrs: {
+                  type: "text",
+                  name: "price_per_word",
+                  readonly: !_vm.showEdit
+                },
+                domProps: { value: _vm.formSetting.price_per_word },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.formSetting,
+                      "price_per_word",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors.has("price_per_word")
+                ? _c("p", { staticClass: "feedback feedback--invalid my-2" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(this.errors.get("price_per_word")) +
+                        "\n                "
+                    )
+                  ])
+                : _vm._e()
+            ]
           )
-        ]
-      )
-    ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "flex" }, [
+          _c(
+            "div",
+            {
+              staticClass: "w-1/3",
+              class: { "form-group": _vm.showEdit, "pl-6": _vm.showEdit }
+            },
+            [
+              _c(
+                "label",
+                {
+                  staticClass: "text-grey block mb-4",
+                  attrs: { for: "base_price_for_docs" }
+                },
+                [
+                  _vm._v(
+                    "قیمت پایه برای فایل‌های کم حجم\n                    (تومان)"
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.formSetting.base_price_for_docs,
+                    expression: "formSetting.base_price_for_docs"
+                  }
+                ],
+                staticClass: "w-full",
+                class: { "dashboard-input": _vm.showEdit },
+                attrs: {
+                  type: "text",
+                  name: "base_price_for_docs",
+                  readonly: !_vm.showEdit
+                },
+                domProps: { value: _vm.formSetting.base_price_for_docs },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.formSetting,
+                      "base_price_for_docs",
+                      $event.target.value
+                    )
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm.errors.has("base_price_for_docs")
+                ? _c("p", { staticClass: "feedback feedback--invalid my-2" }, [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(this.errors.get("base_price_for_docs")) +
+                        "\n                "
+                    )
+                  ])
+                : _vm._e()
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showEdit,
+                  expression: "showEdit"
+                }
+              ],
+              staticClass: "w-2/3 text-left self-center"
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "button button--primary",
+                  on: { click: _vm.submit }
+                },
+                [_vm._v("ذخیره تنظیمات")]
+              )
+            ]
+          )
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -66467,6 +66778,18 @@ function () {
         return this.errors[field][0];
       }
     }
+  }, {
+    key: "reset",
+    value: function reset(key) {
+      if (this.has(key)) {
+        delete this.errors[key];
+      }
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      this.errors = {};
+    }
   }]);
 
   return Errors;
@@ -66606,6 +66929,7 @@ Vue.component('services', __webpack_require__(/*! ./pages/Services.vue */ "./res
 Vue.component('user-account-form', __webpack_require__(/*! ./pages/UserAccountForm.vue */ "./resources/js/pages/UserAccountForm.vue").default);
 Vue.component('update-general-settings', __webpack_require__(/*! ./pages/UpdateGeneralSettings.vue */ "./resources/js/pages/UpdateGeneralSettings.vue").default);
 Vue.component('wysiwyg', __webpack_require__(/*! ./components/Wysiwyg.vue */ "./resources/js/components/Wysiwyg.vue").default);
+Vue.component('favorite', __webpack_require__(/*! ./components/Favorite.vue */ "./resources/js/components/Favorite.vue").default);
 Vue.config.ignoredElements = ['trix-editor'];
 Vue.component('upload-service', {
   data: function data() {
@@ -66911,6 +67235,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Favorite.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/Favorite.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Favorite_vue_vue_type_template_id_3982b107___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Favorite.vue?vue&type=template&id=3982b107& */ "./resources/js/components/Favorite.vue?vue&type=template&id=3982b107&");
+/* harmony import */ var _Favorite_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Favorite.vue?vue&type=script&lang=js& */ "./resources/js/components/Favorite.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Favorite_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Favorite_vue_vue_type_template_id_3982b107___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Favorite_vue_vue_type_template_id_3982b107___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Favorite.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Favorite.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/Favorite.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Favorite_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Favorite.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Favorite.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Favorite_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Favorite.vue?vue&type=template&id=3982b107&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/Favorite.vue?vue&type=template&id=3982b107& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Favorite_vue_vue_type_template_id_3982b107___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Favorite.vue?vue&type=template&id=3982b107& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Favorite.vue?vue&type=template&id=3982b107&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Favorite_vue_vue_type_template_id_3982b107___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Favorite_vue_vue_type_template_id_3982b107___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

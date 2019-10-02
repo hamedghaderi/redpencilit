@@ -27,7 +27,13 @@
             <div class="article">
                 {!! $post->body !!}
             </div>
+
+            <hr>
+
+            <favorite class="mr-auto" :post="{{ $post }}"></favorite>
         </div>
+
+
     </div>
 
 @endsection

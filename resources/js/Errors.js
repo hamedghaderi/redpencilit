@@ -16,6 +16,16 @@ class Errors {
            return this.errors[field][0];
        }
     }
+
+    reset(key) {
+        if (this.has(key)) {
+            delete this.errors[key];
+        }
+    }
+
+    clear() {
+        this.errors = {};
+    }
 }
 
 export default Errors;

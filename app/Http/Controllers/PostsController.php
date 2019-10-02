@@ -14,11 +14,13 @@ class PostsController extends Controller
      */
     public function index()
     {
+        $posts = Post::select('*');
+        
         if (request()->has('q')) {
-            $posts = Post::search(request('q'))->paginate(25);
-        } else {
-            $posts = Post::latest()->paginate(25);
+            $posts = $posts->search(request('q'));
         }
+        
+        $posts = $posts->take(1000)->latest()->paginate(25);
         
         return view(
             'posts.index', [

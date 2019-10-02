@@ -106,7 +106,7 @@ class User extends Authenticatable
      */
     public function roles()
     {
-       return $this->belongsToMany(Role::class);
+        return $this->belongsToMany(Role::class);
     }
     
     /**
@@ -118,7 +118,7 @@ class User extends Authenticatable
      */
     public function addRole($roles)
     {
-       return $this->roles()->sync($roles);
+        return $this->roles()->sync($roles);
     }
     
     /**
@@ -130,16 +130,16 @@ class User extends Authenticatable
      */
     public function hasRole($role)
     {
-       if (is_string($role))  {
-          return $this->roles->contains('name', $role);
-       }
-       
-       if (is_a($role, Role::class)) {
-           return  $this->roles->contains($role);
-       }
-       
-       // if role is a collection.
-       return !! $role->intersect($this->roles)->count();
+        if (is_string($role)) {
+            return $this->roles->contains('name', $role);
+        }
+        
+        if (is_a($role, Role::class)) {
+            return $this->roles->contains($role);
+        }
+        
+        // if role is a collection.
+        return !!$role->intersect($this->roles)->count();
     }
     
     /**
@@ -149,7 +149,7 @@ class User extends Authenticatable
      */
     public function isSuperAdmin()
     {
-       return $this->roles->contains('name', 'super-admin') ;
+        return $this->roles->contains('name', 'super-admin');
     }
     
     /**
@@ -159,7 +159,12 @@ class User extends Authenticatable
      */
     public function posts()
     {
-       return $this->hasMany(Post::class, 'owner_id');
+        return $this->hasMany(Post::class, 'owner_id');
+    }
+    
+    public function favorites()
+    {
+        return $this->belongsToMany(Post::class, 'favoritable');
     }
 }
 

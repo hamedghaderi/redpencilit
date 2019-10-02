@@ -61,6 +61,7 @@ Vue.component('services', require('./pages/Services.vue').default);
 Vue.component('user-account-form', require('./pages/UserAccountForm.vue').default);
 Vue.component('update-general-settings', require('./pages/UpdateGeneralSettings.vue').default);
 Vue.component('wysiwyg', require('./components/Wysiwyg.vue').default);
+Vue.component('favorite', require('./components/Favorite.vue').default);
 
 Vue.config.ignoredElements = ['trix-editor'];
 

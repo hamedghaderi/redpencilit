@@ -37,7 +37,7 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
             }
         });
-        
+
         if (! $this->app->environment('testing')) {
             foreach ($this->getPermissions() as $permission) {
                 Gate::define($permission->name, function ($user) use ($permission) {

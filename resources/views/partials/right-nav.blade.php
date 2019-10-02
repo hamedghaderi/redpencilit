@@ -18,7 +18,7 @@
 
                     <ul>
                         <li>
-                            <a href="{{ '/dashboard/' . auth()->user()->username . '/general_settings' }}">
+                            <a href="{{ '/settings' }}">
                                 <i class="fa fa-list pl-3"></i>
                                 تنظیمات کلی
                             </a>

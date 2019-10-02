@@ -12,26 +12,22 @@ class SettingsController extends Controller
     /**
      * Get the list of all settings.
      *
-     * @param  User  $user
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(User $user)
+    public function index()
     {
         return view(
             'dashboards.settings.index', [
-            'setting' => Setting::first() ?: []
+            'setting' => Setting::first()
         ]);
     }
     
     /**
      * Persist new settings into DB.
      *
-     * @param  User  $user
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(User $user)
+    public function store()
     {
         $attributes = request()->validate(
             [
@@ -41,7 +37,11 @@ class SettingsController extends Controller
                 'base_price_for_docs' => 'required|numeric'
             ]);
         
-        $user->setting()->create($attributes);
+        $setting = auth()->user()->setting()->create($attributes);
+        
+        if (request()->wantsJson()) {
+           return response()->json($setting) ;
+        }
         
         return back();
     }
@@ -49,22 +49,24 @@ class SettingsController extends Controller
     /**
      * Update settings with the given attributes.
      *
-     * @param  User     $user
      * @param  Setting  $setting
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(User $user, Setting $setting)
+    public function update(Setting $setting)
     {
-        $attributes = request()->validate(
-            [
-                'upload_articles_per_day' => 'required|numeric',
-                'upload_words_per_day' => 'required|numeric',
-                'price_per_word' => 'required|numeric',
-                'base_price_for_docs' => 'required|numeric'
-            ]);
+        $attributes = request()->validate([
+            'upload_articles_per_day' => 'required|numeric',
+            'upload_words_per_day' => 'required|numeric',
+            'price_per_word' => 'required|numeric',
+            'base_price_for_docs' => 'required|numeric'
+        ]);
         
         $setting->update($attributes);
+        
+        if (request()->wantsJson()) {
+            return response()->json($setting->fresh());
+        }
         
         return back();
     }

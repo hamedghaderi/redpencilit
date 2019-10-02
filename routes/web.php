@@ -30,9 +30,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/{user}', 'DashboardController@index')->name('dashboard');
     Route::post('/api/users/{user}/avatar', 'AvatarsController@store');
     Route::patch('/dashboard/{user}', 'UsersController@update');
-    Route::get('/dashboard/{user}/general_settings', 'SettingsController@index')->middleware('can:create,App\Service');
-    Route::post('/dashboard/{user}/settings', 'SettingsController@store');
-    Route::patch('/dashboard/{user}/settings/{setting}', 'SettingsController@update');
+    Route::get('/settings', 'SettingsController@index')->middleware('can:manage-setting');
+    Route::post('/settings', 'SettingsController@store')->middleware('can:manage-setting');
+    Route::patch('/settings/{setting}', 'SettingsController@update')->middleware('can:manage-setting');
 
     /*
     |--------------------------------------------------------------------------
@@ -67,6 +67,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/{post}/edit', 'PostsController@edit')->middleware('can:create-posts');
     Route::patch('/posts/{post}', 'PostsController@update')->middleware('can:create-posts');
     Route::delete('/posts/{post}', 'PostsController@destroy')->middleware('can:create-posts');
+    
+    Route::post('/posts/{post}/favorite', 'FavoritePostsController@store');
+    Route::delete('/posts/{post}/disfavor', 'FavoritePostsController@destroy');
 
     Route::patch('/users/{user}/update-services', 'DocumentServiceController@update');
     Route::delete('/users/{user}/documents', 'DocumentsController@destroy')->middleware('must-be-confirmed');

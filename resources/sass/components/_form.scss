@@ -38,7 +38,7 @@
 }
 
 .dashboard-input {
-  @apply border rounded text-sm;
+  @apply border rounded text-sm bg-grey-lightest;
 
   &:focus {
     @apply border-indigo;

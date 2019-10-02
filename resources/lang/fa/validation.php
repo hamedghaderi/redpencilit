@@ -93,7 +93,7 @@ return [
     ],
     'not_in' => 'The selected :attribute is invalid.',
     'not_regex' => 'The :attribute format is invalid.',
-    'numeric' => 'The :attribute must be a number.',
+    'numeric' => ':attribute باید عددی باشد.',
     'present' => 'The :attribute field must be present.',
     'regex' => 'The :attribute format is invalid.',
     'required' => 'فیلد :attribute الزامی است.',
@@ -178,7 +178,11 @@ return [
     'attributes' => [
         'title' => 'عنوان',
         'attachment' => 'ضمیمه',
-        'body' => 'محتوا'
+        'body' => 'محتوا',
+        'upload_articles_per_day' => 'حداکثر آپلود',
+        'upload_words_per_day' => 'حداکثر کلمات',
+        'price_per_word' => 'قیمت کلمات',
+        'base_price_for_docs' => 'قیمت پایه'
     ],
 
 ];
