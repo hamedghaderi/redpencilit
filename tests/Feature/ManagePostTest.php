@@ -41,6 +41,7 @@ class ManagePostTest extends TestCase
     /** @test * */
     public function an_admin_user_can_create_a_new_post()
     {
+        $this->withoutExceptionHandling();
         $this->makeAdmin();
         
         $post = make(Post::class);
@@ -81,6 +82,17 @@ class ManagePostTest extends TestCase
         
         $this->post('/posts', $post->toArray())
              ->assertSessionHasErrors('title');
+    }
+    
+    /** @test * */
+    public function a_post_requires_an_excerpt()
+    {
+        $this->makeAdmin();
+        
+        $post = make(Post::class, ['excerpt' => null]);
+        
+        $this->post('/posts', $post->toArray())
+            ->assertSessionHasErrors('excerpt');
     }
     
     /** @test * */
@@ -161,32 +173,36 @@ class ManagePostTest extends TestCase
         
         $post = create(Post::class);
         
-        $this->patch($post->path(), [
+        $this->patch(
+            $post->path(), [
             'title' => 'Hello',
             'body' => 'Bye Father',
+            'excerpt' => 'Hello There. This is my first post.',
             'thumbnail' => $file = UploadedFile::fake()->image('another_image.jpg')
-       ])->assertRedirect($post->path());
-      
-        $this->assertDatabaseHas('posts', [
+        ])->assertRedirect($post->path());
+        
+        $this->assertDatabaseHas(
+            'posts', [
             'title' => 'Hello',
-            'body'  => 'Bye Father',
-            'thumbnail' => 'blog/' . $file->hashName()
+            'excerpt' => 'Hello There. This is my first post.',
+            'body' => 'Bye Father',
+            'thumbnail' => 'blog/'.$file->hashName()
         ]);
     }
     
-    /** @test **/
+    /** @test * */
     public function a_user_can_delete_a_post()
     {
         $this->withoutExceptionHandling();
         
         $this->makeAdmin();
         
-       $post = create(Post::class) ;
-       
-       self::assertCount(1, Post::all());
-       
-       $this->delete($post->path());
-       
-       $this->assertCount(0, Post::all());
+        $post = create(Post::class);
+        
+        self::assertCount(1, Post::all());
+        
+        $this->delete($post->path());
+        
+        $this->assertCount(0, Post::all());
     }
 }

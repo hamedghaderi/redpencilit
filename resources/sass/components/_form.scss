@@ -1,64 +1,38 @@
+// Labels
+.label {
+  @apply block text-grey-darker mb-2;
+}
+
 // INPUTS
 .textarea {
-  @apply p-3 border text-sm w-full rounded;
-  min-height: 200px;
+  @apply p-3 border text-sm w-full rounded leading-loose;
+  min-height: 100px;
 
   &:focus {
-    @apply border-indigo;
+    @apply border-indigo outline-none;
   }
 }
 
 .input {
-  @apply p-3 border text-sm rounded;
+  @apply appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight;
+
+  &--danger {
+    @apply border border-red;
+  }
 
   &--right {
     padding-right: 2.5rem !important;
   }
 
   &:focus {
-    @apply border-indigo;
+    @apply outline-none bg-white border-grey;
   }
 
   &-icon {
-    @apply absolute pin-l h-full border bg-white rounded-tl rounded-bl flex items-center px-3 text-grey;
-
-    &--no-border {
-      @apply border-none bg-transparent;
-    }
-
-    &--right {
-      left: auto;
-      @apply pin-r;
-    }
-  }
-
-  &--rounded {
-    @apply rounded;
+    @apply absolute absolute-center pin-l ml-6 text-grey-dark;
   }
 }
 
-.dashboard-input {
-  @apply border rounded text-sm bg-grey-lightest;
-
-  &:focus {
-    @apply border-indigo;
-  }
-}
-
-.focusable-input {
-  @apply w-full border-none text-grey-darker;
-
-
-  &:focus {
-    @apply absolute w-full z-20 pin-r pin-t h-full px-6 py-3 shadow-outline rounded;
-    box-shadow: 0 0 0 3px rgba(89, 86, 255, .5);
-    transition: box-shadow .2s;
-  }
-}
-
-.form-group input:not([type=checkbox]) {
-  @apply block p-3 w-full;
-}
 
 // Custom Checkboxes
 .label-check {
@@ -114,94 +88,22 @@
   @apply bg-indigo text-white;
 }
 
-.select , select {
-  @apply appearance-none shadow-none h-12 leading-normal py-3 relative align-top;
-}
-
 .select {
-  height: auto !important;
-
-  &::after {
-    border-width: 2px;
-    border: 3px solid transparent;
-    border-radius: 2px;
-    @apply border-r-0 border-t-0 border-grey-dark block mt-3 pointer-events-none absolute z-10;
-    height: 0.625em;
-    width: 0.625em;
-    margin-top: -.25em;
-    content: "";
-    left: 1.125em;
-    top: 50%;
-    transform: rotate(-45deg);
-    transform-origin: center;
-  }
+  @apply relative z-0;
 
   select {
-    @apply px-3 bg-white border border-grey-light rounded outline-none text-grey-darkest block text-sm max-w-full cursor-pointer m-0 w-full;
-  }
+    @apply block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pl-8 rounded leading-tight;
 
-  select::placeholder {
-    @apply text-grey;
-  }
-
-  .pdatepicker {
-    @apply w-full rounded;
-  }
-
-  .pdatepicker .pdatepicker-dialog[data-v-fd75016c] {
-    @apply border-none rounded shadow-md;
-  }
-
-  .pdatepicker .pdatepicker-dialog .day-view .day-box .hover-effect[data-v-fd75016c] {
-    @apply text-white;
-  }
-
-  .pdatepicker .pdatepicker-dialog .chosen-day span[data-v-fd75016c] {
-    @apply text-white;
-  }
-
-  .pdatepicker .pdatepicker-dialog .day-view .day-box[data-v-fd75016c]:hover {
-    @apply text-indigo-darker;
-  }
-
-  .pdatepicker .pdatepicker-dialog .day-view .pdatepicker-dialog-month .monthName[data-v-fd75016c]:hover {
-    @apply bg-indigo-lightest;
-  }
-
-  .pdatepicker .pdatepicker-dialog .day-view .pdatepicker-dialog-month .preMonth[data-v-fd75016c]:hover,
-  .pdatepicker .pdatepicker-dialog .day-view .pdatepicker-dialog-month .nextMonth[data-v-fd75016c]:hover {
-    @apply bg-indigo-lightest;
-  }
-
-  .pdatepicker .pdatepicker-dialog .day-view .day-name[data-v-fd75016c] {
-    @apply border-none text-grey-dark;
-
-    &:hover {
-      @apply border-none;
+    &:focus {
+      @apply outline-none bg-white border-grey;
     }
   }
 
-  .pdatepicker .pdatepicker-dialog .day-view .day-box.disabled-day[data-v-fd75016c] {
-    @apply bg-transparent text-grey;
+  &__icon {
+    @apply pointer-events-none absolute pin-t pin-b pin-l flex items-center px-2 text-grey-darker;
   }
 
-  .pdatepicker .pdatepicker-dialog .pdatepicker-dialog-header[data-v-fd75016c] {
-    @apply shadow-none rounded rounded-b-none bg-transparent;
-  }
-
-  .date-picker {
-    @apply appearance-none shadow-none h-12 leading-normal py-3 relative align-top border border-grey-light rounded;
-    width: 100% !important;
-    text-align: right !important;
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
-
-    &::placeholder,
-    &::placeholder {
-      @apply text-sm;
-      color: #3d4852 !important;;
-      opacity: 1 !important;
-    }
+  &__svg {
+    @apply fill-current h-4 w-4;
   }
 }
-

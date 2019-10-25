@@ -29,11 +29,12 @@
 <div id="app">
     @include('partials.right-nav')
 
-    <main class="pt-6" style="padding-right: 250px;">
+    <main class="pt-6 md:pr-64">
         <div class="container">
             @yield('content')
         </div>
     </main>
+
     <flash message="{{ session('flash') }}"></flash>
 </div>
 

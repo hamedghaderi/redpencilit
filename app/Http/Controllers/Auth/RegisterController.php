@@ -30,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+//    protected $redirectTo = '/dashboard/' . auth()->id();
 
     /**
      * Create a new controller instance.
@@ -51,10 +51,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255', 'min:3'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'phone' => ['required', 'string', 'regex:/^09\d{9}/','numeric'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'name' => ['bail', 'required', 'string', 'max:255', 'min:3'],
+            'email' => ['bail', 'required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['bail', 'required', 'string', 'regex:/^09\d{9}/','numeric'],
+            'password' => ['bail', 'required', 'string', 'min:6', 'confirmed'],
         ]);
     }
 
@@ -84,5 +84,15 @@ class RegisterController extends Controller
         }
     
         return $user;
+    }
+    
+    /**
+     * Redirect to dashboard after registration.
+     *
+     * @return string
+     */
+    public function redirectTo()
+    {
+        return '/dashboard/' . auth()->id();
     }
 }

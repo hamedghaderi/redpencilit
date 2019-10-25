@@ -54,6 +54,7 @@
 /* Pages */
 @import "pages/contact";
 @import "pages/blog";
+@import "pages/home";
 
 /**
  * Here you would add any of your custom component classes; stuff that you'd
@@ -100,3 +101,10 @@
  * @import "utilities/background-patterns";
  * @import "utilities/skew-transforms";
  */
+
+.footer {
+  background-image: url("../images/footer-bg.svg");
+  background-size: cover;
+  background-position: center center;
+  min-height: 300px;
+}

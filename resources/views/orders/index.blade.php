@@ -8,27 +8,53 @@
     <div class="flex flex-wrap">
         @forelse($orders as $order)
             <div class="px-6 w-1/3 mb-6">
-                <div class="rounded p-6 shadow border-blue card-type-{{ $order->status }}">
-                    <div class="card__doc-icon"
-                         style="width:50px; height: 50px;">
-                        <img class="w-1/2" src="/images/alert-document.svg" alt="vector
-                       microsoft
-                       word
-                       icon">
+                <div class="rounded shadow card-type-{{ $order->status }}">
+                    <div class="flex items-center mb-6 font-bold p-6">
+                        <span class="text-sm mr-2">
+                            {{ $order->status === 1 ? 'در سبد پرداخت' : '' }}
+                            {{ $order->status === 2 ? 'در حال ویرایش' : '' }}
+                            {{ $order->status === 3 ? 'پروژه‌های به اتمام رسیده' : '' }}
+                        </span>
+
+                        <span class="text-xs mr-auto font-light">
+                            {{ $order->created_at->diffForHumans() }}
+                        </span>
                     </div>
 
-                    <h4 class="card__title mb-6">{{ $order->orders_count }} فایل</h4>
-                    <h4 class="card__price mb-3">{{ $order->price }} تومان</h4>
+                    <div class="mb-6 flex px-6">
+                        <div>
+                            <i class="far fa-file text-xs"></i>
+                            <span class="text-xs mr-1">{{ $order->orders_count }} فایل</span>
+                        </div>
 
-                    <div class="tags">
-                        <span class="tag tag--transparent">{{ $order->total_words }} کلمه</span>
-                        <span class="tag tag--transparent">{{ $order->service->name }}</span>
+                        <div class="mr-4">
+                            <i class="far fa-file-word text-xs"></i>
+                            <span class="text-xs mr-1">{{ $order->total_words }} کلمه</span>
+                        </div>
+
+                        <div class="mr-4">
+                            <i class="far fa-folder-open text-xs"></i>
+                            <span class="text-xs mr-1">{{ $order->service->name }}</span>
+                        </div>
+                    </div>
+
+                    <div class="card__separator"></div>
+
+                    <div class="tags px-6 pb-6 pt-3 {{ $order->status === 1 ? "flex items-center" : '' }}">
+                        <span class="tag tag--white">{{ $order->price }} تومان</span>
+
+                        @if ($order->status === 1)
+                            <button type="button" class="button button--primary button--sm mr-auto">پرداخت</button>
+                        @endif
                     </div>
                 </div>
+
             </div>
         @empty
-            <p class="dashboard-title">هیچ مقاله‌ تائید نشده‌ای برای شما وجود ندارد.</p>
+            <p class="dashboard-title">
+                هنوز هیچ مقاله‌ای ارسال نشده است.
+                <a href="/orders/create">ارسال اولین مقاله</a>
+            </p>
         @endforelse
-
     </div>
 @endsection

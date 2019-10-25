@@ -8,7 +8,7 @@
 }
 
 body {
-  @apply bg-grey-lightest text-right font-normal pb-16;
+  @apply bg-grey-lightest text-right font-normal;
   direction: rtl;
   font-family: Sahel;
 }
@@ -17,9 +17,8 @@ h1, h2, h3, h4, h5, h6 {
   @apply text-grey-darkest;
 }
 
-
 a {
-  @apply .text-blue .no-underline outline-none;
+  @apply no-underline;
 }
 
 hr {

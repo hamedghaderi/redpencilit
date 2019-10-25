@@ -1,7 +1,7 @@
 <template>
-    <div class="modal">
+    <div class="modal z-50">
         <span class="modal__close">
-            <img src="/images/cross-out.svg" alt="cross out icon" @click="onClose">
+            <img src="/images/cross-out.svg" alt="cross out icon" @click="close">
         </span>
 
         <div class="modal__wrapper">
@@ -19,7 +19,7 @@
 <script>
     export default {
         methods: {
-            onClose() {
+            close() {
                 this.$emit('closeModal')
             },
         }

@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Setting;
-use App\User;
-use Illuminate\Support\Facades\Cache;
 
 class SettingsController extends Controller
 {
@@ -38,12 +36,8 @@ class SettingsController extends Controller
             ]);
         
         $setting = auth()->user()->setting()->create($attributes);
-        
-        if (request()->wantsJson()) {
-           return response()->json($setting) ;
-        }
-        
-        return back();
+       
+        return back()->with('flash', 'تنظیمات با موفقیت ثبت شد.');
     }
     
     /**
@@ -64,10 +58,6 @@ class SettingsController extends Controller
         
         $setting->update($attributes);
         
-        if (request()->wantsJson()) {
-            return response()->json($setting->fresh());
-        }
-        
-        return back();
+        return back()->with('flash', 'تنظیمات به روز رسانی شد.');
     }
 }

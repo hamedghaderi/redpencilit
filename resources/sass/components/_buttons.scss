@@ -1,39 +1,38 @@
 .button {
- @apply text-white px-6 py-3 rounded-full relative z-10 inline-flex .no-underline items-center;
- transition: all .3s;
+  @apply inline-block rounded-full rounded-full text-sm px-6 py-3;
+  transition: all .3s;
 
- &:hover {
-   transform: translateY(-2px);
- }
-
-  &--sm {
-    @apply text-sm px-3 py-2;
+  &:hover {
+    transform: translateY(-2px);
+    @apply shadow-xl;
   }
 
   &--block {
     @apply w-full justify-center;
   }
 
- &--primary {
-   box-shadow: 0 3px 24px rgba(#5A5DFF, .3);
-   background-image: linear-gradient(to left, #5A5DFF, #A9AAFF);
+  &--primary {
+    @apply bg-indigo text-white;
+  }
 
-   &:hover {
-     box-shadow: 0 5px 24px rgba(#5A5DFF, .4);
-   }
- }
+  &--success {
+    @apply bg-green text-white;
+  }
 
- &--success {
-   background-image: linear-gradient(to bottom left, #51d88a, #1f9d55);
-   box-shadow: 0 3px 24px rgba(#51d88a, .3);
+  &--info {
+    @apply bg-blue text-white;
+  }
 
-   &:hover {
-     box-shadow: 0 5px 24px rgba(#51d88a, .4);
-   }
- }
+  &--neutral {
+    @apply bg-grey-darker text-sm text-white px-6 py-3 rounded shadow-md border-transparent;
+
+    &:hover {
+      @apply shadow-xl;
+      transform: none;
+    }
+  }
 
   &--smooth {
-
     &--danger {
       @apply bg-red-lightest text-red;
 
@@ -63,67 +62,66 @@
     }
   }
 
- &--outline {
-   @apply bg-transparent rounded text-grey-dark;
-   transition: none;
+  &--outline {
+    @apply bg-transparent rounded text-grey-dark;
+    transition: none;
 
-   i {
-     @apply mr-2;
-   }
+    i {
+      @apply mr-2;
+    }
 
-   &--danger {
-     @apply border border-red text-red;
+    &--danger {
+      @apply border border-red text-red;
 
-     &:hover {
-       @apply bg-red text-white;
-       transform: none;
+      &:hover {
+        @apply bg-red text-white;
+        transform: none;
 
-       i {
-         @apply text-white;
-       }
-     }
+        i {
+          @apply text-white;
+        }
+      }
 
-     i {
-       @apply text-red;
-     }
-   }
+      i {
+        @apply text-red;
+      }
+    }
 
-   &--primary {
-     @apply border border-indigo text-indigo text-sm;
+    &--primary {
+      @apply border border-indigo text-indigo text-sm;
 
-     &:hover {
-       @apply bg-indigo text-white;
-       transform: none;
-     }
-   }
- }
+      &:hover {
+        @apply bg-indigo text-white;
+        transform: none;
+      }
+    }
+  }
 
- &--simple {
-   @apply bg-white text-grey-darker shadow;
- }
+  &--simple {
+    @apply bg-white text-grey-darker shadow;
+  }
 
- &--thin {
-   @apply px-6 py-2 text-xs;
- }
+  &--thin {
+    @apply px-6 py-2 text-xs;
+  }
 
- &--default {
-   @apply .bg-grey-lighter .text-blue-darker rounded text-sm px-6;
+  &--default {
+    @apply .bg-grey-lighter .text-blue-darker rounded text-sm px-6;
 
-   &:hover {
-     transform: translate(0px);
-     @apply bg-grey-light;
-   }
- }
+    &:hover {
+      transform: translate(0px);
+      @apply bg-grey-light;
+    }
+  }
 
 
-
- &:active {
-   transform: translateY(0px);
-   box-shadow: none;
- }
+  &:active {
+    transform: translateY(0px);
+    box-shadow: none;
+  }
 }
 
-.card-button  {
+.card-button {
   @apply absolute pin-l text-2xl bg-green-lightest text-green rounded rounded-r-none pin-t h-full;
   width: 60px;
 }

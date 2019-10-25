@@ -1,5 +1,5 @@
 .navbar {
-  @apply py-4 mb-24 relative;
+  @apply py-4 mb-24 relative z-50;
 
   &__nav {
     @apply flex list-reset;
@@ -19,9 +19,10 @@
 }
 
 .dashboard-nav {
-  @apply fixed pin-r pin-t bg-white h-full shadow z-50;
-  width: 250px;
-  max-width: 250px;
+  @apply fixed pin-b bg-white w-full pin-r;
+  // fixed pin-r pin-t bg-white h-full shadow z-50;
+  //width: 250px;
+  //max-width: 250px;
 
   &__parent {
     @apply relative;

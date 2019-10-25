@@ -41,13 +41,13 @@ class UsersController extends Controller
         $attributes = request()->validate(
             [
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+                'email' => 'required|string|email|max:255|unique:users,id,' . $user->id,
                 'phone' => ['required', 'regex:/^09\d{9}$/', 'numeric'],
             ]);
         
         $user->update($attributes);
         
-        return redirect('/dashboard/'.$user->username);
+        return redirect('/dashboard/'.$user->id);
     }
     
     /**

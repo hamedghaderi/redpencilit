@@ -2,17 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\CollegeDegree;
+use App\Country;
+use App\Role;
 use App\User;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function index(User $user)
     {
-        if (auth()->user()->id != $user->id) {
+        if (! auth()->user()->isSuperAdmin() && auth()->user()->id != $user->id) {
             abort(403);
         }
-
-        return view('dashboards.index');
+        
+        $countries = Country::all();
+        
+        $roles = Role::all();
+        
+        return view('dashboards.index', [
+            'degrees' => CollegeDegree::all(),
+            'countries' => $countries,
+            'user' => $user->load('details')
+        ]);
     }
 }

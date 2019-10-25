@@ -17,8 +17,8 @@
                     <div class="bg-white shadow p-6 rounded">
                         <form method="POST" @submit.prevent="saveService">
                             <div class="form-group">
-                                <label for="name" class="dashboard-label">نام سرویس جدید</label>
-                                <input class="dashboard-input" type="text" name="name" id="name" v-model="name">
+                                <label for="name" class="label">نام سرویس جدید</label>
+                                <input class="input" type="text" name="name" id="name" v-model="name">
 
 
                                 <div class="feedback feedback--invalid my-2" v-if="errors.has('name')">
@@ -31,11 +31,10 @@
                             <div class="form-group flex items-center">
                                 <label for="negotiable-update" class="dashboard-label mb-0 label-check">
                                     <input type="checkbox"
-                                           class="form-checkbox check-custom d-inline ml-2"
+                                           class="form-checkbox d-inline ml-2"
                                            name="negotiable"
                                            id="negotiable-update"
                                             v-model="negotiable">
-                                    <span class="check-toggle ml-2"></span>
 
                                     قیمت به صورت مذاکره‌ای
                                 </label>
@@ -103,11 +102,11 @@
                       @keydown="isDisabled=false">
                     <div class="form-group">
                         <div class="form-group">
-                            <label for="name" class="dashboard-label">نام سرویس جدید</label>
-                            <input class="dashboard-input"
+                            <label for="modal-name" class="label">نام سرویس جدید</label>
+                            <input class="input"
                                    type="text"
                                    name="update-name"
-                                   id="name"
+                                   id="modal-name"
                                   v-model="updatedName">
 
                             <div class="feedback feedback--invalid my-2" v-if="errors.has('name')">
@@ -120,11 +119,10 @@
                         <div class="form-group flex items-center">
                             <label for="negotiable" class="dashboard-label mb-0 label-check">
                                 <input type="checkbox"
-                                       class="form-checkbox check-custom d-inline ml-2"
+                                       class="form-checkbox d-inline ml-2"
                                        name="update-negotiable"
                                        id="negotiable"
                                        v-model="updatedNegotiable">
-                                <span class="check-toggle ml-2"></span>
 
                                 قیمت به صورت مذاکره‌ای
                             </label>

@@ -91,10 +91,10 @@ let colors = {
   'teal-darkest': '#0d3331',
   'teal-darker': '#20504f',
   'teal-dark': '#38a89d',
-  'teal': '#4dc0b5',
+  'teal': '#5AD2D0',
   'teal-light': '#64d5ca',
   'teal-lighter': '#a0f0ed',
-  'teal-lightest': '#e8fffe',
+  'teal-lightest': '#DAF9F5',
 
   'blue-darkest': '#12283a',
   'blue-darker': '#055070',
@@ -116,10 +116,10 @@ let colors = {
   'purple-darkest': '#21183c',
   'purple-darker': '#382b5f',
   'purple-dark': '#794acf',
-  'purple': '#893FDD',
-  'purple-light': '#a779e9',
+  'purple': '#715AD0',
+  'purple-light': '#9686DD',
   'purple-lighter': '#d6bbfc',
-  'purple-lightest': '#f3ebff',
+  'purple-lightest': '#EEEBFF',
 
   'pink-darkest': '#451225',
   'pink-darker': '#6f213f',
@@ -658,7 +658,8 @@ module.exports = {
     '16': '4rem',
     '20': '5rem',
     '24': '6rem',
-    '32': '8rem'
+    '32': '8rem',
+    '64': '16rem'
   },
 
   /*
@@ -727,7 +728,7 @@ module.exports = {
     '16': '4rem',
     '20': '5rem',
     '24': '6rem',
-    '32': '8rem'
+    '32': '8rem',
   },
 
   /*
@@ -748,12 +749,14 @@ module.exports = {
   */
 
   shadows: {
-    default: '0 2px 4px 0 rgba(0,0,0,0.10)',
+    default: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
     // 'custom': '0 10px 10px rgba(0,0,0,0.10)',
-    'md': '0 4px 8px 0 rgba(0,0,0,0.12), 0 2px 4px 0 rgba(0,0,0,0.08)',
-    'lg': '0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08)',
-    'inner': 'inset 0 2px 4px 0 rgba(0,0,0,0.06)',
-    'outline': '0 0 0 3px rgba(52,144,220,0.5)',
+    'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+    'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+    'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+    '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+    'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+    'outline': '0 0 0 3px rgba(66, 153, 225, 0.5)',
     'none': 'none'
   },
 
@@ -932,7 +935,7 @@ module.exports = {
     require('tailwindcss/plugins/container')({
       // center: true,
       // padding: '1rem',
-    })
+    }),
   ],
 
   /*

@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             'posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title', 255);
+            $table->string('excerpt', 255);
             $table->text('body');
             $table->unsignedInteger('owner_id');
             $table->string('thumbnail', '255')->nullable();

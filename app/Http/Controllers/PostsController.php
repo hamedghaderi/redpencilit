@@ -58,12 +58,13 @@ class PostsController extends Controller
      */
     public function store()
     {
-        $attributes = request()->validate(
-            [
-                'title' => 'required|min:3|max:255',
-                'body' => 'required|min:5',
-                'thumbnail' => 'sometimes|file|image|max:1024'
-            ]);
+        $attributes = request()->validate([
+            'title' => 'required|min:3|max:255',
+            'excerpt' => 'required|min:20|max:255',
+            'body' => 'required|min:5',
+            'thumbnail' => 'sometimes|file|image|max:1024'
+        ]);
+        
         
         if (request()->has('thumbnail')) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('blog', 'public');
@@ -95,12 +96,12 @@ class PostsController extends Controller
      */
     public function update(Post $post)
     {
-        $attributes = request()->validate(
-            [
-                'title' => 'required|min:3|max:255',
-                'body' => 'required|min:5',
-                'thumbnail' => 'sometimes|file|image|max:1024'
-            ]);
+        $attributes = request()->validate([
+            'title' => 'required|min:3|max:255',
+            'excerpt' => 'required|min:20|max:255',
+            'body' => 'required|min:5',
+            'thumbnail' => 'sometimes|file|image|max:1024'
+        ]);
         
         if (request()->has('thumbnail')) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('blog', 'public');

@@ -1,40 +1,17 @@
-.dropdown {
-  @apply relative z-20;
-
-  ul {
-    @apply list-reset shadow-md rounded py-6 text-sm bg-white;
-  }
+.dropdown-content ul {
+  @apply list-reset;
 
   a {
-    @apply flex items-center text-grey-darker no-underline;
+    @apply text-grey-dark flex p-3;
 
-    i {
-      @apply ml-3;
+    &:hover {
+      @apply bg-indigo-lightest text-indigo-dark;
     }
   }
+}
 
-  &__content {
-    @apply absolute z-50 shadow border border-grey-light py-6 rounded bg-white text-sm;
-
-    &--left {
-      @apply pin-l;
-      top: 100%
-    }
-
-    a {
-      @apply pr-4 pl-12 py-1 leading-loose;
-
-      &:hover {
-        @apply bg-grey-lighter;
-      }
-    }
-  }
-
-  &_toggler {
-    @apply cursor-pointer;
-  }
-
-  &__title {
-    @apply text-grey pr-4 pl-8 text-right block mb-4;
-  }
+.dropdown-left .dropdown-content {
+  left: 0;
+  right: auto !important;
+  top: 100% !important;
 }

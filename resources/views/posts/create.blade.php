@@ -29,6 +29,15 @@
         </div>
 
         <div class="form-group">
+            <label for="excerpt">خلاصه پست (در یک پاراگراف کوتاه)</label>
+            <input type="text" class="input mb-2" name="excerpt" value="{{ old('excerpt') }}">
+
+            @if ($errors->has('excerpt'))
+                <div class="feedback feedback--invalid">{{ $errors->first('excerpt') }}</div>
+            @endif
+        </div>
+
+        <div class="form-group">
             <label for="body">محتوای پست</label>
             <wysiwyg name="body" class="mb-2" host="{{ asset('/') }}" value="{{ old('body') }}"></wysiwyg>
 

@@ -1,0 +1,298 @@
+[
+  {
+    "en": "Afghanistan",
+    "fa": "افغانستان"
+  },
+  {
+    "en": "Albania",
+    "fa": "آلبانی"
+  },
+  {
+    "en": "Argentina",
+    "fa": "آرژانتین"
+  },
+  {
+    "en": "Armenia",
+    "fa": "ارمنستان"
+  },
+  {
+    "en": "Australia",
+    "fa": "استرالیا"
+  },
+  {
+    "en": "Austria",
+    "fa": "اتریش"
+  },
+  {
+    "en": "Azerbaijan",
+    "fa": "آذربایجان"
+  },
+  {
+    "en": "Bahrain",
+    "fa": "بحرین"
+  },
+  {
+    "en": "Bangladesh",
+    "fa": "بنگلادش"
+  },
+  {
+    "en": "Belgium",
+    "fa": "بلژیک"
+  },
+  {
+    "en": "Bosnia and Herzegovina",
+    "fa": "بوسنی و هرزگوئین"
+  },
+  {
+    "en": "Brazil",
+    "fa": "برزیل"
+  },
+  {
+    "en": "Bulgaria",
+    "fa": "بلغارستان"
+  },
+  {
+    "en": "Cameroon",
+    "fa": "کامرون"
+  },
+  {
+    "en": "Canada",
+    "fa": "کانادا"
+  },
+  {
+    "en": "China",
+    "fa": "چین"
+  },
+  {
+    "en": "Czech Republic",
+    "fa": "چک"
+  },
+  {
+    "en": "Denmark",
+    "fa": "دانمارک"
+  },
+  {
+    "en": "Egypt",
+    "fa": "مصر"
+  },
+  {
+    "en": "Estonia",
+    "fa": "استونی"
+  },
+  {
+    "en": "Finland",
+    "fa": "فنلاند"
+  },
+  {
+    "en": "France",
+    "fa": "فرانسه"
+  },
+  {
+    "en": "Greece",
+    "fa": "یونان"
+  },
+  {
+    "en": "Hong Kong",
+    "fa": "هنگ کنگ"
+  },
+  {
+    "en": "Hungary",
+    "fa": "مجارستان"
+  },
+  {
+    "en": "Iceland",
+    "fa": "ایسلند"
+  },
+  {
+    "en": "India",
+    "fa": "هندوستان"
+  },
+  {
+    "en": "Indonesia",
+    "fa": "اندونزی"
+  },
+  {
+    "en": "Iran, Islamic Republic Of",
+    "fa": "ایران"
+  },
+  {
+    "en": "Iraq",
+    "fa": "عراق"
+  },
+  {
+    "en": "Ireland",
+    "fa": "ایرلند"
+  },
+  {
+    "en": "Italy",
+    "fa": "ایتالیا"
+  },
+  {
+    "en": "Japan",
+    "fa": "ژاپن"
+  },
+  {
+    "en": "Kazakhstan",
+    "fa": "قزاقستان"
+  },
+  {
+    "en": "Korea, Democratic People\"S Republic of",
+    "fa": "کره جنوبی"
+  },
+  {
+    "en": "Kuwait",
+    "fa": "کویت"
+  },
+  {
+    "en": "Kyrgyzstan",
+    "fa": "قرقیزستان"
+  },
+  {
+    "en": "Lebanon",
+    "fa": "لبنان"
+  },
+  {
+    "en": "Malaysia",
+    "fa": "مالزی"
+  },
+  {
+    "en": "Netherlands",
+    "fa": "هلند"
+  },
+  {
+    "en": "New Zealand",
+    "fa": "نیوزیلند"
+  },
+  {
+    "en": "Norway",
+    "fa": "نروژ"
+  },
+  {
+    "en": "Oman",
+    "fa": "عمان"
+  },
+  {
+    "en": "Pakistan",
+    "fa": "پاکستان"
+  },
+  {
+    "en": "Philippines",
+    "fa": "فیلیپین"
+  },
+  {
+    "en": "Poland",
+    "fa": "لهستان"
+  },
+  {
+    "en": "Portugal",
+    "fa": "پرتغال"
+  },
+  {
+    "en": "Qatar",
+    "fa": "قطر"
+  },
+  {
+    "en": "Romania",
+    "fa": "رومانی"
+  },
+  {
+    "en": "Russian Federation",
+    "fa": "روسیه"
+  },
+  {
+    "en": "Saudi Arabia",
+    "fa": "عربستان سعودی"
+  },
+  {
+    "en": "Singapore",
+    "fa": "سنگاپور"
+  },
+  {
+    "en": "Slovakia",
+    "fa": "اسلواکی"
+  },
+  {
+    "en": "Slovenia",
+    "fa": "اسلوونی"
+  },
+  {
+    "en": "Somalia",
+    "fa": "سومالی"
+  },
+  {
+    "en": "South Africa",
+    "fa": "آفریقای جنوبی"
+  },
+  {
+    "en": "Spain",
+    "fa": "اسپانیا"
+  },
+  {
+    "en": "Sri Lanka",
+    "fa": "سریلانکا"
+  },
+  {
+    "en": "Sudan",
+    "fa": "سودان"
+  },
+  {
+    "en": "Sweden",
+    "fa": "سوئد"
+  },
+  {
+    "en": "Switzerland",
+    "fa": "سوییس"
+  },
+  {
+    "en": "Syrian Arab Republic",
+    "fa": "سوریه"
+  },
+  {
+    "en": "Taiwan, Province of China",
+    "fa": "تایوان"
+  },
+  {
+    "en": "Tajikistan",
+    "fa": "تاجیکستان"
+  },
+  {
+    "en": "Thailand",
+    "fa": "تایلند"
+  },
+  {
+    "en": "Tunisia",
+    "fa": "تونس"
+  },
+  {
+    "en": "Turkey",
+    "fa": "ترکیه"
+  },
+  {
+    "en": "Ukraine",
+    "fa": "اوکراین"
+  },
+  {
+    "en": "United Arab Emirates",
+    "fa": "امارات متحده عربی"
+  },
+  {
+    "en": "United Kingdom",
+    "fa": "انگلستان"
+  },
+  {
+    "en": "United States",
+    "fa": "ایالات متحده آمریکا"
+  },
+  {
+    "en": "Uzbekistan",
+    "fa": "ازبکستان"
+  },
+  {
+    "en": "Venezuela",
+    "fa": "ونزوئلا"
+  },
+  {
+    "en": "Yemen",
+    "fa": "یمن"
+  }
+]

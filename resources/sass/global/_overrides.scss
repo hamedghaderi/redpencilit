@@ -24,6 +24,10 @@
   max-width: 600px !important;
 }
 
+.uppy-Dashboard-dropFilesTitle {
+  font-size: 14px !important;
+}
+
 .uppy-DashboardItem-statusSize {
   direction: ltr;
 }
@@ -31,6 +35,11 @@
 .uppy-DashboardContent-bar {
   flex-direction: row-reverse !important;
   border-bottom: 1px dashed #ced4da !important;
+}
+
+.uppy-DashboardItem {
+  padding-right: 10px;
+  flex-wrap:wrap!important;
 }
 
 .uppy-size--md .uppy-DashboardItem {
@@ -161,9 +170,11 @@
 
 
 // Uppy Button
-.uppy-size--md .uppy-StatusBar.is-waiting .uppy-StatusBar-actionBtn--upload {
+.uppy-size--md .uppy-StatusBar.is-waiting .uppy-StatusBar-actionBtn--upload,
+.uppy-u-reset .uppy-c-btn .uppy-StatusBar-actionBtn .uppy-StatusBar-actionBtn--upload .uppy-c-btn-primary,
+.uppy-StatusBar.is-waiting .uppy-StatusBar-actionBtn--upload {
   box-shadow: 0 3px 24px rgba(#5A5DFF, .3) !important;
-  background-image: linear-gradient(to left, #5A5DFF, #A9AAFF) !important;
+  background-color: #5a5dff !important;
   border-radius: 50px !important;
   padding-left: 24px !important;
   padding-right: 24px !important;
@@ -191,3 +202,8 @@ trix-editor {
     @apply border-indigo;
   }
 }
+
+.uppy-DashboardItem-preview {
+  margin-left: 1rem !important;
+}
+

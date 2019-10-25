@@ -21,4 +21,8 @@
     @apply border-none text-white shadow;
     background: rgba(255, 255, 255, .3);
   }
+
+  &--white {
+    @apply bg-white border-none;
+  }
 }

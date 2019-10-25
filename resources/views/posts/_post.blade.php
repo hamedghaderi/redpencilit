@@ -19,7 +19,7 @@
         </h3>
 
         <div class="article mb-4">
-            {!! str_limit($post->body, 100)  !!}
+            {!! str_limit($post->excerpt, 100)  !!}
         </div>
 
         @can('create-posts')

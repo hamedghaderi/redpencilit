@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="upload" class="w-3/4 mx-auto mb-3">
+        <div id="upload" class="w-full lg:w-3/4 mx-auto mb-3">
             <div id="file-uploader"></div>
         </div>
     </div>
@@ -29,9 +29,9 @@
 
         created() {
             if (!this.user) {
-                this.endpoint = `/users/${window.Redpencilit.user.username}/orders`;
+                this.endpoint = `/users/${window.Redpencilit.user.id}/orders`;
             } else {
-                this.endpoint = `/users/${this.user.username}/orders`;
+                this.endpoint = `/users/${this.user.id}/orders`;
             }
         },
 

@@ -6,6 +6,7 @@ use App\Order;
 use App\Role;
 use App\Setting;
 use App\User;
+use App\UserDetail;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -83,5 +84,16 @@ class UserTest extends TestCase
        $user = create(User::class);
        
        $this->assertInstanceOf(Collection::class, $user->posts);
+    }
+    
+    /** @test **/
+    public function it_can_have_details()
+    {
+       $this->withoutExceptionHandling() ;
+       
+       $user = create(User::class);
+       $details = create(UserDetail::class, ['user_id' => $user->id]);
+       
+       $this->assertInstanceOf(UserDetail::class, $user->details);
     }
 }

@@ -33,7 +33,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings', 'SettingsController@index')->middleware('can:manage-setting');
     Route::post('/settings', 'SettingsController@store')->middleware('can:manage-setting');
     Route::patch('/settings/{setting}', 'SettingsController@update')->middleware('can:manage-setting');
-
+    
+    Route::post('/details', 'UserDetailsController@store');
+    Route::patch('/users/{user}/details', 'UserDetailsController@update');
+    
     /*
     |--------------------------------------------------------------------------
     | Users
@@ -86,7 +89,6 @@ Route::get('/register/emails', 'RegisterConfirmationController@index');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 /*
 |--------------------------------------------------------------------------

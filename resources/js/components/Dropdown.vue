@@ -1,11 +1,11 @@
 <template>
-    <div class="dropdown" :class="classes">
+    <div class="dropdown relative z-50" v-cloak :class="classes">
         <div @click.prevent="toggleDropdown">
             <slot name="toggler"></slot>
         </div>
 
         <transition name="collapse">
-            <div v-if="isOpen" class="dropdown-content">
+            <div v-if="isOpen" class="dropdown-content bg-white shadow-lg rounded w-64 p-4 text-sm">
                 <slot></slot>
             </div>
         </transition>
@@ -47,7 +47,8 @@
 </script>
 
 <style>
-    .collapse-enter-active, .collapse-leave-active {
+    .collapse-enter-active,
+    .collapse-leave-active {
         transition: all .5s;
         transform: translateY(0);
     }
@@ -59,12 +60,19 @@
 
     .dropdown-content {
         position: absolute;
-        min-width: 100%;
     }
 
     .dropdown-left .collapse-enter-active,
     .dropdown-left .collapse-leave-active {
         transform: translateX(0);
+    }
+
+    @media screen and (min-width: 768px) {
+        .md-left .dropdown-content {
+            right: 100% !important;
+            bottom: auto !important;
+            top: 0;
+        }
     }
 
     .dropdown-left .dropdown-content {
@@ -73,7 +81,15 @@
         transform: translateX(0px);
     }
 
-    .dropdown-left .collapse-enter, .dropdown-left .collapse-leave-to {
+    .dropdown-top .dropdown-content {
+        bottom: 100%;
+        right: 0;
+    }
+
+    .dropdown-left .collapse-enter,
+    .dropdown-left .collapse-leave-to,
+    .md-left .collapse-enter,
+    .md-left .collapse-leave-to{
         opacity: 0;
         transform: translateX(-7px);
     }

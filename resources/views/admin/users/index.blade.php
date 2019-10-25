@@ -8,60 +8,90 @@
                 <h3 class="dashboard-title">مدیریت کاربران</h3>
 
                 <p class="dashboard-text">در این قسمت شما می‌توانید کاربران خود را مدیریت کرده و به‌ آن‌ها نقش‌های
-                    متفاوتی عطا کنید.</p>
+                    متفاوتی اعطا کنید.</p>
             </div>
         </div>
     </div>
 
     <hr>
 
-    <div class="p-6">
-        <div class="flex items-center">
-            <h3 class="dashboard-title">لیست کاربران</h3>
+    <div class="p-6 bg-white rounded shadow">
+        <div class="flex items-center border-b border-grey-lighter pb-6">
+            <h3 class="text-grey">
+                <svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                     height="24">
+                    <path
+                            class="heroicon-ui"
+                            d="M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm9 11a1 1 0 0 1-2 0v-2a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v2a1 1 0 0 1-2 0v-2a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v2z"/>
+                </svg>
+
+                <span class="text-grey-darker">لیست کاربران</span>
+            </h3>
 
             <div class="w-1/3 mr-auto">
                 <form method="GET" action="/users" onchange="this.submit()" class="flex w-full items-center">
-                    <label for="type" name="type" class="text-grey-darker ml-3">فیلتر بر اساس</label>
+                    <label for="type" name="type" class="label ml-3">فیلتر بر اساس</label>
                     <div class="select flex-1">
                         <select name="type" id="type">
                             <option value="all" {{ request('type') === 'all' ? 'selected' : '' }}>همه‌</option>
-                            <option value="coworkers" {{ request('type') === 'coworkers' ? 'selected' : ""}}>همکاران</option>
-                            <option value="customers" {{ request('type') === 'customers' ? 'selected' : "" }}>مشتریان</option>
+                            <option value="coworkers" {{ request('type') === 'coworkers' ? 'selected' : ""}}>همکاران
+                            </option>
+                            <option value="customers" {{ request('type') === 'customers' ? 'selected' : "" }}>مشتریان
+                            </option>
                         </select>
+
+                        <div class="select__icon">
+                            <svg class="select__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                            </svg>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
 
-        <hr>
-
-        <div class="row px-6 mb-2 flex">
-            <div class="w-1/4 text-sm text-grey-dark">نام</div>
-            <div class="w-1/4 text-sm text-grey-dark">ایمیل</div>
-            <div class="w-1/4 text-sm text-grey-dark">نقش</div>
-            <div class="w-1/4"></div>
-        </div>
-
         @foreach ($users as $user)
             <div class="row mb-3 text-sm">
-                <div class="bg-white px-6 py-3 shadow flex items-center relative">
-                    <div class="w-1/4">{{ $user->name }}</div>
+                <div class="px-6 py-3 flex items-center relative border-b border-grey-lighter">
+                    <div class="w-1/4">
+                        <div class="flex items-center">
+                            @if ($user->avatar)
+                                <img class="w-8 h-8 rounded-full ml-3" src="{{ $user->avatar }}" alt="avatar">
+                            @else
+                                <div class="w-8 h-8 bg-blue-lightest rounded-full ml-3 relative justify-center
+                                align-center text-center">
+                                    <span class="text-blue text-xl font-bold">{{ substr($user->name, 0, 2)
+                                    }}</span>
+                                </div>
+                            @endif
+
+                            {{ $user->name }}
+                        </div>
+                    </div>
 
                     <div class="w-1/4">{{ $user->email }}</div>
 
                     <div class="w-1/4">
                         @foreach ($user->roles as $role)
-                            {{ $role->label }}
+                            <div class="flex items-center">
+                                @if (isset($role))
+                                    <span class="w-3 h-3 bg-yellow-dark inline-block ml-2 rounded-full"></span>
+                                @endif
+
+                                <span class="text-xs text-yellow-darker">{{ $role->label }}</span>
+                            </div>
+
+
                         @endforeach
                     </div>
 
                     <div class="w-1/4 flex items-center">
-                        <a href="#edit-role-{{$user->id}}" class="button button--smooth--success button--sm">ویرایش
-                            نقش</a>
+                        <a href="/dashboard/{{ $user->id }}" class="button button--smooth--success button--sm">ویرایش
+                        </a>
 
-                        <inner-modal name="edit-role-{{$user->id}}">
-                            <edit-role :user="{{$user}}" :roles="{{$roles}}"></edit-role>
-                        </inner-modal>
+{{--                        <inner-modal name="edit-role-{{$user->id}}">--}}
+{{--                            <edit-role :user="{{$user}}" :roles="{{$roles}}"></edit-role>--}}
+{{--                        </inner-modal>--}}
 
                         <form action="{{ '/users/' . $user->id }}" method="post" class="mr-auto">
                             @csrf

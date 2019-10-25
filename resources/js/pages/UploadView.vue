@@ -1,41 +1,6 @@
 <template>
-    <div class="container">
-        <div class="upload-levels">
-            <h3 class="upload-levels__title">آپلود مستندات</h3>
-
-            <ul class="upload-levels__list" :class="{'half' : step === 2, 'full': step === 3}">
-                <li class="upload-levels__item" :class="{'upload-levels__item--active' : (step === 1), 'filled' :
-                (step > 1)}">
-                    <span class="upload-levels__marker"></span>
-
-                    <div class="upload-levels__content">
-                        <span>مرحله ۱</span>
-                        ثبت نام
-                    </div>
-                </li>
-
-                <li class="upload-levels__item" :class="{'upload-levels__item--active': (step === 2), 'show-anime':
-                (step === 2), 'filled' : (step > 2)}">
-                    <span class="upload-levels__marker"></span>
-
-                    <div class="upload-levels__content">
-                        <span>مرحله ۲</span>
-                        آپلود مستندات
-                    </div>
-                </li>
-
-                <li class="upload-levels__item" :class="{'upload-levels__item--active': step === 3, 'show-anime':
-                step === 3}">
-                    <span class="upload-levels__marker"></span>
-
-                    <div class="upload-levels__content">
-                        <span>مرحله ۳</span>
-                        نهایی کردن اطلاعات
-                    </div>
-                </li>
-            </ul>
-        </div><!-- upload-levels -->
-
+    <div class="w-full px-4 md:px-24 mt-12">
+        <progress-level :step="step"></progress-level>
 
         <Modal v-if="modal" @closeModal="modal = false">
             <p class="text-grey-dark">
@@ -44,10 +9,12 @@
 
             <template #footer>
                 <div class="flex items-center">
-                    <a class="button button--simple button--sm" href="#" @click.prevent="modal = false">پشیمان شدم. حذف
+                    <a class="button button--simple button--sm" href="#" @click.prevent="modal = false">پشیمان شدم.
+                        حذف
                         نکن :)</a>
 
-                    <button class="button button--sm button--outline--danger mr-auto z-50" @click.prevent="cancelIt">بله
+                    <button class="button button--sm button--outline--danger mr-auto z-50"
+                            @click.prevent="cancelIt">بله
                         مطمئنم.
                         حذف
                         کن!
@@ -61,8 +28,8 @@
              STEP 1
             -=================================================================-->
             <div class="upload-section" v-if="step === 1" v-cloak>
-                <div class="flex w-3/4 mx-auto">
-                    <div class="w-1/2">
+                <div class="flex flex-wrap w-full lg:w-3/4 mx-auto">
+                    <div class="w-full lg:w-1/2">
                         <div class="tabs">
                             <div class="tab-header">
                                 <div class="tab-pane" :class="{'tab-pane--active' : registerActive}">
@@ -88,7 +55,7 @@
                         </div>
                     </div>
 
-                    <div class="w-1/2 text-left">
+                    <div class="w-1/2 hidden lg:block text-left">
                         <img src="/images/upload-register.svg" alt="upload-register" class="w-full">
                     </div>
                 </div>
@@ -101,43 +68,72 @@
                 <uploader-file class="mb-12" @fileUploaded="generateSettings" :user="user"
                                :token="token"></uploader-file>
 
-                <div class="w-3/4 mx-auto flex mb-12" style="min-height: 240px;">
-                    <div class="title-custom-bg w-2/5">
-                        <h3 class="w-1/2 leading-normal pt-24">سرویس مورد نظر خود را انتخاب کنید</h3>
+                <div class="w-full lg:w-3/4 mx-auto flex flex-wrap items-start mb-12">
+                    <div class="mb-8 md:mb-0 w-2/3 md:w-2/5 service-title">
+                        <h3 class="w-full leading-normal pt-24">سرویس مورد نظر خود را<br class="hidden md:block">
+                            انتخاب
+                            کنید</h3>
                     </div>
 
-                    <div class="w-3/5">
-                        <div class="mb-3">
-                            <div class="select">
+                    <div class="w-full md:w-3/5 bg-white p-8 rounded shadow">
+                        <div>
+                            <div class="select mb-1">
                                 <select name="service" id="service" @change="onSelect" v-model="selected">
-                                    <option value="">لطفا سرویس مورد نظر خود را انتخاب کنید</option>
+                                    <option value="">انتخاب سرویس</option>
 
                                     <option v-for="service in options" v-bind:value="service.id">
                                         {{ service.name }}
                                     </option>
                                 </select>
+
+                                <div class="select__icon">
+                                    <svg class="select__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                    </svg>
+                                </div>
                             </div>
 
-                            <p class="form-excerpt" v-show="contract">برای کتاب، محاسبه قیمت و زمان به صورت توافقی
+                            <p class="bg-yellow-lightest text-yellow-darker text-xs p-2 rounded leading-normal"
+                               v-show="contract">
+                                برای
+                                کتاب،
+                                محاسبه قیمت و
+                                زمان
+                                به
+                                صورت توافقی
                                 می‌باشد. لطفا در مرحله‌ بعد آدرس ایمیل و شماره
                                 تماس خود را وارد کنید تا در اسرع وقت برای هماهنگی‌های لازم با شما ارتباط برقرار شود.
                                 پبشاپیش از شکیبایی شما متشکریم.</p>
                         </div><!-- .mb-3 -->
 
-                        <div class="flex items-center p-4 text-sm bg-white shadow mb-1" v-show="!contract"
-                             :class="classObject">
-                            <span>تاریخ تحویل (تخمینی)</span>
+                        <hr class="my-6" v-if="!contract">
+
+                        <div class="flex items-center text-sm mb-3" v-show="!contract">
+                            <span class="mb-0 flex items-center text-grey">
+                                <svg class="fill-current ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 24 24"
+                                     width="24"
+                                      height="24"><path class="heroicon-ui" d="M17 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h2V3a1 1 0 1 1 2 0v1h6V3a1 1 0 0 1 2 0v1zm-2 2H9v1a1 1 0 1 1-2 0V6H5v4h14V6h-2v1a1 1 0 0 1-2 0V6zm4 6H5v8h14v-8z"/></svg>
+                                <span class="text-grey-darker">تاریخ تحویل (تخمینی)</span>
+                            </span>
                             <span class="mr-auto tag tag--info" v-if="deliverDate">
                                 {{ persianNumber.toPersian(deliverDate) }}
                             </span>
                         </div>
 
-                        <p class="form-excerpt mb-6" v-show="deliverDate">اگر زمان مورد نظر فراتر از انتظار شماست،
+                        <p class="bg-yellow-lightest text-yellow-darker text-xs p-2 rounded leading-normal" v-if="deliverDate">اگر زمان مورد نظر فراتر از انتظار شماست،
                             می‌توانید جهت هماهنگی، با پشتیبانی تماس حاصل فرمایید.</p>
 
+                        <hr class="my-6" v-if="!contract">
 
-                        <div class="flex shadow p-4 mb-6 text-sm bg-white items-center" v-show="!contract">
-                            <span>تعداد کلمات مقاله (ها)</span>
+
+                        <div class="flex text-sm bg-white items-center" v-show="!contract">
+                            <span class="mb-0 flex items-center text-grey">
+                                <svg class="fill-current h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                                      height="24"><path class="heroicon-ui" d="M7 5H5v14h14V5h-2v10a1 1 0 0 1-1.45.9L12 14.11l-3.55 1.77A1 1 0 0 1 7 15V5zM5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm4 2v8.38l2.55-1.27a1 1 0 0 1 .9 0L15 13.38V5H9z"/></svg>
+
+                                <span class="text-grey-darker">تعداد کلمات مقاله (ها)</span>
+                            </span>
 
                             <span class="mr-auto tag tag--info" v-show="words">
                                 {{ persianNumber.toPersian(words) + ' کلمه' }}
@@ -146,7 +142,7 @@
                     </div><!-- w-3/5 -->
                 </div><!-- w-3/4 -->
 
-                <div class="w-1/3 bg-white rounded shadow mx-auto p-6" v-if="priceIsAvailable">
+                <div class="w-full lg:w-1/3 bg-white rounded shadow mx-auto p-6" v-if="priceIsAvailable">
                     <p class="text-red border-b border-red pb-3 mb-12">مبلغ محاسبه شده</p>
 
 
@@ -184,7 +180,7 @@
                             <h3 class="text-grey-dark mb-3">تعداد فایل‌های آپلود شده</h3>
 
                             <div class="list">
-                              <li>{{ persianNumber.toPersian(this.order.details.length) }} فایل</li>
+                                <li>{{ persianNumber.toPersian(this.order.details.length) }} فایل</li>
                             </div>
                         </section>
 
@@ -196,7 +192,7 @@
 
                             <ul class="list">
                                 <li v-text="service(selected)"></li>
-                                <li>تاریخ تحویل: {{  persianNumber.toPersian(deliverDate) }}</li>
+                                <li>تاریخ تحویل: {{ persianNumber.toPersian(deliverDate) }}</li>
                             </ul>
                         </section>
 
@@ -242,6 +238,7 @@
     import moment from 'jalali-moment';
     import PersianNumber from "../PersianNumber.js";
     import Modal from "../components/Modal";
+    import ProgressLevel from "../components/ProgressLevel";
 
     export default {
         props: ['services'],
@@ -251,7 +248,8 @@
             Tab,
             UploadRegisterForm,
             UploadLoginForm,
-            Modal
+            Modal,
+            ProgressLevel
         },
 
         computed: {
@@ -326,7 +324,7 @@
             },
 
             cancelIt() {
-                axios.delete(`/users/${this.user.username}/orders/${this.order.id}`)
+                axios.delete(`/users/${this.user.id}/orders/${this.order.id}`)
                     .then(response => {
                         if (response.data.status === 200) {
                             window.location.reload();
@@ -349,16 +347,15 @@
 
                 formData.append('service', this.service);
 
-                axios.post(`/users/${this.user.username}/drafts`, {
+                axios.post(`/users/${this.user.id}/drafts`, {
                     'service_id': this.selected,
                     'order_id': this.order.id
-                })
-                    .then(res => {
-                        if (res.status === 200) {
-                            flash('مرحله دوم با موفقیت به اتمام رسید.ِ')
-                        }
-                        this.step++;
-                    }).catch(error => {
+                }).then(res => {
+                    if (res.status === 200) {
+                        flash('مرحله دوم با موفقیت به اتمام رسید.ِ')
+                    }
+                    this.step++;
+                }).catch(error => {
                     flash('متاسفانه مشکلی در ذخیره سازی اطلاعات پیش‌ آمد. لطفا مجددا سعی کنید.', 'danger');
                     return;
                 });
@@ -366,3 +363,15 @@
         },
     }
 </script>
+
+<style>
+    .service-title {
+        min-height: 240px;
+        background-image:url('/images/custom-title-bg.svg');
+        background-size: auto 240px;
+        background-repeat: no-repeat;
+        background-position: left center;
+    }
+</style>
+
+

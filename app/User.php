@@ -153,5 +153,15 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Post::class, 'favoritable');
     }
+    
+    /**
+     * Each user may have detail.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function details()
+    {
+        return $this->hasOne(UserDetail::class);
+    }
 }
 

@@ -30,6 +30,16 @@
         </div>
 
         <div class="form-group">
+            <label for="title">چکیده پست (در یک پاراگراف کوتاه)</label>
+            <textarea type="text" class="textarea mb-2" name="excerpt">{{ $post->excerpt
+            }}</textarea>
+
+            @if ($errors->has('excerpt'))
+                <div class="feedback feedback--invalid">{{ $errors->first('excerpt') }}</div>
+            @endif
+        </div>
+
+        <div class="form-group">
             <label for="body">محتوای پست</label>
             <wysiwyg name="body" class="mb-2" host="{{ asset('/') }}" value="{{ $post->body  }}"></wysiwyg>
 

@@ -25,8 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/orders/create';
-
+    
     /**
      * Create a new controller instance.
      *
@@ -35,5 +34,10 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+    
+    protected function redirectTo()
+    {
+        return '/dashboard/' . auth()->id();
     }
 }

@@ -1,102 +1,88 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+        <link rel="stylesheet" href="{{ asset('css/vendor/all.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     </head>
-    <body>
-        @can('can-edit', auth()->user())
-            <h1>Hello</h1>
-        @endcan
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
+    <body class="bg-white">
+        <div id="app" class="relative overflow-hidden">
+            <div class="container pt-8 mb-32">
+                <div class="flex items-center">
+                    <a href="/">
+                        <img src="{{ asset('/images/logo.svg') }}" alt="red pencil it">
+                    </a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+                    <ul class="flex list-reset mr-8">
+                        <li><a href="/" class="text-red">خانه</a></li>
+                        <li><a href="/about" class="text-grey-dark mr-6">درباره</a></li>
+                        <li><a href="/contact" class="text-grey-dark mr-6">تماس با ما</a></li>
+                        <li><a href="/services" class="text-grey-dark mr-6">خدمات</a></li>
+                        <li><a href="/orders/create" class="text-grey-dark mr-6">ثبت سفارش</a></li>
+                    </ul>
                 </div>
-            @endif
+                <img src="{{ asset('/images/hero_home.png') }}" alt="hero home" class="hero-home">
+            </div>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+            <div class="container mb-24">
+                <div class="w-1/3">
+                    <h1 class="mb-4">عنوان</h1>
+                    <p class="leading-loose text-grey-dark">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ
+                        و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه
+                        و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی
+                        مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.</p>
                 </div>
             </div>
+
+
+            <section class="services mb-24">
+                <div class="container">
+                    <div class="flex items-center">
+                        <div class="w-1/4">
+                            <h3 class="title">خدمات</h3>
+                            <p class="text-grey-dark leading-loose text-sm mb-4">لورم ایپسوم متن ساختگی با تولید سادگی
+                                نامفهوم از
+                                صنعت چاپ
+                                و با استفاده از طراحان گرافیک است. </p>
+
+                            <a href="/services" class=" button button--outline button--outline--danger button--sm
+                            rounded-full has-icon">
+                                توضیح بیشتر
+                                <i class="text-danger fas fa-arrow-left"></i>
+                            </a>
+                        </div>
+
+                        <div class="w-2/4 mr-auto">
+                           <div class="flex">
+                               <div class="w-1/3 text-center px-6">
+                                   <img class="mb-3" src="{{ asset('images/first-service.svg') }}" alt="first service">
+                                   <span class="text-center text-grey-dark">سرویس اول</span>
+                               </div>
+
+                               <div class="w-1/3 text-center px-6">
+                                   <img class="mb-3" src="{{ asset('images/second-service.svg') }}" alt="second
+                                   service">
+                                   <span class="text-center text-orange-light">سرویس دوم</span>
+                               </div>
+
+                               <div class="w-1/3 text-center px-6">
+                                   <img class="mb-3" src="{{ asset('images/third-service.svg') }}" alt="third service">
+                                   <span class="text-center text-indigo">سرویس سوم</span>
+                               </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+{{--            <section class="contact-ways relative" style="min-height: 600px;">--}}
+{{--                <div class="container">--}}
+{{--                    <img src="{{ asset('images/hom-connection.png') }}" alt="home-connection" class="home-connection">--}}
+{{--                </div>--}}
+{{--            </section>--}}
         </div>
+
+
+
     </body>
 </html>
