@@ -5,7 +5,7 @@
         </div>
 
         <transition name="collapse">
-            <div v-if="isOpen" class="dropdown-content bg-white shadow-lg rounded w-64 p-4 text-sm">
+            <div v-if="isOpen" class="dropdown-content bg-white shadow-lg rounded w-64 py-2 px-4 text-sm">
                 <slot></slot>
             </div>
         </transition>

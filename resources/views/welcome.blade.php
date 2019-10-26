@@ -1,11 +1,33 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <title>{{ config('app.name', 'RedPencilIt') }}</title>
+
         <link rel="stylesheet" href="{{ asset('css/vendor/all.css') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+        <script>
+            window.Redpencilit = {!!
+            json_encode([
+                'signed' => Auth::check(),
+                'user' => Auth::user()
+            ]);
+         !!}
+        </script>
     </head>
     <body class="bg-white">
         <div id="app" class="relative overflow-hidden">
+            <img class="absolute w-4/5 z-0"
+                 style="left: -300px; top:-150px;"
+                 src="{{ asset('images/hero_home.png') }}"
+                 alt="A woman working with her laptop">
+
             <div class="container pt-8 mb-32">
                 <div class="flex items-center">
                     <a href="/">
@@ -19,8 +41,9 @@
                         <li><a href="/services" class="text-grey-dark mr-6">خدمات</a></li>
                         <li><a href="/orders/create" class="text-grey-dark mr-6">ثبت سفارش</a></li>
                     </ul>
+
+                    <nav-dropdown class="mr-auto" button="white"></nav-dropdown>
                 </div>
-                <img src="{{ asset('/images/hero_home.png') }}" alt="hero home" class="hero-home">
             </div>
 
 
@@ -75,14 +98,14 @@
                 </div>
             </section>
 
-{{--            <section class="contact-ways relative" style="min-height: 600px;">--}}
-{{--                <div class="container">--}}
-{{--                    <img src="{{ asset('images/hom-connection.png') }}" alt="home-connection" class="home-connection">--}}
-{{--                </div>--}}
-{{--            </section>--}}
+            <section class="contact-ways relative" style="min-height: 600px;">
+                <div class="container">
+                    <img src="{{ asset('images/hom-connection.png') }}" alt="home-connection" class="home-connection">
+                </div>
+            </section>
         </div>
 
 
-
+        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>

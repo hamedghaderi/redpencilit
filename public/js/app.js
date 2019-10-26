@@ -9733,7 +9733,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['button'],
   created: function created() {
     var _this = this;
 
@@ -9745,11 +9758,16 @@ __webpack_require__.r(__webpack_exports__);
       _this.rotate = isOpen;
     });
     this.user = Redpencilit.user;
+
+    if (this.button) {
+      this.buttonColor = this.button;
+    }
   },
   data: function data() {
     return {
       user: null,
-      rotate: false
+      rotate: false,
+      buttonColor: 'red'
     };
   },
   computed: {
@@ -9762,6 +9780,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     dashboard: function dashboard() {
       return '/dashboard/' + this.user.id;
+    },
+    classObj: function classObj() {
+      return {
+        "border-white": this.buttonColor === 'white',
+        "border-red": this.buttonColor === 'red',
+        "text-white": this.buttonColor === 'white',
+        "text-red": this.buttonColor === 'red',
+        "hover:bg-white": this.buttonColor === 'white',
+        "hover:bg-red": this.buttonColor === 'red',
+        "hover:text-red": this.buttonColor === 'white',
+        "hover:text-white": this.buttonColor === 'red'
+      };
     }
   },
   methods: {
@@ -51808,7 +51838,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "dropdown-content bg-white shadow-lg rounded w-64 p-4 text-sm"
+                  "dropdown-content bg-white shadow-lg rounded w-64 py-2 px-4 text-sm"
               },
               [_vm._t("default")],
               2
@@ -52062,7 +52092,8 @@ var render = function() {
                         "button",
                         {
                           staticClass:
-                            "border border-red text-red py-3 px-4 focus:outline-none hover:bg-red hover:text-white rounded text-sm"
+                            "border py-3 px-4 focus:outline-none rounded text-sm",
+                          class: _vm.classObj
                         },
                         [_vm._v("\n                حساب کاربری\n            ")]
                       )
@@ -52073,6 +52104,12 @@ var render = function() {
                             "inline-flex justify-end items-center text-grey-darker cursor-pointer"
                         },
                         [
+                          _c(
+                            "span",
+                            { staticClass: "text-grey-dark ml-2 text-sm" },
+                            [_vm._v(_vm._s(_vm.user.name))]
+                          ),
+                          _vm._v(" "),
                           _c("img", {
                             staticClass: "w-8 h-8 rounded-full ml-1",
                             attrs: { src: _vm.avatar }
@@ -52169,37 +52206,76 @@ var render = function() {
                   )
                 ])
               : _c("div", [
-                  _c("div", { staticClass: "text-grey pb-4" }, [
-                    _vm._v(_vm._s(_vm.user.name))
-                  ]),
-                  _vm._v(" "),
                   _c(
                     "a",
                     {
                       staticClass:
-                        "border-b border-grey-lighter block py-4 mb-4 text-grey-dark",
+                        "border-b border-grey-lighter block py-4 mb-4 text-indigo flex items-center",
                       attrs: { href: _vm.dashboard }
                     },
                     [
-                      _c("i", {
-                        staticClass: "fas fa-tachometer-alt text-indigo"
-                      }),
-                      _vm._v("\n                    داشبورد\n                ")
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "fill-current h-5 w-5",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            viewBox: "0 0 24 24",
+                            width: "24",
+                            height: "24"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "heroicon-ui",
+                            attrs: {
+                              d:
+                                "M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zM5.68 7.1A7.96 7.96 0 0 0 4.06 11H5a1 1 0 0 1 0 2h-.94a7.95 7.95 0 0 0 1.32 3.5A9.96 9.96 0 0 1 11 14.05V9a1 1 0 0 1 2 0v5.05a9.96 9.96 0 0 1 5.62 2.45 7.95 7.95 0 0 0 1.32-3.5H19a1 1 0 0 1 0-2h.94a7.96 7.96 0 0 0-1.62-3.9l-.66.66a1 1 0 1 1-1.42-1.42l.67-.66A7.96 7.96 0 0 0 13 4.06V5a1 1 0 0 1-2 0v-.94c-1.46.18-2.8.76-3.9 1.62l.66.66a1 1 0 0 1-1.42 1.42l-.66-.67zM6.71 18a7.97 7.97 0 0 0 10.58 0 7.97 7.97 0 0 0-10.58 0z"
+                            }
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-grey-dark mr-1" }, [
+                        _vm._v("داشبورد")
+                      ])
                     ]
                   ),
                   _vm._v(" "),
                   _c(
                     "a",
                     {
-                      staticClass: "block pb-4 text-grey-dark",
+                      staticClass: "block pb-4 text-red flex items-center",
                       attrs: { href: "#" },
                       on: { click: _vm.logout }
                     },
                     [
-                      _c("i", { staticClass: "fas fa-sign-out-alt text-red" }),
-                      _vm._v(
-                        "\n                    خروج از حساب کاربری\n\n                    "
+                      _c(
+                        "svg",
+                        {
+                          staticClass: "fill-current h-5 w-5",
+                          attrs: {
+                            xmlns: "http://www.w3.org/2000/svg",
+                            viewBox: "0 0 24 24",
+                            width: "24",
+                            height: "24"
+                          }
+                        },
+                        [
+                          _c("path", {
+                            staticClass: "heroicon-ui",
+                            attrs: {
+                              d:
+                                "M19 6.41L8.7 16.71a1 1 0 1 1-1.4-1.42L17.58 5H14a1 1 0 0 1 0-2h6a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V6.41zM17 14a1 1 0 0 1 2 0v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h5a1 1 0 0 1 0 2H5v12h12v-5z"
+                            }
+                          })
+                        ]
                       ),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "text-grey-dark mr-2" }, [
+                        _vm._v(" خروج از حساب کاربری")
+                      ]),
+                      _vm._v(" "),
                       _c("form", {
                         staticStyle: { display: "none" },
                         attrs: {

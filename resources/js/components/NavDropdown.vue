@@ -3,12 +3,14 @@
         <dropdown classes="dropdown-left">
             <template v-slot:toggler>
                 <button
-                        class="border border-red text-red py-3 px-4 focus:outline-none hover:bg-red hover:text-white rounded text-sm"
+                        class="border py-3 px-4 focus:outline-none rounded text-sm"
+                        v-bind:class="classObj"
                         v-if="!user">
                     حساب کاربری
                 </button>
 
                 <div class="inline-flex justify-end items-center text-grey-darker cursor-pointer" v-else>
+                    <span class="text-grey-dark ml-2 text-sm">{{ user.name }}</span>
                     <img :src="avatar" class="w-8 h-8 rounded-full ml-1">
                     <i class="fas fa-chevron-down text-xs" :class="{rotate: rotate}"></i>
                 </div>
@@ -42,16 +44,26 @@
                 </div>
 
                 <div v-else>
-                    <div class="text-grey pb-4">{{ user.name }}</div>
-
-                    <a class="border-b border-grey-lighter block py-4 mb-4 text-grey-dark" :href="dashboard">
-                        <i class="fas fa-tachometer-alt text-indigo"></i>
-                        داشبورد
+                    <a class="border-b border-grey-lighter block py-4 mb-4 text-indigo flex items-center"
+                       :href="dashboard">
+                        <svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                             width="24" height="24">
+                            <path
+                                    class="heroicon-ui"
+                                    d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zM5.68 7.1A7.96 7.96 0 0 0 4.06 11H5a1 1 0 0 1 0 2h-.94a7.95 7.95 0 0 0 1.32 3.5A9.96 9.96 0 0 1 11 14.05V9a1 1 0 0 1 2 0v5.05a9.96 9.96 0 0 1 5.62 2.45 7.95 7.95 0 0 0 1.32-3.5H19a1 1 0 0 1 0-2h.94a7.96 7.96 0 0 0-1.62-3.9l-.66.66a1 1 0 1 1-1.42-1.42l.67-.66A7.96 7.96 0 0 0 13 4.06V5a1 1 0 0 1-2 0v-.94c-1.46.18-2.8.76-3.9 1.62l.66.66a1 1 0 0 1-1.42 1.42l-.66-.67zM6.71 18a7.97 7.97 0 0 0 10.58 0 7.97 7.97 0 0 0-10.58 0z"/>
+                        </svg>
+                        <span class="text-grey-dark mr-1">داشبورد</span>
                     </a>
 
-                    <a class="block pb-4 text-grey-dark" href="#" @click="logout">
-                        <i class="fas fa-sign-out-alt text-red"></i>
-                        خروج از حساب کاربری
+                    <a class="block pb-4 text-red flex items-center" href="#" @click="logout">
+                        <svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                             width="24"
+                             height="24">
+                            <path
+                                    class="heroicon-ui"
+                                    d="M19 6.41L8.7 16.71a1 1 0 1 1-1.4-1.42L17.58 5H14a1 1 0 0 1 0-2h6a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V6.41zM17 14a1 1 0 0 1 2 0v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h5a1 1 0 0 1 0 2H5v12h12v-5z"/>
+                        </svg>
+                        <span class="text-grey-dark mr-2"> خروج از حساب کاربری</span>
 
                         <form id="logout-form" action="/logout" method="POST" style="display:none;">
                         </form>
@@ -64,6 +76,8 @@
 
 <script>
     export default {
+        props: ['button'],
+
         created() {
             window.events.$on('userCreated', data => {
                 this.user = data.user;
@@ -76,12 +90,17 @@
             });
 
             this.user = Redpencilit.user;
+
+            if (this.button) {
+                this.buttonColor = this.button;
+            }
         },
 
         data() {
             return {
                 user: null,
                 rotate: false,
+                buttonColor: 'red',
             }
         },
 
@@ -96,6 +115,19 @@
 
             dashboard() {
                 return '/dashboard/' + this.user.id;
+            },
+
+            classObj() {
+                return {
+                    "border-white": this.buttonColor === 'white',
+                    "border-red": this.buttonColor === 'red',
+                    "text-white": this.buttonColor === 'white',
+                    "text-red": this.buttonColor === 'red',
+                    "hover:bg-white": this.buttonColor === 'white',
+                    "hover:bg-red": this.buttonColor === 'red',
+                    "hover:text-red": this.buttonColor === 'white',
+                    "hover:text-white": this.buttonColor === 'red'
+                }
             }
         },
 
