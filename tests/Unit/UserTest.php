@@ -96,4 +96,16 @@ class UserTest extends TestCase
        
        $this->assertInstanceOf(UserDetail::class, $user->details);
     }
+    
+    /** @test **/
+    public function it_can_be_super_admin()
+    {
+       $user = create(User::class);
+       
+       $role = create(Role::class, ['name' => 'super-admin']);
+       
+       $user->addRole($role);
+       
+       $this->assertEquals($user->email, User::superAdmin()->first()->email);
+    }
 }

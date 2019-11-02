@@ -163,5 +163,18 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetail::class);
     }
+    
+    /**
+     * Find superAdmin user.
+     *
+     * @param $builder
+     * @return mixed
+     */
+    public function scopeSuperAdmin($builder)
+    {
+       return $builder->whereHas('roles', function ($query) {
+           $query->where('name', 'super-admin');
+       });
+    }
 }
 

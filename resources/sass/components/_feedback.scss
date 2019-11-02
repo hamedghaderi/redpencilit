@@ -1,5 +1,5 @@
 .feedback {
   &--invalid {
-    @apply .bg-red-lightest px-3 .py-2 .text-red-dark rounded .border-r-4 .border-red text-xs .leading-normal; 
+    @apply .bg-red-lightest mt-2 px-3 .py-2 .text-red-dark rounded .border-r-4 .border-red text-xs .leading-normal;
   }
 }

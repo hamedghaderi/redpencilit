@@ -1,22 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 Route::middleware('auth')->group(function () {
     // Services
     Route::get('dashboard/services', 'ServicesController@index')->name('services');
@@ -77,6 +60,16 @@ Route::middleware('auth')->group(function () {
     Route::patch('/users/{user}/update-services', 'DocumentServiceController@update');
     Route::delete('/users/{user}/documents', 'DocumentsController@destroy')->middleware('must-be-confirmed');
     Route::post("/post-attachments", 'PostAttachmentsController@store');
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Comments
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/comments', 'CommentsController@index')->middleware('can:edit-comments');
+    Route::delete('/comments/{comment}', 'CommentsController@destroy')->middleware('can:edit-comments');
+    Route::post('/comments/{comment}/testimonials', 'TestimonialsController@store')->middleware('can:add-testimonial');
+    
 });
 
 //Route::get('/roles', 'RolesController@index');
@@ -87,9 +80,6 @@ Route::get('orders/create', 'OrdersController@create')->name('new-order');
 Route::get('/register/emails', 'RegisterConfirmationController@index');
 //Route::post('api/documents', 'DocumentsController@store');
 
-Auth::routes();
-
-
 /*
 |--------------------------------------------------------------------------
 | Pages
@@ -98,6 +88,8 @@ Auth::routes();
 Route::get('/about', 'PagesController@about');
 Route::get('/contact', 'PagesController@contact');
 Route::post('/contacts', 'PagesController@store');
+Route::get('/', 'Pagescontroller@homepage');
+
 
 
 /*
@@ -108,5 +100,12 @@ Route::post('/contacts', 'PagesController@store');
 Route::get('/posts', 'PostsController@index');
 Route::get('/posts/{post}', 'PostsController@show');
 
+Route::post('/comments', 'CommentsController@store');
 
+
+
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 

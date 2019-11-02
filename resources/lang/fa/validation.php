@@ -51,7 +51,7 @@ return [
         'array' => 'The :attribute must have more than :value items.',
     ],
     'gte' => [
-        'numeric' => 'The :attribute must be greater than or equal :value.',
+        'numeric' => ':attribute باید بزرگتر یا مساوی :value کاراکتر باشد.',
         'file' => 'The :attribute must be greater than or equal :value kilobytes.',
         'string' => 'The :attribute must be greater than or equal :value characters.',
         'array' => 'The :attribute must have :value items or more.',
@@ -71,15 +71,15 @@ return [
         'array' => 'The :attribute must have less than :value items.',
     ],
     'lte' => [
-        'numeric' => 'The :attribute must be less than or equal :value.',
+        'numeric' => ':attribute باید برابر یا کمتر از :value باشد.',
         'file' => 'The :attribute must be less than or equal :value kilobytes.',
         'string' => 'The :attribute must be less than or equal :value characters.',
         'array' => 'The :attribute must not have more than :value items.',
     ],
     'max' => [
-        'numeric' => 'The :attribute may not be greater than :max.',
+        'numeric' => ':attribute نباید بیشتر از :max کاراکتر باشد.',
         'file' => 'The :attribute may not be greater than :max kilobytes.',
-        'string' => 'The :attribute may not be greater than :max characters.',
+        'string' => ':attribute محتوا نباید بیشتر از :max کاراکتر باشد.',
         'array' => 'The :attribute may not have more than :max items.',
     ],
     'mimes' => 'The :attribute must be a file of type: :values.',
@@ -182,7 +182,8 @@ return [
         'upload_articles_per_day' => 'حداکثر آپلود',
         'upload_words_per_day' => 'حداکثر کلمات',
         'price_per_word' => 'قیمت کلمات',
-        'base_price_for_docs' => 'قیمت پایه'
+        'base_price_for_docs' => 'قیمت پایه',
+        'message' => 'پیام'
     ],
 
 ];

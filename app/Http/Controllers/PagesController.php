@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -28,6 +29,19 @@ class PagesController extends Controller
         return view('pages.contact');
     }
     
+    public function homepage()
+    {
+        $testimonials = Testimonial::with('comment')
+                                   ->latest()
+                                   ->take(5)
+                                   ->get();
+        
+       return view('welcome', compact('testimonials'));
+    }
+    
+    /**
+     * Store a new comment into DB.
+     */
     public function store()
     {
        $attributes = request()->validate([

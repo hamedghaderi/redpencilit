@@ -1,0 +1,68 @@
+$animation-timing: 20s;
+$carousel-items: 5;
+$animation-delay-fraction: $animation-timing / $carousel-items;
+$animation-steps-fraction: 100 / $carousel-items;
+$slide-change-timing: 3;
+
+.carousel {
+  @apply relative flex justify-center flex-col w-full;
+}
+
+.carousel__item {
+  @apply absolute flex w-full py-0 opacity-0 flex-col;
+  align-items: center;
+  filter: drop-shadow(0 2px 2px #555);
+  will-change: transform, opacity;
+  animation: carousel-animate-vertical $animation-timing linear infinite;
+}
+
+@for $i from 1 through ($carousel-items - 1) {
+  .carousel__item:nth-child(#{$i}) {
+    animation-delay: calc(#{$animation-delay-fraction} * #{$i - 2});
+  }
+}
+
+.carousel__item:last-child {
+  animation-delay: calc(-#{$animation-delay-fraction} * 2);
+}
+
+@keyframes carousel-animate-vertical {
+  0% {
+    -webkit-transform: translateY(100%) scale(.5);
+    -moz-transform: translateY(100%) scale(.5);
+    -ms-transform: translateY(100%) scale(.5);
+    -o-transform: translateY(100%) scale(.5);
+    transform: translateY(100%) scale(.5);
+    opacity: 0;
+    visibility: hidden;
+  }
+  #{$slide-change-timing}%,
+  #{$animation-steps-fraction}%  {
+    transform: translateY(100%) scale(.7);
+    opacity: .4;
+    visibility: visible;
+  }
+  #{$animation-steps-fraction + $slide-change-timing}%,
+  #{$animation-steps-fraction * 2}% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    visibility: visible;
+  }
+  #{($animation-steps-fraction * 2) + $slide-change-timing}%,
+  #{$animation-steps-fraction * 3}% {
+    transform: translateY(-100%) scale(0.7);
+    opacity: .4;
+    visibility: visible;
+  }
+  #{($animation-steps-fraction * 3) + $slide-change-timing}% {
+    transform: translateY(-100%) scale(0.5);
+    opacity: 0;
+    visibility: visible;
+  }
+  100% {
+     transform: translateY(-100%) scale(0.5);
+     opacity: 0;
+     visibility: hidden;
+   }
+}
+

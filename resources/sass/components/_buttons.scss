@@ -2,6 +2,11 @@
   @apply inline-block rounded-full rounded-full text-sm px-6 py-3;
   transition: all .3s;
 
+  &:focus {
+    @apply outline-none shadow-outline-indigo;
+
+  }
+
   &:hover {
     transform: translateY(-2px);
     @apply shadow-xl;

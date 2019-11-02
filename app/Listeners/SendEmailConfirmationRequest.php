@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Mail\PleaseConfirmYourEmail;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -34,7 +32,7 @@ class SendEmailConfirmationRequest
     {
         try {
             Mail::to($event->user)
-                ->queue(new PleaseConfirmYourEmail ($event->user));
+                ->send(new PleaseConfirmYourEmail ($event->user));
         } catch (\Error $e) {
             DB::rollBack();
     

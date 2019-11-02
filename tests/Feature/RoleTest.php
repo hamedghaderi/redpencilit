@@ -66,14 +66,4 @@ class RoleTest extends TestCase
        
        $this->assertCount(3, $role->fresh()->permissions);
     }
-    
-//    /** @test **/
-//    public function a_user_can_see_the_list_of_all_roles()
-//    {
-//        $this->withoutExceptionHandling();
-//
-//       $role = create(Role::class);
-//
-//       $this->get('/roles')->assertSee($role->name);
-//    }
 }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\CollegeDegree;
 use App\UserDetail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

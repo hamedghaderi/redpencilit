@@ -3,42 +3,50 @@
 namespace Tests\Feature;
 
 use App\User;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserRegisterTest extends TestCase
 {
-    
     use RefreshDatabase;
     
     /** @test * */
     public function a_user_can_register_with_a_new_account()
     {
         $this->withoutExceptionHandling();
-        $user = make(User::class);
-        $user->password_confirmation = $user->password;
         
-        $response = $this->postJson('/register',
-            $user->makeVisible('password')->makeVisible('email')->toArray()
-        );
+        $user = [
+            'name' => 'John Doe',
+            'email' => 'john@doe.com',
+            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
+            'password_confirmation' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
+            'phone' => '09369396387'
+        ];
         
-        $this->assertEquals(200, $response->json()['status']);
+        $response = $this->json('post', '/register', $user);
         
-        $response->assertJsonFragment(['name' => $user->name]);
+        $response->assertStatus(201)
+            ->assertJson(['name' => 'John Doe'])
+            ->assertJsonMissing(['password']);
     }
     
     /** @test * */
     public function the_first_user_who_register_has_the_role_of_admin()
     {
+        $this->withoutExceptionHandling();
+        
+        Mail::fake();
+        
         $user = make(User::class);
+        
         $user->password_confirmation = $user->password;
         
-        $response = $this->postJson('/register', $user->makeVisible('password')->makeVisible('email')->toArray());
+        $response = $this->postJson('register', $user->makeVisible('password')->makeVisible('email')->toArray());
         $user = User::first();
         $this->assertCount(1, $user->roles);
-        
         $this->assertDatabaseHas('users', ['name' => $user->name]);
-        
+
         $this->assertTrue($user->isSuperAdmin());
     }
     
