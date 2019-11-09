@@ -5265,6 +5265,26 @@ trix-editor:focus {
   right: -10%;
 }
 
+.home-contact {
+  min-height: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .home-contact {
+    min-height: 600px;
+  }
+}
+
+.your-comments {
+  min-height: 650px;
+}
+
+@media screen and (min-width: 768px) {
+  .your-comments {
+    min-height: 450px;
+  }
+}
+
 /**
  * Here you would add any of your custom component classes; stuff that you'd
  * want loaded *before* the utilities so that the utilities could still

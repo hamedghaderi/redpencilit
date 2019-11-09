@@ -2,37 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b36ddba-05a9-4468-b24a-714051e3f2d5" name="Default Changelist" comment="kk">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/redpencilit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/redpencilit.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PagesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Listeners/SendEmailConfirmationRequest.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Listeners/SendEmailConfirmationRequest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/mail.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/mail.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/connection-home-bg.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/fa/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/fa/validation.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_buttons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_buttons.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_feedback.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_feedback.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/global/_base.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/global/_base.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/pages/_contact.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/pages/_contact.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/emails/contact.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/contact.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/contact.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/contact.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/pages/_home.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/pages/_home.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/master.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tailwind.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/RoleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/RoleTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/UserDetailsTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserDetailsTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/UserRegisterTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserRegisterTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/UserTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/UserTest.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -174,7 +152,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/images" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/partials" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
@@ -183,15 +161,16 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/public/images" />
-      <recent name="$PROJECT_DIR$/tests/Feature" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/resources/js/pages" />
       <recent name="$PROJECT_DIR$/resources/views/orders" />
       <recent name="$PROJECT_DIR$/resources/views/confirm" />
       <recent name="$PROJECT_DIR$/resources/sass/global" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/views/partials" />
+      <recent name="$PROJECT_DIR$/public/images" />
+      <recent name="$PROJECT_DIR$/tests/Feature" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -345,7 +324,8 @@
       <workItem from="1572080668393" duration="12808000" />
       <workItem from="1572554659216" duration="8442000" />
       <workItem from="1572605105117" duration="9839000" />
-      <workItem from="1572617756801" duration="29308000" />
+      <workItem from="1572617756801" duration="29569000" />
+      <workItem from="1573247992447" duration="10194000" />
     </task>
     <servers />
   </component>

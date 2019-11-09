@@ -994,7 +994,7 @@ trix-editor:focus {
 }
 
 .carousel {
-  @apply relative flex justify-center flex-col w-full;
+  @apply relative flex md:flex-wrap justify-center flex-col w-full;
 }
 
 .carousel__item {
@@ -1152,6 +1152,24 @@ trix-editor:focus {
   position: absolute;
   height: 100%;
   right: -10%;
+}
+
+.home-contact {
+  min-height: auto;
+}
+@media screen and (min-width: 768px) {
+  .home-contact {
+    min-height: 600px;
+  }
+}
+
+.your-comments {
+  min-height: 650px;
+}
+@media screen and (min-width: 768px) {
+  .your-comments {
+    min-height: 450px;
+  }
 }
 
 /**

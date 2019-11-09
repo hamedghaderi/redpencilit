@@ -12,7 +12,21 @@
 
 .home-connection {
   position: absolute;
-
   height: 100%;
   right: -10%;
+}
+
+.home-contact {
+  min-height: auto;
+
+  @media screen and (min-width: 768px) {
+    min-height: 600px;
+  }
+}
+
+.your-comments {
+  min-height: 650px;
+  @media screen and (min-width: 768px) {
+    min-height: 450px;
+  }
 }

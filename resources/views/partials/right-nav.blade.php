@@ -1,7 +1,7 @@
 <nav class="fixed z-50 pin-b pin-r md:pin-r md:pin-t bg-white w-full md:w-64 border-t border-grey-light md:border-t-none
 md:border-l">
     <div class="hidden md:block dashboard-logo mb-8 pt-6 px-6 pb-3 text-right border-b border-grey-lighter">
-        <img src="{{ asset('images/logo.svg') }}" alt="redpencilit" style="width:50px">
+        <a href="/"><img src="{{ asset('images/logo.svg') }}" alt="redpencilit" style="width:50px"></a>
     </div>
 
     <ul class="flex md:block px-4 py-4 z-50 justify-between list-reset">
