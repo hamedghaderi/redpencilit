@@ -17,14 +17,8 @@
 
     <div class="p-6 bg-white rounded shadow">
         <div class="flex items-center border-b border-grey-lighter pb-6">
-            <h3 class="text-grey">
-                <svg class="fill-current h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
-                     height="24">
-                    <path
-                            class="heroicon-ui"
-                            d="M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm9 11a1 1 0 0 1-2 0v-2a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v2a1 1 0 0 1-2 0v-2a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v2z"/>
-                </svg>
-
+            <h3 class="text-grey flex items-center">
+                <i class="la la-user text-2xl ml-1"></i>
                 <span class="text-grey-darker">لیست کاربران</span>
             </h3>
 
@@ -41,9 +35,7 @@
                         </select>
 
                         <div class="select__icon">
-                            <svg class="select__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-                            </svg>
+                            <i class="la la-angle-down text-sm"></i>
                         </div>
                     </div>
                 </form>

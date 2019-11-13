@@ -1,7 +1,8 @@
 <template>
     <div class="modal z-50">
         <span class="modal__close">
-            <img src="/images/cross-out.svg" alt="cross out icon" @click="close">
+            <i class="la la-times text-3xl" @click="close"></i>
+<!--            <img src="/images/cross-out.svg" alt="cross out icon" @click="close">-->
         </span>
 
         <div class="modal__wrapper">

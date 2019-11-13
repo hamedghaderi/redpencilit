@@ -1,6 +1,4 @@
-<header class="z-50 bg-white md:bg-transparent border-b md:border-none border-grey-light sm:py-4
-md:items-center mb-8 px-4
-py-1">
+<header class="z-50 bg-white md:bg-transparent sm:py-4 md:items-center mb-8 px-4 py-1">
     <div class="flex items-center md:px-4 sm:py-3 sm:p-0 md:w-full">
         <div>
             <a href="{{ url('/') }}">
@@ -53,26 +51,35 @@ py-1">
         </div>
 
         <div class="hidden md:inline-block flex-grow-0 mr-auto">
-            <nav-dropdown button="white"></nav-dropdown>
+            <nav-dropdown home="true"></nav-dropdown>
         </div>
     </div>
 
 
-
-    <div v-if="isOpen" class="md:hidden">
-        <ul class="list-reset px-2 mb-2">
-            <li><a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
-                   href="/">خانه</a></li>
-            <li><a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
-                   href="/about">درباره</a></li>
-            <li><a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
+    <div v-if="isOpen" class="md:hidden bg-grey-lightest">
+        <ul class="list-reset px-2 mb-2 border-t">
+            <li>
+                <a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
+                   href="/">خانه</a>
+            </li>
+            <li>
+                <a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
+                   href="/about">درباره</a>
+            </li>
+            <li>
+                <a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
                    href="/contact">تماس با
-                    ما</a></li>
-            <li><a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
-                   href="/services">خدمات</a></li>
-            <li><a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white"
+                    ما</a>
+            </li>
+            <li>
+                <a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
+                   href="/services">خدمات</a>
+            </li>
+            <li>
+                <a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white"
                    href="/orders/create">سفارش
-                    جدید</a></li>
+                    جدید</a>
+            </li>
         </ul>
 
         <div class="block md:hidden border-t border-t-1">
@@ -89,9 +96,9 @@ py-1">
                         <a class="rounded text-grey-dark text-sm block hover:bg-red-lightest hover:text-red-dark px-2
                         py-3"
                            href="#"
-                           onclick="document.getElementById('logout').submit()
-">خروج از
-                            حساب</a>
+                           onclick="document.getElementById('logout').submit()">
+                            خروج از حساب
+                        </a>
 
                         <form id="logout" action="/logout" method="POST">
                             @csrf

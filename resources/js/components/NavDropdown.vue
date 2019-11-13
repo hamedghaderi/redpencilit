@@ -3,16 +3,17 @@
         <dropdown classes="dropdown-left">
             <template v-slot:toggler>
                 <button
-                        class="border py-3 px-4 focus:outline-none rounded text-sm"
+                        class="border py-3 px-4 focus:outline-none rounded text-sm shadow"
                         v-bind:class="classObj"
                         v-if="!user">
                     حساب کاربری
                 </button>
 
-                <div class="inline-flex justify-end items-center text-grey-darker cursor-pointer" v-else>
-                    <span class="text-grey-dark ml-2 text-sm">{{ user.name }}</span>
+                <div class="inline-flex justify-end items-center text-grey-darker cursor-pointer"
+                     v-else>
+                    <span class="text-grey-dark ml-2 text-sm" :class="{'text-white': home}">{{ user.name }}</span>
                     <img :src="avatar" class="w-8 h-8 rounded-full ml-1">
-                    <i class="fas fa-chevron-down text-xs" :class="{rotate: rotate}"></i>
+                    <i class="la la-angle-down" :class="{rotate: rotate, 'text-white': home}"></i>
                 </div>
             </template>
 
@@ -76,7 +77,11 @@
 
 <script>
     export default {
-        props: ['button'],
+        props: {
+            home: {
+                default: false
+            }
+        },
 
         created() {
             window.events.$on('userCreated', data => {
@@ -90,10 +95,6 @@
             });
 
             this.user = Redpencilit.user;
-
-            if (this.button) {
-                this.buttonColor = this.button;
-            }
         },
 
         data() {
@@ -119,14 +120,15 @@
 
             classObj() {
                 return {
-                    "border-white": this.buttonColor === 'white',
-                    "border-red": this.buttonColor === 'red',
-                    "text-white": this.buttonColor === 'white',
-                    "text-red": this.buttonColor === 'red',
-                    "hover:bg-white": this.buttonColor === 'white',
-                    "hover:bg-red": this.buttonColor === 'red',
-                    "hover:text-red": this.buttonColor === 'white',
-                    "hover:text-white": this.buttonColor === 'red'
+                    "bg-red": this.home,
+                    "text-white": this.home,
+                    "text-red": !this.home,
+                    "border-transparent": this.home,
+                    "border-red": !this.home,
+                    "hover:bg-white": this.home,
+                    "hover:bg-red": !this.home,
+                    "hover:text-red": this.home,
+                    "hover:text-white": !this.home
                 }
             }
         },

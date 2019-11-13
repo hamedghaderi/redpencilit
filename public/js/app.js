@@ -9748,6 +9748,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     close: function close() {
@@ -9843,8 +9844,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['button'],
+  props: {
+    home: {
+      default: false
+    }
+  },
   created: function created() {
     var _this = this;
 
@@ -9856,10 +9862,6 @@ __webpack_require__.r(__webpack_exports__);
       _this.rotate = isOpen;
     });
     this.user = Redpencilit.user;
-
-    if (this.button) {
-      this.buttonColor = this.button;
-    }
   },
   data: function data() {
     return {
@@ -9881,14 +9883,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     classObj: function classObj() {
       return {
-        "border-white": this.buttonColor === 'white',
-        "border-red": this.buttonColor === 'red',
-        "text-white": this.buttonColor === 'white',
-        "text-red": this.buttonColor === 'red',
-        "hover:bg-white": this.buttonColor === 'white',
-        "hover:bg-red": this.buttonColor === 'red',
-        "hover:text-red": this.buttonColor === 'white',
-        "hover:text-white": this.buttonColor === 'red'
+        "bg-red": this.home,
+        "text-white": this.home,
+        "text-red": !this.home,
+        "border-transparent": this.home,
+        "border-red": !this.home,
+        "hover:bg-white": this.home,
+        "hover:bg-red": !this.home,
+        "hover:text-red": this.home,
+        "hover:text-white": !this.home
       };
     }
   },
@@ -52258,7 +52261,7 @@ var render = function() {
           staticClass: "dashboard-nav__avatar-gear",
           on: { click: _vm.openUploader }
         },
-        [_c("i", { staticClass: "fas fa-cog" })]
+        [_c("i", { staticClass: "la la-cog text-lg" })]
       ),
       _vm._v(" "),
       _c("input", {
@@ -52728,10 +52731,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "modal z-50" }, [
     _c("span", { staticClass: "modal__close" }, [
-      _c("img", {
-        attrs: { src: "/images/cross-out.svg", alt: "cross out icon" },
-        on: { click: _vm.close }
-      })
+      _c("i", { staticClass: "la la-times text-3xl", on: { click: _vm.close } })
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "modal__wrapper" }, [
@@ -52780,7 +52780,7 @@ var render = function() {
                         "button",
                         {
                           staticClass:
-                            "border py-3 px-4 focus:outline-none rounded text-sm",
+                            "border py-3 px-4 focus:outline-none rounded text-sm shadow",
                           class: _vm.classObj
                         },
                         [_vm._v("\n                حساب کاربری\n            ")]
@@ -52794,7 +52794,10 @@ var render = function() {
                         [
                           _c(
                             "span",
-                            { staticClass: "text-grey-dark ml-2 text-sm" },
+                            {
+                              staticClass: "text-grey-dark ml-2 text-sm",
+                              class: { "text-white": _vm.home }
+                            },
                             [_vm._v(_vm._s(_vm.user.name))]
                           ),
                           _vm._v(" "),
@@ -52804,8 +52807,11 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c("i", {
-                            staticClass: "fas fa-chevron-down text-xs",
-                            class: { rotate: _vm.rotate }
+                            staticClass: "la la-angle-down",
+                            class: {
+                              rotate: _vm.rotate,
+                              "text-white": _vm.home
+                            }
                           })
                         ]
                       )

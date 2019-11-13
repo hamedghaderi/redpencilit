@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard-nav__avatar" :style="imageUrl">
         <span class="dashboard-nav__avatar-gear" @click="openUploader">
-            <i class="fas fa-cog"></i>
+            <i class="la la-cog text-lg"></i>
         </span>
 
         <input type="file" id="uploader" name="avatar" style="display: none;" @change="uploadAvatar">

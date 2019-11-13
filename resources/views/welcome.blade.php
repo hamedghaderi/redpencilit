@@ -9,7 +9,7 @@
 
     <title>{{ config('app.name', 'RedPencilIt') }}</title>
 
-    <link rel="stylesheet" href="{{ asset('css/vendor/all.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/line-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     <script>
@@ -23,8 +23,6 @@
 </head>
 <body>
 <div id="app" class="overflow-hidden">
-
-
     <section class="bg-white relative" id="intro">
         <img class="absolute w-4/5 z-0 hidden md:block"
              src="{{ asset('images/hero_home.png') }}"
@@ -221,14 +219,15 @@
         <img src="{{ asset('images/coffee-blur.jpg.svg') }}" alt="a white blur shape"
              class="w-1/2 absolute z-0" style="right:-200px; top: -180px; transform:rotate(-15deg)">
 
-        <div class="pt-24 relative z-10">
+        <div class="pt-24 relative z-10 md:mb-8">
             <h3 class="text-white md:text-grey-900 font-light pb-3 text-2xl">
                 آنچه شما درباره ما گفته‌اید
                 <span class="block mt-4 h-1 w-24 bg-red mb-8"></span>
             </h3>
         </div>
 
-        <div class="mr-auto w-full md:w-1/2 carousel flex flex-col md:justify-center" style="max-height: 500px;
+        <div class="mr-auto w-full md:w-1/2 carousel flex flex-col md:justify-center" style="height: 500px; max-height:
+        500px;
         overflow: hidden">
             @foreach($testimonials as $testimonial)
                 <div class="bg-white hover:shadow-2xl rounded shadow-lg mb-4 px-8 py-4 carousel__item">
@@ -259,15 +258,15 @@
         </div>
     </section>
 
-    <section id="team" class="pt-12 px-24 bg-grey-lightest">
-        <div class="pb-24 bg-contain bg-no-repeat bg-center"
+    <section id="team" class="pt-12 px-8 md:px-24 bg-grey-lightest">
+        <div class="md:pb-24 bg-contain bg-no-repeat bg-center"
              style="background-image: url({{ asset ('images/map.png.svg') }});">
-            <h3 class="text-grey-900 font-light pb-3 text-2xl">
+            <h3 class="text-grey-900 font-light pb-3 text-2xl mb-12">
                 تیم حرفه‌ای
                 <span class="block mt-4 h-1 w-24 bg-red mb-8"></span>
             </h3>
 
-            <div class="bg-white rounded-lg p-12 w-1/2 mx-auto shadow relative">
+            <div class="bg-white rounded-lg p-12 md:w-1/2 mx-auto shadow relative">
                 <img class="w-24 h-24 rounded-full absolute" style="left: 50%; top: 0; transform: translate(-50%, -50%);"
                      src="{{ $authorAvatar
                  ?: asset
@@ -289,7 +288,6 @@
                             مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد.
                             <span class="text-indigo text-3xl absolute pin-l pin-b" style="bottom: -20px;">"</span>
                         </p>
-
                     </blockquote>
                 </div>
             </div>
