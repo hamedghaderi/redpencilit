@@ -9055,6 +9055,14 @@ trix-editor:focus {
   padding: 8rem;
 }
 
+.p-48 {
+  padding: 12rem;
+}
+
+.p-56 {
+  padding: 14rem;
+}
+
 .p-64 {
   padding: 16rem;
 }
@@ -9201,6 +9209,26 @@ trix-editor:focus {
 .px-32 {
   padding-left: 8rem;
   padding-right: 8rem;
+}
+
+.py-48 {
+  padding-top: 12rem;
+  padding-bottom: 12rem;
+}
+
+.px-48 {
+  padding-left: 12rem;
+  padding-right: 12rem;
+}
+
+.py-56 {
+  padding-top: 14rem;
+  padding-bottom: 14rem;
+}
+
+.px-56 {
+  padding-left: 14rem;
+  padding-right: 14rem;
 }
 
 .py-64 {
@@ -9445,6 +9473,38 @@ trix-editor:focus {
 
 .pl-32 {
   padding-left: 8rem;
+}
+
+.pt-48 {
+  padding-top: 12rem;
+}
+
+.pr-48 {
+  padding-right: 12rem;
+}
+
+.pb-48 {
+  padding-bottom: 12rem;
+}
+
+.pl-48 {
+  padding-left: 12rem;
+}
+
+.pt-56 {
+  padding-top: 14rem;
+}
+
+.pr-56 {
+  padding-right: 14rem;
+}
+
+.pb-56 {
+  padding-bottom: 14rem;
+}
+
+.pl-56 {
+  padding-left: 14rem;
 }
 
 .pt-64 {
@@ -14728,6 +14788,14 @@ trix-editor:focus {
     padding: 8rem;
   }
 
+  .sm\:p-48 {
+    padding: 12rem;
+  }
+
+  .sm\:p-56 {
+    padding: 14rem;
+  }
+
   .sm\:p-64 {
     padding: 16rem;
   }
@@ -14874,6 +14942,26 @@ trix-editor:focus {
   .sm\:px-32 {
     padding-left: 8rem;
     padding-right: 8rem;
+  }
+
+  .sm\:py-48 {
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+  }
+
+  .sm\:px-48 {
+    padding-left: 12rem;
+    padding-right: 12rem;
+  }
+
+  .sm\:py-56 {
+    padding-top: 14rem;
+    padding-bottom: 14rem;
+  }
+
+  .sm\:px-56 {
+    padding-left: 14rem;
+    padding-right: 14rem;
   }
 
   .sm\:py-64 {
@@ -15118,6 +15206,38 @@ trix-editor:focus {
 
   .sm\:pl-32 {
     padding-left: 8rem;
+  }
+
+  .sm\:pt-48 {
+    padding-top: 12rem;
+  }
+
+  .sm\:pr-48 {
+    padding-right: 12rem;
+  }
+
+  .sm\:pb-48 {
+    padding-bottom: 12rem;
+  }
+
+  .sm\:pl-48 {
+    padding-left: 12rem;
+  }
+
+  .sm\:pt-56 {
+    padding-top: 14rem;
+  }
+
+  .sm\:pr-56 {
+    padding-right: 14rem;
+  }
+
+  .sm\:pb-56 {
+    padding-bottom: 14rem;
+  }
+
+  .sm\:pl-56 {
+    padding-left: 14rem;
   }
 
   .sm\:pt-64 {
@@ -20372,6 +20492,14 @@ trix-editor:focus {
     padding: 8rem;
   }
 
+  .md\:p-48 {
+    padding: 12rem;
+  }
+
+  .md\:p-56 {
+    padding: 14rem;
+  }
+
   .md\:p-64 {
     padding: 16rem;
   }
@@ -20518,6 +20646,26 @@ trix-editor:focus {
   .md\:px-32 {
     padding-left: 8rem;
     padding-right: 8rem;
+  }
+
+  .md\:py-48 {
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+  }
+
+  .md\:px-48 {
+    padding-left: 12rem;
+    padding-right: 12rem;
+  }
+
+  .md\:py-56 {
+    padding-top: 14rem;
+    padding-bottom: 14rem;
+  }
+
+  .md\:px-56 {
+    padding-left: 14rem;
+    padding-right: 14rem;
   }
 
   .md\:py-64 {
@@ -20762,6 +20910,38 @@ trix-editor:focus {
 
   .md\:pl-32 {
     padding-left: 8rem;
+  }
+
+  .md\:pt-48 {
+    padding-top: 12rem;
+  }
+
+  .md\:pr-48 {
+    padding-right: 12rem;
+  }
+
+  .md\:pb-48 {
+    padding-bottom: 12rem;
+  }
+
+  .md\:pl-48 {
+    padding-left: 12rem;
+  }
+
+  .md\:pt-56 {
+    padding-top: 14rem;
+  }
+
+  .md\:pr-56 {
+    padding-right: 14rem;
+  }
+
+  .md\:pb-56 {
+    padding-bottom: 14rem;
+  }
+
+  .md\:pl-56 {
+    padding-left: 14rem;
   }
 
   .md\:pt-64 {
@@ -26016,6 +26196,14 @@ trix-editor:focus {
     padding: 8rem;
   }
 
+  .lg\:p-48 {
+    padding: 12rem;
+  }
+
+  .lg\:p-56 {
+    padding: 14rem;
+  }
+
   .lg\:p-64 {
     padding: 16rem;
   }
@@ -26162,6 +26350,26 @@ trix-editor:focus {
   .lg\:px-32 {
     padding-left: 8rem;
     padding-right: 8rem;
+  }
+
+  .lg\:py-48 {
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+  }
+
+  .lg\:px-48 {
+    padding-left: 12rem;
+    padding-right: 12rem;
+  }
+
+  .lg\:py-56 {
+    padding-top: 14rem;
+    padding-bottom: 14rem;
+  }
+
+  .lg\:px-56 {
+    padding-left: 14rem;
+    padding-right: 14rem;
   }
 
   .lg\:py-64 {
@@ -26406,6 +26614,38 @@ trix-editor:focus {
 
   .lg\:pl-32 {
     padding-left: 8rem;
+  }
+
+  .lg\:pt-48 {
+    padding-top: 12rem;
+  }
+
+  .lg\:pr-48 {
+    padding-right: 12rem;
+  }
+
+  .lg\:pb-48 {
+    padding-bottom: 12rem;
+  }
+
+  .lg\:pl-48 {
+    padding-left: 12rem;
+  }
+
+  .lg\:pt-56 {
+    padding-top: 14rem;
+  }
+
+  .lg\:pr-56 {
+    padding-right: 14rem;
+  }
+
+  .lg\:pb-56 {
+    padding-bottom: 14rem;
+  }
+
+  .lg\:pl-56 {
+    padding-left: 14rem;
   }
 
   .lg\:pt-64 {
@@ -31660,6 +31900,14 @@ trix-editor:focus {
     padding: 8rem;
   }
 
+  .xl\:p-48 {
+    padding: 12rem;
+  }
+
+  .xl\:p-56 {
+    padding: 14rem;
+  }
+
   .xl\:p-64 {
     padding: 16rem;
   }
@@ -31806,6 +32054,26 @@ trix-editor:focus {
   .xl\:px-32 {
     padding-left: 8rem;
     padding-right: 8rem;
+  }
+
+  .xl\:py-48 {
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+  }
+
+  .xl\:px-48 {
+    padding-left: 12rem;
+    padding-right: 12rem;
+  }
+
+  .xl\:py-56 {
+    padding-top: 14rem;
+    padding-bottom: 14rem;
+  }
+
+  .xl\:px-56 {
+    padding-left: 14rem;
+    padding-right: 14rem;
   }
 
   .xl\:py-64 {
@@ -32050,6 +32318,38 @@ trix-editor:focus {
 
   .xl\:pl-32 {
     padding-left: 8rem;
+  }
+
+  .xl\:pt-48 {
+    padding-top: 12rem;
+  }
+
+  .xl\:pr-48 {
+    padding-right: 12rem;
+  }
+
+  .xl\:pb-48 {
+    padding-bottom: 12rem;
+  }
+
+  .xl\:pl-48 {
+    padding-left: 12rem;
+  }
+
+  .xl\:pt-56 {
+    padding-top: 14rem;
+  }
+
+  .xl\:pr-56 {
+    padding-right: 14rem;
+  }
+
+  .xl\:pb-56 {
+    padding-bottom: 14rem;
+  }
+
+  .xl\:pl-56 {
+    padding-left: 14rem;
   }
 
   .xl\:pt-64 {

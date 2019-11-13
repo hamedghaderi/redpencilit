@@ -1,39 +1,20 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.home')
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'RedPencilIt') }}</title>
-
-    <link rel="stylesheet" href="{{ asset('css/line-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
-    <script>
-        window.Redpencilit = {!!
-            json_encode([
-                'signed' => Auth::check(),
-                'user' => Auth::user()
-            ]);
-         !!}
-    </script>
-</head>
-<body>
-<div id="app" class="overflow-hidden">
+@section('content')
     <section class="bg-white relative" id="intro">
         <img class="absolute w-4/5 z-0 hidden md:block"
              src="{{ asset('images/hero_home.png') }}"
              alt="A woman working with her laptop"
              style="left: -50%; top: -20%;">
 
-        <div class="container pt-8 md:pb-32">
+        <div class="px-24 pt-8 md:pb-32">
             @include('partials.nav-home')
         </div>
 
-        <div class="container pb-12 md:pb-24">
+        {{--==========================================================
+        |  Hero
+        ============================================================--}}
+        <div class="pb-12 md:pb-32 px-24">
             <div class="md:w-1/3">
                 <h1 class="mb-2 md:mb-4">عنوان</h1>
                 <p class="text-sm md:text-normal leading-loose text-grey-dark mb-6">لورم ایپسوم متن ساختگی با تولید
@@ -63,8 +44,12 @@
         </div>
     </section>
 
+
+    {{--==========================================================
+    | Services
+    ============================================================--}}
     <section class="services pb-12 md:pb-24 bg-white">
-        <div class="container">
+        <div class="px-24">
             <div class="flex flex-wrap items-center">
                 <div class="md:w-1/4 mb-12 md:mb-0">
                     <h3 class="text-grey-900 font-light pb-3 text-2xl">
@@ -116,13 +101,17 @@
         </div>
     </section>
 
-    <section class="px-12 mb:px-0 bg-white pb-12 flex relative bg-cover bg-left-top w-full home-contact">
+
+    {{--==========================================================
+    |  Contact Ways
+    ============================================================--}}
+    <section class="mb:px-0 bg-white pb-12 flex relative bg-cover bg-left-top w-full home-contact">
         <img src="{{ asset('images/connection-home-bg.svg') }}" alt="background" class="absolute z-0" style="width:
         110%; max-width: 110%; left: -5%; top: -50px">
 
-        <div class="md:w-1/2 relative overflow-hidden">
+        <div class="md:w-1/2 relative overflow-hidden" style="min-height: 650px;">
             <img src="{{ asset('images/hom-connection.png') }}" alt="home-connection" class="absolute z-0"
-                 style="right: -100px; top:50%; transform: translateY(-50%);">
+                 style="right: -30%; top:55%; transform: translateY(-50%);">
         </div>
 
         <div class="md:w-1/2 md:pr-32 pt-12 md:pt-0 relative z-10 items-start flex flex-col justify-center">
@@ -189,6 +178,9 @@
         </div>
     </section>
 
+    {{--==========================================================
+     |  Request Steps
+     ============================================================--}}
     <section id="order-steps" class="bg-grey-lighter md:bg-white py-12 md:py-0 md:px-24 relative pb-12">
         <img src="{{ asset('images/leaf.svg') }}" alt="leaf" class="absolute pin-t hidden md:block"
              style="height: 600px; left: -40%; transform: translateX(50%)">
@@ -248,7 +240,7 @@
                         <ul class="flex list-reset justify-end">
                             @for($i = 0; $i < 5; $i++)
                                 <li class="text-yellow-dark mr-1">
-                                  <i class="fa-star {{ $testimonial->comment->rate > $i ? 'fas' : 'far' }}"></i>
+                                    <i class="fa-star {{ $testimonial->comment->rate > $i ? 'fas' : 'far' }}"></i>
                                 </li>
                             @endfor
                         </ul>
@@ -267,12 +259,14 @@
             </h3>
 
             <div class="bg-white rounded-lg p-12 md:w-1/2 mx-auto shadow relative">
-                <img class="w-24 h-24 rounded-full absolute" style="left: 50%; top: 0; transform: translate(-50%, -50%);"
-                     src="{{ $authorAvatar
-                 ?: asset
-                ('images/avatar.svg') }}"
-                     alt="Author
-                Avatar">
+                {{ auth()->user() }}
+                {{--                <img class="w-24 h-24 rounded-full absolute" style="left: 50%; top: 0; transform: translate(-50%, -50%);"--}}
+                {{--                     src="{{ $authorAvatar--}}
+                {{--                 ?: asset--}}
+                {{--                ('images/avatar.svg') }}"--}}
+                {{--                     alt="Author--}}
+                {{--                Avatar">--}}
+                {{--                @endif--}}
 
                 <div class="text-center p-4">
                     <h3 class="text-indigo mb-2">لامعه هاشمی</h3>
@@ -293,11 +287,4 @@
             </div>
         </div>
     </section>
-
-    @include('partials.footer')
-
-</div>
-
-<script src="{{ asset('js/app.js') }}"></script>
-</body>
-</html>
+@endsection

@@ -1,4 +1,4 @@
-<header class="z-50 bg-white md:bg-transparent sm:py-4 md:items-center mb-8 px-4 py-1">
+<header class="z-50 bg-white md:bg-transparent sm:py-4 md:items-center mb-8 py-1">
     <div class="flex items-center md:px-4 sm:py-3 sm:p-0 md:w-full">
         <div>
             <a href="{{ url('/') }}">

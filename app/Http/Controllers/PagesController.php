@@ -36,8 +36,11 @@ class PagesController extends Controller
                                    ->latest()
                                    ->take(5)
                                    ->get();
-        $authorAvatar = User::superAdmin()->first()->avatar;
-        
+
+        $admin = User::superAdmin()->first();
+
+        $authorAvatar = $admin ? $admin->avatar : '';
+
         return view('welcome', compact('testimonials', 'authorAvatar'));
     }
     
