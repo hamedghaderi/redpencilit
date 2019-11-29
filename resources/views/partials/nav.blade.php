@@ -2,7 +2,7 @@
 py-1">
     <div class="flex items-center justify-between px-4 py-3 sm:p-0 md:w-full">
         <div>
-            <a href="{{ url('/') }}">
+            <a href="{{ route('home', app()->getLocale()) }}">
                 <img class="h-8 md:h-12" src="{{ asset('images/logo.svg') }}" alt="Redpencilit">
             </a>
         </div>
@@ -30,30 +30,30 @@ py-1">
                 <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
                 rounded
                 hover:text-white md:hover:text-indigo"
-                       href="/">خانه</a></li>
+                       href="{{ route('home', app()->getLocale()) }}">خانه</a></li>
                 <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
                 rounded
                 hover:text-white md:hover:text-indigo"
-                       href="/about">درباره</a></li>
+                       href="{{ route('about', app()->getLocale()) }}">درباره</a></li>
                 <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
                 rounded
                 hover:text-white md:hover:text-indigo"
-                       href="/contact">تماس با
+                       href="{{ route('contact', app()->getLocale()) }}">تماس با
                         ما</a></li>
                 <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
                 rounded
                 hover:text-white md:hover:text-indigo"
-                       href="/services">خدمات</a></li>
+                       href="{{ route('pages.services', app()->getLocale()) }}">خدمات</a></li>
                 <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
                 rounded
                 hover:text-white md:hover:text-indigo"
-                       href="/orders/create">سفارش
+                       href="{{ route('new-order', app()->getLocale()) }}">سفارش
                         جدید</a></li>
             </ul>
         </div>
 
         <div class="hidden md:inline-block flex-grow-0">
-            <nav-dropdown></nav-dropdown>
+            <nav-dropdown locale="{{ app()->getLocale() }}"></nav-dropdown>
         </div>
     </div>
 

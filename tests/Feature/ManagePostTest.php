@@ -2,24 +2,16 @@
 
 namespace Tests\Feature;
 
-use App\Permission;
 use App\Post;
 use App\Role;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ManagePostTest extends TestCase
 {
-    
     use RefreshDatabase;
-    
-    protected function setUp()
-    {
-        parent::setUp();
-    }
     
     /** @test * */
     public function guests_cannot_create_a_post()
@@ -44,31 +36,31 @@ class ManagePostTest extends TestCase
         $this->withoutExceptionHandling();
         $this->makeAdmin();
         
-        $post = make(Post::class);
+        $post = [
+            'title' => 'My First Post',
+            'body' => 'Body of the post.',
+            'excerpt' => 'An excerpt with more than 20 characters'
+        ];
         
-        $this->post('/posts', $post->toArray());
+        $this->post('/posts', $post);
         
         $this->assertCount(1, Post::all());
     }
     
     /** @test * */
-    public function a_writer_can_create_a_new_post()
+    public function an_author_can_create_a_new_post()
     {
-        $post = make(Post::class);
-        
         $user = $this->signIn();
+        $post = [
+            'title' => 'My Post',
+            'body' => 'Body of post.',
+            'excerpt' => 'Post excerpt with more than 20 characters'
+        ];
+        $role = create(Role::class, ['name' => 'author']);
         
-        $role = create(Role::class, ['name' => 'writer']);
-        $permission = create(Permission::class, ['name' => 'create-posts']);
-        $role->attachPermissions($permission);
         $user->addRole($role);
         
-        Gate::define(
-            'create-posts', function ($user) use ($permission) {
-            return $user->hasRole($permission->roles);
-        });
-        
-        $this->post('/posts', $post->toArray());
+        $this->post('/posts', $post);
         
         $this->assertCount(1, Post::all());
     }
@@ -123,13 +115,14 @@ class ManagePostTest extends TestCase
         $this->makeAdmin();
         
         Storage::fake('public');
+        $post = [
+            'title' => 'My Post',
+            'body' => 'Body of post.',
+            'excerpt' => 'Post excerpt with more than 20 characters',
+            'thumbnail' => $thumb = UploadedFile::fake()->image('test.jpg')
+        ];
         
-        $post = make(
-            Post::class, [
-            'thumbnail' => $thumb = UploadedFile::fake()->image('test.jpg'),
-        ]);
-        
-        $this->post('/posts', $post->toArray());
+        $this->post('/posts', $post);
         
         Storage::disk('public')->assertExists('blog/'.$thumb->hashName());
         
@@ -173,25 +166,23 @@ class ManagePostTest extends TestCase
         
         $post = create(Post::class);
         
-        $this->patch(
-            $post->path(), [
+        $this->patch($post->path(), [
             'title' => 'Hello',
             'body' => 'Bye Father',
             'excerpt' => 'Hello There. This is my first post.',
             'thumbnail' => $file = UploadedFile::fake()->image('another_image.jpg')
         ])->assertRedirect($post->path());
         
-        $this->assertDatabaseHas(
-            'posts', [
+        $this->assertDatabaseHas('posts', [
             'title' => 'Hello',
             'excerpt' => 'Hello There. This is my first post.',
             'body' => 'Bye Father',
             'thumbnail' => 'blog/'.$file->hashName()
         ]);
     }
-    
+   
     /** @test * */
-    public function a_user_can_delete_a_post()
+    public function admin_can_delete_a_post()
     {
         $this->withoutExceptionHandling();
         
@@ -203,6 +194,21 @@ class ManagePostTest extends TestCase
         
         $this->delete($post->path());
         
+        $this->assertCount(0, Post::all());
+    }
+    
+    /** @test **/
+    public function author_can_delete_a_post()
+    {
+        $user = $this->signIn();
+        $role = create(Role::class, ['name' => 'author']);
+        $post = create(Post::class);
+        $user->addRole($role);
+    
+        $this->assertCount(1, Post::all());
+    
+        $this->delete($post->path());
+    
         $this->assertCount(0, Post::all());
     }
 }

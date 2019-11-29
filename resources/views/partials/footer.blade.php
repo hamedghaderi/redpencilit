@@ -14,10 +14,12 @@
         </div>
 
         <div class="w-full md:w-1/3 mr-auto">
+            {{--   Search Box     --}}
             <form action="/posts" method="GET" class="mb-3">
                 <div class="relative">
                     <input type="text" class="input rounded-full focus:shadow-none" placeholder="جستجو در وبلاگ">
-                    <button type="submit" class="w-10 h-10 bg-blue text-white rounded-full absolute pin-l ml-1
+
+                    <button type="submit" class="w-10 h-10 bg-grey text-white rounded-full absolute pin-l ml-1
                     pin-t hover:shadow-lg" style="margin-top: .2rem">
                         <svg class="fill-current h-5 w-5 mt-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                              width="24"

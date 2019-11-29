@@ -65,7 +65,6 @@ class PostsController extends Controller
             'thumbnail' => 'sometimes|file|image|max:1024'
         ]);
         
-        
         if (request()->has('thumbnail')) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('blog', 'public');
         }
@@ -102,7 +101,7 @@ class PostsController extends Controller
             'body' => 'required|min:5',
             'thumbnail' => 'sometimes|file|image|max:1024'
         ]);
-        
+    
         if (request()->has('thumbnail')) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('blog', 'public');
         }
@@ -117,12 +116,13 @@ class PostsController extends Controller
      *
      * @param  Post  $post
      * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Exception
      */
     public function destroy(Post $post)
     {
-       $post->delete();
-       
-       return back();
+        $post->delete();
+        
+        return back();
     }
 }

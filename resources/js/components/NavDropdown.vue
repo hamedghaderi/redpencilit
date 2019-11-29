@@ -80,6 +80,9 @@
         props: {
             home: {
                 default: false
+            },
+            locale: {
+                required: true
             }
         },
 
@@ -115,7 +118,7 @@
             },
 
             dashboard() {
-                return '/dashboard/' + this.user.id;
+                return `/${this.locale}/dashboard/${this.user.id}`;
             },
 
             classObj() {
@@ -135,8 +138,8 @@
 
         methods: {
             logout() {
-                axios.post('/logout').then(response => {
-                    window.location = "/orders/create";
+                axios.post(`/${this.locale}/logout`).then(response => {
+                    window.location = `/${this.locale}/orders/create`;
                 });
             }
         },

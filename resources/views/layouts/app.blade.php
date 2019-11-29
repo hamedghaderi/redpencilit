@@ -21,7 +21,7 @@
         <nav class="bg-white border-b border-grey-light rtl h-16">
             <div class="flex">
                 <h1 class="flex content-center items-center border-l border-grey-light font-normal text-2xl px-6 font-sans h-16">
-                    <a class="text-black no-underline" href="{{ url('/') }}">RedPencilIt</a>
+                    <a class="text-black no-underline" href="{{ route('home', app()->getLocale()) }}">RedPencilIt</a>
                 </h1>
 
                 <!-- Right Side Of Navbar -->
@@ -29,14 +29,16 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="ml-8">
-                            <a class="no-underline text-grey-dark has-icon hover:text-grey-darker" href="{{ route('login') }}">
+                            <a class="no-underline text-grey-dark has-icon hover:text-grey-darker" href="{{ route
+                            ('login', app()->getLocale()) }}">
                                 <i class="fas fa-sign-out-alt text-grey-light"></i>
                                 ورود به حساب کاربری
                             </a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="no-underline text-grey-dark has-icon hover:text-grey-darker" href="{{ route('register') }}">
+                                <a class="no-underline text-grey-dark has-icon hover:text-grey-darker" href="{{ route
+                                ('register', app()->getLocale()) }}">
                                     <i class="fas fa-user-plus text-grey-light"></i>
                                     ثبت‌نام
                                 </a>

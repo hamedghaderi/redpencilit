@@ -5,6 +5,19 @@
   left: -50%;
 }
 
+.home-hero {
+  @apply bg-transparent;
+
+  @media screen and (min-width: 992px) {
+    background-image: url("../images/hero_home.png");
+    background-position: -560px -150px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    background-position: -360px -150px;
+  }
+}
+
 .contact-ways {
   background-image: url("../images/connection-home-bg.svg");
   background-size: cover;
@@ -17,10 +30,44 @@
 }
 
 .home-contact {
-  min-height: auto;
+  @apply bg-grey-lightest items-center;
 
-  @media screen and (min-width: 768px) {
-    min-height: 600px;
+  @media screen and (min-width: 1024px) and (max-width: 1300px){
+    @apply bg-white;
+  }
+
+  display: none;
+
+  @media screen and (min-width: 1368px) {
+    @apply bg-grey-lighter;
+  }
+
+  &-img-wrapper {
+    min-height: 400px;
+
+    @media screen  and (min-width: 1024px) {
+      min-height: 600px;
+    }
+  }
+
+  &-img {
+    @apply absolute z-0;
+
+    right: -30%;
+    top:55%;
+    transform: translateY(-50%);
+  }
+}
+
+.home-contact-bg {
+  @apply absolute z-0 hidden;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -100px;
+  max-width: 110%;
+
+  @media screen and (min-width: 1024px) and (max-width: 1300px){
+    @apply flex;
   }
 }
 

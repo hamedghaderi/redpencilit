@@ -68,4 +68,9 @@ class PagesController extends Controller
             return back()->with('flash', 'از پیام شما متشکریم.');
         });
     }
+    
+    public function service()
+    {
+       return view('pages.service');
+    }
 }

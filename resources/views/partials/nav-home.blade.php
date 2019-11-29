@@ -1,7 +1,7 @@
 <header class="z-50 bg-white md:bg-transparent sm:py-4 md:items-center mb-8 py-1">
-    <div class="flex items-center md:px-4 sm:py-3 sm:p-0 md:w-full">
+    <div class="flex items-center sm:py-3 sm:p-0 md:w-full">
         <div>
-            <a href="{{ url('/') }}">
+            <a href="{{ route('home', app()->getLocale()) }}">
                 <img class="h-8 md:h-12" src="{{ asset('images/logo.svg') }}" alt="Redpencilit">
             </a>
         </div>
@@ -28,30 +28,29 @@
                 <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
                 rounded
                 hover:text-white md:hover:text-indigo"
-                       href="/">خانه</a></li>
+                       href="{{ route('home', app()->getLocale()) }}">خانه</a></li>
                 <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
                 rounded
                 hover:text-white md:hover:text-indigo"
-                       href="/about">درباره</a></li>
+                       href="{{ route('about', app()->getLocale()) }}">درباره</a></li>
                 <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
                 rounded
                 hover:text-white md:hover:text-indigo"
-                       href="/contact">تماس با
+                       href="{{ route('contact', app()->getLocale()) }}">تماس با
                         ما</a></li>
                 <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
                 rounded
                 hover:text-white md:hover:text-indigo"
-                       href="/services">خدمات</a></li>
+                       href="{{ route('pages.services', app()->getLocale()) }}">خدمات</a></li>
                 <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
                 rounded
                 hover:text-white md:hover:text-indigo"
-                       href="/orders/create">سفارش
-                        جدید</a></li>
+                       href="{{ route('new-order', app()->getLocale()) }}">سفارش جدید</a></li>
             </ul>
         </div>
 
         <div class="hidden md:inline-block flex-grow-0 mr-auto">
-            <nav-dropdown home="true"></nav-dropdown>
+            <nav-dropdown locale="{{ app()->getLocale() }}" home="true"></nav-dropdown>
         </div>
     </div>
 
@@ -60,38 +59,50 @@
         <ul class="list-reset px-2 mb-2 border-t">
             <li>
                 <a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
-                   href="/">خانه</a>
+                   href="{{ route('home', app()->getLocale()) }}">خانه</a>
             </li>
             <li>
                 <a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
-                   href="/about">درباره</a>
+                   href="{{ route('about', app()->getLocale()) }}">درباره</a>
             </li>
             <li>
                 <a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
-                   href="/contact">تماس با
+                   href="{{ route('contact', app()->getLocale()) }}">تماس با
                     ما</a>
             </li>
             <li>
                 <a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white mb-1"
-                   href="/services">خدمات</a>
+                   href="{{ route('pages.services', app()->getLocale()) }}">خدمات</a>
             </li>
             <li>
                 <a class="px-2 text-grey-dark text-sm block py-3 hover:bg-grey-dark rounded hover:text-white"
-                   href="/orders/create">سفارش
+                   href="{{ route('new-order', app()->getLocale()) }}">سفارش
                     جدید</a>
             </li>
         </ul>
 
         <div class="block md:hidden border-t border-t-1">
             <ul class="list-reset py-2 px-2">
-                @if (auth()->guest())
+                @guest
                     <li><a class="text-grey-dark py-3 px-2 block text-sm hover:bg-blue-lightest hover:text-blue-dark
                     rounded mb-1"
-                           href="/login">ورود</a></li>
+                           href="{{ route('login', app()->getLocale()) }}">ورود</a></li>
                     <li><a class="text-grey-dark py-3 px-2 block text-sm hover:bg-green-lightest hover:text-green-dark
                     rounded"
-                           href="/register">عضویت</a></li>
-                @else
+                           href="{{ route('register', app()->getLocale()) }}">عضویت</a></li>
+                @endguest
+
+                @auth
+                    <li>
+                        <a href="{{ route('dashboard', [auth()->user(), app()->getLocale()]) }}" class="rounded
+                        text-grey-dark
+                        text-sm
+                        block
+                        hover:bg-red-lightest
+                        hover:text-red-dark
+                        px-2
+                        py-3">حساب کاربری</a>
+                    </li>
                     <li>
                         <a class="rounded text-grey-dark text-sm block hover:bg-red-lightest hover:text-red-dark px-2
                         py-3"
@@ -100,11 +111,11 @@
                             خروج از حساب
                         </a>
 
-                        <form id="logout" action="/logout" method="POST">
+                        <form id="logout" action="{{ route('logout', app()->getLocale()) }}" method="POST">
                             @csrf
                         </form>
                     </li>
-                @endif
+                @endauth
             </ul>
         </div>
     </div>

@@ -31,24 +31,15 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        Gate::before(function ($user, $abilities) {
-            if ($user->isSuperAdmin())   {
+        
+        Gate::before(function ($user) {
+            if ($user->hasRole('super-admin')) {
                 return true;
             }
         });
-
-        if (! $this->app->environment('testing')) {
-            foreach ($this->getPermissions() as $permission) {
-                Gate::define($permission->name, function ($user) use ($permission) {
-                    return $user->hasRole($permission->roles);
-                });
-            }
-        }
-    }
-    
-    protected function getPermissions()
-    {
-       return Permission::with('roles')->get();
+        
+        Gate::define('manage-posts', function ($user) {
+            return $user->hasRole('author') ? true : false;
+        });
     }
 }

@@ -9849,6 +9849,9 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     home: {
       default: false
+    },
+    locale: {
+      required: true
     }
   },
   created: function created() {
@@ -9879,7 +9882,7 @@ __webpack_require__.r(__webpack_exports__);
       return '/images/avatar.svg';
     },
     dashboard: function dashboard() {
-      return '/dashboard/' + this.user.id;
+      return "/".concat(this.locale, "/dashboard/").concat(this.user.id);
     },
     classObj: function classObj() {
       return {
@@ -9897,8 +9900,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     logout: function logout() {
-      axios.post('/logout').then(function (response) {
-        window.location = "/orders/create";
+      var _this2 = this;
+
+      axios.post("/".concat(this.locale, "/logout")).then(function (response) {
+        window.location = "/".concat(_this2.locale, "/orders/create");
       });
     }
   }
@@ -10617,6 +10622,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Errors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Errors */ "./resources/js/Errors.js");
+//
 //
 //
 //
@@ -54064,7 +54070,7 @@ var render = function() {
             { staticClass: "text-grey-dark text-sm leading-loose mb-3" },
             [
               _vm._v(
-                "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم\n                از صنعت چاپ و با استفاده از طراحان گرافیک است."
+                "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم\n                    از صنعت چاپ و با استفاده از طراحان گرافیک است."
               )
             ]
           ),
@@ -54100,9 +54106,9 @@ var render = function() {
             _vm.errors.has("name")
               ? _c("div", { staticClass: "feedback feedback--invalid" }, [
                   _vm._v(
-                    "\n                    " +
+                    "\n                        " +
                       _vm._s(_vm.errors.get("name")) +
-                      "\n                "
+                      "\n                    "
                   )
                 ])
               : _vm._e()
@@ -54135,9 +54141,9 @@ var render = function() {
             _vm.errors.has("email")
               ? _c("div", { staticClass: "feedback feedback--invalid" }, [
                   _vm._v(
-                    "\n                    " +
+                    "\n                        " +
                       _vm._s(_vm.errors.get("email")) +
-                      "\n                "
+                      "\n                    "
                   )
                 ])
               : _vm._e()
@@ -54154,7 +54160,7 @@ var render = function() {
                 }
               ],
               staticClass:
-                "text-sm h-32 bg-white rounded w-full px-4 py-3 border focus:outline-none\n                              focus:border-indigo",
+                "text-sm h-32 bg-white rounded w-full px-4 py-3 border focus:outline-none\n                                  focus:border-indigo",
               attrs: { name: "message", id: "message", placeholder: "پیام" },
               domProps: { value: _vm.message },
               on: {
@@ -54170,9 +54176,9 @@ var render = function() {
             _vm.errors.has("message")
               ? _c("div", { staticClass: "feedback feedback--invalid" }, [
                   _vm._v(
-                    "\n                    " +
+                    "\n                        " +
                       _vm._s(_vm.errors.get("message")) +
-                      "\n                "
+                      "\n                    "
                   )
                 ])
               : _vm._e()
@@ -54204,12 +54210,7 @@ var render = function() {
                       }
                     }
                   },
-                  [
-                    _c("i", {
-                      staticClass: "far fa-star hover:cursor-pointer",
-                      class: { fas: item["value"] === true }
-                    })
-                  ]
+                  [_c("i", { staticClass: "la la-star text-lg" })]
                 )
               }),
               0
@@ -54217,9 +54218,9 @@ var render = function() {
             _vm._v(" "),
             _c("span", { staticClass: "text-grey-dark text-sm mr-2" }, [
               _vm._v(
-                "\n                    میزان رضایتتان از وبسایت: " +
+                "\n                        میزان رضایتتان از وبسایت: " +
                   _vm._s(this.rate) +
-                  "\n                    "
+                  "\n                        "
               ),
               _vm.rate ? _c("em", [_vm._v("از 5")]) : _vm._e()
             ]),
@@ -54254,7 +54255,11 @@ var render = function() {
                 attrs: { type: "submit" },
                 on: { click: _vm.submitComment }
               },
-              [_vm._v("ارسال\n                    پیام\n                ")]
+              [
+                _vm._v(
+                  "ارسال\n                        پیام\n                    "
+                )
+              ]
             )
           ])
         ])
@@ -69933,8 +69938,8 @@ var uppy_settings = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/kubak/projects/redpencilit/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/kubak/projects/redpencilit/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/laravel/projects/redpencilit/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/laravel/projects/redpencilit/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

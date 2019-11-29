@@ -46,14 +46,15 @@
                             @click="clicked(item)"
                             :class="{'text-yellow-dark': item['hover'] === true || item['value'] === true}"
                         >
-                            <i class="far fa-star hover:cursor-pointer" :class="{'fas': item['value'] === true}"></i>
+                            <i class="la la-star text-lg"></i>
+<!--                            <i class="far fa-star hover:cursor-pointer" :class="{'fas': item['value'] === true}"></i>-->
                         </li>
                     </ul>
 
                     <span class="text-grey-dark text-sm mr-2">
                         میزان رضایتتان از وبسایت: {{this.rate}}
                         <em v-if="rate">از 5</em></span>
-                    <input type="hidden" name="rate" v-model="rate">
+                        <input type="hidden" name="rate" v-model="rate">
                 </div>
 
                 <div class="form-group">

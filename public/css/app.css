@@ -5268,6 +5268,23 @@ trix-editor:focus {
   left: -50%;
 }
 
+.home-hero {
+  background-color: transparent;
+}
+
+@media screen and (min-width: 992px) {
+  .home-hero {
+    background-image: url("../images/hero_home.png");
+    background-position: -560px -150px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .home-hero {
+    background-position: -360px -150px;
+  }
+}
+
 .contact-ways {
   background-image: url("../images/connection-home-bg.svg");
   background-size: cover;
@@ -5280,12 +5297,56 @@ trix-editor:focus {
 }
 
 .home-contact {
-  min-height: auto;
+  background-color: #f5f7fb;
+  align-items: center;
+  display: none;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) and (max-width: 1300px) {
   .home-contact {
+    background-color: #fff;
+  }
+}
+
+@media screen and (min-width: 1368px) {
+  .home-contact {
+    background-color: #f1f5f8;
+  }
+}
+
+.home-contact-img-wrapper {
+  min-height: 400px;
+}
+
+@media screen and (min-width: 1024px) {
+  .home-contact-img-wrapper {
     min-height: 600px;
+  }
+}
+
+.home-contact-img {
+  position: absolute;
+  z-index: 0;
+  right: -30%;
+  top: 55%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+}
+
+.home-contact-bg {
+  position: absolute;
+  z-index: 0;
+  display: none;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  left: -100px;
+  max-width: 110%;
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1300px) {
+  .home-contact-bg {
+    display: flex;
   }
 }
 

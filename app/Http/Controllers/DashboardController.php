@@ -9,7 +9,7 @@ use App\User;
 
 class DashboardController extends Controller
 {
-    public function index(User $user)
+    public function index($locale, User $user)
     {
         if (! auth()->user()->isSuperAdmin() && auth()->user()->id != $user->id) {
             abort(403);
@@ -19,10 +19,11 @@ class DashboardController extends Controller
         
         $roles = Role::all();
         
-        return view('dashboards.index', [
+        return view('dashboards.index')->with([
             'degrees' => CollegeDegree::all(),
             'countries' => $countries,
-            'user' => $user->load('details')
+            'user' => $user->load('details'),
+            'roles' => $roles,
         ]);
     }
 }

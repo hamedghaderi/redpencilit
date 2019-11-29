@@ -61,6 +61,8 @@ class UserProfileTest extends TestCase
     /** @test **/
     public function update_user_account_requires_valid_email_address()
     {
+        $this->withoutExceptionHandling();
+        
         $user = $this->signIn(
             factory(User::class)->create([
                 'name' => 'Jane',
@@ -69,19 +71,10 @@ class UserProfileTest extends TestCase
             ])
         );
 
-        $attributes = [
-            'email' => null
-        ];
-
-        $this->patch('/dashboard/' . $user->id, $attributes)
+        $this->patch(route('dashboard.user.update', [$user, 'en']), ['email' => null])
             ->assertSessionHasErrors('email');
-
-
-        $attributes = [
-            'email' => 'johasdfasdf'
-        ];
-
-        $this->patch('/dashboard/' . $user->username, $attributes)
+        
+        $this->patch(route('dashboard.user.update', [$user, 'en']), ['email' => 'johasdfasdf'])
             ->assertSessionHasErrors('email');
     }
 
