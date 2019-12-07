@@ -1,13 +1,13 @@
 <template>
     <div class="w-full lg:w-3/4 mx-auto md:flex items-center">
-        <h3 class="mb-8 w-48 md:mb-0">آپلود مستندات</h3>
+        <h3 class="text-sm mb-8 w-48 md:mb-0">{{ trans.get('__JSON__.upload documents') }}</h3>
 
         <div class="flex justify-between w-full relative z-20 mb-16">
             <div class="w-48 md:w-24">
                 <div v-if="step==1"
                      class="bg-white w-full text-center py-3 flex flex-col items-center rounded border border-gray z-30 mb-5 shadow step-1 relative">
-                    <div class="text-grey text-xs mb-1">مرحله ۱</div>
-                    <div class="text-sm">ثبت‌نام</div>
+                    <div class="text-grey text-xs mb-1">{{ trans.get('__JSON__.step 1') }}</div>
+                    <div class="text-xs">{{ trans.get('__JSON__.register') }}</div>
                 </div>
             </div>
 
@@ -15,8 +15,8 @@
             <div class="w-48 md:w-24">
                 <div v-if="step==2"
                      class="bg-white w-full text-center py-3 flex flex-col items-center rounded border border-gray z-30 mb-5 shadow step-2 relative">
-                    <div class="text-grey text-xs mb-1">مرحله ۲</div>
-                    <div class="text-sm">آپلود مستندات</div>
+                    <div class="text-grey text-xs mb-1">{{ trans.get('__JSON__.step 2') }}</div>
+                    <div class="text-xs">{{ trans.get('__JSON__.upload documents') }}</div>
                 </div>
             </div>
 
@@ -24,8 +24,8 @@
             <div class="w-48 md:w-24">
                 <div v-if="step==3"
                      class="bg-white w-24 text-center py-3 flex flex-col items-center rounded border border-gray z-30 mb-5 shadow step-3 relative">
-                    <div class="text-grey text-xs mb-1">مرحله ۳</div>
-                    <div class="text-sm">ثبت نهایی</div>
+                    <div class="text-grey text-xs mb-1">{{ trans.get('__JSON__.step 3') }}</div>
+                    <div class="text-xs">{{ trans.get('__JSON__.confirm information') }}</div>
                 </div>
             </div>
 

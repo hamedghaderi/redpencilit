@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Permission;
 use App\Policies\ServicePolicy;
 use App\Policies\SettingPolicy;
 use App\Service;

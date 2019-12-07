@@ -18,10 +18,10 @@ class UserRoleTest extends TestCase
        $user = $this->signIn();
        
        $role = create(Role::class);
-       
-       $this->post("/users/{$user->id}/roles", [
-           'roles' => [$role->id]
-       ]);
+    
+        $this->post(route('users.roles.store', [app()->getLocale(), $user]), [
+            'roles' => [$role->id]
+        ]);
        
        $this->assertCount(1, $user->roles);
     }

@@ -9,7 +9,15 @@ use mysql_xdevapi\Exception;
 
 class AvatarsController extends Controller
 {
-    public function store($userId)
+    
+    /**
+     * Store a new avatar into DB.
+     *
+     * @param $locale
+     * @param $userId
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function store($locale, $userId)
     {
         if ((int) auth()->id() != (int) $userId) {
             abort(403);

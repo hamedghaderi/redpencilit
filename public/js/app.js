@@ -9410,7 +9410,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var form = new FormData();
       form.append('avatar', this.avatarFormInput.files[0]);
-      axios.post("/api/users/".concat(this.user, "/avatar"), form).then(function (response) {
+      axios.post("/".concat(Redpencilit.locale, "/api/users/").concat(this.user, "/avatar"), form).then(function (response) {
         console.log(_this.imageUrl);
         _this.path = '/storage/' + response.data.path;
       });
@@ -9592,6 +9592,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['post'],
   created: function created() {
@@ -9599,16 +9602,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      favorited: false
+      favorited: false,
+      locale: Redpencilit.locale
     };
   },
   methods: {
     favorite: function favorite() {
       var _this = this;
 
-      var url = "/posts/".concat(this.post.id, "/favorite");
+      var url = "/".concat(this.locale, "/posts/").concat(this.post.id, "/favorite");
       axios.post(url).then(function (res) {
-        flash('پست را پسندیدم!');
+        flash('😍 پست رو پسندیدم');
         _this.favorited = true;
       }).catch(function (error) {
         flash('لایک شما ثبت نشد. لطفا مجددا سعی کنید.!', 'danger');
@@ -9617,9 +9621,9 @@ __webpack_require__.r(__webpack_exports__);
     disfavor: function disfavor() {
       var _this2 = this;
 
-      var url = "/posts/".concat(this.post.id, "/disfavor");
+      var url = "/".concat(this.locale, "/posts/").concat(this.post.id, "/disfavor");
       axios.delete(url).then(function (res) {
-        flash('پشیمان شدم :(!');
+        flash('☹️ پشیمون شدم');
         _this2.favorited = false;
       }).catch(function (error) {
         flash('متاسفانه عملیات با موفقیت ثبت نشد. لطفا مجددا سعی کنید.', 'danger');
@@ -9843,15 +9847,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     home: {
       default: false
-    },
-    locale: {
-      required: true
     }
   },
   created: function created() {
@@ -9870,7 +9869,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       user: null,
       rotate: false,
-      buttonColor: 'red'
+      buttonColor: 'red',
+      locale: Redpencilit.locale
     };
   },
   computed: {
@@ -9896,6 +9896,15 @@ __webpack_require__.r(__webpack_exports__);
         "hover:text-red": this.home,
         "hover:text-white": !this.home
       };
+    },
+    loginUrl: function loginUrl() {
+      return '/' + Redpencilit.locale + '/login';
+    },
+    registerUrl: function registerUrl() {
+      return '/' + Redpencilit.locale + '/register';
+    },
+    logoutUrl: function logoutUrl() {
+      return '/' + Redpencilit.locale + '/logout';
     }
   },
   methods: {
@@ -10066,24 +10075,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Testimonial",
@@ -10095,7 +10086,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       testimonial: false,
       body: '',
-      errors: new _Errors__WEBPACK_IMPORTED_MODULE_0__["default"]()
+      errors: new _Errors__WEBPACK_IMPORTED_MODULE_0__["default"](),
+      locale: Redpencilit.locale
     };
   },
   methods: {
@@ -10108,7 +10100,7 @@ __webpack_require__.r(__webpack_exports__);
     saveTestimonialOn: function saveTestimonialOn(comment) {
       var _this = this;
 
-      var url = '/comments/' + comment.id + '/testimonials';
+      var url = "/".concat(this.locale, "/comments/").concat(comment.id, "/testimonials");
       axios.post(url, {
         body: this.body
       }).then(function (response) {
@@ -10180,20 +10172,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       email: '',
       password: '',
-      errors: new _Errors_js__WEBPACK_IMPORTED_MODULE_0__["default"]()
+      errors: new _Errors_js__WEBPACK_IMPORTED_MODULE_0__["default"](),
+      locale: Redpencilit.locale
     };
   },
   methods: {
     onSubmit: function onSubmit() {
       var _this = this;
 
-      axios.post('/login', this.$data).then(function (response) {
+      axios.post("/".concat(this.locale, "/login"), this.$data).then(function (response) {
+        console.log(response.data);
+
         if (response.data.status === 200) {
           window.events.$emit('userCreated', response.data);
 
@@ -10306,6 +10303,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -10316,7 +10317,9 @@ __webpack_require__.r(__webpack_exports__);
       password_confirmation: '',
       phone: '',
       errors: new _Errors_js__WEBPACK_IMPORTED_MODULE_0__["default"](),
-      buttonText: 'تائید'
+      buttonText: this.trans.get('__JSON__.confirm'),
+      disabled: false,
+      locale: Redpencilit.locale
     };
   },
   methods: {
@@ -10324,8 +10327,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.buttonText = '<img src="/images/three-dots.svg" class="loader">';
-      axios.post('/register', this.$data).then(function (response) {
-        flash('حساب شما با موفقیت ایجاد شد. لطفا قبل از بارگذاری فایل‌ها، وارد ایمیلتان شوید و حساب خودتان را فعال کنید.');
+      this.disabled = true;
+      axios.post("/".concat(this.locale, "/register"), this.$data).then(function (response) {
+        _this.disabled = false;
+        flash(_this.trans.get('__JSON__.account created'));
 
         if (response.data.status === 200) {
           _this.buttonText = '<i class="fas fa-check">';
@@ -10334,7 +10339,8 @@ __webpack_require__.r(__webpack_exports__);
           _this.$emit('userRegistered', response.data);
         }
       }).catch(function (error) {
-        _this.buttonText = 'تائید';
+        _this.disabled = false;
+        _this.buttonText = _this.trans.get('__JSON__.confirm');
 
         _this.errors.record(error.response.data.errors);
       });
@@ -10377,14 +10383,15 @@ var Dashboard = __webpack_require__(/*! @uppy/dashboard */ "./node_modules/@uppy
     return {
       uppy: null,
       documents: [],
-      endpoint: null
+      endpoint: null,
+      locale: Redpencilit.locale
     };
   },
   created: function created() {
     if (!this.user) {
-      this.endpoint = "/users/".concat(window.Redpencilit.user.id, "/orders");
+      this.endpoint = "/".concat(this.locale, "/users/").concat(window.Redpencilit.user.id, "/orders");
     } else {
-      this.endpoint = "/users/".concat(this.user.id, "/orders");
+      this.endpoint = "/".concat(this.locale, "/users/").concat(this.user.id, "/orders");
     }
   },
   mounted: function mounted() {
@@ -10430,9 +10437,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['name', 'host', 'value'],
+  data: function data() {
+    return {
+      locale: Redpencilit.locale
+    };
+  },
   mounted: function mounted() {
     var _this = this;
 
@@ -10477,7 +10490,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var key = this.createStorageKey(file);
       var formData = this.createFormData(key, file);
-      axios.post('/post-attachments', formData, {
+      axios.post("/".concat(this.locale, "/post-attachments"), formData, {
         header: {
           'Content-Type': 'multipart/form-data'
         },
@@ -10580,22 +10593,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      comments: []
+      comments: [],
+      locale: Redpencilit.locale
     };
   },
   methods: {
     dateTime: function dateTime(date) {
       var m = jalali_moment__WEBPACK_IMPORTED_MODULE_0___default()(date);
-      m.locale('fa');
+      m.locale(this.locale);
       return m.format('DD') + ' ' + m.format('MMMM') + ' ' + m.format('YYYY');
     },
     hasRate: function hasRate(rate) {
       return parseInt(rate);
     },
-    deleteComment: function deleteComment(cm) {
+    deleteComment: function deleteComment(comment) {
       var _this = this;
 
-      var url = '/comments/' + cm.id;
+      var url = "/".concat(this.locale, "/comments/").concat(comment.id);
       axios.delete(url).then(function (response) {
         if (response.status == 200) {
           _this.comments = _this.comments.filter(function (comment) {
@@ -10700,7 +10714,9 @@ __webpack_require__.r(__webpack_exports__);
       email: '',
       message: '',
       rate: '',
+      disabled: false,
       errors: new _Errors__WEBPACK_IMPORTED_MODULE_0__["default"](),
+      locale: Redpencilit.locale,
       items: [{
         key: 1,
         value: false,
@@ -10738,11 +10754,16 @@ __webpack_require__.r(__webpack_exports__);
         data.rate = this.rate;
       }
 
-      axios.post('/comments', data).then(function (res) {
+      var url = "/".concat(this.locale, "/comments");
+      this.disabled = true;
+      axios.post(url, data).then(function (res) {
+        _this.disabled = false;
         flash(res.data);
 
         _this.clear();
       }).catch(function (error) {
+        _this.disabled = false;
+
         _this.errors.record(error.response.data.errors);
       });
     },
@@ -11027,13 +11048,14 @@ __webpack_require__.r(__webpack_exports__);
       modal: false,
       updatedName: '',
       updatedNegotiable: false,
-      isDisabled: true
+      isDisabled: true,
+      locale: Redpencilit.locale
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    axios.get("/dashboard/services").then(function (response) {
+    axios.get("/".concat(Redpencilit.locale, "/dashboard/services")).then(function (response) {
       _this.services = response.data;
     });
     this.moment = jalali_moment__WEBPACK_IMPORTED_MODULE_1___default.a;
@@ -11042,7 +11064,7 @@ __webpack_require__.r(__webpack_exports__);
     saveService: function saveService() {
       var _this2 = this;
 
-      axios.post("/dashboard/services", {
+      axios.post("/".concat(Redpencilit.locale, "/dashboard/services"), {
         name: this.name,
         negotiable: this.negotiable
       }).then(function (response) {
@@ -11060,14 +11082,15 @@ __webpack_require__.r(__webpack_exports__);
     deleteService: function deleteService(id) {
       var _this3 = this;
 
-      axios.delete("/dashboard/services/".concat(id)).then(function (response) {
+      axios.delete("/".concat(this.locale, "/dashboard/services/").concat(id)).then(function (response) {
         _this3.services = response.data;
+        flash('سرویس با موفقیت حذف شد.');
       });
     },
     openEdit: function openEdit(id) {
       var _this4 = this;
 
-      axios.get("/dashboard/services/".concat(id)).then(function (response) {
+      axios.get("/".concat(this.locale, "/dashboard/services/").concat(id)).then(function (response) {
         if (response.data.status === 200) {
           _this4.serviceForUpdate = response.data.service;
           _this4.modal = true;
@@ -11079,13 +11102,13 @@ __webpack_require__.r(__webpack_exports__);
     updateService: function updateService(service) {
       var _this5 = this;
 
-      axios.patch("/dashboard/services/".concat(service.id), {
+      axios.patch("/".concat(Redpencilit.locale, "/dashboard/services/").concat(service.id), {
         name: this.updatedName,
         negotiable: this.updatedNegotiable
       }).then(function (response) {
         if (response.data.status === 200) {
           _this5.modal = false;
-          axios.get("/dashboard/services").then(function (response) {
+          axios.get("/".concat(Redpencilit.locale, "/dashboard/services")).then(function (response) {
             _this5.services = response.data;
           });
           _this5.isDisabled = true;
@@ -11214,14 +11237,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PersianNumber_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../PersianNumber.js */ "./resources/js/PersianNumber.js");
 /* harmony import */ var _components_Modal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Modal */ "./resources/js/components/Modal.vue");
 /* harmony import */ var _components_ProgressLevel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/ProgressLevel */ "./resources/js/components/ProgressLevel.vue");
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -13395,6 +13410,399 @@ function d2g(jdn) {
         , gd: gd
     };
 }
+
+
+/***/ }),
+
+/***/ "./node_modules/lang.js/esm/lang.js":
+/*!******************************************!*\
+  !*** ./node_modules/lang.js/esm/lang.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+
+function inferLocale() {
+    if (document && document.documentElement) {
+        return document.documentElement.lang;
+    }
+}
+function convertNumber(str) {
+    if (str === '-Inf') {
+        return -Infinity;
+    }
+    else if (str === '+Inf' || str === 'Inf' || str === '*') {
+        return Infinity;
+    }
+    return parseInt(str, 10);
+}
+function applyReplacements(message, replacements) {
+    var keys = Object.keys(replacements).sort(function (a, b) { return b.length - a.length; });
+    keys.forEach(function (replace) {
+        message = message.replace(new RegExp(':' + replace, 'gi'), function (key) {
+            var value = replacements[replace];
+            // Capitalize all characters.
+            var allCaps = key === key.toUpperCase();
+            if (allCaps) {
+                return value.toUpperCase();
+            }
+            // Capitalize first letter.
+            var firstCap = key ===
+                key.replace(/\w/i, function (letter) {
+                    return letter.toUpperCase();
+                });
+            if (firstCap) {
+                return value.charAt(0).toUpperCase() + value.slice(1);
+            }
+            return value;
+        });
+    });
+    return message;
+}
+var intervalRegexp = /^({\s*(\-?\d+(\.\d+)?[\s*,\s*\-?\d+(\.\d+)?]*)\s*})|([\[\]])\s*(-Inf|\*|\-?\d+(\.\d+)?)\s*,\s*(\+?Inf|\*|\-?\d+(\.\d+)?)\s*([\[\]])$/;
+function testInterval(count, interval) {
+    /**
+     * From the Symfony\Component\Translation\Interval Docs
+     *
+     * Tests if a given number belongs to a given math interval.
+     *
+     * An interval can represent a finite set of numbers:
+     *
+     *  {1,2,3,4}
+     *
+     * An interval can represent numbers between two numbers:
+     *
+     *  [1, +Inf]
+     *  ]-1,2[
+     *
+     * The left delimiter can be [ (inclusive) or ] (exclusive).
+     * The right delimiter can be [ (exclusive) or ] (inclusive).
+     * Beside numbers, you can use -Inf and +Inf for the infinite.
+     */
+    interval = interval.trim();
+    var matches = interval.match(intervalRegexp);
+    if (!matches) {
+        throw new Error("Invalid interval: " + interval);
+    }
+    if (matches[2]) {
+        var items = matches[2].split(',');
+        for (var i = 0; i < items.length; i++) {
+            if (parseInt(items[i], 10) === count) {
+                return true;
+            }
+        }
+    }
+    else {
+        // Remove falsy values.
+        matches = matches.filter(function (match) {
+            return !!match;
+        });
+        var leftDelimiter = matches[1];
+        var leftNumber = convertNumber(matches[2]);
+        if (leftNumber === Infinity) {
+            leftNumber = -Infinity;
+        }
+        var rightNumber = convertNumber(matches[3]);
+        var rightDelimiter = matches[4];
+        return ((leftDelimiter === '[' ? count >= leftNumber : count > leftNumber) &&
+            (rightDelimiter === ']' ? count <= rightNumber : count < rightNumber));
+    }
+    return false;
+}
+/**
+ * Returns the plural position to use for the given locale and number.
+ *
+ * The plural rules are derived from code of the Zend Framework (2010-09-25),
+ * which is subject to the new BSD license (http://framework.zend.com/license/new-bsd).
+ * Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
+ */
+function getPluralForm(count, locale) {
+    switch (locale) {
+        case 'az':
+        case 'bo':
+        case 'dz':
+        case 'id':
+        case 'ja':
+        case 'jv':
+        case 'ka':
+        case 'km':
+        case 'kn':
+        case 'ko':
+        case 'ms':
+        case 'th':
+        case 'tr':
+        case 'vi':
+        case 'zh':
+            return 0;
+        case 'af':
+        case 'bn':
+        case 'bg':
+        case 'ca':
+        case 'da':
+        case 'de':
+        case 'el':
+        case 'en':
+        case 'eo':
+        case 'es':
+        case 'et':
+        case 'eu':
+        case 'fa':
+        case 'fi':
+        case 'fo':
+        case 'fur':
+        case 'fy':
+        case 'gl':
+        case 'gu':
+        case 'ha':
+        case 'he':
+        case 'hu':
+        case 'is':
+        case 'it':
+        case 'ku':
+        case 'lb':
+        case 'ml':
+        case 'mn':
+        case 'mr':
+        case 'nah':
+        case 'nb':
+        case 'ne':
+        case 'nl':
+        case 'nn':
+        case 'no':
+        case 'om':
+        case 'or':
+        case 'pa':
+        case 'pap':
+        case 'ps':
+        case 'pt':
+        case 'so':
+        case 'sq':
+        case 'sv':
+        case 'sw':
+        case 'ta':
+        case 'te':
+        case 'tk':
+        case 'ur':
+        case 'zu':
+            return count == 1 ? 0 : 1;
+        case 'am':
+        case 'bh':
+        case 'fil':
+        case 'fr':
+        case 'gun':
+        case 'hi':
+        case 'hy':
+        case 'ln':
+        case 'mg':
+        case 'nso':
+        case 'xbr':
+        case 'ti':
+        case 'wa':
+            return count === 0 || count === 1 ? 0 : 1;
+        case 'be':
+        case 'bs':
+        case 'hr':
+        case 'ru':
+        case 'sr':
+        case 'uk':
+            return count % 10 == 1 && count % 100 != 11
+                ? 0
+                : count % 10 >= 2 &&
+                    count % 10 <= 4 &&
+                    (count % 100 < 10 || count % 100 >= 20)
+                    ? 1
+                    : 2;
+        case 'cs':
+        case 'sk':
+            return count == 1 ? 0 : count >= 2 && count <= 4 ? 1 : 2;
+        case 'ga':
+            return count == 1 ? 0 : count == 2 ? 1 : 2;
+        case 'lt':
+            return count % 10 == 1 && count % 100 != 11
+                ? 0
+                : count % 10 >= 2 && (count % 100 < 10 || count % 100 >= 20)
+                    ? 1
+                    : 2;
+        case 'sl':
+            return count % 100 == 1
+                ? 0
+                : count % 100 == 2
+                    ? 1
+                    : count % 100 == 3 || count % 100 == 4
+                        ? 2
+                        : 3;
+        case 'mk':
+            return count % 10 == 1 ? 0 : 1;
+        case 'mt':
+            return count == 1
+                ? 0
+                : count === 0 || (count % 100 > 1 && count % 100 < 11)
+                    ? 1
+                    : count % 100 > 10 && count % 100 < 20
+                        ? 2
+                        : 3;
+        case 'lv':
+            return count === 0 ? 0 : count % 10 == 1 && count % 100 != 11 ? 1 : 2;
+        case 'pl':
+            return count == 1
+                ? 0
+                : count % 10 >= 2 &&
+                    count % 10 <= 4 &&
+                    (count % 100 < 12 || count % 100 > 14)
+                    ? 1
+                    : 2;
+        case 'cy':
+            return count == 1 ? 0 : count == 2 ? 1 : count == 8 || count == 11 ? 2 : 3;
+        case 'ro':
+            return count == 1
+                ? 0
+                : count === 0 || (count % 100 > 0 && count % 100 < 20)
+                    ? 1
+                    : 2;
+        case 'ar':
+            return count === 0
+                ? 0
+                : count == 1
+                    ? 1
+                    : count == 2
+                        ? 2
+                        : count % 100 >= 3 && count % 100 <= 10
+                            ? 3
+                            : count % 100 >= 11 && count % 100 <= 99
+                                ? 4
+                                : 5;
+        default:
+            return 0;
+    }
+}
+function flat(obj, path) {
+    return Object.keys(obj).reduce(function (flatten, key) {
+        var value = obj[key];
+        var flattenPath = path ? path + "." + key : key;
+        if (typeof value === 'string') {
+            flatten[flattenPath] = obj[key];
+            return flatten;
+        }
+        return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"])({}, flatten, flat(value, flattenPath));
+    }, {});
+}
+
+var DEFAULT_LOCALE = 'en';
+var anyIntervalRegexp = /({\s*(\-?\d+(\.\d+)?[\s*,\s*\-?\d+(\.\d+)?]*)\s*})|([\[\]])\s*(-Inf|\*|\-?\d+(\.\d+)?)\s*,\s*(\+?Inf|\*|\-?\d+(\.\d+)?)\s*([\[\]])/;
+var Lang = /** @class */ (function () {
+    function Lang(options) {
+        this.locale = null;
+        this.fallback = null;
+        this.messages = {};
+        if (!options) {
+            throw new Error('options must be defined');
+        }
+        this.locale = options.locale || inferLocale() || DEFAULT_LOCALE;
+        this.fallback = options.fallback;
+        this.setMessages(options.messages);
+    }
+    Lang.prototype.setMessages = function (messages) {
+        if (messages) {
+            this.messages = flat(messages);
+        }
+    };
+    Lang.prototype.getLocale = function () {
+        return this.locale;
+    };
+    Lang.prototype.setLocale = function (locale) {
+        this.locale = locale;
+    };
+    Lang.prototype.getFallback = function () {
+        return this.fallback;
+    };
+    Lang.prototype.setFallback = function (fallback) {
+        this.fallback = fallback;
+    };
+    Lang.prototype.get = function (key, replacements, locale) {
+        if (!key) {
+            return null;
+        }
+        key = key.replace(/\//g, '.');
+        var _a = this._parseKey(key, locale), source = _a.source, sourceFallback = _a.sourceFallback;
+        var message = this.messages[source];
+        if (message === undefined) {
+            message = this.messages[sourceFallback];
+            if (message === undefined) {
+                return key;
+            }
+        }
+        if (replacements) {
+            return applyReplacements(message, replacements);
+        }
+        return message;
+    };
+    Lang.prototype.trans = function (key, replacements, locale) {
+        return this.get(key, replacements, locale);
+    };
+    Lang.prototype.has = function (key, locale) {
+        var message = this.get(key, null, locale);
+        return message !== null && message !== key;
+    };
+    Lang.prototype.choice = function (key, number, replacements, locale) {
+        if (replacements === void 0) { replacements = {}; }
+        replacements.count = number;
+        var message = this.get(key, replacements, locale);
+        if (message === null) {
+            return message;
+        }
+        var messageParts = message.split('|');
+        var explicitRules = [];
+        for (var i = 0; i < messageParts.length; i++) {
+            messageParts[i] = messageParts[i].trim();
+            if (anyIntervalRegexp.test(messageParts[i])) {
+                var messageSpaceSplit = messageParts[i].split(/\s/);
+                explicitRules.push(messageSpaceSplit.shift());
+                messageParts[i] = messageSpaceSplit.join(' ');
+            }
+        }
+        // Check if there's only one message
+        if (messageParts.length === 1) {
+            // Nothing to do here
+            return message;
+        }
+        // Check the explicit rules
+        for (var j = 0; j < explicitRules.length; j++) {
+            if (testInterval(number, explicitRules[j])) {
+                return messageParts[j];
+            }
+        }
+        locale = locale || this._getLocaleFromExistingMessage(key, locale);
+        var pluralForm = getPluralForm(number, locale);
+        return messageParts[pluralForm];
+    };
+    Lang.prototype.transChoice = function (key, number, replacements, locale) {
+        return this.choice(key, number, replacements, locale);
+    };
+    Lang.prototype._getLocaleFromExistingMessage = function (key, locale) {
+        var keyObj = this._parseKey(key, locale);
+        if (this.messages[keyObj.source]) {
+            return this.locale;
+        }
+        if (this.messages[keyObj.sourceFallback]) {
+            return this.fallback;
+        }
+        return null;
+    };
+    Lang.prototype._parseKey = function (key, locale) {
+        key = key.replace(/\//g, '.');
+        return {
+            source: (locale || this.locale) + "." + key,
+            sourceFallback: this.fallback + "." + key
+        };
+    };
+    return Lang;
+}());
+
+/* harmony default export */ __webpack_exports__["default"] = (Lang);
 
 
 /***/ }),
@@ -51244,6 +51652,18 @@ var index = (function () {
 
 /***/ }),
 
+/***/ "./node_modules/sal.js/dist/sal.js":
+/*!*****************************************!*\
+  !*** ./node_modules/sal.js/dist/sal.js ***!
+  \*****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t():undefined}(window,(function(){return function(e){var t={};function n(r){if(t[r])return t[r].exports;var o=t[r]={i:r,l:!1,exports:{}};return e[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=e,n.c=t,n.d=function(e,t,r){n.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:r})},n.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},n.t=function(e,t){if(1&t&&(e=n(e)),8&t)return e;if(4&t&&"object"==typeof e&&e&&e.__esModule)return e;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:e}),2&t&&"string"!=typeof e)for(var o in e)n.d(r,o,function(t){return e[t]}.bind(null,o));return r},n.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return n.d(t,"a",t),t},n.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},n.p="dist/",n(n.s=0)}([function(e,t,n){"use strict";n.r(t);n(1);function r(e,t){var n=Object.keys(e);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(e);t&&(r=r.filter((function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable}))),n.push.apply(n,r)}return n}function o(e){for(var t=1;t<arguments.length;t++){var n=null!=arguments[t]?arguments[t]:{};t%2?r(n,!0).forEach((function(t){i(e,t,n[t])})):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(n)):r(n).forEach((function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(n,t))}))}return e}function i(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}var a="Sal was not initialised! Probably it is used in SSR.",s="Your browser does not support IntersectionObserver!\nGet a polyfill from here:\nhttps://github.com/w3c/IntersectionObserver/tree/master/polyfill",l={rootMargin:"0% 50%",threshold:.5,animateClassName:"sal-animate",disabledClassName:"sal-disabled",enterEventName:"sal:in",exitEventName:"sal:out",selector:"[data-sal]",once:!0,disabled:!1},u=[],c=null,f=function(e,t){var n=new CustomEvent(e,{bubbles:!0,detail:t});t.target.dispatchEvent(n)},d=function(){document.body.classList.add(l.disabledClassName)},b=function(){return l.disabled||"function"==typeof l.disabled&&l.disabled()},p=function(e,t){e.forEach((function(e){e.intersectionRatio>=l.threshold?(!function(e){e.target.classList.add(l.animateClassName),f(l.enterEventName,e)}(e),l.once&&t.unobserve(e.target)):l.once||function(e){e.target.classList.remove(l.animateClassName),f(l.exitEventName,e)}(e)}))},m=function(){d(),c.disconnect(),c=null},y=function(){document.body.classList.remove(l.disabledClassName),c=new IntersectionObserver(p,{rootMargin:l.rootMargin,threshold:l.threshold}),(u=[].filter.call(document.querySelectorAll(l.selector),(function(e){return!function(e){return e.classList.contains(l.animateClassName)}(e,l.animateClassName)}))).forEach((function(e){return c.observe(e)}))};t.default=function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:l;if(e!==l&&(l=o({},l,{},e)),"undefined"==typeof window)return console.warn(a),{elements:u,disable:m,enable:y};if(!window.IntersectionObserver)throw d(),Error(s);return b()?d():y(),{elements:u,disable:m,enable:y}}},function(e,t,n){}]).default}));
+//# sourceMappingURL=sal.js.map
+
+/***/ }),
+
 /***/ "./node_modules/setimmediate/setImmediate.js":
 /*!***************************************************!*\
   !*** ./node_modules/setimmediate/setImmediate.js ***!
@@ -52242,6 +52662,224 @@ for(n=o=e,i=this.getLength();n>0&&this.getCommonAttributesAtRange([n-1,o])[t];)n
 
 /***/ }),
 
+/***/ "./node_modules/tslib/tslib.es6.js":
+/*!*****************************************!*\
+  !*** ./node_modules/tslib/tslib.es6.js ***!
+  \*****************************************/
+/*! exports provided: __extends, __assign, __rest, __decorate, __param, __metadata, __awaiter, __generator, __exportStar, __values, __read, __spread, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__extends", function() { return __extends; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__assign", function() { return __assign; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__rest", function() { return __rest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__decorate", function() { return __decorate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__param", function() { return __param; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__metadata", function() { return __metadata; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__awaiter", function() { return __awaiter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__generator", function() { return __generator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__exportStar", function() { return __exportStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__values", function() { return __values; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__read", function() { return __read; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spread", function() { return __spread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__await", function() { return __await; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncGenerator", function() { return __asyncGenerator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncDelegator", function() { return __asyncDelegator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncValues", function() { return __asyncValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__makeTemplateObject", function() { return __makeTemplateObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importStar", function() { return __importStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importDefault", function() { return __importDefault; });
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) if (e.indexOf(p[i]) < 0)
+            t[p[i]] = s[p[i]];
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+function __exportStar(m, exports) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+
+function __values(o) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator], i = 0;
+    if (m) return m.call(o);
+    return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result.default = mod;
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04&":
 /*!*********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Avatar.vue?vue&type=template&id=62781b04& ***!
@@ -52580,13 +53218,17 @@ var render = function() {
         ]),
     _vm._v(" "),
     _c("span", { staticClass: "mr-auto cursor-pointer" }, [
+      _c("span", { staticClass: "text-grey-dark" }, [
+        _vm._v(_vm._s(_vm.post.favorites_count))
+      ]),
+      _vm._v(" "),
       !_vm.favorited
         ? _c("i", {
-            staticClass: "far fa-heart text-grey-dark",
+            staticClass: "la la-heart text-grey-dark",
             on: { click: _vm.favorite }
           })
         : _c("i", {
-            staticClass: "fas fa-heart text-red",
+            staticClass: "la la-heart text-red",
             on: { click: _vm.disfavor }
           })
     ])
@@ -52789,7 +53431,13 @@ var render = function() {
                             "border py-3 px-4 focus:outline-none rounded text-sm shadow",
                           class: _vm.classObj
                         },
-                        [_vm._v("\n                حساب کاربری\n            ")]
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.trans.get("__JSON__.account")) +
+                              "\n            "
+                          )
+                        ]
                       )
                     : _c(
                         "div",
@@ -52836,7 +53484,7 @@ var render = function() {
                     {
                       staticClass:
                         "text-grey-dark block items-center py-2 px-3 mb-1 rounded hover:bg-blue-lightest hover:text-blue-dark",
-                      attrs: { href: "/login" }
+                      attrs: { href: _vm.loginUrl }
                     },
                     [
                       _c("span", { staticClass: "flex items-center" }, [
@@ -52863,7 +53511,11 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("span", { staticClass: "mr-3" }, [
-                          _vm._v("ورود به حساب ")
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.trans.get("__JSON__.login")) +
+                              "\n                        "
+                          )
                         ])
                       ])
                     ]
@@ -52874,7 +53526,7 @@ var render = function() {
                     {
                       staticClass:
                         "text-grey-dark block items-center py-2 px-3 mb-1 rounded hover:bg-green-lightest hover:text-green-dark",
-                      attrs: { href: "/register" }
+                      attrs: { href: _vm.registerUrl }
                     },
                     [
                       _c("span", { staticClass: "flex items-center" }, [
@@ -52900,7 +53552,13 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _c("span", { staticClass: "mr-3" }, [_vm._v("ثبت‌نام")])
+                        _c("span", { staticClass: "mr-3" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.trans.get("__JSON__.register")) +
+                              "\n                        "
+                          )
+                        ])
                       ])
                     ]
                   )
@@ -52914,30 +53572,14 @@ var render = function() {
                       attrs: { href: _vm.dashboard }
                     },
                     [
-                      _c(
-                        "svg",
-                        {
-                          staticClass: "fill-current h-5 w-5",
-                          attrs: {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            viewBox: "0 0 24 24",
-                            width: "24",
-                            height: "24"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            staticClass: "heroicon-ui",
-                            attrs: {
-                              d:
-                                "M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zM5.68 7.1A7.96 7.96 0 0 0 4.06 11H5a1 1 0 0 1 0 2h-.94a7.95 7.95 0 0 0 1.32 3.5A9.96 9.96 0 0 1 11 14.05V9a1 1 0 0 1 2 0v5.05a9.96 9.96 0 0 1 5.62 2.45 7.95 7.95 0 0 0 1.32-3.5H19a1 1 0 0 1 0-2h.94a7.96 7.96 0 0 0-1.62-3.9l-.66.66a1 1 0 1 1-1.42-1.42l.67-.66A7.96 7.96 0 0 0 13 4.06V5a1 1 0 0 1-2 0v-.94c-1.46.18-2.8.76-3.9 1.62l.66.66a1 1 0 0 1-1.42 1.42l-.66-.67zM6.71 18a7.97 7.97 0 0 0 10.58 0 7.97 7.97 0 0 0-10.58 0z"
-                            }
-                          })
-                        ]
-                      ),
+                      _c("i", { staticClass: "la la-tachometer-alt text-2xl" }),
                       _vm._v(" "),
                       _c("span", { staticClass: "text-grey-dark mr-1" }, [
-                        _vm._v("داشبورد")
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(_vm.trans.get("__JSON__.dashboard")) +
+                            "\n                    "
+                        )
                       ])
                     ]
                   ),
@@ -52950,37 +53592,17 @@ var render = function() {
                       on: { click: _vm.logout }
                     },
                     [
-                      _c(
-                        "svg",
-                        {
-                          staticClass: "fill-current h-5 w-5",
-                          attrs: {
-                            xmlns: "http://www.w3.org/2000/svg",
-                            viewBox: "0 0 24 24",
-                            width: "24",
-                            height: "24"
-                          }
-                        },
-                        [
-                          _c("path", {
-                            staticClass: "heroicon-ui",
-                            attrs: {
-                              d:
-                                "M19 6.41L8.7 16.71a1 1 0 1 1-1.4-1.42L17.58 5H14a1 1 0 0 1 0-2h6a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V6.41zM17 14a1 1 0 0 1 2 0v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7c0-1.1.9-2 2-2h5a1 1 0 0 1 0 2H5v12h12v-5z"
-                            }
-                          })
-                        ]
-                      ),
+                      _c("i", { staticClass: "la la-sign-out-alt text-2xl" }),
                       _vm._v(" "),
                       _c("span", { staticClass: "text-grey-dark mr-2" }, [
-                        _vm._v(" خروج از حساب کاربری")
+                        _vm._v(_vm._s(_vm.trans.get("__JSON__.logout")))
                       ]),
                       _vm._v(" "),
                       _c("form", {
                         staticStyle: { display: "none" },
                         attrs: {
                           id: "logout-form",
-                          action: "/logout",
+                          action: _vm.logoutUrl,
                           method: "POST"
                         }
                       })
@@ -53020,7 +53642,9 @@ var render = function() {
     "div",
     { staticClass: "w-full lg:w-3/4 mx-auto md:flex items-center" },
     [
-      _c("h3", { staticClass: "mb-8 w-48 md:mb-0" }, [_vm._v("آپلود مستندات")]),
+      _c("h3", { staticClass: "text-sm mb-8 w-48 md:mb-0" }, [
+        _vm._v(_vm._s(_vm.trans.get("__JSON__.upload documents")))
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -53036,10 +53660,12 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "text-grey text-xs mb-1" }, [
-                      _vm._v("مرحله ۱")
+                      _vm._v(_vm._s(_vm.trans.get("__JSON__.step 1")))
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "text-sm" }, [_vm._v("ثبت‌نام")])
+                    _c("div", { staticClass: "text-xs" }, [
+                      _vm._v(_vm._s(_vm.trans.get("__JSON__.register")))
+                    ])
                   ]
                 )
               : _vm._e()
@@ -53055,11 +53681,11 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "text-grey text-xs mb-1" }, [
-                      _vm._v("مرحله ۲")
+                      _vm._v(_vm._s(_vm.trans.get("__JSON__.step 2")))
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "text-sm" }, [
-                      _vm._v("آپلود مستندات")
+                    _c("div", { staticClass: "text-xs" }, [
+                      _vm._v(_vm._s(_vm.trans.get("__JSON__.upload documents")))
                     ])
                   ]
                 )
@@ -53076,10 +53702,14 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "text-grey text-xs mb-1" }, [
-                      _vm._v("مرحله ۳")
+                      _vm._v(_vm._s(_vm.trans.get("__JSON__.step 3")))
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "text-sm" }, [_vm._v("ثبت نهایی")])
+                    _c("div", { staticClass: "text-xs" }, [
+                      _vm._v(
+                        _vm._s(_vm.trans.get("__JSON__.confirm information"))
+                      )
+                    ])
                   ]
                 )
               : _vm._e()
@@ -53192,10 +53822,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8&scoped=true&":
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8&scoped=true& ***!
-  \**************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8&":
+/*!**************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8& ***!
+  \**************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -53217,27 +53847,7 @@ var render = function() {
             on: { click: _vm.showTestimonial }
           },
           [
-            _c(
-              "svg",
-              {
-                staticClass: "fill-current h-4 w-4 ml-1",
-                attrs: {
-                  xmlns: "http://www.w3.org/2000/svg",
-                  viewBox: "0 0 24 24",
-                  width: "24",
-                  height: "24"
-                }
-              },
-              [
-                _c("path", {
-                  staticClass: "heroicon-ui",
-                  attrs: {
-                    d:
-                      "M17 11a1 1 0 0 1 0 2h-4v4a1 1 0 0 1-2 0v-4H7a1 1 0 0 1 0-2h4V7a1 1 0 0 1 2 0v4h4z"
-                  }
-                })
-              ]
-            ),
+            _c("i", { staticClass: "las la-plus ml-2" }),
             _vm._v("\n        افزودن به صفحه اصلی\n    ")
           ]
         )
@@ -53295,7 +53905,7 @@ var render = function() {
               "button",
               {
                 staticClass:
-                  "mb-4 inline-flex items-center bg-indigo-lightest text-indigo text-xs px-4 py-2 rounded-full",
+                  "mb-4 inline-flex items-center bg-indigo-lightest text-indigo text-sm px-4 py-2 rounded-full",
                 on: {
                   click: function($event) {
                     return _vm.saveTestimonialOn(_vm.comment)
@@ -53303,27 +53913,7 @@ var render = function() {
                 }
               },
               [
-                _c(
-                  "svg",
-                  {
-                    staticClass: "fill-current h-4 w-4",
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      viewBox: "0 0 24 24",
-                      width: "24",
-                      height: "24"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      staticClass: "heroicon-ui",
-                      attrs: {
-                        d:
-                          "M13 5.41V17a1 1 0 0 1-2 0V5.41l-3.3 3.3a1 1 0 0 1-1.4-1.42l5-5a1 1 0 0 1 1.4 0l5 5a1 1 0 1 1-1.4 1.42L13 5.4zM3 17a1 1 0 0 1 2 0v3h14v-3a1 1 0 0 1 2 0v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3z"
-                      }
-                    })
-                  ]
-                ),
+                _c("i", { staticClass: "la la-save text-lg ml-1" }),
                 _vm._v("\n                ذخیره پیام\n            ")
               ]
             ),
@@ -53335,29 +53925,7 @@ var render = function() {
                   "mr-auto inline-flex items-center bg-red-lightest text-red text-xs px-1 py-1 rounded-full",
                 on: { click: _vm.hideTestimonial }
               },
-              [
-                _c(
-                  "svg",
-                  {
-                    staticClass: "fill-current w-4 h-4",
-                    attrs: {
-                      xmlns: "http://www.w3.org/2000/svg",
-                      viewBox: "0 0 24 24",
-                      width: "24",
-                      height: "24"
-                    }
-                  },
-                  [
-                    _c("path", {
-                      staticClass: "heroicon-ui",
-                      attrs: {
-                        d:
-                          "M16.24 14.83a1 1 0 0 1-1.41 1.41L12 13.41l-2.83 2.83a1 1 0 0 1-1.41-1.41L10.59 12 7.76 9.17a1 1 0 0 1 1.41-1.41L12 10.59l2.83-2.83a1 1 0 0 1 1.41 1.41L13.41 12l2.83 2.83z"
-                      }
-                    })
-                  ]
-                )
-              ]
+              [_c("i", { staticClass: "la la-times" })]
             )
           ])
         ])
@@ -53399,7 +53967,11 @@ var render = function() {
             }
           ],
           staticClass: "input input--rounded input--right",
-          attrs: { type: "email", name: "email", placeholder: "ایمیل" },
+          attrs: {
+            type: "email",
+            name: "email",
+            placeholder: _vm.trans.get("__JSON__.email")
+          },
           domProps: { value: _vm.email },
           on: {
             input: function($event) {
@@ -53446,7 +54018,7 @@ var render = function() {
           attrs: {
             type: "password",
             name: "password",
-            placeholder: "رمز عبور"
+            placeholder: _vm.trans.get("__JSON__.password")
           },
           domProps: { value: _vm.password },
           on: {
@@ -53486,7 +54058,13 @@ var render = function() {
           staticClass: "button button--primary button--block",
           on: { click: _vm.onSubmit }
         },
-        [_vm._v("تائید")]
+        [
+          _vm._v(
+            "\n            " +
+              _vm._s(_vm.trans.get("__JSON__.confirm")) +
+              "\n        "
+          )
+        ]
       )
     ])
   ])
@@ -53551,7 +54129,7 @@ var render = function() {
           attrs: {
             type: "text",
             name: "name",
-            placeholder: "نام و نام خانوادگی"
+            placeholder: _vm.trans.get("__JSON__.full name")
           },
           domProps: { value: _vm.name },
           on: {
@@ -53596,7 +54174,12 @@ var render = function() {
             }
           ],
           staticClass: "input input--rounded input--right",
-          attrs: { type: "email", name: "email", placeholder: "آدرس ایمیل" },
+          class: { "input--danger": _vm.errors.has("name") },
+          attrs: {
+            type: "email",
+            name: "email",
+            placeholder: _vm.trans.get("__JSON__.email")
+          },
           domProps: { value: _vm.email },
           on: {
             input: function($event) {
@@ -53640,7 +54223,12 @@ var render = function() {
             }
           ],
           staticClass: "input input--rounded input--right",
-          attrs: { type: "text", name: "phone", placeholder: "شماره تماس" },
+          attrs: {
+            type: "text",
+            name: "phone",
+            placeholder: _vm.trans.get("__JSON__.phone number"),
+            "i:class": "{'input--danger': errors.has('name') }"
+          },
           domProps: { value: _vm.phone },
           on: {
             input: function($event) {
@@ -53684,10 +54272,11 @@ var render = function() {
             }
           ],
           staticClass: "input input--rounded input--right",
+          class: { "input--danger": _vm.errors.has("name") },
           attrs: {
             type: "password",
             name: "password",
-            placeholder: "رمز عبور"
+            placeholder: _vm.trans.get("__JSON__.password")
           },
           domProps: { value: _vm.password },
           on: {
@@ -53732,10 +54321,11 @@ var render = function() {
             }
           ],
           staticClass: "input input--rounded input--right",
+          class: { "input--danger": _vm.errors.has("name") },
           attrs: {
             type: "password",
             name: "password_confirmation",
-            placeholder: "تایید رمز عبور"
+            placeholder: _vm.trans.get("__JSON__.password confirmation")
           },
           domProps: { value: _vm.password_confirmation },
           on: {
@@ -53755,6 +54345,7 @@ var render = function() {
     _c("div", { staticClass: "form-group" }, [
       _c("button", {
         staticClass: "button button--primary button--block",
+        attrs: { disabled: _vm.disabled },
         domProps: { innerHTML: _vm._s(_vm.buttonText) },
         on: { click: _vm.submitForm }
       })
@@ -53884,7 +54475,7 @@ var render = function() {
       _vm._v(" "),
       _c("trix-editor", {
         ref: "trix",
-        staticClass: "trix-content",
+        staticClass: "trix-content bg-grey-lighter px-4 py-2",
         attrs: { input: "trix" }
       })
     ],
@@ -54062,7 +54653,7 @@ var render = function() {
       _c("div", { staticClass: "flex items-center justify-center" }, [
         _c("div", { staticClass: "w-full md:w-2/3 lg:w-1/3" }, [
           _c("h3", { staticClass: "title text-center" }, [
-            _vm._v("ارتباط با ما")
+            _vm._v(_vm._s(_vm.trans.get("__JSON__.contact us")))
           ]),
           _vm._v(" "),
           _c(
@@ -54070,7 +54661,13 @@ var render = function() {
             { staticClass: "text-grey-dark text-sm leading-loose mb-3" },
             [
               _vm._v(
-                "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم\n                    از صنعت چاپ و با استفاده از طراحان گرافیک است."
+                "\n                " +
+                  _vm._s(
+                    _vm.trans.get(
+                      "__JSON__.Returns a string with the first character of str capitalized, if that character is alphabetic. Note that 'alphabetic' is determined by the current locale."
+                    )
+                  ) +
+                  "\n            "
               )
             ]
           ),
@@ -54090,7 +54687,7 @@ var render = function() {
               attrs: {
                 name: "name",
                 type: "text",
-                placeholder: "نام و نام خانوادگی"
+                placeholder: _vm.trans.get("__JSON__.full name")
               },
               domProps: { value: _vm.name },
               on: {
@@ -54106,9 +54703,9 @@ var render = function() {
             _vm.errors.has("name")
               ? _c("div", { staticClass: "feedback feedback--invalid" }, [
                   _vm._v(
-                    "\n                        " +
+                    "\n                    " +
                       _vm._s(_vm.errors.get("name")) +
-                      "\n                    "
+                      "\n                "
                   )
                 ])
               : _vm._e()
@@ -54126,7 +54723,11 @@ var render = function() {
               ],
               staticClass:
                 "text-sm bg-white rounded w-full px-4 py-3 border focus:outline-none focus:border-indigo",
-              attrs: { name: "email", type: "email", placeholder: "ایمیل" },
+              attrs: {
+                name: "email",
+                type: "email",
+                placeholder: _vm.trans.get("__JSON__.email")
+              },
               domProps: { value: _vm.email },
               on: {
                 input: function($event) {
@@ -54141,9 +54742,9 @@ var render = function() {
             _vm.errors.has("email")
               ? _c("div", { staticClass: "feedback feedback--invalid" }, [
                   _vm._v(
-                    "\n                        " +
+                    "\n                    " +
                       _vm._s(_vm.errors.get("email")) +
-                      "\n                    "
+                      "\n                "
                   )
                 ])
               : _vm._e()
@@ -54160,8 +54761,12 @@ var render = function() {
                 }
               ],
               staticClass:
-                "text-sm h-32 bg-white rounded w-full px-4 py-3 border focus:outline-none\n                                  focus:border-indigo",
-              attrs: { name: "message", id: "message", placeholder: "پیام" },
+                "text-sm h-32 bg-white rounded w-full px-4 py-3 border focus:outline-none\n                              focus:border-indigo",
+              attrs: {
+                name: "message",
+                id: "message",
+                placeholder: _vm.trans.get("__JSON__.message")
+              },
               domProps: { value: _vm.message },
               on: {
                 input: function($event) {
@@ -54176,9 +54781,9 @@ var render = function() {
             _vm.errors.has("message")
               ? _c("div", { staticClass: "feedback feedback--invalid" }, [
                   _vm._v(
-                    "\n                        " +
+                    "\n                    " +
                       _vm._s(_vm.errors.get("message")) +
-                      "\n                    "
+                      "\n                "
                   )
                 ])
               : _vm._e()
@@ -54218,11 +54823,17 @@ var render = function() {
             _vm._v(" "),
             _c("span", { staticClass: "text-grey-dark text-sm mr-2" }, [
               _vm._v(
-                "\n                        میزان رضایتتان از وبسایت: " +
+                "\n                      " +
+                  _vm._s(_vm.trans.get("__JSON__.your score")) +
+                  " " +
                   _vm._s(this.rate) +
-                  "\n                        "
+                  "\n                    "
               ),
-              _vm.rate ? _c("em", [_vm._v("از 5")]) : _vm._e()
+              _vm.rate
+                ? _c("em", [
+                    _vm._v(_vm._s(_vm.trans.get("__JSON__.from")) + " 5")
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("input", {
@@ -54252,12 +54863,14 @@ var render = function() {
               "button",
               {
                 staticClass: "button button--primary",
-                attrs: { type: "submit" },
+                attrs: { type: "submit", disabled: _vm.disabled },
                 on: { click: _vm.submitComment }
               },
               [
                 _vm._v(
-                  "ارسال\n                        پیام\n                    "
+                  "\n                    " +
+                    _vm._s(_vm.trans.get("__JSON__.send message")) +
+                    "\n                "
                 )
               ]
             )
@@ -54565,7 +55178,7 @@ var render = function() {
                       _vm._s(
                         _vm
                           .moment(service.created_at)
-                          .locale("fa")
+                          .locale(_vm.locale)
                           .fromNow()
                       ) +
                       "\n                "
@@ -54578,7 +55191,7 @@ var render = function() {
                       _vm._s(
                         _vm
                           .moment(service.updated_at)
-                          .locale("fa")
+                          .locale(_vm.locale)
                           .fromNow()
                       ) +
                       "\n                "
@@ -54954,7 +55567,13 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "پشیمان شدم.\n                    حذف\n                    نکن :)"
+                              "\n                    " +
+                                _vm._s(
+                                  _vm.trans.get(
+                                    "__JSON__.No Nooo! Just continue!"
+                                  )
+                                ) +
+                                "\n                "
                             )
                           ]
                         ),
@@ -54973,7 +55592,13 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "بله\n                    مطمئنم.\n                    حذف\n                    کن!\n                "
+                              "\n                    " +
+                                _vm._s(
+                                  _vm.trans.get(
+                                    "__JSON__.Yes! I am sure. Delete it."
+                                  )
+                                ) +
+                                "\n                "
                             )
                           ]
                         )
@@ -54986,7 +55611,13 @@ var render = function() {
             [
               _c("p", { staticClass: "text-grey-dark" }, [
                 _vm._v(
-                  "\n            با انتخاب گزینه انصراف کلیه فایل‌های آپلود شده حذف می‌گردد. آیا از انتخاب خود مطمئنید؟\n        "
+                  "\n            " +
+                    _vm._s(
+                      _vm.trans.get(
+                        "__JSON__.By choosing this, all uploaded files will be deleted. Are you sure, wanna do this?"
+                      )
+                    ) +
+                    "\n        "
                 )
               ])
             ]
@@ -55022,7 +55653,11 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("ثبت‌نام")]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.trans.get("__JSON__.register"))
+                                  )
+                                ]
                               )
                             ])
                           ]
@@ -55047,7 +55682,11 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("ورود به حساب")]
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.trans.get("__JSON__.login"))
+                                  )
+                                ]
                               )
                             ])
                           ]
@@ -55122,7 +55761,27 @@ var render = function() {
                       "w-full lg:w-3/4 mx-auto flex flex-wrap items-start mb-12"
                   },
                   [
-                    _vm._m(1),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "mb-8 md:mb-0 w-2/3 md:w-2/5 service-title"
+                      },
+                      [
+                        _c(
+                          "h3",
+                          { staticClass: "w-full leading-normal pt-24" },
+                          [
+                            _vm._v(
+                              _vm._s(
+                                _vm.trans.get(
+                                  "__JSON__.Choose a proper service for your need"
+                                )
+                              )
+                            )
+                          ]
+                        )
+                      ]
+                    ),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -55169,7 +55828,11 @@ var render = function() {
                               },
                               [
                                 _c("option", { attrs: { value: "" } }, [
-                                  _vm._v("انتخاب سرویس")
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.trans.get("__JSON__.Select a service")
+                                    )
+                                  )
                                 ]),
                                 _vm._v(" "),
                                 _vm._l(_vm.options, function(service) {
@@ -55227,7 +55890,13 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                            برای\n                            کتاب،\n                            محاسبه قیمت و\n                            زمان\n                            به\n                            صورت توافقی\n                            می‌باشد. لطفا در مرحله‌ بعد آدرس ایمیل و شماره\n                            تماس خود را وارد کنید تا در اسرع وقت برای هماهنگی‌های لازم با شما ارتباط برقرار شود.\n                            پبشاپیش از شکیبایی شما متشکریم."
+                                "\n                            " +
+                                  _vm._s(
+                                    _vm.trans.get(
+                                      "__JSON__.For books, price and time calculation is adaptive. We will contact you ASA, for further communications. We are appreciate you."
+                                    )
+                                  ) +
+                                  "\n                        "
                               )
                             ]
                           )
@@ -55282,7 +55951,15 @@ var render = function() {
                                 _c(
                                   "span",
                                   { staticClass: "text-grey-darker" },
-                                  [_vm._v("تاریخ تحویل (تخمینی)")]
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.trans.get(
+                                          "__JSON__.Delivery date: (Estimated)"
+                                        )
+                                      )
+                                    )
+                                  ]
                                 )
                               ]
                             ),
@@ -55316,7 +55993,11 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "اگر زمان مورد نظر فراتر از انتظار شماست،\n                        می‌توانید جهت هماهنگی، با پشتیبانی تماس حاصل فرمایید."
+                                  _vm._s(
+                                    _vm.trans.get(
+                                      "__JSON__.If the delivery date is further than what you had expected, please contact supports for help."
+                                    )
+                                  )
                                 )
                               ]
                             )
@@ -55371,7 +56052,15 @@ var render = function() {
                                 _c(
                                   "span",
                                   { staticClass: "text-grey-darker" },
-                                  [_vm._v("تعداد کلمات مقاله (ها)")]
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.trans.get(
+                                          "__JSON__.article(s) word count"
+                                        )
+                                      )
+                                    )
+                                  ]
                                 )
                               ]
                             ),
@@ -55507,7 +56196,7 @@ var render = function() {
                 "div",
                 { staticClass: "w-3/4 mx-auto bg-white pt-6 pb-3 mb-12" },
                 [
-                  _vm._m(2),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("div", { staticClass: "flex" }, [
                     _c(
@@ -55621,14 +56310,14 @@ var render = function() {
                   staticStyle: { "min-height": "240px" }
                 },
                 [
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "div",
                     { staticClass: "w-3/5 flex items-center justify-center" },
                     [
                       _c("div", { staticClass: "text-center w-1/2" }, [
-                        _vm._m(4),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c(
                           "a",
@@ -55662,24 +56351,6 @@ var staticRenderFns = [
         attrs: { src: "/images/upload-register.svg", alt: "upload-register" }
       })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "mb-8 md:mb-0 w-2/3 md:w-2/5 service-title" },
-      [
-        _c("h3", { staticClass: "w-full leading-normal pt-24" }, [
-          _vm._v("سرویس مورد نظر خود را"),
-          _c("br", { staticClass: "hidden md:block" }),
-          _vm._v(
-            "\n                        انتخاب\n                        کنید"
-          )
-        ])
-      ]
-    )
   },
   function() {
     var _vm = this
@@ -67911,12 +68582,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap.js */ "./resources/js/bootstrap.js");
 /* harmony import */ var _bootstrap_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap_js__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _PersianNumber__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PersianNumber */ "./resources/js/PersianNumber.js");
+/* harmony import */ var sal_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sal.js */ "./node_modules/sal.js/dist/sal.js");
+/* harmony import */ var sal_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sal_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var lang_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lang.js */ "./node_modules/lang.js/esm/lang.js");
 
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
 var authorizations = __webpack_require__(/*! ./authorizations */ "./resources/js/authorizations.js");
 
+
+window.sal = sal_js__WEBPACK_IMPORTED_MODULE_2___default.a;
 window.events = new Vue();
 window.PersianNumber = new _PersianNumber__WEBPACK_IMPORTED_MODULE_1__["default"]();
 
@@ -67927,6 +68603,17 @@ window.flash = function (message) {
     level: level
   });
 };
+
+
+var default_locale = window.default_locale;
+var fallback_locale = window.fallback_locale;
+var messages = window.messages;
+var test = Vue.prototype.trans = new lang_js__WEBPACK_IMPORTED_MODULE_3__["default"]({
+  messages: messages,
+  locale: default_locale,
+  fallback: fallback_locale
+});
+console.log(test.messages);
 
 Vue.prototype.authorize = function () {
   if (!window.Redpencilit.signed) return false;
@@ -68953,7 +69640,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Testimonial_vue_vue_type_template_id_811e8ff8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Testimonial.vue?vue&type=template&id=811e8ff8&scoped=true& */ "./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8&scoped=true&");
+/* harmony import */ var _Testimonial_vue_vue_type_template_id_811e8ff8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Testimonial.vue?vue&type=template&id=811e8ff8& */ "./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8&");
 /* harmony import */ var _Testimonial_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Testimonial.vue?vue&type=script&lang=js& */ "./resources/js/components/Testimonial.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -68965,11 +69652,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _Testimonial_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Testimonial_vue_vue_type_template_id_811e8ff8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Testimonial_vue_vue_type_template_id_811e8ff8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Testimonial_vue_vue_type_template_id_811e8ff8___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Testimonial_vue_vue_type_template_id_811e8ff8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "811e8ff8",
+  null,
   null
   
 )
@@ -68995,19 +69682,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8&scoped=true&":
-/*!********************************************************************************************!*\
-  !*** ./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8&scoped=true& ***!
-  \********************************************************************************************/
+/***/ "./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8& ***!
+  \********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Testimonial_vue_vue_type_template_id_811e8ff8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Testimonial.vue?vue&type=template&id=811e8ff8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Testimonial_vue_vue_type_template_id_811e8ff8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Testimonial_vue_vue_type_template_id_811e8ff8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Testimonial.vue?vue&type=template&id=811e8ff8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Testimonial.vue?vue&type=template&id=811e8ff8&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Testimonial_vue_vue_type_template_id_811e8ff8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Testimonial_vue_vue_type_template_id_811e8ff8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Testimonial_vue_vue_type_template_id_811e8ff8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

@@ -4,7 +4,7 @@
             <div class="relative flex">
                 <input type="email"
                        name="email"
-                       placeholder="ایمیل"
+                       :placeholder="trans.get('__JSON__.email')"
                        class="input input--rounded input--right"
                         v-model="email">
 
@@ -23,7 +23,7 @@
                 <input
                         type="password"
                         name="password"
-                        placeholder="رمز عبور"
+                        :placeholder="trans.get('__JSON__.password')"
                        class="input input--rounded input--right"
                         v-model="password">
 
@@ -38,7 +38,9 @@
         </div>
 
         <div class="form-group">
-            <button class="button button--primary button--block" @click="onSubmit">تائید</button>
+            <button class="button button--primary button--block" @click="onSubmit">
+                {{ trans.get('__JSON__.confirm') }}
+            </button>
         </div>
     </div>
 </template>
@@ -51,14 +53,16 @@
             return {
                 email: '',
                 password: '',
-                errors: new Errors()
+                errors: new Errors(),
+                locale: Redpencilit.locale
             }
         },
 
         methods: {
             onSubmit() {
-                axios.post('/login', this.$data)
+                axios.post(`/${this.locale}/login`, this.$data)
                     .then(response => {
+                        console.log(response.data);
                         if (response.data.status === 200) {
                             window.events.$emit('userCreated', response.data);
 

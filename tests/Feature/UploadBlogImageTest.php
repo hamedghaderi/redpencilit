@@ -23,8 +23,8 @@ class UploadBlogImageTest extends TestCase
         
         $user->addRole($role);
         
-        $this->postJson('/post-attachments', [
-            'attachment' =>  $file = UploadedFile::fake()->image('test.jpg'),
+        $this->postJson(route('attachments.store', app()->getLocale()), [
+            'attachment' => $file = UploadedFile::fake()->image('test.jpg'),
             'key' => 'image.jpg'
         ])->assertStatus(200);
         
@@ -33,38 +33,41 @@ class UploadBlogImageTest extends TestCase
         Storage::disk('public')->delete('blog/image.jpg');
     }
     
-    /** @test **/
+    /** @test * */
     public function image_should_be_in_valid_format()
     {
-       Storage::fake('blog');
-    
+        Storage::fake('blog');
+        
         $user = $this->signIn();
         $role = create(Role::class, ['name' => 'super-admin']);
-    
+        
         $user->addRole($role);
-    
-        $this->postJson('/post-attachments', [
-            'attachment' =>  $file = UploadedFile::fake()->create('test.docx'),
+        
+        $this->postJson(route('attachments.store', app()->getLocale()), [
+            'attachment' => $file = UploadedFile::fake()->create('test.docx'),
             'key' => 'image.jpg'
-        ])->assertJson(['errors' => [
-            'attachment' => [
-                0 => 'فایل ضمیمه شده باید حتما عکس باشد.'
-            ]
-        ]]);
+        ])->assertJson(
+            [
+                'errors' => [
+                    'attachment' => [
+                        0 => 'فایل ضمیمه شده باید حتما عکس باشد.'
+                    ]
+                ]
+            ]);
     }
     
-    /** @test **/
+    /** @test * */
     public function an_image_requires_a_key_name()
     {
-       Storage::fake('blog');
-    
+        Storage::fake('blog');
+        
         $user = $this->signIn();
         $role = create(Role::class, ['name' => 'super-admin']);
-    
+        
         $user->addRole($role);
-    
-        $this->postJson('/post-attachments', [
-            'attachment' =>  $file = UploadedFile::fake()->create('test.docx'),
+        
+        $this->postJson(route('attachments.store', app()->getLocale()), [
+            'attachment' => $file = UploadedFile::fake()->create('test.docx'),
         ])->assertSeeText('errors');
     }
 }

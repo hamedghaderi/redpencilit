@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
+    
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -17,9 +19,9 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
+    
     use AuthenticatesUsers;
-
+    
     /**
      * Where to redirect users after login.
      *
@@ -38,6 +40,36 @@ class LoginController extends Controller
     
     protected function redirectTo()
     {
-        return '/dashboard/' . auth()->id();
+        return route('dashboard', [app()->getLocale(), auth()->id()]);
+    }
+    
+    public function showLoginForm($lang)
+    {
+        return view('auth.login');
+    }
+    
+    protected function sendLoginResponse(Request $request)
+    {
+        $request->session()->regenerate();
+        
+        $this->clearLoginAttempts($request);
+        
+        if ($this->authenticated($request, $this->guard()->user())) {
+            return $this->authenticated($request, $this->guard()->user());
+        } else {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 200,
+                    'user' => auth()->user(),
+                    'token' => csrf_token()
+                ]);
+            }
+            
+            return redirect()->intended($this->redirectPath());
+        }
+        //
+        //
+        //        return $this->authenticated($request, $this->guard()->user())
+        //            ?: redirect()->intended($this->redirectPath());
     }
 }

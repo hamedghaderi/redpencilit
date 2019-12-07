@@ -76,11 +76,11 @@
                     </div>
 
                     <div class="w-1/5 text-grey-darker">
-                        {{ moment(service.created_at).locale('fa').fromNow() }}
+                        {{ moment(service.created_at).locale(locale).fromNow() }}
                     </div>
 
                     <div class="w-1/5 text-grey-darker">
-                        {{ moment(service.updated_at).locale('fa').fromNow() }}
+                        {{ moment(service.updated_at).locale(locale).fromNow() }}
                     </div>
 
                     <div class="w-1/5">
@@ -170,12 +170,13 @@
                 modal: false,
                 updatedName: '',
                 updatedNegotiable: false,
-                isDisabled: true
+                isDisabled: true,
+                locale: Redpencilit.locale
             }
         },
 
         mounted() {
-            axios.get(`/dashboard/services`).then(response => {
+            axios.get(`/${Redpencilit.locale}/dashboard/services`).then(response => {
                 this.services = response.data;
             });
 
@@ -184,7 +185,7 @@
 
         methods: {
             saveService() {
-                axios.post(`/dashboard/services`, {
+                axios.post(`/${Redpencilit.locale}/dashboard/services`, {
                     name: this.name,
                     negotiable: this.negotiable
                 }).then(response => {
@@ -200,14 +201,15 @@
             },
 
             deleteService(id) {
-              axios.delete(`/dashboard/services/${id}`)
+              axios.delete(`/${this.locale}/dashboard/services/${id}`)
                   .then(response => {
                       this.services = response.data
+                      flash('سرویس با موفقیت حذف شد.');
                   });
             },
 
             openEdit(id) {
-                axios.get(`/dashboard/services/${id}`)
+                axios.get(`/${this.locale}/dashboard/services/${id}`)
                     .then(response => {
                         if (response.data.status === 200) {
                             this.serviceForUpdate = response.data.service;
@@ -219,14 +221,14 @@
             },
 
             updateService(service){
-                axios.patch(`/dashboard/services/${service.id}`, {
+                axios.patch(`/${Redpencilit.locale}/dashboard/services/${service.id}`, {
                     name: this.updatedName,
                     negotiable: this.updatedNegotiable
                 }).then(response => {
                     if (response.data.status === 200) {
                         this.modal = false;
 
-                        axios.get(`/dashboard/services`).then(response => {
+                        axios.get(`/${Redpencilit.locale}/dashboard/services`).then(response => {
                             this.services = response.data;
                         });
 

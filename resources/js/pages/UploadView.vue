@@ -4,20 +4,18 @@
 
         <Modal v-if="modal" @closeModal="modal = false">
             <p class="text-grey-dark">
-                با انتخاب گزینه انصراف کلیه فایل‌های آپلود شده حذف می‌گردد. آیا از انتخاب خود مطمئنید؟
+                {{ trans.get(`__JSON__.By choosing this, all uploaded files will be deleted. Are you sure, wanna do this?`)}}
             </p>
 
             <template #footer>
                 <div class="flex items-center">
-                    <a class="button button--simple button--sm" href="#" @click.prevent="modal = false">پشیمان شدم.
-                        حذف
-                        نکن :)</a>
+                    <a class="button button--simple button--sm" href="#" @click.prevent="modal = false">
+                        {{ trans.get('__JSON__.No Nooo! Just continue!')}}
+                    </a>
 
                     <button class="button button--sm button--outline--danger mr-auto z-50"
-                            @click.prevent="cancelIt">بله
-                        مطمئنم.
-                        حذف
-                        کن!
+                            @click.prevent="cancelIt">
+                        {{ trans.get('__JSON__.Yes! I am sure. Delete it.')}}
                     </button>
                 </div>
             </template>
@@ -34,13 +32,15 @@
                             <div class="tab-header">
                                 <div class="tab-pane" :class="{'tab-pane--active' : registerActive}">
                                  <span class="tab-name">
-                                    <a href="#" @click.prevent="registerActive = true">ثبت‌نام</a>
+                                    <a href="#" @click.prevent="registerActive = true">{{
+                                        trans.get('__JSON__.register') }}</a>
                                  </span>
                                 </div>
 
                                 <div class="tab-pane" :class="{'tab-pane--active' : !registerActive}">
                                  <span class="tab-name">
-                                    <a href="#" @click.prevent="registerActive = false">ورود به حساب</a>
+                                    <a href="#" @click.prevent="registerActive = false">{{ trans.get('__JSON__.login')
+                                        }}</a>
                                  </span>
                                 </div>
                             </div>
@@ -70,16 +70,14 @@
 
                 <div class="w-full lg:w-3/4 mx-auto flex flex-wrap items-start mb-12">
                     <div class="mb-8 md:mb-0 w-2/3 md:w-2/5 service-title">
-                        <h3 class="w-full leading-normal pt-24">سرویس مورد نظر خود را<br class="hidden md:block">
-                            انتخاب
-                            کنید</h3>
+                        <h3 class="w-full leading-normal pt-24">{{ trans.get(`__JSON__.Choose a proper service for your need`)}}</h3>
                     </div>
 
                     <div class="w-full md:w-3/5 bg-white p-8 rounded shadow">
                         <div>
                             <div class="select mb-1">
                                 <select name="service" id="service" @change="onSelect" v-model="selected">
-                                    <option value="">انتخاب سرویس</option>
+                                    <option value="">{{ trans.get('__JSON__.Select a service')}}</option>
 
                                     <option v-for="service in options" v-bind:value="service.id">
                                         {{ service.name }}
@@ -95,15 +93,8 @@
 
                             <p class="bg-yellow-lightest text-yellow-darker text-xs p-2 rounded leading-normal"
                                v-show="contract">
-                                برای
-                                کتاب،
-                                محاسبه قیمت و
-                                زمان
-                                به
-                                صورت توافقی
-                                می‌باشد. لطفا در مرحله‌ بعد آدرس ایمیل و شماره
-                                تماس خود را وارد کنید تا در اسرع وقت برای هماهنگی‌های لازم با شما ارتباط برقرار شود.
-                                پبشاپیش از شکیبایی شما متشکریم.</p>
+                                {{ trans.get('__JSON__.For books, price and time calculation is adaptive. We will contact you ASA, for further communications. We are appreciate you.') }}
+                            </p>
                         </div><!-- .mb-3 -->
 
                         <hr class="my-6" v-if="!contract">
@@ -114,15 +105,16 @@
                                      viewBox="0 0 24 24"
                                      width="24"
                                       height="24"><path class="heroicon-ui" d="M17 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h2V3a1 1 0 1 1 2 0v1h6V3a1 1 0 0 1 2 0v1zm-2 2H9v1a1 1 0 1 1-2 0V6H5v4h14V6h-2v1a1 1 0 0 1-2 0V6zm4 6H5v8h14v-8z"/></svg>
-                                <span class="text-grey-darker">تاریخ تحویل (تخمینی)</span>
+                                <span class="text-grey-darker">{{ trans.get('__JSON__.Delivery date: (Estimated)')}}</span>
                             </span>
                             <span class="mr-auto tag tag--info" v-if="deliverDate">
                                 {{ persianNumber.toPersian(deliverDate) }}
                             </span>
                         </div>
 
-                        <p class="bg-yellow-lightest text-yellow-darker text-xs p-2 rounded leading-normal" v-if="deliverDate">اگر زمان مورد نظر فراتر از انتظار شماست،
-                            می‌توانید جهت هماهنگی، با پشتیبانی تماس حاصل فرمایید.</p>
+                        <p class="bg-yellow-lightest text-yellow-darker text-xs p-2 rounded leading-normal"
+                           v-if="deliverDate">{{ trans.get('__JSON__.If the delivery date is further than what you had expected, please contact supports for help.')
+                            }}</p>
 
                         <hr class="my-6" v-if="!contract">
 
@@ -132,7 +124,7 @@
                                 <svg class="fill-current h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
                                       height="24"><path class="heroicon-ui" d="M7 5H5v14h14V5h-2v10a1 1 0 0 1-1.45.9L12 14.11l-3.55 1.77A1 1 0 0 1 7 15V5zM5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm4 2v8.38l2.55-1.27a1 1 0 0 1 .9 0L15 13.38V5H9z"/></svg>
 
-                                <span class="text-grey-darker">تعداد کلمات مقاله (ها)</span>
+                                <span class="text-grey-darker">{{ trans.get('__JSON__.article(s) word count')}}</span>
                             </span>
 
                             <span class="mr-auto tag tag--info" v-show="words">

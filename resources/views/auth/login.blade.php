@@ -1,12 +1,12 @@
 @extends('layouts.auth')
 
 @section('nav-link')
-    <a href="{{ route('register') }}" class="block text-grey-darker text-sm rounded py-1 mb-1 sm:mb-0
+    <a href="{{ route('register', app()->getLocale()) }}" class="block text-grey-darker text-sm rounded py-1 mb-1 sm:mb-0
                 sm:mr-2 px-2
                 hover:bg-grey-light sm:hidden">حساب
         جدیدی برام ایجاد کن</a>
 
-    <a href="{{ route('register') }}" class="hidden
+    <a href="{{ route('register', app()->getLocale()) }}" class="hidden
                 button
                 button--success
                 sm:block
@@ -27,7 +27,7 @@
                     کاربری</h2>
 
                 <p class="text-grey text-center mb-8">خوش آمدید</p>
-                <form method="POST" action="/login" class="text-md w-full" novalidate>
+                <form method="POST" action="{{ route('login', app()->getLocale()) }}" class="text-md w-full" novalidate>
                     @csrf
 
                     <div class="mb-4">
@@ -92,7 +92,7 @@
 
                             @if (Route::has('password.request'))
                                 <p class="mr-auto text-left">
-                                    <a href="{{ route('password.request') }}"
+                                    <a href="{{ route('password.request', app()->getLocale()) }}"
                                        class="text-blue text-xs no-underline hover:text-blue-dark">رمز عبورت را فراموش
                                         کرده‌ای؟</a>
                                 </p>

@@ -2,7 +2,8 @@
     <div>
         <input id="trix" type="hidden" :name="name" :value="value">
 
-        <trix-editor ref="trix" class="trix-content" input="trix"></trix-editor>
+        <trix-editor ref="trix" class="trix-content bg-grey-lighter px-4 py-2"
+                     input="trix"></trix-editor>
     </div>
 </template>
 
@@ -11,6 +12,12 @@
 
     export default {
         props: ['name', 'host', 'value'],
+
+        data() {
+            return {
+                locale: Redpencilit.locale
+            }
+        },
 
         mounted() {
             this.$refs.trix.addEventListener('trix-file-accept', (e) => {
@@ -57,7 +64,7 @@
                 let key = this.createStorageKey(file);
                 let formData = this.createFormData(key, file);
 
-                axios.post('/post-attachments', formData, {
+                axios.post(`/${this.locale}/post-attachments`, formData, {
                     header: {
                         'Content-Type': 'multipart/form-data'
                     },

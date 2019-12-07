@@ -23,7 +23,10 @@
             </h3>
 
             <div class="w-1/3 mr-auto">
-                <form method="GET" action="/users" onchange="this.submit()" class="flex w-full items-center">
+                <form method="GET" action="{{ route('admin.users.index', app()->getLocale()) }}" onchange="this.submit()"
+                      class="flex
+                w-full
+                items-center">
                     <label for="type" name="type" class="label ml-3">فیلتر بر اساس</label>
                     <div class="select flex-1">
                         <select name="type" id="type">
@@ -78,14 +81,16 @@
                     </div>
 
                     <div class="w-1/4 flex items-center">
-                        <a href="/dashboard/{{ $user->id }}" class="button button--smooth--success button--sm">ویرایش
+                        <a href="{{ route('dashboard', [app()->getLocale(), $user->id]) }}" class="button
+                        button--smooth--success button--sm">ویرایش
                         </a>
 
 {{--                        <inner-modal name="edit-role-{{$user->id}}">--}}
 {{--                            <edit-role :user="{{$user}}" :roles="{{$roles}}"></edit-role>--}}
 {{--                        </inner-modal>--}}
 
-                        <form action="{{ '/users/' . $user->id }}" method="post" class="mr-auto">
+                        <form action="{{ route('admin.users.destroy', [app()->getLocale(), $user->id]) }}"
+                              method="post" class="mr-auto">
                             @csrf
                             @method('DELETE')
 

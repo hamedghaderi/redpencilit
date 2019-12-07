@@ -53,7 +53,7 @@
         @empty
             <p class="dashboard-title">
                 هنوز هیچ مقاله‌ای ارسال نشده است.
-                <a href="/orders/create">ارسال اولین مقاله</a>
+                <a href="{{ route('new-order', app()->getLocale()) }}">ارسال اولین مقاله</a>
             </p>
         @endforelse
     </div>

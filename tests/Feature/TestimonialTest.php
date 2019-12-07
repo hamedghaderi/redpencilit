@@ -19,7 +19,7 @@ class TestimonialTest extends TestCase
         
         $comment = create(Comment::class);
         
-        $this->post('/comments/' . $comment->id . '/testimonials', [
+        $this->post(route('testimonials.store', [app()->getLocale(), $comment]), [
             'body' => 'Hello There.'
         ]);
         
@@ -37,9 +37,9 @@ class TestimonialTest extends TestCase
         $comment = create(Comment::class);
         
         $this->signIn();
-    
-        $this->post('/comments/' . $comment->id . '/testimonials', [
-            'body' => 'Hello There.'
+        
+        $this->post(route('testimonials.store', [app()->getLocale(), $comment]), [
+            'body' => 'Hello'
         ])->assertStatus(403);
     }
 }

@@ -31,11 +31,11 @@ class PostsController extends Controller
     /**
      * Show a single post.
      *
+     * @param        $locale
      * @param  Post  $post
-     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show(Post $post)
+    public function show($locale, Post $post)
     {
         return view(
             'posts.show', [
@@ -81,7 +81,7 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(Post $post)
+    public function edit($locale, Post $post)
     {
         return view('posts.edit', compact('post'));
     }
@@ -89,11 +89,11 @@ class PostsController extends Controller
     /**
      * Update the given post.
      *
+     * @param        $locale
      * @param  Post  $post
-     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(Post $post)
+    public function update($locale, Post $post)
     {
         $attributes = request()->validate([
             'title' => 'required|min:3|max:255',
@@ -108,18 +108,19 @@ class PostsController extends Controller
         
         $post->update($attributes);
         
-        return redirect($post->path());
+        return redirect(route('posts.show', [app()->getLocale(), $post]));
     }
     
     /**
      * Delete the given post.
      *
+     * @param        $locale
      * @param  Post  $post
      * @return \Illuminate\Http\RedirectResponse
      *
      * @throws \Exception
      */
-    public function destroy(Post $post)
+    public function destroy($locale, Post $post)
     {
         $post->delete();
         

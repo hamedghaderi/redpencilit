@@ -11,23 +11,27 @@
 
 
     <!-- Styles -->
-    <link href=" {{ asset('css/vendor/all.css') }}" rel="stylesheet">
+    <link href=" {{ asset('css/line-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <script>
         window.Redpencilit = {!!
             json_encode([
                 'signed' => Auth::check(),
-                'user' => Auth::user()
+                'user' => Auth::user(),
+                'locale' => app()->getLocale()
             ]);
          !!}
+        window.default_locale = "{{ config('app.locale') }}";
+        window.fallback_locale = "{{ config('app.fallback_locale') }}";
+        window.messages = @json($messages);
     </script>
 </head>
 <body class="blog-posts bg-white">
 <div id="app">
     @include('partials/nav')
 
-    <main class="-mt-24">
+    <main class="-mt-8">
         @yield('content')
     </main>
 

@@ -45,7 +45,7 @@ class OrderTest extends TestCase
             'upload_articles_per_day' => 4
         ]);
         
-        $response = $this->json('post', '/users/'.$user->id.'/orders', [
+        $response = $this->json('post', route('orders.create', [app()->getLocale(), $user]), [
             'documents' => [
                 0 => $file = $this->makeTestFile('951')
             ]
@@ -82,7 +82,7 @@ class OrderTest extends TestCase
         
         $response = $this->json(
             'post',
-            '/users/'.$user->id.'/orders', [
+            route('orders.create', [app()->getLocale(), $user]), [
             'documents' => [
                 0 => $files[0] = $this->makeTestFile('951'),
                 1 => $file[1] = $this->makeTestFile('1')
@@ -118,8 +118,7 @@ class OrderTest extends TestCase
             'upload_articles_per_day' => 4
         ]);
         
-        $response = $this->json(
-            'post', '/users/'.$user->id.'/orders', [
+        $response = $this->json('post', route('orders.create', [app()->getLocale(), $user]), [
             'documents' => [
                 0 => $files[0] = $this->makeTestFile('951'),
             ]
@@ -127,7 +126,7 @@ class OrderTest extends TestCase
     }
     
     /** @test * */
-    public function a_user_can_not_upload_more_than_settings_file_upload()
+    public function a_user_can_not_upload_more_files_than_settings_limit()
     {
         Storage::fake('documents');
         
@@ -143,7 +142,7 @@ class OrderTest extends TestCase
         ]);
         
         $this->json(
-            'post', '/users/'.$user->id.'/orders', [
+            'post', route('orders.create', [app()->getLocale(), $user]), [
             'documents' => [
                 0 => $files[0] = $this->makeTestFile('951'),
                 1 => UploadedFile::fake()->create('2.docx'),
@@ -152,7 +151,7 @@ class OrderTest extends TestCase
     }
     
     /** @test * */
-    public function a_document_can_not_be_more_than_limited_words()
+    public function an_uploaded_document_can_not_be_more_than_limited_words()
     {
         Storage::fake('documents');
         
@@ -168,7 +167,7 @@ class OrderTest extends TestCase
         ]);
         
         $this->json(
-            'post', '/users/'.$user->id.'/orders', [
+            'post', route('orders.create', [app()->getLocale(), $user]), [
             'documents' => [
                 0 => $files[0] = $this->makeTestFile('951'),
             ]
@@ -190,7 +189,7 @@ class OrderTest extends TestCase
         ]);
         
         $this->json(
-            'post', '/users/'.$user->id.'/orders', [
+            'post', route('orders.create', [app()->getLocale(), $user]), [
             'documents' => [
                 0 => $this->makeTestFile('951')
             ]
@@ -213,8 +212,7 @@ class OrderTest extends TestCase
             'price_per_word' => 500
         ]);
         
-        $this->json(
-            'post', '/users/'.$user->id.'/orders', [
+        $this->json('post', route('orders.create', [app()->getLocale(), $user]), [
             'documents' => [
                 0 => $this->makeTestFile('951')
             ]
@@ -235,7 +233,7 @@ class OrderTest extends TestCase
         
         $setting = create(Setting::class);
         
-        $this->json('post', '/users/' . $user->id . '/orders/', [
+        $this->json('post', route('orders.create', [app()->getLocale(), $user]), [
             'documents' => [
                 0 => $this->makeTestFile('951')
             ]
@@ -243,7 +241,7 @@ class OrderTest extends TestCase
         
         $this->assertEquals(1, count(Storage::disk('documents')->allFiles()));
         
-        $this->json('delete', "/users/{$user->id}/orders/1");
+        $this->json('delete', route('orders.destroy', [app()->getLocale(), $user, 1]));
         
         $this->assertEquals(0, count(Storage::disk('documents')->allFiles()));
         $this->assertCount(0, Order::all());

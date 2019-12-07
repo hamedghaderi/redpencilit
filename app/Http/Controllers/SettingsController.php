@@ -23,9 +23,11 @@ class SettingsController extends Controller
     /**
      * Persist new settings into DB.
      *
+     * @param $locale
+     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store()
+    public function store($locale)
     {
         $attributes = request()->validate(
             [
@@ -43,11 +45,11 @@ class SettingsController extends Controller
     /**
      * Update settings with the given attributes.
      *
+     * @param           $locale
      * @param  Setting  $setting
-     *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Setting $setting)
+    public function update($locale, Setting $setting)
     {
         $attributes = request()->validate([
             'upload_articles_per_day' => 'required|numeric',

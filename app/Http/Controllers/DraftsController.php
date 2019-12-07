@@ -2,17 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Delivery;
-use App\Document;
 use App\DocumentDraft;
-use App\DraftReserve;
 use App\Order;
-use App\Service;
 use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\ValidationException;
 
 class DraftsController extends Controller
 {
@@ -28,7 +20,7 @@ class DraftsController extends Controller
     //       return view('dashboards.drafts', compact('documents'));
     //    }
     
-    public function store(User $user)
+    public function store($locale, User $user)
     {
         if (auth()->user()->isNot($user)) {
             abort(403);

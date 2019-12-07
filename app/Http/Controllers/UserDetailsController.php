@@ -13,7 +13,7 @@ class UserDetailsController extends Controller
      *
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store()
+    public function store($locale)
     {
         $attributes = request()->validate([
             'degree_id' => 'sometimes|nullable|exists:college_degrees,id',
@@ -25,10 +25,10 @@ class UserDetailsController extends Controller
         
         auth()->user()->details()->create($attributes);
         
-        return back();
+        return redirect(route('dashboard', [$locale, auth()->id()]));
     }
     
-    public function update(User $user)
+    public function update($locale, User $user)
     {
         $attributes = request()->validate([
             'degree_id' => 'sometimes|nullable|exists:college_degrees,id',
@@ -40,6 +40,6 @@ class UserDetailsController extends Controller
         
        $user->details()->update($attributes);
         
-        return back();
+        return back()->with('flash', 'اطلاعات شما با موفقیت ثبت شد.');
     }
 }

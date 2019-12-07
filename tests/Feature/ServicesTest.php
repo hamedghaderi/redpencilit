@@ -9,7 +9,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ServicesTest extends TestCase
 {
-    
     use RefreshDatabase;
     
     /** @test * */
@@ -25,8 +24,8 @@ class ServicesTest extends TestCase
         
         $service = make(Service::class);
         
-        $this->post(route('services'), $service->toArray())
-             ->assertRedirect(route('services'));
+        $this->post(route('services.store', app()->getLocale()), $service->toArray())
+             ->assertRedirect(route('services.index', app()->getLocale()));
         
         $this->assertDatabaseHas('services', ['name' => $service->name]);
         
@@ -44,8 +43,7 @@ class ServicesTest extends TestCase
         
         $service = make(Service::class, ['name' => null]);
         
-        $this->post(
-            route('services', $user),
+        $this->post(route('services.index', app()->getLocale()),
             $service->toArray())->assertSessionHasErrors('name');
     }
     
@@ -54,8 +52,8 @@ class ServicesTest extends TestCase
     {
         $service = make(Service::class);
         
-        $this->post(route('services.store', 1), $service->toArray())
-             ->assertRedirect('/login');
+        $this->post(route('services.store', [app()->getLocale(), 1]), $service->toArray())
+             ->assertRedirect(route('login', app()->getLocale()));
     }
     
     /** @test * */
@@ -93,8 +91,8 @@ class ServicesTest extends TestCase
         
         $service = create(Service::class, ['user_id' => $user->id]);
         
-        $this->delete(route('services.delete', ['service' => $service->id]))
-             ->assertRedirect(route('services'));
+        $this->delete(route('services.delete', [app()->getLocale(), $service]))
+             ->assertRedirect(route('services.index', app()->getLocale()));
         
         $this->assertSoftDeleted('services', ['name' => $service->name]);
     }
@@ -128,9 +126,9 @@ class ServicesTest extends TestCase
         $service = create(Service::class, ['user_id' => $user->id]);
         
         
-        $this->patch(route('services.update', ['service' => $service->id]), [
+        $this->patch(route('services.update', [app()->getLocale(), $service]), [
             'name' => 'Blabla'
-        ])->assertRedirect(route('services'));
+        ])->assertRedirect(route('services.index', app()->getLocale()));
         
         $this->assertDatabaseHas('services', ['name' => 'Blabla']);
     }
@@ -183,6 +181,7 @@ class ServicesTest extends TestCase
         $this->signIn();
         $service = create(Service::class);
         
-        $this->get(route('new-order'))->assertSee($service->name);
+        $this->get(route('new-order', app()->getLocale()))
+             ->assertSee($service->name);
     }
 }

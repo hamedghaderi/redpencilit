@@ -15,7 +15,7 @@ class UploadAvatarTest extends TestCase
     /** @test **/
     public function only_members_can_add_avatar() 
     {
-       $this->json('POST', 'api/users/1/avatar')
+       $this->json('POST', route('avatar.store', [app()->getLocale(), 1]))
            ->assertStatus(401);
     }
 
@@ -30,7 +30,7 @@ class UploadAvatarTest extends TestCase
 
        $file = UploadedFile::fake()->image('avatar.jpg');
 
-       $this->json('POST', '/api/users/' . $user->id . '/avatar', [
+       $this->json('POST', route('avatar.store', [app()->getLocale(), $user->id]), [
            'avatar' => $file
        ]);
 
@@ -44,7 +44,7 @@ class UploadAvatarTest extends TestCase
     {
         $user = $this->signIn();
 
-        $this->json('POST', '/api/users/' . $user->id . '/avatar', [
+        $this->json('POST', route('avatar.store', [app()->getLocale(), $user->id]), [
             'avatar' => 'not an image'
         ])->assertStatus(422);
     }

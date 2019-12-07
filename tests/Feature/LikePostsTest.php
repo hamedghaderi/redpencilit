@@ -19,7 +19,7 @@ class LikePostsTest extends TestCase
         
         $post = create(Post::class);
         
-        $this->post($post->path() . '/favorite');
+        $this->post(route('favorite.store', [app()->getLocale(), $post]));
         
         $this->assertCount(1, $post->favorites);
     }
@@ -31,11 +31,11 @@ class LikePostsTest extends TestCase
        
        $post = create(Post::class);
     
-        $this->post($post->path() . '/favorite');
+        $this->post(route('favorite.store', [app()->getLocale(), $post]));
     
         $this->assertCount(1, $post->fresh()->favorites);
        
-       $this->delete($post->path() . '/disfavor');
+       $this->delete(route('favorite.destroy', [app()->getLocale(), $post]));
        
        $this->assertCount(0, $post->fresh()->favorites);
     }
@@ -47,11 +47,11 @@ class LikePostsTest extends TestCase
     
         $post = create(Post::class);
     
-        $this->post($post->path() . '/favorite');
+        $this->post(route('favorite.store', [app()->getLocale(), $post]));
 
         $this->assertEquals(1, $post->isFavorited());
 
-        $this->delete($post->path() . '/disfavor');
+        $this->delete(route('favorite.destroy', [app()->getLocale(), $post]));
 
         $this->assertEquals(0, $post->fresh()->isFavorited());
     }

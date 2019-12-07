@@ -16,7 +16,8 @@ class ManagePostTest extends TestCase
     /** @test * */
     public function guests_cannot_create_a_post()
     {
-        $this->post('/posts', [])->assertRedirect('/login');
+        $this->post(route('posts.store', app()->getLocale()), [])
+             ->assertRedirect(route('login', app()->getLocale()));
     }
     
     /** @test * */
@@ -26,7 +27,7 @@ class ManagePostTest extends TestCase
         
         $post = make(Post::class);
         
-        $this->post('/posts', $post->toArray())
+        $this->post(route('posts.store', app()->getLocale()), $post->toArray())
              ->assertStatus(403);
     }
     
@@ -42,7 +43,7 @@ class ManagePostTest extends TestCase
             'excerpt' => 'An excerpt with more than 20 characters'
         ];
         
-        $this->post('/posts', $post);
+        $this->post(route('posts.store', app()->getLocale()), $post);
         
         $this->assertCount(1, Post::all());
     }
@@ -60,7 +61,7 @@ class ManagePostTest extends TestCase
         
         $user->addRole($role);
         
-        $this->post('/posts', $post);
+        $this->post(route('posts.store', app()->getLocale()), $post);
         
         $this->assertCount(1, Post::all());
     }
@@ -72,7 +73,7 @@ class ManagePostTest extends TestCase
         
         $post = make(Post::class, ['title' => null]);
         
-        $this->post('/posts', $post->toArray())
+        $this->post(route('posts.store', app()->getLocale()), $post->toArray())
              ->assertSessionHasErrors('title');
     }
     
@@ -83,7 +84,7 @@ class ManagePostTest extends TestCase
         
         $post = make(Post::class, ['excerpt' => null]);
         
-        $this->post('/posts', $post->toArray())
+        $this->post(route('posts.store', app()->getLocale()), $post->toArray())
             ->assertSessionHasErrors('excerpt');
     }
     
@@ -94,7 +95,7 @@ class ManagePostTest extends TestCase
         
         $post = make(Post::class, ['body' => null]);
         
-        $this->post('/posts', $post->toArray())
+        $this->post(route('posts.store', app()->getLocale()), $post->toArray())
              ->assertSessionHasErrors('body');
     }
     
@@ -103,7 +104,7 @@ class ManagePostTest extends TestCase
     {
         $post = create(Post::class);
         
-        $this->get('/posts')
+        $this->get(route('posts.index', app()->getLocale()))
              ->assertSee($post->title)
              ->assertSee($post->description);
     }
@@ -122,7 +123,7 @@ class ManagePostTest extends TestCase
             'thumbnail' => $thumb = UploadedFile::fake()->image('test.jpg')
         ];
         
-        $this->post('/posts', $post);
+        $this->post(route('posts.store', app()->getLocale()), $post);
         
         Storage::disk('public')->assertExists('blog/'.$thumb->hashName());
         
@@ -141,7 +142,7 @@ class ManagePostTest extends TestCase
             'thumbnail' => $thumb = UploadedFile::fake()->create('test.pdf'),
         ]);
         
-        $this->post('/posts', $post->toArray())
+        $this->post(route('posts.store', app()->getLocale()), $post->toArray())
              ->assertSessionHasErrors('thumbnail');
     }
     
@@ -152,7 +153,7 @@ class ManagePostTest extends TestCase
         
         $post = create(Post::class);
         
-        $this->get($post->path())
+        $this->get(route('posts.show', [app()->getLocale(), $post]))
              ->assertSee($post->title)
              ->assertSee($post->body);
     }
@@ -166,12 +167,12 @@ class ManagePostTest extends TestCase
         
         $post = create(Post::class);
         
-        $this->patch($post->path(), [
+        $this->patch(route('posts.update', [app()->getLocale(), $post]), [
             'title' => 'Hello',
             'body' => 'Bye Father',
             'excerpt' => 'Hello There. This is my first post.',
             'thumbnail' => $file = UploadedFile::fake()->image('another_image.jpg')
-        ])->assertRedirect($post->path());
+        ])->assertRedirect(route('posts.show', [app()->getLocale(), $post]));
         
         $this->assertDatabaseHas('posts', [
             'title' => 'Hello',
@@ -192,7 +193,7 @@ class ManagePostTest extends TestCase
         
         self::assertCount(1, Post::all());
         
-        $this->delete($post->path());
+        $this->delete(route('posts.destroy', [app()->getLocale(), $post]));
         
         $this->assertCount(0, Post::all());
     }
@@ -207,7 +208,7 @@ class ManagePostTest extends TestCase
     
         $this->assertCount(1, Post::all());
     
-        $this->delete($post->path());
+        $this->delete(route('posts.destroy', [app()->getLocale(), $post]));
     
         $this->assertCount(0, Post::all());
     }

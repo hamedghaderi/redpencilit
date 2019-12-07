@@ -15,7 +15,10 @@
                     <h3>تنظیمات</h3>
                 </div>
 
-                <form class="w-full" method="POST" action="{{ $setting ? "/settings/{$setting->id}" : "/settings" }}">
+                <form class="w-full" method="POST"
+                      action="{{ $setting ?
+                        route('settings.update', [app()->getLocale() , $setting]) :
+                        route('settings.store', app()->getLocale())}}">
                     @csrf
 
                     @if ($setting)

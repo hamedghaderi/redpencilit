@@ -19,7 +19,7 @@ class RegisterConfirmationController extends Controller
 
         $user->confirm();
 
-        return redirect(route('new-order'))
+        return redirect(route('new-order', app()->getLocale()))
             ->with('flash', 'حساب شما تائید شد. حال می‌توانید سفارشات خود را تکمیل کنید.');
     }
 }

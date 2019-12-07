@@ -18,7 +18,7 @@ class SearchPostTest extends TestCase
        $post = create(Post::class, ['title' => 'Hello there.']);
        create(Post::class, [], 100);
        
-       $this->get('/posts?q=there')
+       $this->get(route('posts.index', app()->getLocale()) . '?q=there')
            ->assertSee('Hello there.');
     }
 }

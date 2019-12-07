@@ -2,52 +2,106 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b36ddba-05a9-4468-b24a-714051e3f2d5" name="Default Changelist" comment="kk">
+      <change afterPath="$PROJECT_DIR$/resources/lang/en.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/redpencilit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/redpencilit.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DashboardController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/HomeController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Admin/UsersController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AvatarsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AvatarsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/CommentsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/CommentsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/DraftsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/DraftsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/FavoritePostsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/FavoritePostsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PagesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PermissionsController.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PostsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PostsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RolesController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RegisterConfirmationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RegisterConfirmationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ServicesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ServicesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/SettingsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/SettingsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/TestimonialsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/TestimonialsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserDetailsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserDetailsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserRolesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserRolesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UsersController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Kernel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Permission.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Authenticate.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/LocaleMiddleware.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/LocaleMiddleware.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AppServiceProvider.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/AuthServiceProvider.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/PermissionFactory.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/PostFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/PostFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_11_165949_create_role_user_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_08_11_165949_create_role_user_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_11_180036_create_permissions_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_11_182744_create_permission_role_table.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/bootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Avatar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Avatar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Favorite.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Favorite.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/NavDropdown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/NavDropdown.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/ProgressLevel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/ProgressLevel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Testimonial.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Testimonial.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/UploadLoginForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UploadLoginForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/UploadRegisterForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UploadRegisterForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/UploaderFile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/UploaderFile.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Wysiwyg.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Wysiwyg.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/Comments.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Comments.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/Contact.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Contact.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/Services.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Services.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/pages/UploadView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/UploadView.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en/en.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/fa.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/fa.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/sass/app.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/pages/_home.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/pages/_home.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/components/_buttons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_buttons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/pages/_blog.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/pages/_blog.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/admin/users/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/users/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/login.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/login.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/passwords/email.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/passwords/reset.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth/register.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth/register.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/dashboards/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboards/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/dashboards/settings/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/dashboards/settings/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/auth.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/auth.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/blog.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/blog.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/home.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/master.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/master.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/orders/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/orders/index.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/pages/about.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/about.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/pages/service.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/service.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/partials/footer.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/footer.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/partials/nav-home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/nav-home.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/partials/nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/nav.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/posts/_post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/_post.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/posts/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/posts/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/posts/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/posts/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/show.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/vendor/pagination/paginator.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/vendor/pagination/paginator.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/AdminManageRolesTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/AdminManageRolesTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/AdminTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/AdminTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/CommentTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CommentTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/DraftOrdersTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/DraftOrdersTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/LikePostsTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/LikePostsTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/PermissionTest.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/RoleTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/ManageSettingsTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ManageSettingsTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/OrderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/OrderTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/RegisterationTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/RegisterationTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/SearchPostTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/SearchPostTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/ServicesTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ServicesTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/TestimonialTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/TestimonialTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UploadAvatarTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UploadAvatarTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UploadBlogImageTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UploadBlogImageTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserDetailsTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserDetailsTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/UserProfileTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserProfileTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/RoleTest.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserRegisterTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserRegisterTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/UserRoleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserRoleTest.php" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -63,6 +117,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Vue Single File Component" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -184,16 +239,23 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
       <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
       <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/vendor/kg-bot/laravel-localization-to-vue" />
     </include_path>
   </component>
   <component name="ProjectId" id="1Os6oSV6lEGIlcEed75ohLPr1wu" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
   </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="compactDirectories" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/views/partials" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -204,54 +266,43 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/resources/lang" />
-      <recent name="$PROJECT_DIR$/resources/lang/fa" />
-      <recent name="$PROJECT_DIR$/public" />
-      <recent name="$PROJECT_DIR$/resources/js/pages" />
-      <recent name="$PROJECT_DIR$/resources/views/orders" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/lang" />
       <recent name="$PROJECT_DIR$/resources/views/partials" />
       <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/tests/Feature" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/resources/lang" />
+      <recent name="$PROJECT_DIR$/resources/lang/en" />
+      <recent name="$PROJECT_DIR$/resources/lang/fa" />
+      <recent name="$PROJECT_DIR$/public" />
+      <recent name="$PROJECT_DIR$/resources/js/pages" />
+    </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="PHPUnit.UserProfileTest.update_user_account_requires_valid_email_address">
+  <component name="RunManager" selected="PHPUnit.AdminManageRolesTest.admin_can_get_all_roles_from_a_user">
+    <configuration name="AdminManageRolesTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\AdminManageRolesTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/AdminManageRolesTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
     <configuration name="AdminManageRolesTest.admin_can_add_role_to_a_user" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\AdminManageRolesTest" file="$PROJECT_DIR$/tests/Feature/AdminManageRolesTest.php" method="admin_can_add_role_to_a_user" scope="Method" />
+      <TestRunner class="Tests\Feature\AdminManageRolesTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/AdminManageRolesTest.php" method="admin_can_add_role_to_a_user" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="AdminManageRolesTest.admin_can_get_all_roles_from_a_user" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\AdminManageRolesTest" file="$PROJECT_DIR$/tests/Feature/AdminManageRolesTest.php" method="admin_can_get_all_roles_from_a_user" scope="Method" />
+      <TestRunner class="Tests\Feature\AdminManageRolesTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/AdminManageRolesTest.php" method="admin_can_get_all_roles_from_a_user" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="ManagePostTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\ManagePostTest" file="$PROJECT_DIR$/tests/Feature/ManagePostTest.php" scope="Class" />
+    <configuration name="DraftOrdersTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\DraftOrdersTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/DraftOrdersTest.php" scope="Class" />
       <method v="2" />
     </configuration>
-    <configuration name="RoleTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\RoleTest" file="$PROJECT_DIR$/tests/Feature/RoleTest.php" scope="Class" />
-      <method v="2" />
-    </configuration>
-    <configuration name="UserProfileTest.update_user_account_requires_valid_email_address" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\UserProfileTest" file="$PROJECT_DIR$/tests/Feature/UserProfileTest.php" method="update_user_account_requires_valid_email_address" scope="Method" />
+    <configuration name="DraftOrdersTest.users_can_select_from_setting_and_make_a_draft_from_their_uploads" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\DraftOrdersTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/DraftOrdersTest.php" method="users_can_select_from_setting_and_make_a_draft_from_their_uploads" scope="Method" />
       <method v="2" />
     </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
@@ -260,13 +311,26 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="PHPUnit.UserProfileTest.update_user_account_requires_valid_email_address" />
-        <item itemvalue="PHPUnit.RoleTest" />
         <item itemvalue="PHPUnit.AdminManageRolesTest.admin_can_get_all_roles_from_a_user" />
         <item itemvalue="PHPUnit.AdminManageRolesTest.admin_can_add_role_to_a_user" />
-        <item itemvalue="PHPUnit.ManagePostTest" />
+        <item itemvalue="PHPUnit.AdminManageRolesTest" />
+        <item itemvalue="PHPUnit.DraftOrdersTest.users_can_select_from_setting_and_make_a_draft_from_their_uploads" />
+        <item itemvalue="PHPUnit.DraftOrdersTest" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+    <option name="showServicesTree" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -382,6 +446,12 @@
       <workItem from="1573764785565" duration="2718000" />
       <workItem from="1574432086438" duration="24000" />
       <workItem from="1575043191046" duration="14739000" />
+      <workItem from="1575623939531" duration="9708000" />
+      <workItem from="1575636172230" duration="25000" />
+      <workItem from="1575636225349" duration="147000" />
+      <workItem from="1575636447182" duration="22000" />
+      <workItem from="1575636491808" duration="54000" />
+      <workItem from="1575636572926" duration="53483000" />
     </task>
     <servers />
   </component>
@@ -400,6 +470,52 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="328" y="135" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1575636458477">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="328" y="135" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.800@0.0.1280.800" timestamp="1575636458477" />
+    <state x="378" y="153" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1575683187422">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="378" y="153" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.800@0.0.1280.800" timestamp="1575683187422" />
+    <state width="1280" height="333" key="GridCell.Tab.0.bottom" timestamp="1575668497350">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1280" height="333" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1575668497350" />
+    <state width="1280" height="333" key="GridCell.Tab.0.center" timestamp="1575668497348">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1280" height="333" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1575668497348" />
+    <state width="1280" height="333" key="GridCell.Tab.0.left" timestamp="1575668497347">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1280" height="333" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1575668497347" />
+    <state width="1280" height="333" key="GridCell.Tab.0.right" timestamp="1575668497349">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1280" height="333" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1575668497349" />
+    <state x="259" y="51" key="SettingsEditor" timestamp="1575636722126">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="259" y="51" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1575636722126" />
+    <state x="370" y="150" width="540" height="540" key="StructurePopup" timestamp="1575711790883">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="370" y="150" width="540" height="540" key="StructurePopup/0.0.1280.800@0.0.1280.800" timestamp="1575711790883" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1575722776489">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="500" height="445" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1575722776489" />
+    <state x="305" y="185" key="run.anything.popup" timestamp="1575685696351">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="305" y="185" key="run.anything.popup/0.0.1280.800@0.0.1280.800" timestamp="1575685696351" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1575720650911">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1575720650911" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/redpencilit@LikePostsTest_an_authenticated_user_can_like_a_post.xml" NAME="LikePostsTest.an_authenticated_user_can_like_a_post Coverage Results" MODIFIED="1567857983161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

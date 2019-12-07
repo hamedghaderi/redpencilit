@@ -57,13 +57,14 @@
         data() {
             return {
                 comments: [],
+                locale: Redpencilit.locale
             }
         },
 
         methods: {
             dateTime(date) {
                 const m = moment(date);
-                m.locale('fa');
+                m.locale(this.locale);
 
                 return m.format('DD') + ' ' + m.format('MMMM') + ' ' + m.format('YYYY');
             },
@@ -72,8 +73,8 @@
                 return parseInt(rate);
             },
 
-            deleteComment(cm) {
-                let url = '/comments/' + cm.id;
+            deleteComment(comment) {
+                let url = `/${this.locale}/comments/${comment.id}`;
 
                 axios.delete(url).then(response => {
                     if (response.status == 200) {

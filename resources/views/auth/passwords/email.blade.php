@@ -18,7 +18,7 @@
                         </div>
                     @endif
 
-                    <form method="POST" action="{{ route('password.email') }}" novalidate>
+                    <form method="POST" action="{{ route('password.email', app()->getLocale()) }}" novalidate>
                         @csrf
 
                         <div class="form-group mb-6">
@@ -45,7 +45,7 @@
                                     پسورد جدیدی برایم ایجاد کن
                                 </button>
 
-                                <a href="{{ route('login') }}" class="button button--neutral
+                                <a href="{{ route('login', app()->getLocale()) }}" class="button button--neutral
                                 shadow-none hover:shadow-none
                                 mr-auto py-2 px-3">
                                     منصرف شدم

@@ -7,7 +7,8 @@
             </li>
         @else
             <li class="page-item page-caret">
-                <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')">
+                <a class="page-link" href="{{ app()->getLocale() . '/' . $paginator->previousPageUrl() }}" rel="prev"
+                   aria-label="@lang('pagination.previous')">
                     <i class="fas fa-angle-right"></i>
                 </a>
             </li>
@@ -26,7 +27,9 @@
                     @if ($page == $paginator->currentPage())
                         <li class="page-item active" aria-current="page"><span class="page-link">{{ $page }}</span></li>
                     @else
-                        <li class="page-item"><a class="page-link" href="{{ $url }}">{{ $page }}</a></li>
+                        <li class="page-item"><a class="page-link" href="{{ app()->getLocale() . '/' . $url }}">{{
+                        $page
+                        }}</a></li>
                     @endif
                 @endforeach
             @endif
@@ -35,7 +38,9 @@
         {{-- Next Page Link --}}
         @if ($paginator->hasMorePages())
             <li class="page-item page-caret">
-                <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="@lang('pagination
+                <a class="page-link" href="{{ app()->getLocale() . '/' . $paginator->nextPageUrl() }}" rel="next"
+                   aria-label="@lang
+                ('pagination
                 .next')">
                     <i class="fas fa-angle-left"></i>
                 </a>

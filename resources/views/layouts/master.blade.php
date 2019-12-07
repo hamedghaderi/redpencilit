@@ -18,9 +18,13 @@
         window.Redpencilit = {!!
             json_encode([
                 'signed' => Auth::check(),
-                'user' => Auth::user()
+                'user' => Auth::user(),
+                'locale' => app()->getLocale()
             ]);
          !!}
+            window.default_locale = "{{ config('app.locale') }}";
+            window.fallback_locale = "{{ config('app.fallback_locale') }}";
+            window.messages = @json($messages);
     </script>
 </head>
 <body>

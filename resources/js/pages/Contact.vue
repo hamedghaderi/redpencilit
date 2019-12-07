@@ -2,13 +2,14 @@
     <div class="w-full px-8 md:px-24 contact md:h-screen md:min-h-screen">
         <div class="flex items-center justify-center">
             <div class="w-full md:w-2/3 lg:w-1/3">
-                <h3 class="title text-center">ارتباط با ما</h3>
+                <h3 class="title text-center">{{ trans.get('__JSON__.contact us')}}</h3>
 
-                <p class="text-grey-dark text-sm leading-loose mb-3">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم
-                    از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
+                <p class="text-grey-dark text-sm leading-loose mb-3">
+                    {{ trans.get(`__JSON__.Returns a string with the first character of str capitalized, if that character is alphabetic. Note that 'alphabetic' is determined by the current locale.`) }}
+                </p>
 
                 <div class="mb-4">
-                    <input name="name" type="text" v-model="name" placeholder="نام و نام خانوادگی"
+                    <input name="name" type="text" v-model="name" :placeholder="trans.get('__JSON__.full name')"
                            class="text-sm bg-white rounded w-full px-4 py-3 border focus:outline-none focus:border-indigo">
 
                     <div class="feedback feedback--invalid" v-if="errors.has('name')">
@@ -17,7 +18,7 @@
                 </div>
 
                 <div class="mb-4">
-                    <input name="email" v-model="email" type="email" placeholder="ایمیل"
+                    <input name="email" v-model="email" type="email" :placeholder="trans.get('__JSON__.email')"
                            class="text-sm bg-white rounded w-full px-4 py-3 border focus:outline-none focus:border-indigo">
 
                     <div class="feedback feedback--invalid" v-if="errors.has('email')">
@@ -29,7 +30,7 @@
                         <textarea name="message" v-model="message" id="message"
                                   class="text-sm h-32 bg-white rounded w-full px-4 py-3 border focus:outline-none
                                   focus:border-indigo"
-                                  placeholder="پیام"> </textarea>
+                                  :placeholder="trans.get('__JSON__.message')"> </textarea>
 
                     <div class="feedback feedback--invalid" v-if="errors.has('message')">
                         {{ errors.get('message') }}
@@ -47,19 +48,18 @@
                             :class="{'text-yellow-dark': item['hover'] === true || item['value'] === true}"
                         >
                             <i class="la la-star text-lg"></i>
-<!--                            <i class="far fa-star hover:cursor-pointer" :class="{'fas': item['value'] === true}"></i>-->
                         </li>
                     </ul>
 
                     <span class="text-grey-dark text-sm mr-2">
-                        میزان رضایتتان از وبسایت: {{this.rate}}
-                        <em v-if="rate">از 5</em></span>
+                          {{ trans.get('__JSON__.your score')}} {{this.rate}}
+                        <em v-if="rate">{{ trans.get('__JSON__.from')}} 5</em></span>
                         <input type="hidden" name="rate" v-model="rate">
                 </div>
 
                 <div class="form-group">
-                    <button type="submit" class="button button--primary" @click="submitComment">ارسال
-                        پیام
+                    <button type="submit" class="button button--primary" :disabled="disabled" @click="submitComment">
+                        {{ trans.get('__JSON__.send message') }}
                     </button>
                 </div>
             </div>
@@ -79,7 +79,9 @@
                 email: '',
                 message: '',
                 rate: '',
+                disabled: false,
                 errors: new Errors(),
+                locale: Redpencilit.locale,
                 items: [
                     {key: 1, value: false, hover: false},
                     {key: 2, value: false, hover: false},
@@ -102,10 +104,16 @@
                     data.rate = this.rate;
                 }
 
-                axios.post('/comments', data).then(res => {
+                let url = `/${this.locale}/comments`;
+
+                this.disabled = true;
+
+                axios.post(url, data).then(res => {
+                    this.disabled = false;
                     flash(res.data);
                     this.clear();
                 }).catch(error => {
+                    this.disabled = false;
                     this.errors.record(error.response.data.errors);
                 });
             },

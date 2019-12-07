@@ -23,7 +23,7 @@ class AdminManageRolesTest extends TestCase
         $john = create(User::class);
         
         $this->patch(
-            route('admin.users.patch', $john), [
+            route('admin.users.patch', [app()->getLocale(), $john]), [
             'roles' => [$author->id, $basic->id]
         ]);
         
@@ -48,7 +48,7 @@ class AdminManageRolesTest extends TestCase
         $john->addRole($basic);
     
         $this->patch(
-            route('admin.users.patch', $john), [
+            route('admin.users.patch', [app()->getLocale(), $john]), [
             'roles' => []
         ]);
     

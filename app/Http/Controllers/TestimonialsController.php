@@ -7,7 +7,14 @@ use App\Comment;
 class TestimonialsController extends Controller
 {
     
-    public function store(Comment $comment)
+    /**
+     * Create a new testimonial.
+     *
+     * @param           $locale
+     * @param  Comment  $comment
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function store($locale, Comment $comment)
     {
         $attributes = request()->validate([
             'body' => 'required|min:5|max:100'

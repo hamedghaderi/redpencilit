@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use App\User;
-use Illuminate\Validation\Rule;
 
 class UsersController extends Controller
 {
@@ -18,10 +17,12 @@ class UsersController extends Controller
     {
         if (request()->has('type') && request('type') === 'coworkers') {
             $users = User::whereHas('roles')->paginate(10);
-        } else if (request()->has('type') && request('type') === 'customers') {
-            $users = User::whereDoesntHave('roles')->paginate(10);
         } else {
-            $users = User::paginate(10);
+            if (request()->has('type') && request('type') === 'customers') {
+                $users = User::whereDoesntHave('roles')->paginate(10);
+            } else {
+                $users = User::paginate(10);
+            }
         }
         
         $roles = Role::all();
@@ -33,35 +34,38 @@ class UsersController extends Controller
      * Update user details.
      *
      * @param  User  $user
-     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(User $user)
+    public function update($locale, User $user)
     {
-        $attributes = request()->validate(
-            [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => 'required|string|email|max:255|unique:users,id,' . $user->id,
-                'phone' => ['required', 'regex:/^09\d{9}$/', 'numeric'],
-            ]);
+        $attributes = request()->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,id,'.$user->id,
+                'phone' => 'required',
+        ]);
         
         $user->update($attributes);
         
-        return redirect('/dashboard/'.$user->id);
+        session()->flash('flash', 'اطلاعات با موفقیت به روز رسانی شد.');
+        
+        return back();
     }
     
     /**
      * Delete a user from DB.
      *
+     * @param        $locale
      * @param  User  $user
-     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     *
      * @throws \Exception
      */
-    public function destroy(User $user)
+    public function destroy($locale, User $user)
     {
         $user->delete();
         
-        return redirect('/users');
+        \session()->flash('حساب کاربری شما حذف شد.');
+        
+        return redirect(route('admin.users.index', $locale));
     }
 }

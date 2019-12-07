@@ -11,6 +11,8 @@ class Post extends Model
     
     protected $appends = ['isFavorited'];
     
+    protected $withCount = ['favorites'];
+    
     /**
      * Get the path of a single post.
      *

@@ -21,7 +21,7 @@ class CommentTest extends TestCase
         
         $this->makeAdmin();
         
-        $this->postJson('/comments',  [
+        $this->postJson(route('comments.store', app()->getLocale()),  [
             'name' => 'John Doe',
             'email' => 'john@doe.com',
             'message' => 'My Message',
@@ -45,7 +45,7 @@ class CommentTest extends TestCase
         
         Mail::fake();
     
-        $this->postJson('/comments',  [
+        $this->postJson(route('comments.store', app()->getLocale()),  [
             'name' => 'John Doe',
             'email' => 'john@doe.com',
             'message' => 'My Message'
@@ -57,7 +57,7 @@ class CommentTest extends TestCase
     /** @test **/
     public function a_contact_message_requires_a_name()
     {
-        $this->post('/comments',  [
+        $this->post(route('comments.store', app()->getLocale()),  [
             'name' => null,
             'email' => 'john@doe.com',
             'message' => 'My Message'
@@ -67,7 +67,7 @@ class CommentTest extends TestCase
     /** @test **/
     public function a_contact_message_name_should_be_at_least_3_chars()
     {
-        $this->post('/comments',  [
+        $this->post(route('comments.store', app()->getLocale()),  [
             'name' => 'll',
             'email' => 'john@doe.com',
             'message' => 'My Message'
@@ -77,7 +77,7 @@ class CommentTest extends TestCase
     /** @test **/
     public function a_contact_requires_an_email()
     {
-        $this->post('/comments',  [
+        $this->post(route('comments.store', app()->getLocale()),  [
             'name' => 'John Doe',
             'email' => null,
             'message' => 'My Message'
@@ -87,7 +87,7 @@ class CommentTest extends TestCase
     /** @test **/
     public function a_contact_email_should_be_a_valid_email()
     {
-        $this->post('/comments',  [
+        $this->post(route('comments.store', app()->getLocale()),  [
             'name' => 'John Doe',
             'email' => 'kjasdlfjasdkf',
             'message' => 'My Message'
@@ -97,7 +97,7 @@ class CommentTest extends TestCase
     /** @test **/
     public function a_contact_requires_a_message()
     {
-        $this->post('/comments',  [
+        $this->post(route('comments.store', app()->getLocale()),  [
             'name' => 'John Doe',
             'email' => 'john@doe.com',
             'message' => null
@@ -107,7 +107,7 @@ class CommentTest extends TestCase
     /** @test **/
     public function a_contact_message_should_be_at_least_5_characters()
     {
-        $this->post('/comments',  [
+        $this->post(route('comments.store', app()->getLocale()),  [
             'name' => 'John Doe',
             'email' => 'john@doe.com',
             'message' => 'kjkj'
@@ -123,7 +123,8 @@ class CommentTest extends TestCase
         
         $comment = create(Comment::class);
         
-        $this->get('/comments')->assertSee($comment->name);
+        $this->get(route('admin.users.comments', app()->getLocale()))
+             ->assertSee($comment->name);
     }
     
     /** @test **/
@@ -135,7 +136,7 @@ class CommentTest extends TestCase
        
        $comment = create(Comment::class);
        
-       $this->deleteJson('/comments/' . $comment->id);
+       $this->deleteJson(route('comment.destroy', [app()->getLocale(), $comment]));
        
        $this->assertDatabaseMissing('comments', [
            'name' => $comment->name,

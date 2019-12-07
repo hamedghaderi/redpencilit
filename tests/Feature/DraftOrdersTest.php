@@ -29,7 +29,7 @@ class DraftOrdersTest extends TestCase
         create(OrderDetail::class, ['order_id' => $order->id]);
         
         $this->json(
-            'post', '/users/'.$user->id.'/drafts', [
+            'post', route('drafts.store', [app()->getLocale(), $user]), [
             'service_id' => $service->id,
             'order_id' => $order->id
         ]);

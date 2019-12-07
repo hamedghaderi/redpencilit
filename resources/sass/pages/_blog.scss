@@ -48,7 +48,7 @@
 }
 
 .hero {
-  @apply w-full mb-8 flex relative items-center justify-center flex-col;
+  @apply w-full flex relative items-center justify-center flex-col;
   background-repeat: no-repeat;
   background-size: cover;
   height: 400px;
@@ -62,7 +62,7 @@
   }
 
   &__title {
-    @apply text-white z-10 text-4xl text-center leading-loose mb-4 relative;
+    @apply text-white z-10 text-center leading-loose mb-4 relative;
     max-width: 50%;
   }
 

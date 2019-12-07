@@ -1,10 +1,10 @@
 @extends('layouts.auth')
 
 @section('nav-link')
-    <a href="{{ route('login') }}" class="block text-grey-darker text-sm rounded py-1 mb-1 sm:mb-0
+    <a href="{{ route('login', app()->getLocale()) }}" class="block text-grey-darker text-sm rounded py-1 mb-1 sm:mb-0
                 sm:mr-2 px-2
                 hover:bg-grey-light sm:hidden">قبلا حساب ایجاد کرده‌ام</a>
-    <a href="{{ route('login') }}"
+    <a href="{{ route('login', app()->getLocale()) }}"
        class="hidden sm:block
                 button
                 button--info
@@ -16,7 +16,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container mb-12">
         <div class="w-full sm:w-3/4 md:w-2/3 lg:w-2/5 mx-auto">
             <div class="card mt-16">
                 <h2 class="text-lg md:text-2xl font-bold text-grey-darker mb-4 text-center font-normal">ایجاد حساب کاربری</h2>
@@ -26,7 +26,8 @@
                     خود را
                     هر چه سریعتر برای ما ارسال کنید.</p>
 
-                <form method="POST" action="/register" class="text-md w-full" novalidate>
+                <form method="POST" action="{{ '/'. app()->getLocale() . '/register' }}" class="text-md w-full"
+                      novalidate>
                     @csrf
 
                     <div class="mb-4">

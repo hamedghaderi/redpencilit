@@ -1,21 +1,24 @@
 @extends('layouts.blog')
 
 @section('content')
-
     <div class="container">
         <div class="w-3/4 mx-auto mb-8">
 
             <div class="flex items-center mb-2">
-                <h1 class="mb text-2xl">وبلاگ</h1>
+                <h1 class="mb text-2xl">{{ ucwords(__('blog')) }}</h1>
 
-                <p class="mr-auto text-grey-darker">تعداد کل پست‌ها: {{ $posts->total() }} پست</p>
+                <p class="mr-auto text-grey-darker text-sm">
+                    {{ ucwords(__('total posts')) }}:
+                    {{ $posts->total() }}
+                    {{ __('post(s)') }}
+                </p>
             </div>
 
             <hr>
 
             <div class="search-box">
-                <form action="/posts" method="get">
-                    <input type="search" class="search-input" name="q" placeholder="در جستجوی آنم ...">
+                <form action="{{ route('posts.index', app()->getLocale()) }}" method="get">
+                    <input type="search" class="search-input" name="q" placeholder="{{ __('I am searching for') }}...">
 
                     <span class="search-icon">
                         <i class="fas fa-search"></i>
@@ -28,10 +31,10 @@
             @forelse($posts as $post)
                 @include('posts._post', $post)
             @empty
-                <h4>لیست پست‌ها</h4>
+                <h4>{{ __('Posts List') }}</h4>
 
                 <div class="article">
-                    <p>هنوز هیچگونه پستی ثبت نشده است.</p>
+                    <p>{{ __('There is\'nt any post yet!') }}</p>
                 </div>
             @endforelse
 

@@ -47,11 +47,11 @@ class OrdersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param        $locale
      * @param  User  $user
-     *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|void
      */
-    public function store(User $user)
+    public function store($locale, User $user)
     {
         if (auth()->user()->isNot($user)) {
             return abort(403);
@@ -138,12 +138,14 @@ class OrdersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param         $locale
      * @param  User   $user
      * @param  Order  $order
-     *
      * @return void
+     *
+     * @throws \Exception
      */
-    public function destroy(User $user, Order $order)
+    public function destroy($locale, User $user, Order $order)
     {
         if (auth()->user()->isNot($user)) {
             abort(4003);
@@ -157,10 +159,9 @@ class OrdersController extends Controller
         $order->delete();
         $order->details()->delete();
         
-        return response()->json(
-            [
-                'status' => 200,
-            ]);
+        return response()->json([
+            'status' => 200,
+        ]);
     }
     
     /**

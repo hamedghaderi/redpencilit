@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserRegisterTest extends TestCase
 {
+    
     use RefreshDatabase;
     
     /** @test * */
@@ -24,11 +25,11 @@ class UserRegisterTest extends TestCase
             'phone' => '09369396387'
         ];
         
-        $response = $this->json('post', '/register', $user);
+        $response = $this->json('post', route('register', app()->getLocale()), $user);
         
         $response->assertStatus(201)
-            ->assertJson(['name' => 'John Doe'])
-            ->assertJsonMissing(['password']);
+                 ->assertJson(['name' => 'John Doe'])
+                 ->assertJsonMissing(['password']);
     }
     
     /** @test * */
@@ -42,18 +43,21 @@ class UserRegisterTest extends TestCase
         
         $user->password_confirmation = $user->password;
         
-        $response = $this->postJson('register', $user->makeVisible('password')->makeVisible('email')->toArray());
+        $response = $this->postJson(
+            route('register', app()->getLocale()),
+            $user->makeVisible('password')->makeVisible('email')->toArray()
+        );
+        
         $user = User::first();
         $this->assertCount(1, $user->roles);
         $this->assertDatabaseHas('users', ['name' => $user->name]);
-
+        
         $this->assertTrue($user->isSuperAdmin());
     }
     
-    /** @test **/
+    /** @test * */
     public function the_second_user_has_not_any_roles()
     {
-        
         /*
         |--------------------------------------------------------------------------
         | First User
@@ -61,21 +65,19 @@ class UserRegisterTest extends TestCase
         */
         create(User::class);
         
-        
         /*
         |--------------------------------------------------------------------------
         | Second User
         |--------------------------------------------------------------------------
-        */ 
+        */
         $user = make(User::class, ['name' => 'John']);
         $user->password_confirmation = $user->password;
-    
+        
         $response = $this->json('post', '/register', $user->makeVisible('password')->makeVisible('email')->toArray());
         $user = User::first();
         $this->assertCount(0, $user->roles);
-    
+        
         $this->assertDatabaseHas('users', ['name' => $user->name]);
         $this->assertFalse($user->isSuperAdmin());
-       
     }
 }

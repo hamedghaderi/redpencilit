@@ -16,21 +16,24 @@
         window.Redpencilit = {!!
             json_encode([
                 'signed' => Auth::check(),
-                'user' => Auth::user()
+                'user' => Auth::user(),
+                'locale' => app()->getLocale()
             ]);
-         !!}
+         !!};
+        window.default_locale = "{{ config('app.locale') }}";
+        window.fallback_locale = "{{ config('app.fallback_locale') }}";
+        window.messages = @json($messages);
     </script>
 </head>
 <body>
 <div id="app" class="overflow-hidden">
-
     @yield('content')
 
     @include('partials.footer')
-
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>
+@yield('script')
 </body>
 </html>
 

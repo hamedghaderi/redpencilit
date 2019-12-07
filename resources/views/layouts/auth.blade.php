@@ -17,7 +17,8 @@
         window.Redpencilit = {!!
             json_encode([
                 'signed' => Auth::check(),
-                'user' => Auth::user()
+                'user' => Auth::user(),
+                'locale' => app()->getLocale()
             ]);
          !!}
     </script>
@@ -50,11 +51,16 @@
 
 
             <div class="px-2 pt-2 pb-4 sm:p-0 sm:flex" :class="isOpen ? 'block' : 'hidden'">
-                <a href="/posts" class="block text-grey-darker text-sm rounded py-1 mb-1 sm:mr-2 sm:mb-0 px-2
+                <a href="{{ route('posts.index', app()->getLocale()) }}" class="block text-grey-darker text-sm rounded
+                py-1 mb-1
+                sm:mr-2
+                sm:mb-0 px-2
                 hover:bg-grey-light">وبلاگ</a>
-                <a href="/about" class="block text-grey-darker text-sm rounded py-1 mb-1 sm:mb-0 sm:mr-2 px-2
+                <a href="{{ route('about', app()->getLocale()) }}" class="block text-grey-darker text-sm rounded py-1 mb-1
+                sm:mb-0
+                sm:mr-2 px-2
                 hover:bg-grey-light">درباره</a>
-                <a href="/contact" class="block text-grey-darker text-sm rounded py-1 px-2
+                <a href="{{ route('contact', app()->getLocale()) }}" class="block text-grey-darker text-sm rounded py-1 px-2
                 hover:bg-grey-light">تماس با
                     ما</a>
 

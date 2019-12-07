@@ -39,7 +39,7 @@
 
                 form.append('avatar', this.avatarFormInput.files[0]);
 
-                axios.post(`/api/users/${this.user}/avatar`, form)
+                axios.post(`/${Redpencilit.locale}/api/users/${this.user}/avatar`, form)
                     .then(response => {
                         console.log(this.imageUrl);
                         this.path = '/storage/' + response.data.path;

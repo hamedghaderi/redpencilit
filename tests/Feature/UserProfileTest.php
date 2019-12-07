@@ -25,7 +25,7 @@ class UserProfileTest extends TestCase
            'phone' => '09360000000'
        ];
 
-       $this->patch('/dashboard/' . $user->id, $attributes);
+       $this->patch(route('dashboard.user.update', [app()->getLocale(), $user]), $attributes);
 
       $this->assertDatabaseHas('users', $attributes);
    }
@@ -33,75 +33,46 @@ class UserProfileTest extends TestCase
    /** @test **/
    public function guests_cannot_update_user_information()
    {
-       $this->patch('/dashboard/1', [])->assertRedirect('login');
+       $this->patch(route('dashboard.user.update', [app()->getLocale(), 1]))
+            ->assertRedirect(route('login', app()->getLocale()));
    }
 
    /** @test **/
     public function update_user_account_requires_valid_phone_number()
     {
-        $user = $this->signIn(
-            factory(User::class)->create([
-                'name' => 'Jane',
-                'email' => 'jane@doe.com',
-                'phone' => '09369396387'
-            ])
-        );
+        $user = $this->signIn();
 
-        $attributes = ['phone' => null];
-
-        $this->patch('/dashboard/' . $user->id, $attributes)
-            ->assertSessionHasErrors('phone');
-
-        $attributes = ['phone' => '9023920342039'];
-
-        $this->patch('/dashboard/' . $user->id, $attributes)
+        $this->patch(route('dashboard.user.update', ['fa', $user]), ['phone' => ''])
             ->assertSessionHasErrors('phone');
     }
-
+   
     /** @test **/
     public function update_user_account_requires_valid_email_address()
     {
-        $this->withoutExceptionHandling();
-        
-        $user = $this->signIn(
-            factory(User::class)->create([
-                'name' => 'Jane',
-                'email' => 'jane@doe.com',
-                'phone' => '09369396387'
-            ])
-        );
+        $user = $this->signIn();
 
-        $this->patch(route('dashboard.user.update', [$user, 'en']), ['email' => null])
-            ->assertSessionHasErrors('email');
-        
-        $this->patch(route('dashboard.user.update', [$user, 'en']), ['email' => 'johasdfasdf'])
+        $this->patch(route('dashboard.user.update', ['fa', $user]), ['email' => ''])
             ->assertSessionHasErrors('email');
     }
-
+    
     /** @test **/
-    public function update_user_account_requires_valid_name()
+    public function email_should_be_a_valid_email_for_update()
     {
-        $user = $this->signIn(
-            factory(User::class)->create([
-                'name' => 'Jane',
-                'email' => 'jane@doe.com',
-                'phone' => '09369396387'
-            ])
-        );
-
-        $attributes = [
-            'name' => null
-        ];
-
-        $this->patch('/dashboard/' . $user->id, $attributes)
-            ->assertSessionHasErrors('name');
-
-
-        $attributes = [
-            'email' => 'ab'
-        ];
-
-        $this->patch('/dashboard/' . $user->username, $attributes)
-            ->assertSessionHasErrors('name');
+       $user = $this->signIn();
+    
+        $this->patch(route('dashboard.user.update', ['fa', $user]), ['email' => 'johasdfasdf'])
+             ->assertSessionHasErrors('email');
+    }
+    
+    /** @test **/
+    public function updating_a_user_requires_a_name()
+    {
+        $user = $this->signIn();
+        
+        $this->patch(route('dashboard.user.update', ['fa', $user]), [
+            'name' => '',
+            'email' => 'hamedghaderii@gmail.com',
+            'phone' => '09369396387'
+        ])->assertSessionHasErrors('name');
     }
 }

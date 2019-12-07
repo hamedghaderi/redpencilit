@@ -20,7 +20,8 @@
         window.Redpencilit = {!!
             json_encode([
                 'signed' => Auth::check(),
-                'user' => Auth::user()
+                'user' => Auth::user(),
+                'locale' => app()->getLocale()
             ]);
          !!}
     </script>

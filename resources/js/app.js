@@ -5,6 +5,11 @@ window.Vue = require('vue');
 
 let authorizations = require('./authorizations');
 
+import sal from 'sal.js';
+
+window.sal = sal;
+
+
 window.events = new Vue();
 
 window.PersianNumber =  new PersianNumber();
@@ -13,6 +18,15 @@ window.PersianNumber =  new PersianNumber();
 window.flash = function (message, level = 'success') {
     window.events.$emit('flash', {message, level});
 }
+
+import Lang from "lang.js";
+
+const default_locale = window.default_locale;
+const fallback_locale = window.fallback_locale;
+const messages = window.messages;
+
+let test = Vue.prototype.trans = new Lang({ messages, locale: default_locale, fallback: fallback_locale});
+console.log(test.messages);
 
 
 Vue.prototype.authorize = function (...params) {

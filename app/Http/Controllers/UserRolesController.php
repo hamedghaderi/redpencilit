@@ -9,7 +9,14 @@ use Illuminate\Http\Request;
 class UserRolesController extends Controller
 {
     
-    public function store(User $user)
+    /**
+     * Set a role(s) for given user.
+     *
+     * @param        $locale
+     * @param  User  $user
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store($locale, User $user)
     {
        request()->validate([
            'roles' => 'sometimes|array',

@@ -2,12 +2,13 @@
 
 namespace App\Providers;
 
-use App\Setting;
-use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use KgBot\LaravelLocalization\Facades\ExportLocalizations;
 
 class AppServiceProvider extends ServiceProvider
 {
+    
     /**
      * Register any application services.
      *
@@ -15,9 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-    
     }
-
+    
     /**
      * Bootstrap any application services.
      *
@@ -25,5 +25,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::composer('*', function ($view) {
+            return $view->with([
+                'messages' => ExportLocalizations::export()->toFlat()
+            ]);
+        });
     }
 }

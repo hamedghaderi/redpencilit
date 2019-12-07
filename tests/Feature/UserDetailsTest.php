@@ -20,7 +20,7 @@ class UserDetailsTest extends TestCase
         
         $userDetails = make(UserDetail::class);
         
-        $this->post('/details', $userDetails->toArray());
+        $this->post(route('details.store', app()->getLocale()), $userDetails->toArray());
         
         $this->assertDatabaseHas('user_details', [
             'user_id' => $user->id,
@@ -41,7 +41,7 @@ class UserDetailsTest extends TestCase
        
        $userDetails = create(UserDetail::class, ['user_id' => $user->id]);
        
-       $this->patch('/users/' . auth()->id() . '/details' , [
+       $this->patch(route('details.update', [app()->getLocale(), $user]) , [
            'country_id' => 3,
            'address' => 'Baharan',
            'field' => 'Computer',

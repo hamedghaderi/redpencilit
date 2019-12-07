@@ -4,7 +4,6 @@
 
   &:focus {
     @apply outline-none shadow-outline-indigo;
-
   }
 
   &:hover {
@@ -18,6 +17,15 @@
 
   &--primary {
     @apply bg-indigo text-white;
+
+    &:disabled {
+      @apply border border-indigo-lighter bg-indigo-lightest text-indigo-lighter;
+
+      &:hover {
+        @apply shadow-none;
+        transform: none;
+      }
+    }
   }
 
   &--success {

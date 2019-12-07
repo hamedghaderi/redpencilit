@@ -24,14 +24,15 @@
                 uppy: null,
                 documents: [],
                 endpoint: null,
+                locale: Redpencilit.locale
             }
         },
 
         created() {
             if (!this.user) {
-                this.endpoint = `/users/${window.Redpencilit.user.id}/orders`;
+                this.endpoint = `/${this.locale}/users/${window.Redpencilit.user.id}/orders`;
             } else {
-                this.endpoint = `/users/${this.user.id}/orders`;
+                this.endpoint = `/${this.locale}/users/${this.user.id}/orders`;
             }
         },
 

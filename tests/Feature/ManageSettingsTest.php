@@ -8,7 +8,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ManageSettingsTest extends TestCase
 {
-    
     use RefreshDatabase;
     
     /** @test * */
@@ -16,7 +15,8 @@ class ManageSettingsTest extends TestCase
     {
         factory(Setting::class)->create();
         
-        $this->patch('/dashboard/settings', [])->assertRedirect('login');
+        $this->patch(route('settings.update', [app()->getLocale(), 1]), [])
+             ->assertRedirect(route('login', app()->getLocale()));
     }
     
     /** @test * */
@@ -28,7 +28,7 @@ class ManageSettingsTest extends TestCase
         
         $settings = factory(Setting::class)->make();
         
-        $this->post('/settings', $settings->toArray());
+        $this->post(route('settings.store', app()->getLocale()), $settings->toArray());
         
         $this->assertDatabaseHas(
             'settings', [
@@ -46,7 +46,7 @@ class ManageSettingsTest extends TestCase
         
         $setting = factory(Setting::class)->make();
         
-        $this->post('/settings', $setting->toArray())
+        $this->post(route('settings.store', app()->getLocale()), $setting->toArray())
              ->assertStatus(403);
     }
     
@@ -64,7 +64,7 @@ class ManageSettingsTest extends TestCase
             'base_price_for_docs' => 50000
         ];
         
-        $this->patch('/settings/1', $settings);
+        $this->patch(route('settings.update', [app()->getLocale(), 1]), $settings);
         
         $this->assertDatabaseHas('settings', $settings);
     }
@@ -74,7 +74,7 @@ class ManageSettingsTest extends TestCase
     {
         $this->signIn();
         
-        factory(Setting::class)->create();
+        $setting = factory(Setting::class)->create();
         
         $settings = [
             'upload_articles_per_day' => 4,
@@ -83,7 +83,8 @@ class ManageSettingsTest extends TestCase
             'base_price_for_docs' => 50000
         ];
         
-        $this->patch('/settings/1', $settings)->assertStatus(403);
+        $this->patch(route('settings.update', [app()->getLocale(), $setting]), $settings)
+             ->assertStatus(403);
     }
     
     /** @test * */
@@ -98,7 +99,7 @@ class ManageSettingsTest extends TestCase
             'upload_words_per_day' => 20000
         ];
         
-        $this->patch('/settings/1', $settings)
+        $this->patch(route('settings.update', [app()->getLocale(), $setting]), $settings)
              ->assertSessionHasErrors('upload_articles_per_day');
         
         $settings = [
@@ -106,14 +107,14 @@ class ManageSettingsTest extends TestCase
             'upload_words_per_day' => 20000
         ];
         
-        $this->patch('settings/1', $settings)
+        $this->patch(route('settings.update', [app()->getLocale(), $setting]), $settings)
              ->assertSessionHasErrors('upload_articles_per_day');
     }
     
     /** @test * */
     public function update_settings_requires_a_valid_word_count()
     {
-        factory(Setting::class)->create();
+        $setting = factory(Setting::class)->create();
         
         $this->makeAdmin();
         
@@ -122,7 +123,7 @@ class ManageSettingsTest extends TestCase
             'upload_words_per_day' => null
         ];
         
-        $this->patch('/settings/1', $settings)
+        $this->patch(route('settings.update', [app()->getLocale(), $setting]), $settings)
              ->assertSessionHasErrors('upload_words_per_day');
         
         $settings = [
@@ -130,14 +131,14 @@ class ManageSettingsTest extends TestCase
             'upload_words_per_day' => 'hello'
         ];
         
-        $this->patch('/settings/1', $settings)
+        $this->patch(route('settings.update', [app()->getLocale(), $setting]), $settings)
              ->assertSessionHasErrors('upload_words_per_day');
     }
     
     /** @test * */
     public function update_settings_requires_a_valid_price_per_words()
     {
-        factory(Setting::class)->create();
+        $setting = factory(Setting::class)->create();
         
         $this->makeAdmin();
         
@@ -145,21 +146,21 @@ class ManageSettingsTest extends TestCase
             'price_per_word' => null
         ];
         
-        $this->patch('/settings/1', $settings)
+        $this->patch(route('settings.update', [app()->getLocale(), $setting]), $settings)
              ->assertSessionHasErrors('price_per_word');
         
         $settings = [
             'price_per_word' => 'hello'
         ];
         
-        $this->patch('/settings/1', $settings)
+        $this->patch(route('settings.update', [app()->getLocale(), $setting]), $settings)
              ->assertSessionHasErrors('price_per_word');
     }
     
     /** @test * */
     public function update_settings_requires_a_valid_base_price()
     {
-        factory(Setting::class)->create();
+        $setting = factory(Setting::class)->create();
         
         $this->makeAdmin();
         
@@ -167,14 +168,14 @@ class ManageSettingsTest extends TestCase
             'base_price_for_docs' => null
         ];
         
-        $this->patch('/settings/1', $settings)
+        $this->patch(route('settings.update', [app()->getLocale(), $setting]), $settings)
              ->assertSessionHasErrors('base_price_for_docs');
         
         $settings = [
             'base_price_for_docs' => 'hello'
         ];
         
-        $this->patch('/settings/1', $settings)
+        $this->patch(route('settings.update', [app()->getLocale(), $setting]), $settings)
              ->assertSessionHasErrors('base_price_for_docs');
     }
 }

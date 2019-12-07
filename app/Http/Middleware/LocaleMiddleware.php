@@ -15,8 +15,12 @@ class LocaleMiddleware
      */
     public function handle($request, Closure $next)
     {
-        app()->setLocale($request->locale);
-        
+        if ($request->locale !== 'fa' && $request->locale !== 'en') {
+            app()->setLocale('fa');
+        } else {
+            app()->setLocale($request->locale);
+        }
+    
         return $next($request);
     }
 }

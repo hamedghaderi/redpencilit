@@ -1,5 +1,6 @@
 @import "~@uppy/core/dist/style.css";
 @import "~@uppy/dashboard/dist/style.css";
+@import '~sal.js/dist/sal.css';
 /**
 * This injects Tailwind's base styles, which is a combination of
 * Normalize.css and some additional base styles.
@@ -355,6 +356,13 @@ trix-editor:focus {
 }
 .button--primary {
   @apply bg-indigo text-white;
+}
+.button--primary:disabled {
+  @apply border border-indigo-lighter bg-indigo-lightest text-indigo-lighter;
+}
+.button--primary:disabled:hover {
+  @apply shadow-none;
+  transform: none;
 }
 .button--success {
   @apply bg-green text-white;
@@ -1124,7 +1132,7 @@ trix-editor:focus {
 }
 
 .hero {
-  @apply w-full mb-8 flex relative items-center justify-center flex-col;
+  @apply w-full flex relative items-center justify-center flex-col;
   background-repeat: no-repeat;
   background-size: cover;
   height: 400px;
@@ -1136,7 +1144,7 @@ trix-editor:focus {
   background-color: rgba(0, 0, 0, 0.6);
 }
 .hero__title {
-  @apply text-white z-10 text-4xl text-center leading-loose mb-4 relative;
+  @apply text-white z-10 text-center leading-loose mb-4 relative;
   max-width: 50%;
 }
 .hero__avatar {
@@ -1232,6 +1240,7 @@ trix-editor:focus {
   }
 }
 
+/** Animation **/
 /**
  * Here you would add any of your custom component classes; stuff that you'd
  * want loaded *before* the utilities so that the utilities could still

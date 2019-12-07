@@ -17,9 +17,9 @@ class CommentsController extends Controller
      */
     public function index()
     {
-       $comments = Comment::latest()->paginate(25);
-       
-       return view('comments.index', compact('comments'));
+        $comments = Comment::latest()->paginate(25);
+        
+        return view('comments.index', compact('comments'));
     }
     
     /**
@@ -48,12 +48,13 @@ class CommentsController extends Controller
     /**
      * Delete a comment if exists.
      *
+     * @param           $locale
      * @param  Comment  $comment
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      *
      * @throws \Exception
      */
-    public function destroy(Comment $comment)
+    public function destroy($locale, Comment $comment)
     {
         $comment->delete();
         
