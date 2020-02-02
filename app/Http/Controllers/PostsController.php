@@ -37,10 +37,7 @@ class PostsController extends Controller
      */
     public function show($locale, Post $post)
     {
-        return view(
-            'posts.show', [
-            'post' => $post
-        ]);
+        return view('posts.show', compact('post'));
     }
     
     /**

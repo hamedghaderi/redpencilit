@@ -13,7 +13,8 @@
                         {{ trans.get('__JSON__.No Nooo! Just continue!')}}
                     </a>
 
-                    <button class="button button--sm button--outline--danger mr-auto z-50"
+                    <button class="button button--sm button--outline--danger z-50"
+                            :class="[locale === 'fa' ? 'mr-auto' : 'ml-auto']"
                             @click.prevent="cancelIt">
                         {{ trans.get('__JSON__.Yes! I am sure. Delete it.')}}
                     </button>
@@ -21,7 +22,7 @@
             </template>
         </Modal>
 
-        <div class="upload-sections">
+        <div class="upload-sections" style="min-height: 600px;">
             <!--=================================================================
              STEP 1
             -=================================================================-->
@@ -39,8 +40,9 @@
 
                                 <div class="tab-pane" :class="{'tab-pane--active' : !registerActive}">
                                  <span class="tab-name">
-                                    <a href="#" @click.prevent="registerActive = false">{{ trans.get('__JSON__.login')
-                                        }}</a>
+                                    <a href="#" @click.prevent="registerActive = false">
+                                        {{ trans.get('__JSON__.login')}}
+                                    </a>
                                  </span>
                                 </div>
                             </div>
@@ -101,14 +103,12 @@
 
                         <div class="flex items-center text-sm mb-3" v-show="!contract">
                             <span class="mb-0 flex items-center text-grey">
-                                <svg class="fill-current ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
-                                     viewBox="0 0 24 24"
-                                     width="24"
-                                      height="24"><path class="heroicon-ui" d="M17 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h2V3a1 1 0 1 1 2 0v1h6V3a1 1 0 0 1 2 0v1zm-2 2H9v1a1 1 0 1 1-2 0V6H5v4h14V6h-2v1a1 1 0 0 1-2 0V6zm4 6H5v8h14v-8z"/></svg>
+                                <i class="las la-calendar text-2xl"></i>
                                 <span class="text-grey-darker">{{ trans.get('__JSON__.Delivery date: (Estimated)')}}</span>
                             </span>
-                            <span class="mr-auto tag tag--info" v-if="deliverDate">
-                                {{ persianNumber.toPersian(deliverDate) }}
+                            <span class="tag tag--info" :class="[locale === 'fa' ? 'mr-auto' : 'ml-auto']" v-if="deliverDate">
+                                {{ locale === 'fa' ? persianNumber.toPersian(deliverDate) :
+                                moment(deliverDate).format('MMMM Do YYYY') }}
                             </span>
                         </div>
 
@@ -121,34 +121,43 @@
 
                         <div class="flex text-sm bg-white items-center" v-show="!contract">
                             <span class="mb-0 flex items-center text-grey">
-                                <svg class="fill-current h-5 w-5 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
-                                      height="24"><path class="heroicon-ui" d="M7 5H5v14h14V5h-2v10a1 1 0 0 1-1.45.9L12 14.11l-3.55 1.77A1 1 0 0 1 7 15V5zM5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm4 2v8.38l2.55-1.27a1 1 0 0 1 .9 0L15 13.38V5H9z"/></svg>
-
+                                <i class="las la-calendar text-2xl"></i>
                                 <span class="text-grey-darker">{{ trans.get('__JSON__.article(s) word count')}}</span>
                             </span>
 
-                            <span class="mr-auto tag tag--info" v-show="words">
-                                {{ persianNumber.toPersian(words) + ' کلمه' }}
+                            <span class="tag tag--info" :class="[locale === 'fa' ? 'mr-auto' : 'ml-auto']"
+                                  v-show="words">
+                                {{ locale === 'fa' ? persianNumber.toPersian(words) : words + ' ' +
+                                trans.get('__JSON__.words') }}
                             </span>
                         </div>
                     </div><!-- w-3/5 -->
                 </div><!-- w-3/4 -->
 
                 <div class="w-full lg:w-1/3 bg-white rounded shadow mx-auto p-6" v-if="priceIsAvailable">
-                    <p class="text-red border-b border-red pb-3 mb-12">مبلغ محاسبه شده</p>
+                    <p class="text-red border-b border-red pb-3 mb-12">
+                        {{ trans.get('__JSON__.total cost')}}
+                    </p>
 
 
                     <div class="text-center">
                         <h3 class="text-3xl mb-6">
-                            <span v-show="!contract">{{ persianNumber.toPersian(price) }} تومان</span>
-                            <span v-show="contract">توافقی</span>
+                            <span v-show="!contract">
+                                {{ locale === 'fa' ? persianNumber.toPersian(price) : price }}
+                                {{trans.get('__JSON__.tomans')}}
+                            </span>
+                            <span v-show="contract">
+                                {{ trans.get('__JSON__.agreement')}}
+                            </span>
                         </h3>
 
-                        <button class="button button--primary mb-3" @click="saveSecondStep">مرحله بعد</button>
+                        <button class="button button--primary mb-3" @click="saveSecondStep">
+                            {{ trans.get('__JSON__.next step')}}
+                        </button>
                         <p class="mb-6">
                             <a class="text-grey-dark text-sm no-underline"
                                @click.prevent="requestToCancel">
-                                انصراف
+                               {{ trans.get('__JSON__.cancel')}}
                             </a>
                         </p>
                     </div><!-- text-center -->
@@ -169,10 +178,16 @@
                             <img class="mb-3 h-24" src="/images/uploaded-articles.svg"
                                  alt="vector two people and monitor">
 
-                            <h3 class="text-grey-dark mb-3">تعداد فایل‌های آپلود شده</h3>
+                            <h3 class="text-grey-dark mb-3">{{ trans.get('__JSON__.uploaded files')}}</h3>
 
                             <div class="list">
-                                <li>{{ persianNumber.toPersian(this.order.details.length) }} فایل</li>
+                                <li>
+                                    {{ locale === 'fa'
+                                        ? persianNumber.toPersian(this.order.details.length)
+                                        : order.details.length
+                                    }}
+                                    {{ trans.get('__JSON__.file(s)') }}
+                                </li>
                             </div>
                         </section>
 
@@ -180,22 +195,31 @@
                             <img class="mb-3 h-24" src="/images/selected-services.svg"
                                  alt="vector girl and rounded icons">
 
-                            <h3 class="text-grey-dark mb-3">سرویس‌های انتخاب شده</h3>
+                            <h3 class="text-grey-dark mb-3">{{ trans.get("__JSON__.selected services")}}</h3>
 
                             <ul class="list">
                                 <li v-text="service(selected)"></li>
-                                <li>تاریخ تحویل: {{ persianNumber.toPersian(deliverDate) }}</li>
+                                <li>
+                                    {{ trans.get('__JSON__.delivery date') }}
+                                    {{ locale === 'fa' ? persianNumber.toPersian(deliverDate) : deliverDate }}
+                                </li>
                             </ul>
                         </section>
 
                         <section class="px-6 w-1/3 text-center">
                             <img class="mb-3 h-24" src="/images/price.svg" alt="vector payment cart">
 
-                            <h3 class="text-grey-dark mb-3">هزینه قابل پرداخت</h3>
+                            <h3 class="text-grey-dark mb-3">{{ trans.get('__JSON__.payable price')}}</h3>
 
                             <ul class="list">
-                                <li>{{ persianNumber.toPersian(words) }} کلمه</li>
-                                <li>{{ persianNumber.toPersian(price) }} تومان</li>
+                                <li>
+                                    {{ locale === 'fa' ? persianNumber.toPersian(words) : words }}
+                                    {{ trans.get('__JSON__.words')}}
+                                </li>
+                                <li>
+                                    {{ locale === 'fa' ? persianNumber.toPersian(price) : words }}
+                                    {{ trans.get('__JSON__.tomans')}}
+                                </li>
                             </ul>
                         </section>
                     </div>
@@ -203,17 +227,19 @@
 
                 <div class="w-3/4 mx-auto flex mb-12" style="min-height: 240px;">
                     <div class="title-custom-bg w-2/5">
-                        <h3 class="w-1/2 leading-normal pt-24">تایید نهایی و پرداخت</h3>
+                        <h3 class="w-1/2 leading-normal pt-24">{{ trans.get('__JSON__.final review and payment')}}</h3>
                     </div>
 
                     <div class="w-3/5 flex items-center justify-center">
                         <div class="text-center w-1/2">
                             <a href="#" class="button button--primary button--block mb-6">
-                                پرداخت
+                                {{ trans.get('__JSON__.payment')}}
                                 <i class="fas fa-arrow-left mr-3"></i>
                             </a>
 
-                            <a href="#" @click="requestToCancel" class="no-underline text-gery">انصراف</a>
+                            <a href="#" @click="requestToCancel" class="no-underline text-gery">
+                                {{ trans.get('__JSON__.cancel') }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -275,9 +301,11 @@
                 step: 1,
                 price: 0,
                 persianNumber: new PersianNumber(),
+                moment: moment,
                 modal: false,
                 order: null,
-                documents: []
+                documents: [],
+                locale: Redpencilit.locale
             }
         },
 
@@ -288,7 +316,12 @@
                 this.price = this.order.price;
 
                 const m = moment(order.delivery_date);
-                m.locale('fa');
+
+                if (this.locale === 'fa') {
+                    m.locale('fa');
+                } else {
+                    m.local('en');
+                }
 
                 this.deliverDate = m.format('DD') + ' ' + m.format('MMMM') + ' ' + m.format('YYYY');
             },
@@ -338,8 +371,9 @@
                 let formData = new FormData;
 
                 formData.append('service', this.service);
+                let url = '/' + this.locale + '/users/' + this.user.id + '/drafts';
 
-                axios.post(`/users/${this.user.id}/drafts`, {
+                axios.post(url, {
                     'service_id': this.selected,
                     'order_id': this.order.id
                 }).then(res => {

@@ -1,51 +1,74 @@
-<nav class="fixed z-50 pin-b pin-r md:pin-r md:pin-t bg-white w-full md:w-64 border-t border-grey-light md:border-t-none
-md:border-l">
-    <div class="hidden md:block dashboard-logo mb-8 pt-6 px-6 pb-3 text-right border-b border-grey-lighter">
-        <a href="{{ route('home', app()->getLocale()) }}"><img src="{{ asset('images/logo.svg') }}" alt="redpencilit"
-                                            style="width:50px"></a>
+<nav class="fixed z-50 pin-b
+    @if (app()->getLocale() === 'fa') pin-r md:pin-r md:border-l @elsepin-l md:pin-l md:border-r @endif
+        md:pin-t bg-white w-full md:w-64 border-t border-grey-light md:border-t-none">
+    <div class="hidden md:block dashboard-logo mb-8 pt-6 px-6 pb-3
+            @if(app()->getLocale() === 'fa') text-right @elsetext-left @endif border-b border-grey-lighter">
+        <a href="{{ route('home', app()->getLocale()) }}">
+            <img src="{{ asset('images/logo-last.svg') }}" alt="redpencilit" style="width:50px">
+        </a>
     </div>
 
     <ul class="flex md:block px-4 py-4 z-50 justify-between list-reset">
         @can('manage-all')
             <li class="md:mb-3">
-                <dropdown classes="dropdown-top md-left">
+                <dropdown classes="dropdown-top @if (app()->getLocale() === 'fa') md-left @else md-right @endif">
                     <template v-slot:toggler>
                         <a href="#" class="text-grey-dark md:flex items-center md:py-2 md:hover:bg-indigo-lightest
                         hover:text-indigo-dark md:rounded md:px-3 mb-1">
-                            <i class="la la-briefcase text-2xl ml-3"></i>
-                            <span class="hidden md:block">مدیریت</span>
-                            <i class="la la-angle-left text-normal mr-auto"></i>
+                            <i class="la la-briefcase text-2xl @if (app()->getLocale() === 'fa') ml-3 @else mr-3
+                            @endif"></i>
+                            <span class="hidden md:block">{{ __('Management') }}</span>
+                            @if (app()->getLocale() === 'fa')
+                                <i class="la la-angle-left text-normal mr-auto"></i>
+                            @else
+                                <i class="la la-angle-right text-normal ml-auto"></i>
+                            @endif
                         </a>
                     </template>
 
                     <ul>
                         <li>
-                            <a href="{{ route('settings.index', app()->getLocale()) }}" class="flex items-center text-grey">
-                                <i class="la la-screwdriver text-2xl ml-3"></i>
-                                تنظیمات کلی
+                            <a href="{{ route('settings.index', app()->getLocale()) }}"
+                               class="flex items-center text-grey">
+                                <i class="la la-screwdriver text-2xl @if (app()->getLocale() === 'fa') ml-3 @else
+                                        mr-3 @endif"></i>
+                                {{ __('General Settings') }}
                             </a>
                         </li>
 
                         <li>
-                            <a href="{{ route('services.index', app()->getLocale()) }}" class="flex items-center text-grey">
-                                <i class="la la-cog text-2xl ml-3"></i>
-                                <span>سرویس‌ها</span>
+                            <a href="{{ route('services.index', app()->getLocale()) }}"
+                               class="flex items-center text-grey">
+                                <i class="la la-cog text-2xl @if (app()->getLocale() === 'fa') ml-3 @else
+                                        mr-3 @endif"></i>
+                                <span>{{ ucfirst(__('services')) }}</span>
                             </a>
                         </li>
 
                         <li>
                             <a href="{{ route('admin.users.index', app()->getLocale()) }}" class="flex items-center
                             text-grey">
-                                <i class="la la-users text-2xl ml-3"></i>
-                                کاربران
+                                <i class="la la-users text-2xl @if (app()->getLocale() === 'fa') ml-3 @else
+                                        mr-3 @endif"></i>
+                                {{ ucfirst(__('users')) }}
                             </a>
                         </li>
 
                         <li>
                             <a href="{{ route('admin.users.comments', app()->getLocale()) }}" class="flex items-center
                             text-grey">
-                                <i class="la la-comments text-2xl ml-3"></i>
-                               نظرات کابران
+                                <i class="la la-comments text-2xl @if (app()->getLocale() === 'fa') ml-3 @else
+                                        mr-3 @endif"></i>
+                                {{ ucfirst(__('comments')) }}
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('admin.pages.index', app()->getLocale()) }}" class="flex items-center
+                            text-grey">
+                                <i class="las la-file-alt text-2xl @if (app()->getLocale() === 'fa') ml-3 @else
+                                        mr-3 @endif"></i>
+                                {{ ucfirst(__('pages')) }}
                             </a>
                         </li>
                     </ul>
@@ -55,12 +78,10 @@ md:border-l">
 
         <li class="md:mb-3">
             <a href="{{ route('users.orders.index', [app()->getLocale(), auth()->user()]) }}" class="text-grey-dark
-            md:flex
-            md:py-2
-            md:hover:bg-indigo-lightest
-                        hover:text-indigo-dark md:rounded md:px-3 md:mb-1 items-center">
-                <i class="la la-file-alt text-2xl ml-3"></i>
-                <span class="hidden md:block">مقالات آپلود شده</span>
+            md:flex md:py-2 md:hover:bg-indigo-lightest hover:text-indigo-dark md:rounded md:px-3 md:mb-1 items-center">
+                <i class="la la-file-alt text-2xl
+                    @if (app()->getLocale() === 'fa') ml-3 @else mr-3 @endif"></i>
+                <span class="hidden md:block">{{ ucfirst(__('uploaded documents')) }}</span>
             </a>
         </li>
 
@@ -69,8 +90,11 @@ md:border-l">
             md:flex
             md:hover:bg-indigo-lightest
                         hover:text-indigo-dark md:rounded md:py-2 md:px-3 md:mb-1 items-center">
-                <i class="la la-user-tie text-2xl ml-3"></i>
-                <span class="hidden md:block">تنظیمات حساب کاربری</span>
+                <i class="la la-user-tie text-2xl
+                    @if (app()->getLocale() === 'fa') ml-3 @else mr-3 @endif"></i>
+                <span class="hidden md:block">
+                    {{ ucfirst(__('account settings'))  }}
+                </span>
             </a>
         </li>
 
@@ -80,8 +104,11 @@ md:border-l">
                 md:hover:bg-indigo-lightest
                 hover:text-indigo-dark
                  md:rounded md:py-2 md:px-3 md:mb-1 items-center">
-                    <i class="la la-newspaper text-2xl ml-3"></i>
-                    <span class="hidden md:block">پست جدید</span>
+                    <i class="la la-newspaper text-2xl
+                        @if (app()->getLocale() === 'fa') ml-3 @else mr-3 @endif"></i>
+                    <span class="hidden md:block">
+                        {{ ucfirst(__('new post')) }}
+                    </span>
                 </a>
             </li>
         @endcan
@@ -92,9 +119,10 @@ md:border-l">
                  .getElementById('logout-form')
             .submit
             ();">
-                <i class="la la-sign-out-alt ml-3 text-2xl"></i>
+                <i class="la la-sign-out-alt text-2xl
+                    @if (app()->getLocale() === 'fa') ml-3 @else mr-3 @endif"></i>
 
-                <span class="hidden md:block">خروج از حساب</span>
+                <span class="hidden md:block">{{ ucfirst(__('logout')) }}</span>
 
                 <form id="logout-form" style="display: none;" action="{{ route('logout', app()->getLocale()) }}"
                       method="POST">
@@ -118,8 +146,8 @@ md:border-l">
 
     <div class="hidden md:block new-order text-center">
         <a class="button button--outline--primary has-icon" href="{{ route('new-order', app()->getLocale()) }}">
-            <i class="la la-file-alt pl-1 text-lg"></i>
-            سفارش جدید
+            <i class="la la-file-alt @if (app()->getLocale() === 'fa') pl-1 @else pr-1 @endif text-lg"></i>
+            {{ __('new order') }}
         </a>
     </div>
 </nav>

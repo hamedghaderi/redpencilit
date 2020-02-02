@@ -55,9 +55,7 @@
 }
 
 body {
-  @apply bg-grey-lightest text-right font-normal;
-  direction: rtl;
-  font-family: Sahel;
+  @apply bg-grey-lightest font-normal;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -1082,36 +1080,29 @@ trix-editor:focus {
   }
 }
 /* Pages */
-@media screen and (min-width: 768px) {
-  .contact {
-    background-image: url("../images/contact.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-}
-
 .post {
   @apply bg-grey-lightest relative pt-24 pb-12 mb-8;
+  direction: ltr;
 }
 .post__thumb {
-  @apply absolute pin-l pin-t;
+  @apply absolute pin-r pin-t;
   width: 40%;
   height: 100%;
   background-size: cover;
   background-position: center;
 }
 .post__body {
-  @apply pr-32;
+  @apply pl-32 text-left;
 }
 .post__date {
-  @apply absolute pin-t bg-red text-white px-4 py-2;
-  right: 100px;
+  @apply absolute pin-t bg-red text-white px-4 py-2 z-10;
+  left: 100px;
 }
 .post__author {
   @apply font-bold text-grey-dark;
 }
 .post__title {
-  @apply text-xl relative mb-2 leading-loose;
+  @apply text-xl relative mb-2 leading-loose text-left;
 }
 .post__title a {
   @apply text-indigo-darkest;
@@ -1119,7 +1110,7 @@ trix-editor:focus {
 .post__title::before {
   content: "";
   @apply bg-red absolute pin-t;
-  right: -30px;
+  left: -30px;
   width: 5px;
   height: 100px;
 }
@@ -1160,27 +1151,95 @@ trix-editor:focus {
   position: absolute;
   width: 100%;
   top: -50%;
-  left: -50%;
+}
+
+@media screen and (min-width: 1024px) {
+  .-mt-300 {
+    margin-top: -300px;
+  }
+}
+
+.en .hero-home {
+  right: -50%;
 }
 
 .home-hero {
   @apply bg-transparent;
+  min-height: auto;
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1024px) {
   .home-hero {
-    background-image: url("../images/hero_home.png");
-    background-position: -560px -150px;
+    min-height: 570px;
   }
 }
-@media screen and (min-width: 1200px) {
-  .home-hero {
-    background-position: -360px -150px;
+.home-hero-bg {
+  @apply absolute pin-l pin-b;
+  z-index: -1;
+  width: 100%;
+  opacity: 0.3;
+}
+@media screen and (min-width: 768px) {
+  .home-hero-bg {
+    width: 668px;
+    opacity: 1;
+  }
+}
+@media screen and (min-width: 992px) {
+  .home-hero-bg {
+    width: 800px;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .home-hero-bg {
+    width: 1000px;
   }
 }
 
-.contact-ways {
-  background-image: url("../images/connection-home-bg.svg");
-  background-size: cover;
+.en-home-hero-bg {
+  @apply pin-r;
+  left: auto;
+  transform: rotateY(180deg);
+}
+
+@media screen and (min-width: 1024px) {
+  .service-card {
+    width: 380px;
+    min-height: 500px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .en .home-hero {
+    background-position: calc(100% + 560px) -150px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .en .home-hero {
+    background-position: calc(100% + 360px) -150px;
+  }
+}
+
+.contact-ways::before {
+  @apply bg-grey-lightest;
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  -webkit-transform: skewY(-12deg);
+  -moz-transform: skewY(-12deg);
+  -ms-transform: skewY(-12deg);
+  -o-transform: skewY(-12deg);
+  transform: skewY(-12deg);
+}
+
+.en-contact-ways::before {
+  -webkit-transform: skewY(12deg);
+  -moz-transform: skewY(12deg);
+  -ms-transform: skewY(12deg);
+  -o-transform: skewY(12deg);
+  transform: skewY(12deg);
 }
 
 .home-connection {
@@ -1213,16 +1272,22 @@ trix-editor:focus {
 }
 .home-contact-img {
   @apply absolute z-0;
-  right: -30%;
   top: 55%;
   transform: translateY(-50%);
+}
+
+.fa .home-contact-img {
+  right: -30%;
+}
+
+.en .home-contact-img {
+  left: -30%;
 }
 
 .home-contact-bg {
   @apply absolute z-0 hidden;
   top: 50%;
   transform: translateY(-50%);
-  left: -100px;
   max-width: 110%;
 }
 @media screen and (min-width: 1024px) and (max-width: 1300px) {
@@ -1237,6 +1302,25 @@ trix-editor:focus {
 @media screen and (min-width: 768px) {
   .your-comments {
     min-height: 450px;
+  }
+}
+
+.cloud-left {
+  left: -215px;
+  right: auto;
+}
+
+.cloud-right {
+  right: -200px;
+  left: auto;
+}
+
+.pidgin {
+  top: 0;
+}
+@media screen and (min-width: 1024px) {
+  .pidgin {
+    top: -100px;
   }
 }
 

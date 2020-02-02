@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Page;
 use App\Testimonial;
 use App\User;
 use Illuminate\Http\Request;
@@ -30,18 +31,25 @@ class PagesController extends Controller
         return view('pages.contact');
     }
     
+    /**
+     * Show homepage view.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function homepage()
     {
         $testimonials = Testimonial::with('comment')
                                    ->latest()
                                    ->take(5)
                                    ->get();
+        
+        $home = Page::where('name', 'home')->firstOrFail();
 
         $admin = User::superAdmin()->first();
 
-        $authorAvatar = $admin ? $admin->avatar : '';
+        $authorAvatar = ($admin && $admin->avatar) ? $admin->avatar : asset('images/profile.png.jpg');
 
-        return view('welcome', compact('testimonials', 'authorAvatar'));
+        return view('welcome', compact('testimonials', 'authorAvatar', 'home'));
     }
     
     /**

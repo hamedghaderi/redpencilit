@@ -20,7 +20,7 @@
         "lang.js": "^2.0.0-beta.1",
         "laravel-mix": "^4.0.7",
         "laravel-mix-tailwind": "^0.1.0",
-        "npm": "^6.11.2",
+        "npm": "^6.13.6",
         "resolve-url-loader": "^2.3.1",
         "sal.js": "^0.6.5",
         "sass": "^1.15.2",
@@ -30,6 +30,7 @@
         "vue-template-compiler": "^2.6.0"
     },
     "dependencies": {
+        "@glidejs/glide": "^3.4.1",
         "@uppy/locales": "^1.4.0",
         "jalali-moment": "^3.3.1",
         "moment": "^2.24.0",

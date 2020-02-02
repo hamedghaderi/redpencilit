@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use KgBot\LaravelLocalization\Facades\ExportLocalizations;
@@ -25,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
+        
         View::composer('*', function ($view) {
             return $view->with([
                 'messages' => ExportLocalizations::export()->toFlat()

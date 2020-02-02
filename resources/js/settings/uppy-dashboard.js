@@ -1,5 +1,7 @@
 const Persian = require('@uppy/locales/lib/fa_IR');
+const US = require('@uppy/locales/lib/en_US');
 Persian.strings.dropPaste =  'فایلها را اینجا رها کنید، یا  %{browse} بارگذاری کنید.';
+
 
 let dashboard_settings = {
     id: 'file-uploader',
@@ -16,8 +18,6 @@ let dashboard_settings = {
     hideProgressAfterFinish: false,
     proudlyDisplayPoweredByUppy:false,
     replaceTargetContent: true,
-
-    locale: Persian
 };
 
-export {dashboard_settings};
+export {dashboard_settings, Persian, US};

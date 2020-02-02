@@ -3,7 +3,8 @@
 @section('nav-link')
     <a href="{{ route('login', app()->getLocale()) }}" class="block text-grey-darker text-sm rounded py-1 mb-1 sm:mb-0
                 sm:mr-2 px-2
-                hover:bg-grey-light sm:hidden">قبلا حساب ایجاد کرده‌ام</a>
+                hover:bg-grey-light sm:hidden">{{ __('I already have an account') }}</a>
+
     <a href="{{ route('login', app()->getLocale()) }}"
        class="hidden sm:block
                 button
@@ -12,19 +13,21 @@
                 mb-1
                 sm:mb-0
                 sm:mr-2
-                px-4">قبلا حساب ایجاد کرده‌ام</a>
+                text-lg
+                px-4">{{ __('I already have an account') }}</a>
 @endsection
 
 @section('content')
     <div class="container mb-12">
         <div class="w-full sm:w-3/4 md:w-2/3 lg:w-2/5 mx-auto">
             <div class="card mt-16">
-                <h2 class="text-lg md:text-2xl font-bold text-grey-darker mb-4 text-center font-normal">ایجاد حساب کاربری</h2>
+                <h2 class="text-lg md:text-2xl font-bold text-grey-darker mb-4 text-center font-normal">
+                    {{ __('Create a new account') }}
+                </h2>
 
-                <p class="text-grey text-sm text-center mb-6 leading-loose">با ایجاد حساب کاربری و فعالسازی آن‌
-                    می‌توانید سفارشات
-                    خود را
-                    هر چه سریعتر برای ما ارسال کنید.</p>
+                <p class="text-grey text-sm text-center mb-6 leading-loose">
+                    {{__('By creating and activating an account, you can set your orders ASAP.')}}
+                </p>
 
                 <form method="POST" action="{{ '/'. app()->getLocale() . '/register' }}" class="text-md w-full"
                       novalidate>
@@ -34,7 +37,7 @@
                         <div class="flex relative">
                             <input id="name" type="text"
                                    class="input field-rtl pl-12 rounded {{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                   name="name" value="{{ old('name') }}" placeholder="نام و نام خانوداگی" required
+                                   name="name" value="{{ old('name') }}" placeholder="{{ __('full name') }}" required
                                    autofocus>
 
                             <span class="input-icon">
@@ -53,7 +56,7 @@
                         <div class="relative flex">
                             <input id="email" type="email"
                                    class="input field-rtl pl-12 {{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                   name="email" value="{{ old('email') }}" required placeholder="آدرس ایمیل">
+                                   name="email" value="{{ old('email') }}" required placeholder="{{ __('email') }}">
 
                             <span class="input-icon">
                                 <i class="las la-envelope text-2xl"></i>
@@ -76,7 +79,7 @@
                                    name="phone"
                                    value="{{ old('phone') }}"
                                    required
-                                   placeholder="شماره تماس (موبایل)"
+                                   placeholder="{{ ucfirst(__('mobile number')) }}"
                                    @input="changeToEnglish"
                             >
 
@@ -99,7 +102,7 @@
                                    class="input field-rtl pl-12
                                         {{ $errors->has('password') ? ' is-invalid' : '' }}"
                                    name="password"
-                                   placeholder="رمز عبور"
+                                   placeholder="{{ __('password') }}"
                                    required>
 
                             <span class="input-icon">
@@ -121,7 +124,7 @@
                                    class="input pl-12 field-rtl border w-full rounded block"
                                    name="password_confirmation"
                                    required
-                                   placeholder="تکرار رمز عبور">
+                                   placeholder="{{ ucfirst(__('re-enter password')) }}">
 
                             <span class="input-icon">
                                 <i class="la la-check-double text-2xl"></i>
@@ -132,7 +135,7 @@
                     <div>
                         <div class="col-md-8 text-center offset-md-4">
                             <button type="submit" class="button button--primary ml-3">
-                                ایجاد حساب
+                                {{ __('create account') }}
                             </button>
                         </div>
                     </div>

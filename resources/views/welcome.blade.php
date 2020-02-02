@@ -1,7 +1,10 @@
 @extends('layouts.home')
 
 @section('content')
-    <section class="bg-white relative bg-contain bg-no-repeat home-hero" id="intro">
+    <section class="relative bg-contain bg-no-repeat home-hero" id="intro">
+        <img src="{{ asset('images/1.svg') }}" alt="a girl with a computer" class="home-hero-bg @if (app()->getLocale
+        () === 'en') en-home-hero-bg @endif">
+
         <div class="px-8 md:px-24 pt-8 md:pb-0">
             @include('partials.nav-home')
         </div>
@@ -9,34 +12,37 @@
         {{--==========================================================
         |  Hero
         ============================================================--}}
-        <div class="pb-12 md:pb-24 px-8 md:px-24">
-            <div class="md:w-1/3 border-b md:border-none pb-12 md:pb-0">
-                <h1 class="mb-2 md:mb-4"
+        <div class="pb-12 md:pb-24 px-8 md:px-24 flex">
+            <div class="md:w-1/2 pb-12 md:pb-0">
+                <h1 class="mb-2 md:mb-4 text-xl lg:text-3xl xl:text-5xl"
                     data-sal="slide-right"
                     data-sal-delay="300"
                     data-sal-easing="ease-out-back"
-                    data-sal-duration="400">{{ ucfirst(__('title')) }}</h1>
-                <p class="text-sm md:text-normal leading-loose text-grey-dark mb-6"
+                    data-sal-duration="400">
+                    {{ $home->data[app()->getLocale()]['HomeHeroTitle'] }}
+                </h1>
+                <p class="text-sm lg:text-lg leading-loose text-grey-dark mb-6"
                    data-sal="slide-left"
                    data-sal-delay="300"
                    data-sal-easing="ease-out-back"
                    data-sal-duration="400"
                 >
-                        {{ __('Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Asperiores atque consequuntur culpa distinctio ex
-                                expedita explicabo fuga fugiat fugit maxime minima officiis quasi
-                                quibusdam quidem quis reiciendis sequi tempora, ullam!') }}
-                    </p>
+                    {{ $home->data[app()->getLocale()]['HomeHeroBody'] }}
+                </p>
 
-                <a href="{{ route('about', app()->getLocale()) }}"
-                   class="inline-flex items-center text-sm md:text-normal text-red border border-red px-8
+                <a href="{{ route('new-order', app()->getLocale()) }}"
+                   class="inline-flex items-center text-sm md:text-normal bg-red text-white border border-red px-8
                            py-3 rounded-full hover:bg-red hover:text-white"
                    data-sal="zoom-in"
                    data-sal-delay="400"
                    data-sal-duration="400"
                 >
-                   {{ __('about us') }}
-                    <i class="la la-long-arrow-alt-left text-lg mr-2"></i>
+                    {{ $home->data[app()->getLocale()]['HomeHeroButton'] }}
+                    @if (app()->getLocale() === 'fa')
+                        <i class="la la-long-arrow-alt-left text-lg mr-2"></i>
+                    @else
+                        <i class="la la-long-arrow-alt-right text-lg ml-2"></i>
+                    @endif
                 </a>
             </div>
         </div>
@@ -46,16 +52,16 @@
     {{--==========================================================
     | Services
     ============================================================--}}
-    <section class="services pb-12 md:pb-24 bg-white">
+    <section class="services pt-0 md:pt-24 pb-16 bg-white">
         <div class="px-8 md:px-24">
-            <div class="flex flex-wrap items-center">
-                <div class="md:w-1/4 mb-12 md:mb-0">
-                    <h3 class="text-grey-900 font-light pb-3 text-2xl"
+            <div class="flex flex-wrap items-start">
+                <div class="lg:w-1/2 mb-12 md:mb-0 mt-8">
+                    <h3 class="text-grey-900 font-light pb-3 text-normal lg:text-3xl"
                         data-sal="slide-right"
                         data-sal-delay="300"
                         data-sal-easing="ease-out-back"
                         data-sal-duration="400">
-                       {{ ucfirst(__('services')) }}
+                        {{ $home->data[app()->getLocale()]['ServicesTitle'] }}
                     </h3>
 
                     <span class="block h-1 w-12 bg-red mb-3"></span>
@@ -66,51 +72,62 @@
                        data-sal-easing="ease-out-back"
                        data-sal-duration="400"
                     >
-                        {{ __('Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Asperiores atque consequuntur culpa distinctio ex
-                                expedita explicabo fuga fugiat fugit maxime minima officiis quasi
-                                quibusdam quidem quis reiciendis sequi tempora, ullam!') }}
+                        {{ $home->data[app()->getLocale()]['ServicesBody'] }}
                     </p>
-
-                    <a href="{{ route('pages.services', app()->getLocale()) }}"
-                       class="inline-flex items-center text-sm md:text-normal text-red border border-red
-                            px-8 py-3 rounded-full hover:bg-red hover:text-white tex"
-                       data-sal="zoom-in"
-                       data-sal-delay="400"
-                       data-sal-duration="400">
-                        {{ __('more') }}
-                        <i class="la la-long-arrow-alt-left text-lg mr-2"></i>
-                    </a>
                 </div>
 
-                <div class="md:w-2/4 mr-auto">
-                    <div class="flex">
-                        <div class="w-1/3 text-center px-6"
-                             data-sal="fade"
-                             data-sal-delay="400">
-                            <img class="mb-0 md:mb-3" src="{{ asset('images/first-service.svg') }}" alt="first service">
-                            <span class="text-center text-grey-dark text-sm md:text-normal">
-                                {{ __('first service') }}
-                            </span>
+                <div class="lg:w-1/2 flex @if (app()->getLocale() === 'fa') mr-auto @else ml-auto @endif">
+                    <div class="bg-white shadow-lg rounded-lg relative mt-24 service-card @if (app()->getLocale() ===
+                     'fa') mr-auto @else ml-auto @endif">
+                        <img src="{{ asset('images/3.svg') }}" alt="a guy vector" class="absolute z-0" style="top:
+                       -50%; left: 50%; transform: translate(-50%, -50%);">
+                        <div class="pt-32 pb-8 lg:pb-32 px-8">
+                            <h4 class="text-lg lg:text-2xl font-normal mb-4 lg:mb-8">
+                                {{ $home->data[app()->getLocale()]['FirstServiceTitle'] }}
+                            </h4>
+                            <p class="text-grey-dark leading-loose text-sm lg:text-lg mb-4 lg:mb-12">
+                                {{ $home->data[app()->getLocale()]['FirstServiceBody'] }}
+                            </p>
+                            <a class="text-red underline" href="{{ route('pages.services', app()->getLocale()) }}">
+                                {{ __('learn more') }}
+                            </a>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="w-1/3 text-center px-6"
-                             data-sal="fade"
-                             data-sal-delay="600">
-                            <img class="mb-0 md:mb-3" src="{{ asset('images/second-service.svg') }}" alt="second
-                                   service">
-                            <span class="text-center text-orange-light text-sm md:text-normal">
-                                {{ __('second service') }}
-                            </span>
+                <div class="lg:w-1/2 flex lg:pr-24 -mt-300">
+                    <div class="bg-white shadow-lg rounded-lg relative mt-24 service-card">
+                        <img src="{{ asset('images/4.svg') }}" alt="a guy vector" class="absolute z-0" style="top:
+                       -50%; left: 50%; transform: translate(-50%, -50%);">
+                        <div class="pt-32 pb-8 lg:pb-32 px-8">
+                            <h4 class="text-lg lg:text-2xl font-normal mb-4 lg:mb-8">
+                                {{ $home->data[app()->getLocale()]['SecondServiceTitle'] }}
+                            </h4>
+                            <p class="text-grey-dark leading-loose text-sm lg:text-lg mb-4 lg:mb-12">
+                                {{ $home->data[app()->getLocale()]['SecondServiceBody'] }}
+                            </p>
+                            <a class="text-red underline" href="{{ route('pages.services', app()->getLocale()) }}">
+                                {{ __('learn more') }}
+                            </a>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="w-1/3 text-center px-6"
-                             data-sal="fade"
-                             data-sal-delay="800">
-                            <img class="mb-0 md:mb-3" src="{{ asset('images/third-service.svg') }}" alt="third service">
-                            <span class="text-center text-indigo text-sm md:text-normal">
-                                {{ __('third service') }}
-                            </span>
+                <div class="lg:w-2/4 flex mt-8 @if (app()->getLocale() === 'fa') mr-auto @else ml-auto @endif">
+                    <div class="bg-white shadow-lg rounded-lg relative mt-24 service-card @if (app()->getLocale() ===
+                     'fa') mr-auto @else ml-auto @endif">
+                        <img src="{{ asset('images/5.svg') }}" alt="a guy vector" class="absolute z-0" style="top:
+                       -50%; left: 50%; transform: translate(-50%, -50%);">
+                        <div class="pt-32 pb-8 lg:pb-32 px-8">
+                            <h4 class="text-lg lg:text-2xl font-normal mb-4 lg:mb-8">
+                                {{ $home->data[app()->getLocale()]['ThirdServiceTitle'] }}
+                            </h4>
+                            <p class="text-sm lg:text-lg text-grey-dark leading-loose mb-4 lg:mb-12">
+                                {{ $home->data[app()->getLocale()]['ThirdServiceBody'] }}
+                            </p>
+                            <a class="text-red underline" href="{{ route('pages.services', app()->getLocale()) }}">
+                                {{ __('learn more') }}
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -122,27 +139,23 @@
     {{--==========================================================
     |  Contact Ways
     ============================================================--}}
-    <section class="md:px-0 pb-12 flex relative bg-left-top w-full home-contact">
-        <img src="{{ asset('images/connection-home-bg.svg') }}"
-             alt="background"
-             class="home-contact-bg"
-        >
-
-        <div class="md:w-1/2 relative overflow-hidden home-contact-img-wrapper"
-             data-sal="slide-left"
-             data-sal-delay="300"
-             data-sal-duration="600"
-             data-sal-easing="ease-out-back">
-            <img src="{{ asset('images/hom-connection.png') }}" alt="home-contact" class="home-contact-img">
+    <section class="md:px-0 pt-8 md:pt-24 py-12 flex flex-wrap items-center w-full relative z-10 contact-ways @if (app
+    ()->getLocale() === 'en') en-contact-ways @endif bg-white">
+        <div class="md:w-1/2 relative pidgin @if (app()->getLocale() === 'fa') pr-32 @else pl-32 @endif">
+            <img src="{{ asset('images/6.svg') }}" alt="a woman on a pidgin"
+                 data-sal="slide-left"
+                 data-sal-duration="400"
+                 class="w-1/2 md:w-full" style="transform: rotateY(180deg); @if (app()->getLocale() === 'en')
+                    transform: rotateY(0deg); @endif">
         </div>
 
-        <div class="md:w-1/2 md:pr-32 mt-12 md:mt-32 mx-auto md:pt-0 relative z-10 items-start
-                    flex flex-col justify-center">
+        <div class="md:w-1/2 md:pr-32 mx-auto md:pt-0 relative z-10 items-start
+                    flex flex-col justify-center @if (app()->getLocale() === 'fa') md:pr-32 @else md:pl-32 @endif">
             <h3 class="text-grey-900 font-light pb-3 text-2xl"
                 data-sal="slide-right"
                 data-sal-delay="300"
                 data-sal-duration="600">
-                {{ ucwords(__('contact ways')) }}
+                {{ $home->data[app()->getLocale()]['ConnectionTitle'] }}
             </h3>
 
             <span class="block h-1 w-12 bg-red mb-8"
@@ -155,57 +168,38 @@
                 data-sal-delay="500"
                 data-sal-duration="600">
                 <li class="py-3 flex items-center">
-                    <svg class="fill-current w-5 h-5"
-                         xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 24 24"
-                         width="24"
-                         height="24">
-                        <path class="heroicon-ui"
-                              d="M13.04 14.69l1.07-2.14a1 1 0 0 1 1.2-.5l6 2A1 1 0 0 1 22 15v5a2 2 0 0 1-2 2h-2A16 16 0 0 1 2 6V4c0-1.1.9-2 2-2h5a1 1 0 0 1 .95.68l2 6a1 1 0 0 1-.5 1.21L9.3 10.96a10.05 10.05 0 0 0 3.73 3.73zM8.28 4H4v2a14 14 0 0 0 14 14h2v-4.28l-4.5-1.5-1.12 2.26a1 1 0 0 1-1.3.46 12.04 12.04 0 0 1-6.02-6.01 1 1 0 0 1 .46-1.3l2.26-1.14L8.28 4zm12.01-1.7a1 1 0 0 1 1.42 1.4L17.4 8H20a1 1 0 0 1 0 2h-5a1 1 0 0 1-1-1V4a1 1 0 0 1 2 0v2.59l4.3-4.3z"/>
-                    </svg>
-                    <span class="text-grey-darker mr-2">
-                        {{ __('+988733776522') }}
+                    <i class="las la-phone-volume text-2xl"></i>
+                    <span class="text-grey-darker @if (app()->getLocale() === 'fa') mr-2 @else ml-2 @endif">
+                        {{ $home->data[app()->getLocale()]['ConnectionPhone'] }}
                     </span>
                 </li>
 
                 <li class="py-3 flex items-center">
-                    <svg class="fill-current w-5 h-5"
-                         xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 24 24"
-                         width="24"
-                         height="24">
-                        <path class="heroicon-ui"
-                              d="M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2zm0 2v16h8V4H8zm4 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
-                    </svg>
-                    <span class="text-grey-darker mr-2">
-                        {{ __('+989188736585') }}
+                    <i class="las la-mobile text-2xl"></i>
+                    <span class="text-grey-darker @if (app()->getLocale() === 'fa') mr-2 @else ml-2 @endif">
+                        {{ $home->data[app()->getLocale()]['ConnectionMobile'] }}
                     </span>
                 </li>
 
                 <li class="py-3 flex items-center">
-                    <svg class="fill-current w-5 h-5"
-                         xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 24 24"
-                         width="24"
-                         height="24">
-                        <path class="heroicon-ui"
-                              d="M18 18v2a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-2H4a2 2 0 0 1-2-2v-6c0-1.1.9-2 2-2h2V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v4h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2zm0-2h2v-6H4v6h2v-2c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v2zm-2-8V4H8v4h8zm-8 6v6h8v-6H8z"/>
-                    </svg>
-                    <span class="text-grey-darker mr-2">
-                        {{ __('+988733776520') }}
+                    <i class="lab la-instagram text-2xl"></i>
+                    <span class="text-grey-darker @if (app()->getLocale() === 'fa') mr-2 @else ml-2 @endif">
+                        {{ $home->data[app()->getLocale()]['ConnectionInsta'] }}
                     </span>
                 </li>
 
                 <li class="py-3 flex items-center">
-                    <svg class="fill-current w-5 h-5"
-                         xmlns="http://www.w3.org/2000/svg"
-                         viewBox="0 0 24 24"
-                         width="24"
-                         height="24">
-                        <path class="heroicon-ui"
-                              d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2zm16 3.38V6H4v1.38l8 4 8-4zm0 2.24l-7.55 3.77a1 1 0 0 1-.9 0L4 9.62V18h16V9.62z"/>
-                    </svg>
-                    <span class="text-grey-darker mr-2">rojan.sharifi@gmail.com</span>
+                    <i class="lab la-whatsapp text-2xl"></i>
+                    <span class="text-grey-darker @if (app()->getLocale() === 'fa') mr-2 @else ml-2 @endif">
+                        {{ $home->data[app()->getLocale()]['ConnectionWhatsApp'] }}
+                    </span>
+                </li>
+
+                <li class="py-3 flex items-center">
+                    <i class="las la-envelope-open-text text-2xl"></i>
+                    <span class="text-grey-darker @if (app()->getLocale() === 'fa') mr-2 @else ml-2 @endif">
+                        {{ $home->data[app()->getLocale()]['ConnectionEmail'] }}
+                    </span>
                 </li>
             </ul>
 
@@ -217,8 +211,12 @@
                data-sal-delay="600"
                data-sal-duration="600"
             >
-                {{ __('contact us') }}
-                <i class="la la-long-arrow-alt-left text-lg mr-2"></i>
+                {{ __('contact') }}
+                @if (app()->getLocale() === 'fa')
+                    <i class="la la-long-arrow-alt-left text-lg mr-2"></i>
+                @else
+                    <i class="la la-long-arrow-alt-right text-lg ml-2"></i>
+                @endif
             </a>
         </div>
     </section>
@@ -226,24 +224,21 @@
     {{--==========================================================
      |  Request Steps
      ============================================================--}}
-    <section id="order-steps" class="bg-white md:bg-white py-12 md:py-0 md:px-24 relative pb-12">
+    <section id="order-steps" class="bg-white md:bg-white py-12 md:px-24 relative pb-12">
         <img src="{{ asset('images/leaf.svg') }}" alt="leaf" class="absolute pin-t hidden md:block"
              style="height: 600px; left: -40%; transform: translateX(50%)">
 
         <div class="flex flex-col items-center">
             <h3 class="text-grey-900 font-light pb-3 text-normal md:text-2xl">
-                {{ __('Steps for Making a New Order') }}
+                {{ $home->data[app()->getLocale()]['RequestTitle'] }}
                 <span class="block mt-4 h-1 w-24 bg-red mb-8"></span>
             </h3>
 
             <p class="text-center w-2/3 text-grey-dark leading-loose text-sm">
-                {{ __('Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Asperiores atque consequuntur culpa distinctio ex
-                                expedita explicabo fuga fugiat fugit maxime minima officiis quasi
-                                quibusdam quidem quis reiciendis sequi tempora, ullam!') }}
+                {{ $home->data[app()->getLocale()]['RequestBody'] }}
             </p>
 
-            <img src="{{ asset('images/steps.png.svg') }}"
+            <img src="@if (app()->getLocale() === 'fa') {{ asset('images/fa-steps.png') }} @else {{ asset ('images/en-steps.png') }} @endif"
                  alt="chart of upload steps"
                  class="md:w-2/3 mb-8"
                  data-sal="slide-down"
@@ -253,11 +248,16 @@
         </div>
     </section>
 
+
+    {{--==========================================================
+      | Testimonials
+      ============================================================--}}
     <section id="your-comments" class="z-10 bg-cover relative overflow-hidden px-8 md:px-24 md:flex"
              style="background-image: url({{ asset('images/coffee.svg.jpg') }}); min-height: 450px;">
 
         <img src="{{ asset('images/coffee-blur.jpg.svg') }}" alt="a white blur shape"
-             class="w-1/2 absolute z-0" style="right:-200px; top: -180px; transform:rotate(-15deg)">
+             class="w-1/2 absolute z-0 {{ app()->getLocale() === 'fa' ? 'cloud-right' : 'cloud-left' }}"
+             style="top: -180px; transform:rotate(-15deg);">
 
         <div class="pt-24 relative z-10 md:mb-8">
             <h3 class="text-white md:text-grey-900 font-light pb-3 text-2xl"
@@ -265,7 +265,7 @@
                 data-sal-duration="600"
                 data-sal-delay="600">
 
-               {{ __('What You\'ve Said About Us') }}
+                {{ $home->data[app()->getLocale()]['Testimonial'] }}
                 <span class="block mt-4 h-1 w-24 bg-red mb-8"
                       data-sal="slide-left"
                       data-sal-delay="1000"
@@ -273,7 +273,10 @@
             </h3>
         </div>
 
-        <div class="mr-auto w-full md:w-1/2 carousel flex flex-col md:justify-center" style="height: 500px; max-height:
+        <div class="@if (app()->getLocale() === 'fa') mr-auto @else ml-auto @endif w-full md:w-1/2 carousel flex
+        flex-col md:justify-center"
+             style="height: 500px;
+        max-height:
         500px;
         overflow: hidden">
             @foreach($testimonials as $testimonial)
@@ -305,7 +308,10 @@
         </div>
     </section>
 
-    <section id="team" class="pt-12 px-8 md:px-24 bg-grey-lightest">
+    {{--==========================================================
+     | Team
+     ============================================================--}}
+    <section id="team" class="pt-12 pb-12 md:pb-0 px-8 md:px-24 bg-grey-lightest">
         <div class="md:pb-24 bg-contain bg-no-repeat bg-center"
              style="background-image: url({{ asset ('images/map.png.svg') }});">
             <h3 class="text-grey-900 font-light pb-3 text-2xl mb-12"
@@ -313,7 +319,7 @@
                 data-sal-duration="600"
                 data-sal-delay="600"
             >
-               {{ __('Professional Team') }}
+                {{ __('Professional Team') }}
                 <span class="block mt-4 h-1 w-24 bg-red mb-8"
                       data-sal="slide-left"
                       data-sal-delay="300"
@@ -326,21 +332,20 @@
                  data-sal-delay="800">
                 <img class="w-24 h-24 rounded-full absolute"
                      style="left: 50%; top: 0; transform: translate(-50%, -50%);"
-                     src="{{ '/'. $authorAvatar ?: asset ('images/profile.png.jpg') }}"
+                     src="{{ $authorAvatar  }}"
                      alt="Author Avatar">
 
                 <div class="text-center p-4">
                     <h3 class="text-indigo mb-2">{{ __('Lamiah Hashemi') }}</h3>
 
-                    <p class="mb-2">{{ __('Proofreading and SEO') }}</p>
+                    <p class="mb-2">
+                        {{ $home->data[app()->getLocale()]['TeamTitle'] }}
+                    </p>
 
                     <blockquote class="text-grey-dark leading-normal">
                         <p class="relative text-sm">
                             <span class="text-indigo text-3xl absolute pin-r pin-t" style="top: -20px;">"</span>
-                            {{ __('Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Asperiores atque consequuntur culpa distinctio ex
-                                expedita explicabo fuga fugiat fugit maxime minima officiis quasi
-                                quibusdam quidem quis reiciendis sequi tempora, ullam!') }}
+                            {{ $home->data[app()->getLocale()]['TeamBody'] }}
                             <span class="text-indigo text-3xl absolute pin-l pin-b" style="bottom: -20px;">"</span>
                         </p>
                     </blockquote>

@@ -10,8 +10,9 @@
         <div class="flex">
             <div class="w-1/2">
                 <h3 class="dashboard-title py-4 inline-flex items-center">
-                    <i class="la la-newspaper text-indigo-dark ml-2 text-2xl"></i>
-                    <span>ایجاد پست جدید</span>
+                    <i class="la la-newspaper text-indigo-dark @if (app()->getLocale() === 'fa') ml-2 @else mr-2 @endif
+                    text-2xl"></i>
+                    <span class="capitalize">{{ __('create new post') }}</span>
                 </h3>
             </div>
         </div>
@@ -24,7 +25,7 @@
             @csrf
 
             <div class="form-group">
-                <label for="title">عنوان پست جدید</label>
+                <label class="capitalize" for="title">{{ __('post title')  }}</label>
                 <input type="text" class="input mb-2" name="title" value="{{ old('title') }}">
 
                 @if ($errors->has('title'))
@@ -33,7 +34,9 @@
             </div>
 
             <div class="form-group">
-                <label for="excerpt">خلاصه پست (در یک پاراگراف کوتاه)</label>
+                <label for="excerpt" class="capitalize">
+                    {{ __('summary (in one paragraph)') }}
+                </label>
                 <input type="text" class="input mb-2" name="excerpt" value="{{ old('excerpt') }}">
 
                 @if ($errors->has('excerpt'))
@@ -42,7 +45,9 @@
             </div>
 
             <div class="form-group">
-                <label for="body">محتوای پست</label>
+                <label for="body" class="capitalize">
+                    {{ __('post body') }}
+                </label>
                 <wysiwyg name="body" class="mb-2" host="{{ asset('/') }}" value="{{ old('body') }}"></wysiwyg>
 
                 @if ($errors->has('body'))
@@ -51,7 +56,7 @@
             </div>
 
             <div class="form-group">
-                <label for="thumbnail">آپلود عکس پیش‌فرض برای پست</label>
+                <label for="thumbnail" class="capitalize">{{ __('default picture for post') }}</label>
                 <input type="file" name="thumbnail" value="old('thumbnail')">
 
                 @if ($errors->has('thumbnail'))
@@ -59,7 +64,9 @@
                 @endif
             </div>
 
-            <button class="button button--primary">انتشار پست</button>
+            <button class="button button--primary">
+                {{ __('publish post') }}
+            </button>
         </form>
     </div>
 @endsection

@@ -11,20 +11,22 @@
 
     <div class="flex items-center border-b border-grey-lighter pb-3 mb-3">
         <h3 class="text-base md:text-lg flex items-center text-grey-darker">
-            <span class="text-grey ml-1">
+            <span class="text-grey @if (app()->getLocale() === 'fa') ml-1 @else mr-1 @endif">
                 <i class="la la-user-edit text-2xl"></i>
             </span>
-            اطلاعات تکمیلی
+            {{ ucfirst(__('complementary information')) }}
         </h3>
     </div>
 
     <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/2 lg:w-1/3 px-3 mb-6">
-            <label for="country" class="label">کشور محل اقامت</label>
+            <label for="country" class="label">
+                {{ ucfirst(__('country')) }}
+            </label>
 
             <div class="select">
                 <select name="country_id" id="country">
-                    <option value="">نام کشور</option>
+                    <option value="">{{ __('country name') }}</option>
 
                     @foreach ($countries as $country)
                         <option value="{{ $country->id }}"
@@ -47,7 +49,9 @@
         </div>
 
         <div class="w-full md:w-1/2 lg:w-1/3 px-3 mb-6">
-            <label for="college" class="label">دانشگاه</label>
+            <label for="college" class="label">
+                {{ ucfirst(__('university')) }}
+            </label>
             <input id="college"
                    class="input"
                    type="text"
@@ -62,7 +66,9 @@
         </div>
 
         <div class="w-full md:w-1/2 lg:w-1/3 px-3 mb-6">
-            <label for="field" class="label">رشته تحصیلی</label>
+            <label for="field" class="label">
+                {{ ucfirst(__('study field')) }}
+            </label>
 
             <input id="field"
                     class="input"
@@ -78,11 +84,13 @@
         </div>
 
         <div class="w-full md:w-1/2 lg:w-1/3 px-3 mb-6 md:mb-0">
-            <label for="degree_id" class="label">مقطع تحصیلی</label>
+            <label for="degree_id" class="label">
+                {{ ucfirst(__('degree')) }}
+            </label>
 
             <div class="select">
                 <select name="degree_id" id="degree_id">
-                    <option value="">مقطع تحصیلی</option>
+                    <option value="">{{ __('degree') }}</option>
 
                     @foreach ($degrees as $degree)
                         <option value="{{ $degree->id }}"
@@ -98,8 +106,40 @@
             </div>
         </div>
 
-        <div class="w-full sm:w-ful lg:w-2/3 px-3 mb-6 md:mb-0">
-            <label for="address" class="label">آدرس</label>
+        <div class="w-full sm:w-ful lg:w-1/3 px-3 mb-6 md:mb-0">
+            <label for="address" class="label">
+                {{ ucfirst(__('gender')) }}
+            </label>
+            <div class="flex">
+                <label>
+                    <input type="radio"
+                           name="gender"
+                           id="address"
+                           value="{{ \App\Redpencilit\Gender::FEMALE }}"
+                            {{ ($user->details && (int) $user->details->gender ===
+                            (int) \App\Redpencilit\Gender::FEMALE) ?
+                            "checked" : ''}}> {{ __('female') }}
+
+                </label>
+
+                <label class="mr-4">
+                    <input
+                            type="radio"
+                            name="gender"
+                            id="address"
+                            value="{{ \App\Redpencilit\Gender::MALE }}"
+                            {{ ($user->details && (int)$user->details->gender === (int) \App\Redpencilit\Gender::MALE) ?
+                            'checked' : ''}}> {{ __('male') }}
+
+                </label>
+            </div>
+
+        </div>
+
+        <div class="w-full sm:w-ful lg:w-1/3 px-3 mb-6 md:mb-0">
+            <label for="address" class="label">
+                {{ ucfirst(__('address')) }}
+            </label>
             <input class="input"
                     type="text"
                     name="address"
@@ -111,6 +151,8 @@
     <hr class="mb-3">
 
     <div class="row">
-        <button class="button button--primary">ذخیره اطلاعات</button>
+        <button class="button button--primary">
+            {{ __('save information') }}
+        </button>
     </div>
 </form>

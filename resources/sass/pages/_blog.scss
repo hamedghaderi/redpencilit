@@ -1,8 +1,9 @@
 .post {
   @apply bg-grey-lightest relative pt-24 pb-12 mb-8;
+  direction: ltr;
 
   &__thumb {
-    @apply absolute pin-l pin-t;
+    @apply absolute pin-r pin-t;
     width: 40%;
     height: 100%;
     background-size: cover;
@@ -10,12 +11,12 @@
   }
 
   &__body {
-    @apply pr-32;
+    @apply pl-32 text-left;
   }
 
   &__date {
-    @apply absolute pin-t bg-red text-white px-4 py-2;
-    right: 100px;
+    @apply absolute pin-t bg-red text-white px-4 py-2 z-10;
+    left: 100px;
   }
 
   &__author {
@@ -23,7 +24,7 @@
   }
 
   &__title {
-    @apply text-xl relative mb-2 leading-loose;
+    @apply text-xl relative mb-2 leading-loose text-left;
 
     a {
       @apply text-indigo-darkest;
@@ -32,7 +33,7 @@
     &::before {
       content: '';
       @apply bg-red absolute pin-t;
-      right: -30px;
+      left: -30px;
       width: 5px;
       height: 100px;
     }

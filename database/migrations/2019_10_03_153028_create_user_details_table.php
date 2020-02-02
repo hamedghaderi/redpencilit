@@ -21,6 +21,7 @@ class CreateUserDetailsTable extends Migration
             $table->string('college', 255)->nullable();
             $table->unsignedInteger('degree_id')->nullable();
             $table->unsignedInteger('country_id')->nullable();
+            $table->boolean('gender')->nullable();
             $table->timestamps();
             
             $table->foreign('user_id')->references("id")->on('users')->onDelete('cascade');

@@ -41,6 +41,6 @@ class VerificationController extends Controller
     
     protected function redirectTo()
     {
-        return '/dashboard/' . auth()->id();
+        return '/' . app()->getLocale() .'/dashboard/' . auth()->id();
     }
 }

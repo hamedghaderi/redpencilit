@@ -8,12 +8,8 @@ let authorizations = require('./authorizations');
 import sal from 'sal.js';
 
 window.sal = sal;
-
-
 window.events = new Vue();
-
-window.PersianNumber =  new PersianNumber();
-
+window.PersianNumber = new PersianNumber();
 
 window.flash = function (message, level = 'success') {
     window.events.$emit('flash', {message, level});
@@ -25,9 +21,7 @@ const default_locale = window.default_locale;
 const fallback_locale = window.fallback_locale;
 const messages = window.messages;
 
-let test = Vue.prototype.trans = new Lang({ messages, locale: default_locale, fallback: fallback_locale});
-console.log(test.messages);
-
+let test = Vue.prototype.trans = new Lang({messages, locale: default_locale, fallback: fallback_locale});
 
 Vue.prototype.authorize = function (...params) {
     if (!window.Redpencilit.signed) return false;
@@ -104,19 +98,19 @@ const app = new Vue({
         isOpen: false,
     },
 
-   watch: {
+    watch: {
         isOpen(isOpen) {
             if (isOpen) {
                 document.addEventListener('click', this.closeMenu);
             }
         },
-   },
+    },
 
     methods: {
         closeMenu(event) {
-           if (! event.target.closest('header'))  {
-               this.isOpen = false;
-           }
+            if (!event.target.closest('header')) {
+                this.isOpen = false;
+            }
         },
 
         persianReplace(str = '') {
@@ -141,7 +135,6 @@ const app = new Vue({
             e.target.value = this.persianReplace(e.target.value);
         },
     },
-
 
 
     // changeToEnglish(e) {

@@ -4,12 +4,14 @@
                 class="inline-flex items-center bg-blue-lightest text-blue-dark text-xs px-4 py-2 rounded-full"
                 @click="showTestimonial">
             <i class="las la-plus ml-2"></i>
-            افزودن به صفحه اصلی
+            {{ trans.get('__JSON__.add to home page') }}
         </button>
 
 
         <div class="w-full" v-if="testimonial">
-            <label class="font-bold text-grey-dark text-sm mb-2 block" for="body">متن پیام</label>
+            <label class="font-bold text-grey-dark text-sm mb-2 block" for="body">
+                {{ trans.get('__JSON__.message body') }}
+            </label>
 
             <textarea name="body" id="body"
                       @keydown="errors.clear('body')"
@@ -25,11 +27,12 @@
                         class="mb-4 inline-flex items-center bg-indigo-lightest text-indigo text-sm px-4 py-2 rounded-full"
                         @click="saveTestimonialOn(comment)">
                     <i class="la la-save text-lg ml-1"></i>
-                    ذخیره پیام
+                    {{ trans.get('__JSON__.save message') }}
                 </button>
 
                 <button
-                        class="mr-auto inline-flex items-center bg-red-lightest text-red text-xs px-1 py-1 rounded-full"
+                        class="inline-flex items-center bg-red-lightest text-red text-xs px-1 py-1 rounded-full"
+                        :class="[locale === 'fa' ? 'mr-auto' : 'ml-auto']"
                         @click="hideTestimonial">
                     <i class="la la-times"></i>
                 </button>

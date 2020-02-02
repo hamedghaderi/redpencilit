@@ -1,10 +1,10 @@
 <template>
-    <div class="mb-24">
+    <div class="mb-8">
         <div class="row px-6 mb-4 hidden lg:flex">
-            <div class="w-1/5 text-sm text-grey-dark">فرستنده پیام</div>
-            <div class="w-2/5 text-sm text-grey-dark">ایمیل فرستنده</div>
-            <div class="w-1/5 text-sm text-grey-dark">تاریخ ارسال</div>
-            <div class="w-1/5 text-sm text-grey-dark">امتیاز</div>
+            <div class="w-1/5 text-sm text-grey-dark">{{ trans.get('__JSON__.message sender')}}</div>
+            <div class="w-2/5 text-sm text-grey-dark">{{ trans.get('__JSON__.sender email') }}</div>
+            <div class="w-1/5 text-sm text-grey-dark">{{ trans.get('__JSON__.sent at') }}</div>
+            <div class="w-1/5 text-sm text-grey-dark">{{ trans.get('__JSON__.score') }}</div>
         </div>
 
         <div class="bg-white mb-4 px-6 py-4 shadow hover:shadow-lg flex flex-wrap items-center relative rounded"
@@ -28,7 +28,7 @@
 
                 <div class="mr-auto">
                     <span class="bg-red-lightest text-red-dark text-xs px-2 py-1 rounded hover:bg-red-dark hover:text-white hover:cursor-pointer"
-                          @click="deleteComment(comment)">حذف </span>
+                          @click="deleteComment(comment)">{{ trans.get('__JSON__.delete') }} </span>
                 </div>
             </div>
 

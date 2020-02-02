@@ -13,6 +13,23 @@
     <link href=" {{ asset('css/line-awesome.min.css') }}" rel="stylesheet" >
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <style>
+        @if (app()->getLocale() === 'fa')
+        body {
+            text-align: right;
+            direction: rtl;
+            font-family: Sahel;
+        }
+
+        @else
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            direction: ltr;
+            text-align: left;
+        }
+        @endif
+    </style>
+
     <script>
         window.Redpencilit = {!!
             json_encode([
@@ -28,8 +45,8 @@
         <header class="bg-white sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3">
             <div class="flex items-center justify-between px-4 py-3 sm:p-0">
                 <div>
-                    <a href="{{ url('/') }}">
-                        <img class="h-8 md:h-12" src="{{ asset('images/logo.svg') }}" alt="Redpencilit">
+                    <a href="{{ route('home', app()->getLocale()) }}">
+                        <img class="h-8 md:h-12" src="{{ asset('images/logo-last.svg') }}" alt="Redpencilit">
                     </a>
                 </div>
 
@@ -51,18 +68,41 @@
 
 
             <div class="px-2 pt-2 pb-4 sm:p-0 sm:flex" :class="isOpen ? 'block' : 'hidden'">
-                <a href="{{ route('posts.index', app()->getLocale()) }}" class="block text-grey-darker text-sm rounded
-                py-1 mb-1
-                sm:mr-2
-                sm:mb-0 px-2
-                hover:bg-grey-light">وبلاگ</a>
-                <a href="{{ route('about', app()->getLocale()) }}" class="block text-grey-darker text-sm rounded py-1 mb-1
+                @if (app()->getLocale() === "en")
+                    <a class="px-2 md:px-4 text-grey text-xs py-3 md:py-2 hover:bg-grey-dark
+                    md:hover:bg-transparent
+                        rounded hover:text-white md:hover:text-indigo"
+                       href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), 'fa') }}">
+                        فارسی
+                    </a>
+                @else
+                    <a class="px-2 md:px-4 text-grey text-xs py-3 md:py-2 hover:bg-grey-dark
+                    md:hover:bg-transparent
+                        rounded hover:text-white md:hover:text-indigo"
+                       href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), 'en') }}">
+                        En
+                    </a>
+                @endif
+
+                <a href="{{ route('posts.index', app()->getLocale()) }}" class="block text-grey-darker text-sm
+                md:text-lg rounded
+                py-1 mb-1 @if (app()->getLocale() === 'fa') sm:mr-2 @else sm:ml-2 @endif sm:mb-0 px-2
+                hover:bg-grey-light">
+                    {{ __('blog') }}
+                </a>
+
+                <a href="{{ route('about', app()->getLocale()) }}" class="block text-grey-darker text-sm md:text-lg
+                rounded py-1
+                mb-1
                 sm:mb-0
                 sm:mr-2 px-2
-                hover:bg-grey-light">درباره</a>
-                <a href="{{ route('contact', app()->getLocale()) }}" class="block text-grey-darker text-sm rounded py-1 px-2
-                hover:bg-grey-light">تماس با
-                    ما</a>
+                hover:bg-grey-light">{{ __('about') }}</a>
+                <a href="{{ route('contact', app()->getLocale()) }}" class="block text-grey-darker text-sm md:text-lg
+                rounded
+                py-1 px-2
+                hover:bg-grey-light">
+                    {{ __('contact') }}
+                </a>
 
                 @yield('nav-link')
             </div>

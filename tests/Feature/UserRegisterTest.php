@@ -27,8 +27,8 @@ class UserRegisterTest extends TestCase
         
         $response = $this->json('post', route('register', app()->getLocale()), $user);
         
-        $response->assertStatus(201)
-                 ->assertJson(['name' => 'John Doe'])
+        $response->assertStatus(200)
+                 ->assertJson(['user' => ['name' => 'John Doe']])
                  ->assertJsonMissing(['password']);
     }
     

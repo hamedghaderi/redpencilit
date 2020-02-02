@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\URL;
 
 class LocaleMiddleware
 {
@@ -20,7 +21,7 @@ class LocaleMiddleware
         } else {
             app()->setLocale($request->locale);
         }
-    
+        
         return $next($request);
     }
 }

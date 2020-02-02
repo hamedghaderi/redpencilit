@@ -3868,10 +3868,7 @@ table {
 
 body {
   background-color: #f5f7fb;
-  text-align: right;
   font-weight: 400;
-  direction: rtl;
-  font-family: Sahel;
 }
 
 h1,
@@ -5596,25 +5593,18 @@ trix-editor:focus {
 
 /* Pages */
 
-@media screen and (min-width: 768px) {
-  .contact {
-    background-image: url("../images/contact.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-}
-
 .post {
   background-color: #f5f7fb;
   position: relative;
   padding-top: 6rem;
   padding-bottom: 3rem;
   margin-bottom: 2rem;
+  direction: ltr;
 }
 
 .post__thumb {
   position: absolute;
-  left: 0;
+  right: 0;
   top: 0;
   width: 40%;
   height: 100%;
@@ -5623,7 +5613,8 @@ trix-editor:focus {
 }
 
 .post__body {
-  padding-right: 8rem;
+  padding-left: 8rem;
+  text-align: left;
 }
 
 .post__date {
@@ -5635,7 +5626,8 @@ trix-editor:focus {
   padding-right: 1rem;
   padding-top: .5rem;
   padding-bottom: .5rem;
-  right: 100px;
+  z-index: 10;
+  left: 100px;
 }
 
 .post__author {
@@ -5648,6 +5640,7 @@ trix-editor:focus {
   position: relative;
   margin-bottom: .5rem;
   line-height: 2;
+  text-align: left;
 }
 
 .post__title a {
@@ -5659,7 +5652,7 @@ trix-editor:focus {
   background-color: #ff5a5d;
   position: absolute;
   top: 0;
-  right: -30px;
+  left: -30px;
   width: 5px;
   height: 100px;
 }
@@ -5730,29 +5723,98 @@ trix-editor:focus {
   position: absolute;
   width: 100%;
   top: -50%;
-  left: -50%;
+}
+
+@media screen and (min-width: 1024px) {
+  .-mt-300 {
+    margin-top: -300px;
+  }
+}
+
+.en .hero-home {
+  right: -50%;
 }
 
 .home-hero {
   background-color: transparent;
+  min-height: auto;
+}
+
+@media screen and (min-width: 1024px) {
+  .home-hero {
+    min-height: 570px;
+  }
+}
+
+.home-hero-bg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  width: 100%;
+  opacity: .3;
+}
+
+@media screen and (min-width: 768px) {
+  .home-hero-bg {
+    width: 668px;
+    opacity: 1;
+  }
 }
 
 @media screen and (min-width: 992px) {
-  .home-hero {
-    background-image: url("../images/hero_home.png");
-    background-position: -560px -150px;
+  .home-hero-bg {
+    width: 800px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .home-hero-bg {
+    width: 1000px;
+  }
+}
+
+.en-home-hero-bg {
+  right: 0;
+  left: auto;
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+
+@media screen and (min-width: 1024px) {
+  .service-card {
+    width: 380px;
+    min-height: 500px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .en .home-hero {
+    background-position: calc(100% + 560px) -150px;
   }
 }
 
 @media screen and (min-width: 1200px) {
-  .home-hero {
-    background-position: -360px -150px;
+  .en .home-hero {
+    background-position: calc(100% + 360px) -150px;
   }
 }
 
-.contact-ways {
-  background-image: url("../images/connection-home-bg.svg");
-  background-size: cover;
+.contact-ways::before {
+  background-color: #f5f7fb;
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  -webkit-transform: skewY(-12deg);
+          transform: skewY(-12deg);
+}
+
+.en-contact-ways::before {
+  -webkit-transform: skewY(12deg);
+          transform: skewY(12deg);
 }
 
 .home-connection {
@@ -5792,10 +5854,17 @@ trix-editor:focus {
 .home-contact-img {
   position: absolute;
   z-index: 0;
-  right: -30%;
   top: 55%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
+}
+
+.fa .home-contact-img {
+  right: -30%;
+}
+
+.en .home-contact-img {
+  left: -30%;
 }
 
 .home-contact-bg {
@@ -5805,7 +5874,6 @@ trix-editor:focus {
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
-  left: -100px;
   max-width: 110%;
 }
 
@@ -5822,6 +5890,26 @@ trix-editor:focus {
 @media screen and (min-width: 768px) {
   .your-comments {
     min-height: 450px;
+  }
+}
+
+.cloud-left {
+  left: -215px;
+  right: auto;
+}
+
+.cloud-right {
+  right: -200px;
+  left: auto;
+}
+
+.pidgin {
+  top: 0;
+}
+
+@media screen and (min-width: 1024px) {
+  .pidgin {
+    top: -100px;
   }
 }
 
@@ -10188,6 +10276,10 @@ trix-editor:focus {
   box-shadow: 0 0 0 4px #a9aaff;
 }
 
+.shadow-card {
+  box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+}
+
 .hover\:shadow:hover {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
 }
@@ -10224,6 +10316,10 @@ trix-editor:focus {
   box-shadow: 0 0 0 4px #a9aaff;
 }
 
+.hover\:shadow-card:hover {
+  box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+}
+
 .focus\:shadow:focus {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
 }
@@ -10258,6 +10354,10 @@ trix-editor:focus {
 
 .focus\:shadow-outline-indigo:focus {
   box-shadow: 0 0 0 4px #a9aaff;
+}
+
+.focus\:shadow-card:focus {
+  box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
 }
 
 .fill-current {
@@ -15921,6 +16021,10 @@ trix-editor:focus {
     box-shadow: 0 0 0 4px #a9aaff;
   }
 
+  .sm\:shadow-card {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
   .sm\:hover\:shadow:hover {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -15957,6 +16061,10 @@ trix-editor:focus {
     box-shadow: 0 0 0 4px #a9aaff;
   }
 
+  .sm\:hover\:shadow-card:hover {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
   .sm\:focus\:shadow:focus {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -15991,6 +16099,10 @@ trix-editor:focus {
 
   .sm\:focus\:shadow-outline-indigo:focus {
     box-shadow: 0 0 0 4px #a9aaff;
+  }
+
+  .sm\:focus\:shadow-card:focus {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
   .sm\:table-auto {
@@ -21625,6 +21737,10 @@ trix-editor:focus {
     box-shadow: 0 0 0 4px #a9aaff;
   }
 
+  .md\:shadow-card {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
   .md\:hover\:shadow:hover {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -21661,6 +21777,10 @@ trix-editor:focus {
     box-shadow: 0 0 0 4px #a9aaff;
   }
 
+  .md\:hover\:shadow-card:hover {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
   .md\:focus\:shadow:focus {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -21695,6 +21815,10 @@ trix-editor:focus {
 
   .md\:focus\:shadow-outline-indigo:focus {
     box-shadow: 0 0 0 4px #a9aaff;
+  }
+
+  .md\:focus\:shadow-card:focus {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
   .md\:table-auto {
@@ -27329,6 +27453,10 @@ trix-editor:focus {
     box-shadow: 0 0 0 4px #a9aaff;
   }
 
+  .lg\:shadow-card {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
   .lg\:hover\:shadow:hover {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -27365,6 +27493,10 @@ trix-editor:focus {
     box-shadow: 0 0 0 4px #a9aaff;
   }
 
+  .lg\:hover\:shadow-card:hover {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
   .lg\:focus\:shadow:focus {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -27399,6 +27531,10 @@ trix-editor:focus {
 
   .lg\:focus\:shadow-outline-indigo:focus {
     box-shadow: 0 0 0 4px #a9aaff;
+  }
+
+  .lg\:focus\:shadow-card:focus {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
   .lg\:table-auto {
@@ -33033,6 +33169,10 @@ trix-editor:focus {
     box-shadow: 0 0 0 4px #a9aaff;
   }
 
+  .xl\:shadow-card {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
   .xl\:hover\:shadow:hover {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -33069,6 +33209,10 @@ trix-editor:focus {
     box-shadow: 0 0 0 4px #a9aaff;
   }
 
+  .xl\:hover\:shadow-card:hover {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
   .xl\:focus\:shadow:focus {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -33103,6 +33247,10 @@ trix-editor:focus {
 
   .xl\:focus\:shadow-outline-indigo:focus {
     box-shadow: 0 0 0 4px #a9aaff;
+  }
+
+  .xl\:focus\:shadow-card:focus {
+    box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
   .xl\:table-auto {

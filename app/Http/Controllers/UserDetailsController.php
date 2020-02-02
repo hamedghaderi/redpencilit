@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class UserDetailsController extends Controller
 {
-    
     /**
      * Create details for a user
      *
@@ -20,7 +19,8 @@ class UserDetailsController extends Controller
             'college' => 'sometimes|nullable|min:3|max:255',
             'country_id' => 'sometimes|nullable|exists:countries,id',
             'field' => 'sometimes|nullable|min:3|max:255',
-            'address' => 'sometimes|nullable|min:3|max:255'
+            'address' => 'sometimes|nullable|min:3|max:255',
+            'gender' => 'sometimes|nullable|boolean',
         ]);
         
         auth()->user()->details()->create($attributes);
@@ -35,7 +35,8 @@ class UserDetailsController extends Controller
             'college' => 'sometimes|nullable|min:3|max:255',
             'country_id' => 'sometimes|nullable|exists:countries,id',
             'field' => 'sometimes|nullable|min:3|max:255',
-            'address' => 'sometimes|nullable|min:3|max:255'
+            'address' => 'sometimes|nullable|min:3|max:255',
+            'gender' => 'sometimes|nullable|boolean' ,
         ]);
         
        $user->details()->update($attributes);

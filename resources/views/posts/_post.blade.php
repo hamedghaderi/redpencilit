@@ -16,7 +16,7 @@
         <span class="post__author text-sm">{{ $post->owner->name }}</span>
 
         <h3 class="post__title">
-            <a href="{{ route('posts.show', [app()->getLocale(), $post]) }}">
+            <a href="{{ route('posts.show', ['locale' => app()->getLocale(), 'post' => $post->id]) }}">
                 {{ $post->title }}
             </a>
         </h3>

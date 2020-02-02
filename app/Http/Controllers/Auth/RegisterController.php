@@ -115,8 +115,8 @@ class RegisterController extends Controller
      *
      * @return string
      */
-    public function redirectTo()
+    public function redirectPath()
     {
-        return '/dashboard/' . auth()->id();
+        return route('dashboard', [app()->getLocale(), auth()->id()]);
     }
 }

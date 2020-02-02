@@ -9,13 +9,13 @@
             <span class="text-grey ml-1">
                 <i class="la la-user-alt text-2xl"></i>
             </span>
-            اطلاعات حساب
+            {{ ucfirst(__('account info')) }}
         </h3>
     </div>
 
     <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full md:w-1/2 lg:w-1/3 px-3 pb-6">
-            <label for="name" class="label">نام</label>
+            <label for="name" class="label">{{ ucfirst(__('full name')) }}</label>
             <input type="text" id="name" value="{{ $user->name }}" name="name" class="input">
 
             @if ($errors->has('name'))
@@ -26,7 +26,7 @@
         </div>
 
         <div class="w-full md:w-1/2 lg:w-1/3 px-3 pb-6">
-            <label for="email" class="label">آدرس ایمیل</label>
+            <label for="email" class="label">{{ ucfirst(__('email address')) }}</label>
             <input id="email" class="input" type="email" name="email" value="{{ $user->email }}">
 
             @if ($errors->has('email'))
@@ -37,7 +37,7 @@
         </div>
 
         <div class="w-full md:w-1/2 lg:w-1/3 px-3">
-            <label for="mobile" class="label">شماره تماس (موبایل)</label>
+            <label for="mobile" class="label">{{ ucfirst(__('phone number')) }}</label>
             <input id="mobile" class="input" type="text" name="phone" value="{{ $user->phone }}">
 
             @if ($errors->has('phone'))
@@ -51,6 +51,6 @@
     <hr class="mb-3">
 
     <div class="row">
-        <button @click="" class="button button--primary">ذخیره اطلاعات</button>
+        <button @click="" class="button button--primary">{{ __('save information') }}</button>
     </div>
 </form>

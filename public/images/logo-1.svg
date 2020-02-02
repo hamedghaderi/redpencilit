@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="83.418" height="55.454" viewBox="0 0 83.418 55.454">
+  <g id="Logo" transform="translate(-200.83 -56.257)">
+    <text id="R" transform="translate(200.83 91.257)" fill="#ff5a5d" font-size="45" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">R</tspan></text>
+    <g id="Group_5" data-name="Group 5" transform="translate(256.312 61.964)">
+      <path id="Path_3" data-name="Path 3" d="M337.471,76.2,364.7,91.37l-27.233,15.171Z" transform="translate(-337.471 -76.199)" fill="#ff5a5d"/>
+      <path id="Path_4" data-name="Path 4" d="M390.686,108.061l5.824,3.288-5.824,3.288Z" transform="translate(-370.496 -96.179)" fill="#f5f5f5"/>
+    </g>
+    <text id="E" transform="translate(229.586 92.257)" fill="#ff5a5d" font-size="47" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">E</tspan></text>
+    <text id="PENCIL" transform="translate(203.346 106.711)" fill="#453d3d" font-size="21" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">PENCIL</tspan></text>
+    <text id="IT" transform="translate(277.247 97.853)" fill="#453d3d" font-size="7" font-family="Helvetica-Bold, Helvetica" font-weight="700"><tspan x="0" y="0">IT</tspan></text>
+  </g>
+</svg>

@@ -14,6 +14,25 @@
     <link href=" {{ asset('css/line-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <style>
+        @if (app()->getLocale() === 'fa')
+        body {
+            text-align: right;
+            direction: rtl;
+            font-family: Sahel;
+        }
+
+        @else
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            direction: ltr;
+            text-align: left;
+        }
+        @endif
+    </style>
+
+    @yield('style')
+
     <script>
         window.Redpencilit = {!!
             json_encode([
@@ -38,8 +57,8 @@
     <flash message="{{ session('flash') }}"></flash>
 </div>
 
-    @include('partials.footer')
-<script src="/js/app.js"></script>
+@include('partials.footer')
+<script src="{{ asset('js/app.js') }}"></script>
 @yield('script')
 </body>
 </html>

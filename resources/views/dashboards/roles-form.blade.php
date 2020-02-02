@@ -8,13 +8,13 @@
                                 <span class="text-grey ml-1">
                                     <i class="la la-user-alt text-2xl"></i>
                                 </span>
-            نقش‌ها
+           {{ ucfirst(__('roles')) }}
         </h3>
     </div>
 
     <div class="flex flex-wrap -mx-3 mb-6">
         <div class="w-full px-3 pb-6">
-            <label for="name" class="text-grey-darker block mb-4">انتخاب نقش</label>
+            <label for="name" class="text-grey-darker block mb-4">{{ ucfirst(__('pick a role'))  }}</label>
 
             <div class="flex w-full">
                 @foreach ($roles as $role)
@@ -37,7 +37,9 @@
     <hr class="mb-3">
 
     <div class="row">
-        <button @click="" class="button button--primary">ذخیره اطلاعات</button>
+        <button @click="" class="button button--primary">
+            {{ __('save information') }}
+        </button>
     </div>
 
 </form>

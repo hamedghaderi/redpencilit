@@ -6263,6 +6263,163 @@ module.exports = function (_Plugin) {
 
 /***/ }),
 
+/***/ "./node_modules/@uppy/locales/lib/en_US.js":
+/*!*************************************************!*\
+  !*** ./node_modules/@uppy/locales/lib/en_US.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* eslint camelcase: 0 */
+var en_US = {};
+en_US.strings = {
+  addMoreFiles: 'Add more files',
+  addingMoreFiles: 'Adding more files',
+  allowAccessDescription: 'In order to take pictures or record video with your camera, please allow camera access for this site.',
+  allowAccessTitle: 'Please allow access to your camera',
+  authenticateWith: 'Connect to %{pluginName}',
+  authenticateWithTitle: 'Please authenticate with %{pluginName} to select files',
+  back: 'Back',
+  browse: 'browse',
+  cancel: 'Cancel',
+  cancelUpload: 'Cancel upload',
+  chooseFiles: 'Choose files',
+  closeModal: 'Close Modal',
+  companionAuthError: 'Authorization required',
+  companionError: 'Connection with Companion failed',
+  complete: 'Complete',
+  connectedToInternet: 'Connected to the Internet',
+  copyLink: 'Copy link',
+  copyLinkToClipboardFallback: 'Copy the URL below',
+  copyLinkToClipboardSuccess: 'Link copied to clipboard',
+  creatingAssembly: 'Preparing upload...',
+  creatingAssemblyFailed: 'Transloadit: Could not create Assembly',
+  dashboardTitle: 'File Uploader',
+  dashboardWindowTitle: 'File Uploader Window (Press escape to close)',
+  dataUploadedOfTotal: '%{complete} of %{total}',
+  done: 'Done',
+  dropHereOr: 'Drop files here or %{browse}',
+  dropHint: 'Drop your files here',
+  dropPaste: 'Drop files here, paste or %{browse}',
+  dropPasteImport: 'Drop files here, paste, %{browse} or import from',
+  edit: 'Edit',
+  editFile: 'Edit file',
+  editing: 'Editing %{file}',
+  emptyFolderAdded: 'No files were added from empty folder',
+  encoding: 'Encoding...',
+  enterCorrectUrl: 'Incorrect URL: Please make sure you are entering a direct link to a file',
+  enterUrlToImport: 'Enter URL to import a file',
+  exceedsSize: 'This file exceeds maximum allowed size of',
+  failedToFetch: 'Companion failed to fetch this URL, please make sure it’s correct',
+  failedToUpload: 'Failed to upload %{file}',
+  fileSource: 'File source: %{name}',
+  filesUploadedOfTotal: {
+    '0': '%{complete} of %{smart_count} file uploaded',
+    '1': '%{complete} of %{smart_count} files uploaded',
+    '2': '%{complete} of %{smart_count} files uploaded'
+  },
+  filter: 'Filter',
+  finishEditingFile: 'Finish editing file',
+  folderAdded: {
+    '0': 'Added %{smart_count} file from %{folder}',
+    '1': 'Added %{smart_count} files from %{folder}',
+    '2': 'Added %{smart_count} files from %{folder}'
+  },
+  import: 'Import',
+  importFrom: 'Import from %{name}',
+  link: 'Link',
+  loading: 'Loading...',
+  logOut: 'Log out',
+  myDevice: 'My Device',
+  noFilesFound: 'You have no files or folders here',
+  noInternetConnection: 'No Internet connection',
+  pause: 'Pause',
+  pauseUpload: 'Pause upload',
+  paused: 'Paused',
+  poweredBy: 'Powered by',
+  preparingUpload: 'Preparing upload...',
+  processingXFiles: {
+    '0': 'Processing %{smart_count} file',
+    '1': 'Processing %{smart_count} files',
+    '2': 'Processing %{smart_count} files'
+  },
+  removeFile: 'Remove file',
+  resetFilter: 'Reset filter',
+  resume: 'Resume',
+  resumeUpload: 'Resume upload',
+  retry: 'Retry',
+  retryUpload: 'Retry upload',
+  saveChanges: 'Save changes',
+  selectXFiles: {
+    '0': 'Select %{smart_count} file',
+    '1': 'Select %{smart_count} files',
+    '2': 'Select %{smart_count} files'
+  },
+  smile: 'Smile!',
+  startRecording: 'Begin video recording',
+  stopRecording: 'Stop video recording',
+  takePicture: 'Take a picture',
+  timedOut: 'Upload stalled for %{seconds} seconds, aborting.',
+  upload: 'Upload',
+  uploadComplete: 'Upload complete',
+  uploadFailed: 'Upload failed',
+  uploadPaused: 'Upload paused',
+  uploadXFiles: {
+    '0': 'Upload %{smart_count} file',
+    '1': 'Upload %{smart_count} files',
+    '2': 'Upload %{smart_count} files'
+  },
+  uploadXNewFiles: {
+    '0': 'Upload +%{smart_count} file',
+    '1': 'Upload +%{smart_count} files',
+    '2': 'Upload +%{smart_count} files'
+  },
+  uploading: 'Uploading',
+  uploadingXFiles: {
+    '0': 'Uploading %{smart_count} file',
+    '1': 'Uploading %{smart_count} files',
+    '2': 'Uploading %{smart_count} files'
+  },
+  xFilesSelected: {
+    '0': '%{smart_count} file selected',
+    '1': '%{smart_count} files selected',
+    '2': '%{smart_count} files selected'
+  },
+  xMoreFilesAdded: {
+    '0': '%{smart_count} more file added',
+    '1': '%{smart_count} more files added',
+    '2': '%{smart_count} more files added'
+  },
+  xTimeLeft: '%{time} left',
+  youCanOnlyUploadFileTypes: 'You can only upload: %{types}',
+  youCanOnlyUploadX: {
+    '0': 'You can only upload %{smart_count} file',
+    '1': 'You can only upload %{smart_count} files',
+    '2': 'You can only upload %{smart_count} files'
+  },
+  youHaveToAtLeastSelectX: {
+    '0': 'You have to select at least %{smart_count} file',
+    '1': 'You have to select at least %{smart_count} files',
+    '2': 'You have to select at least %{smart_count} files'
+  }
+};
+
+en_US.pluralize = function (n) {
+  if (n === 1) {
+    return 0;
+  }
+
+  return 1;
+};
+
+if (typeof window !== 'undefined' && typeof window.Uppy !== 'undefined') {
+  window.Uppy.locales.en_US = en_US;
+}
+
+module.exports = en_US;
+
+/***/ }),
+
 /***/ "./node_modules/@uppy/locales/lib/fa_IR.js":
 /*!*************************************************!*\
   !*** ./node_modules/@uppy/locales/lib/fa_IR.js ***!
@@ -9843,10 +10000,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     home: {
@@ -10035,6 +10188,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Errors__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Errors */ "./resources/js/Errors.js");
+//
+//
+//
 //
 //
 //
@@ -10393,6 +10549,8 @@ var Dashboard = __webpack_require__(/*! @uppy/dashboard */ "./node_modules/@uppy
     } else {
       this.endpoint = "/".concat(this.locale, "/users/").concat(this.user.id, "/orders");
     }
+
+    _settings_uppy_dashboard__WEBPACK_IMPORTED_MODULE_0__["dashboard_settings"].locale = this.locale === 'fa' ? _settings_uppy_dashboard__WEBPACK_IMPORTED_MODULE_0__["Persian"] : _settings_uppy_dashboard__WEBPACK_IMPORTED_MODULE_0__["US"];
   },
   mounted: function mounted() {
     var _this = this;
@@ -10705,6 +10863,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Contact",
@@ -10879,6 +11041,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jalali_moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jalali-moment */ "./node_modules/jalali-moment/jalali-moment.js");
 /* harmony import */ var jalali_moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jalali_moment__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _components_Modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Modal */ "./resources/js/components/Modal.vue");
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -11461,6 +11630,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11507,9 +11702,11 @@ __webpack_require__.r(__webpack_exports__);
       step: 1,
       price: 0,
       persianNumber: new _PersianNumber_js__WEBPACK_IMPORTED_MODULE_5__["default"](),
+      moment: jalali_moment__WEBPACK_IMPORTED_MODULE_4___default.a,
       modal: false,
       order: null,
-      documents: []
+      documents: [],
+      locale: Redpencilit.locale
     };
   },
   methods: {
@@ -11518,7 +11715,13 @@ __webpack_require__.r(__webpack_exports__);
       this.words = this.order.total_words;
       this.price = this.order.price;
       var m = jalali_moment__WEBPACK_IMPORTED_MODULE_4___default()(order.delivery_date);
-      m.locale('fa');
+
+      if (this.locale === 'fa') {
+        m.locale('fa');
+      } else {
+        m.local('en');
+      }
+
       this.deliverDate = m.format('DD') + ' ' + m.format('MMMM') + ' ' + m.format('YYYY');
     },
     onSelect: function onSelect() {
@@ -11584,7 +11787,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var formData = new FormData();
       formData.append('service', this.service);
-      axios.post("/users/".concat(this.user.id, "/drafts"), {
+      var url = '/' + this.locale + '/users/' + this.user.id + '/drafts';
+      axios.post(url, {
         'service_id': this.selected,
         'order_id': this.order.id
       }).then(function (res) {
@@ -11737,7 +11941,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".collapse-enter-active,\n.collapse-leave-active {\n  transition: all .5s;\n  -webkit-transform: translateY(0);\n          transform: translateY(0);\n}\n.collapse-enter,\n.collapse-leave-to {\n  opacity: 0;\n  -webkit-transform: translateY(7px);\n          transform: translateY(7px);\n}\n.dropdown-content {\n  position: absolute;\n}\n.dropdown-left .collapse-enter-active,\n.dropdown-left .collapse-leave-active {\n  -webkit-transform: translateX(0);\n          transform: translateX(0);\n}\n@media screen and (min-width: 768px) {\n.md-left .dropdown-content {\n    right: 100% !important;\n    bottom: auto !important;\n    top: 0;\n}\n}\n.dropdown-left .dropdown-content {\n  top: 0;\n  right: 100%;\n  -webkit-transform: translateX(0px);\n          transform: translateX(0px);\n}\n.dropdown-top .dropdown-content {\n  bottom: 100%;\n  right: 0;\n}\n.dropdown-left .collapse-enter,\n.dropdown-left .collapse-leave-to,\n.md-left .collapse-enter,\n.md-left .collapse-leave-to {\n  opacity: 0;\n  -webkit-transform: translateX(-7px);\n          transform: translateX(-7px);\n}\n", ""]);
+exports.push([module.i, ".collapse-enter-active,\n.collapse-leave-active {\n  transition: all .5s;\n  -webkit-transform: translateY(0);\n          transform: translateY(0);\n}\n.collapse-enter,\n.collapse-leave-to {\n  opacity: 0;\n  -webkit-transform: translateY(7px);\n          transform: translateY(7px);\n}\n.dropdown-content {\n  position: absolute;\n}\n.dropdown-left .collapse-enter-active,\n.dropdown-left .collapse-leave-active {\n  -webkit-transform: translateX(0);\n          transform: translateX(0);\n}\n.dropdown-right .collapse-enter-active,\n.dropdown-right .collapse-leave-active {\n  -webkit-transform: translateX(0);\n          transform: translateX(0);\n}\n@media screen and (min-width: 768px) {\n.md-left .dropdown-content {\n    left: auto;\n    right: 100% !important;\n    bottom: auto !important;\n    top: 0;\n}\n.md-right .dropdown-content {\n    left: 100% !important;\n    right: auto;\n    bottom: auto !important;\n    top: 0;\n}\n}\n.dropdown-left .dropdown-content {\n  top: 0;\n  right: 100%;\n  -webkit-transform: translateX(0px);\n          transform: translateX(0px);\n}\n.dropdown-right .dropdown-content {\n  left: auto;\n  right: 0;\n}\n.dropdown-top .dropdown-content {\n  bottom: 100%;\n  right: 0;\n}\n.dropdown-left .collapse-enter,\n.dropdown-left .collapse-leave-to,\n.md-left .collapse-enter,\n.md-left .collapse-leave-to {\n  opacity: 0;\n  -webkit-transform: translateX(-7px);\n          transform: translateX(-7px);\n}\n.dropdown-right .collapse-enter,\n.dropdown-right .collapse-leave-to,\n.md-right .collapse-enter,\n.md-right .collapse-leave-to {\n  opacity: 0;\n  -webkit-transform: translateX(7px);\n          transform: translateX(7px);\n}\n", ""]);
 
 // exports
 
@@ -53417,7 +53621,9 @@ var render = function() {
       _c(
         "dropdown",
         {
-          attrs: { classes: "dropdown-left" },
+          attrs: {
+            classes: [_vm.locale === "fa" ? "dropdown-left" : "dropdown-right"]
+          },
           scopedSlots: _vm._u([
             {
               key: "toggler",
@@ -53448,10 +53654,7 @@ var render = function() {
                         [
                           _c(
                             "span",
-                            {
-                              staticClass: "text-grey-dark ml-2 text-sm",
-                              class: { "text-white": _vm.home }
-                            },
+                            { staticClass: "text-grey-darkest ml-2 text-sm" },
                             [_vm._v(_vm._s(_vm.user.name))]
                           ),
                           _vm._v(" "),
@@ -53464,7 +53667,7 @@ var render = function() {
                             staticClass: "la la-angle-down",
                             class: {
                               rotate: _vm.rotate,
-                              "text-white": _vm.home
+                              "text-grey-darkest": _vm.home
                             }
                           })
                         ]
@@ -53488,35 +53691,19 @@ var render = function() {
                     },
                     [
                       _c("span", { staticClass: "flex items-center" }, [
-                        _c(
-                          "svg",
-                          {
-                            staticClass: "fill-current h-5 w-5",
-                            attrs: {
-                              xmlns: "http://www.w3.org/2000/svg",
-                              viewBox: "0 0 24 24",
-                              width: "24",
-                              height: "24"
-                            }
-                          },
-                          [
-                            _c("path", {
-                              staticClass: "heroicon-ui",
-                              attrs: {
-                                d:
-                                  "M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm0 10v6h14v-6h-2.38l-1.45 2.9a2 2 0 0 1-1.79 1.1h-2.76a2 2 0 0 1-1.8-1.1L7.39 13H5zm14-2V5H5v6h2.38a2 2 0 0 1 1.8 1.1l1.44 2.9h2.76l1.45-2.9a2 2 0 0 1 1.79-1.1H19z"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("i", { staticClass: "las la-sign-in-alt text-2xl" }),
                         _vm._v(" "),
-                        _c("span", { staticClass: "mr-3" }, [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.trans.get("__JSON__.login")) +
-                              "\n                        "
-                          )
-                        ])
+                        _c(
+                          "span",
+                          { class: [_vm.locale === "fa" ? "mr-3" : "ml-3"] },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.trans.get("__JSON__.login")) +
+                                "\n                        "
+                            )
+                          ]
+                        )
                       ])
                     ]
                   ),
@@ -53530,35 +53717,19 @@ var render = function() {
                     },
                     [
                       _c("span", { staticClass: "flex items-center" }, [
-                        _c(
-                          "svg",
-                          {
-                            staticClass: "fill-current h-5 w-5",
-                            attrs: {
-                              xmlns: "http://www.w3.org/2000/svg",
-                              viewBox: "0 0 24 24",
-                              width: "24",
-                              height: "24"
-                            }
-                          },
-                          [
-                            _c("path", {
-                              staticClass: "heroicon-ui",
-                              attrs: {
-                                d:
-                                  "M19 10h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2V8a1 1 0 0 1 2 0v2zM9 12A5 5 0 1 1 9 2a5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm8 11a1 1 0 0 1-2 0v-2a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v2a1 1 0 0 1-2 0v-2a5 5 0 0 1 5-5h5a5 5 0 0 1 5 5v2z"
-                              }
-                            })
-                          ]
-                        ),
+                        _c("i", { staticClass: "las la-user-plus text-2xl" }),
                         _vm._v(" "),
-                        _c("span", { staticClass: "mr-3" }, [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.trans.get("__JSON__.register")) +
-                              "\n                        "
-                          )
-                        ])
+                        _c(
+                          "span",
+                          { class: [_vm.locale === "fa" ? "mr-3" : "ml-3"] },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.trans.get("__JSON__.register")) +
+                                "\n                        "
+                            )
+                          ]
+                        )
                       ])
                     ]
                   )
@@ -53574,13 +53745,20 @@ var render = function() {
                     [
                       _c("i", { staticClass: "la la-tachometer-alt text-2xl" }),
                       _vm._v(" "),
-                      _c("span", { staticClass: "text-grey-dark mr-1" }, [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(_vm.trans.get("__JSON__.dashboard")) +
-                            "\n                    "
-                        )
-                      ])
+                      _c(
+                        "span",
+                        {
+                          staticClass: "text-grey-dark",
+                          class: [_vm.locale === "fa" ? "mr-1" : "ml-1"]
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.trans.get("__JSON__.dashboard")) +
+                              "\n                    "
+                          )
+                        ]
+                      )
                     ]
                   ),
                   _vm._v(" "),
@@ -53594,9 +53772,20 @@ var render = function() {
                     [
                       _c("i", { staticClass: "la la-sign-out-alt text-2xl" }),
                       _vm._v(" "),
-                      _c("span", { staticClass: "text-grey-dark mr-2" }, [
-                        _vm._v(_vm._s(_vm.trans.get("__JSON__.logout")))
-                      ]),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "text-grey-dark",
+                          class: [_vm.locale === "fa" ? "mr-2" : "ml-2"]
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.trans.get("__JSON__.logout")) +
+                              "\n                    "
+                          )
+                        ]
+                      ),
                       _vm._v(" "),
                       _c("form", {
                         staticStyle: { display: "none" },
@@ -53643,7 +53832,7 @@ var render = function() {
     { staticClass: "w-full lg:w-3/4 mx-auto md:flex items-center" },
     [
       _c("h3", { staticClass: "text-sm mb-8 w-48 md:mb-0" }, [
-        _vm._v(_vm._s(_vm.trans.get("__JSON__.upload documents")))
+        _vm._v(_vm._s(_vm.trans.get("__JSON__.order register")))
       ]),
       _vm._v(" "),
       _c(
@@ -53848,7 +54037,11 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "las la-plus ml-2" }),
-            _vm._v("\n        افزودن به صفحه اصلی\n    ")
+            _vm._v(
+              "\n        " +
+                _vm._s(_vm.trans.get("__JSON__.add to home page")) +
+                "\n    "
+            )
           ]
         )
       : _vm._e(),
@@ -53861,7 +54054,13 @@ var render = function() {
               staticClass: "font-bold text-grey-dark text-sm mb-2 block",
               attrs: { for: "body" }
             },
-            [_vm._v("متن پیام")]
+            [
+              _vm._v(
+                "\n            " +
+                  _vm._s(_vm.trans.get("__JSON__.message body")) +
+                  "\n        "
+              )
+            ]
           ),
           _vm._v(" "),
           _c("textarea", {
@@ -53914,7 +54113,11 @@ var render = function() {
               },
               [
                 _c("i", { staticClass: "la la-save text-lg ml-1" }),
-                _vm._v("\n                ذخیره پیام\n            ")
+                _vm._v(
+                  "\n                " +
+                    _vm._s(_vm.trans.get("__JSON__.save message")) +
+                    "\n            "
+                )
               ]
             ),
             _vm._v(" "),
@@ -53922,7 +54125,8 @@ var render = function() {
               "button",
               {
                 staticClass:
-                  "mr-auto inline-flex items-center bg-red-lightest text-red text-xs px-1 py-1 rounded-full",
+                  "inline-flex items-center bg-red-lightest text-red text-xs px-1 py-1 rounded-full",
+                class: [_vm.locale === "fa" ? "mr-auto" : "ml-auto"],
                 on: { click: _vm.hideTestimonial }
               },
               [_c("i", { staticClass: "la la-times" })]
@@ -54506,9 +54710,25 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "mb-24" },
+    { staticClass: "mb-8" },
     [
-      _vm._m(0),
+      _c("div", { staticClass: "row px-6 mb-4 hidden lg:flex" }, [
+        _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
+          _vm._v(_vm._s(_vm.trans.get("__JSON__.message sender")))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-2/5 text-sm text-grey-dark" }, [
+          _vm._v(_vm._s(_vm.trans.get("__JSON__.sender email")))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
+          _vm._v(_vm._s(_vm.trans.get("__JSON__.sent at")))
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
+          _vm._v(_vm._s(_vm.trans.get("__JSON__.score")))
+        ])
+      ]),
       _vm._v(" "),
       _vm._l(_vm.comments, function(comment) {
         return _c(
@@ -54572,7 +54792,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("حذف ")]
+                    [_vm._v(_vm._s(_vm.trans.get("__JSON__.delete")) + " ")]
                   )
                 ])
               ],
@@ -54601,30 +54821,7 @@ var render = function() {
     2
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row px-6 mb-4 hidden lg:flex" }, [
-      _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
-        _vm._v("فرستنده پیام")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "w-2/5 text-sm text-grey-dark" }, [
-        _vm._v("ایمیل فرستنده")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
-        _vm._v("تاریخ ارسال")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
-        _vm._v("امتیاز")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -54648,10 +54845,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "w-full px-8 md:px-24 contact md:h-screen md:min-h-screen" },
+    {
+      staticClass:
+        "w-full px-8 md:px-24 contact md:h-screen md:min-h-screen relative"
+    },
     [
-      _c("div", { staticClass: "flex items-center justify-center" }, [
-        _c("div", { staticClass: "w-full md:w-2/3 lg:w-1/3" }, [
+      _c("div", { staticClass: "flex flex-wrap items-center" }, [
+        _c("div", { staticClass: "w-full md:w-2/3 lg:w-1/2" }, [
           _c("h3", { staticClass: "title text-center" }, [
             _vm._v(_vm._s(_vm.trans.get("__JSON__.contact us")))
           ]),
@@ -54875,12 +55075,27 @@ var render = function() {
               ]
             )
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
       ])
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "w-full md:w-1/3 lg:w-1/2" }, [
+      _c("img", {
+        staticClass: "w-full",
+        staticStyle: { transform: "rotateY(-180deg)" },
+        attrs: { src: "/images/8.svg", alt: "a support girl" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -54999,7 +55214,29 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "flex mb-12" }, [
-      _vm._m(0),
+      _c("div", { staticClass: "w-1/2" }, [
+        _c("div", { staticClass: "p-6" }, [
+          _c("h3", { staticClass: "dashboard-title" }, [
+            _vm._v(
+              "\n                   " +
+                _vm._s(_vm.trans.get("__JSON__.create a new service")) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "dashboard-text" }, [
+            _vm._v(
+              "\n                    " +
+                _vm._s(
+                  _vm.trans.get(
+                    "__JSON__.These kinds of services, take effect on the final price. For example, a user who select the book service, neither price nor delivery date doesnt depend on words count and will be calculated in an agreement."
+                  )
+                ) +
+                "\n                "
+            )
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "w-1/2" }, [
         _c("div", { staticClass: "p-6" }, [
@@ -55020,7 +55257,7 @@ var render = function() {
                   _c(
                     "label",
                     { staticClass: "label", attrs: { for: "name" } },
-                    [_vm._v("نام سرویس جدید")]
+                    [_vm._v(_vm._s(_vm.trans.get("__JSON__.new service name")))]
                   ),
                   _vm._v(" "),
                   _c("input", {
@@ -55113,7 +55350,9 @@ var render = function() {
                         }
                       }),
                       _vm._v(
-                        "\n\n                                قیمت به صورت مذاکره‌ای\n                            "
+                        "\n\n                                " +
+                          _vm._s(_vm.trans.get("__JSON__.agreement price")) +
+                          "\n                            "
                       )
                     ]
                   )
@@ -55135,7 +55374,22 @@ var render = function() {
                     )
                   : _vm._e(),
                 _vm._v(" "),
-                _vm._m(1)
+                _c("div", { staticClass: "form-group mb-0" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button button--smooth--primary",
+                      attrs: { type: "submit" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.trans.get("__JSON__.save service")) +
+                          "\n                            "
+                      )
+                    ]
+                  )
+                ])
               ]
             )
           ])
@@ -55147,13 +55401,29 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "px-6" },
+      { staticClass: "px-6 mb-24" },
       [
         _c("h3", { staticClass: "dashboard-title mb-8" }, [
-          _vm._v("سرویس‌های موجود")
+          _vm._v(
+            "\n            " +
+              _vm._s(_vm.trans.get("__JSON__.current services")) +
+              "\n        "
+          )
         ]),
         _vm._v(" "),
-        _vm._m(2),
+        _c("div", { staticClass: "row px-6 mb-2 flex" }, [
+          _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
+            _vm._v(_vm._s(_vm.trans.get("__JSON__.service name")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
+            _vm._v(_vm._s(_vm.trans.get("__JSON__.created at")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
+            _vm._v(_vm._s(_vm.trans.get("__JSON__.updated at")))
+          ])
+        ]),
         _vm._v(" "),
         _vm._l(_vm.services, function(service) {
           return _c("div", { key: service.id, staticClass: "row mb-3" }, [
@@ -55210,7 +55480,13 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("ویرایش\n                        اطلاعات")]
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.trans.get("__JSON__.edit info")) +
+                          "\n                    "
+                      )
+                    ]
                   )
                 ]),
                 _vm._v(" "),
@@ -55233,7 +55509,13 @@ var render = function() {
                           staticClass:
                             "button button--smooth--danger button--sm"
                         },
-                        [_vm._v("حذف سرویس")]
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(_vm.trans.get("__JSON__.delete service")) +
+                              "\n                        "
+                          )
+                        ]
                       )
                     ]
                   )
@@ -55280,7 +55562,11 @@ var render = function() {
                             staticClass: "label",
                             attrs: { for: "modal-name" }
                           },
-                          [_vm._v("نام سرویس جدید")]
+                          [
+                            _vm._v(
+                              _vm._s(_vm.trans.get("__JSON__.new service name"))
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c("input", {
@@ -55385,7 +55671,11 @@ var render = function() {
                                 }
                               }),
                               _vm._v(
-                                "\n\n                            قیمت به صورت مذاکره‌ای\n                        "
+                                "\n\n                           " +
+                                  _vm._s(
+                                    _vm.trans.get("__JSON__.negotiable price")
+                                  ) +
+                                  "\n                        "
                               )
                             ]
                           )
@@ -55418,7 +55708,11 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "به روز\n                                رسانی\n                                سرویس"
+                              "\n                                " +
+                                _vm._s(
+                                  _vm.trans.get("__JSON__.update service")
+                                ) +
+                                "\n                            "
                             )
                           ]
                         )
@@ -55434,59 +55728,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "w-1/2" }, [
-      _c("div", { staticClass: "p-6" }, [
-        _c("h3", { staticClass: "dashboard-title" }, [
-          _vm._v("ایجاد سرویس جدید")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "dashboard-text" }, [
-          _vm._v(
-            "این گونه سرویس‌ها روی نحوه‌ی محاسبه‌ی هزینه تاثیر می‌گذارند. مثلا کاربری که\n                    سرویس کتاب را\n                    انتخاب\n                    کند، قیمت نهایی و زمان، دیگر بستگی به تعداد کلمات ندارد و به صورت توافقی مشخص خواهد شد."
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group mb-0" }, [
-      _c(
-        "button",
-        {
-          staticClass: "button button--smooth--primary",
-          attrs: { type: "submit" }
-        },
-        [_vm._v("ذخیره\n                                سرویس")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row px-6 mb-2 flex" }, [
-      _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
-        _vm._v("نام سرویس")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
-        _vm._v("تاریخ ایجاد سرویس")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
-        _vm._v("تاریخ به روز رسانی")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -55582,7 +55824,10 @@ var render = function() {
                           "button",
                           {
                             staticClass:
-                              "button button--sm button--outline--danger mr-auto z-50",
+                              "button button--sm button--outline--danger z-50",
+                            class: [
+                              _vm.locale === "fa" ? "mr-auto" : "ml-auto"
+                            ],
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
@@ -55624,520 +55869,271 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "upload-sections" }, [
-        _vm.step === 1
-          ? _c("div", { staticClass: "upload-section" }, [
-              _c(
-                "div",
-                { staticClass: "flex flex-wrap w-full lg:w-3/4 mx-auto" },
-                [
-                  _c("div", { staticClass: "w-full lg:w-1/2" }, [
-                    _c("div", { staticClass: "tabs" }, [
-                      _c("div", { staticClass: "tab-header" }, [
+      _c(
+        "div",
+        {
+          staticClass: "upload-sections",
+          staticStyle: { "min-height": "600px" }
+        },
+        [
+          _vm.step === 1
+            ? _c("div", { staticClass: "upload-section" }, [
+                _c(
+                  "div",
+                  { staticClass: "flex flex-wrap w-full lg:w-3/4 mx-auto" },
+                  [
+                    _c("div", { staticClass: "w-full lg:w-1/2" }, [
+                      _c("div", { staticClass: "tabs" }, [
+                        _c("div", { staticClass: "tab-header" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "tab-pane",
+                              class: { "tab-pane--active": _vm.registerActive }
+                            },
+                            [
+                              _c("span", { staticClass: "tab-name" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        _vm.registerActive = true
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.trans.get("__JSON__.register"))
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "tab-pane",
+                              class: { "tab-pane--active": !_vm.registerActive }
+                            },
+                            [
+                              _c("span", { staticClass: "tab-name" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        _vm.registerActive = false
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    " +
+                                        _vm._s(
+                                          _vm.trans.get("__JSON__.login")
+                                        ) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "div",
                           {
-                            staticClass: "tab-pane",
-                            class: { "tab-pane--active": _vm.registerActive }
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.registerActive,
+                                expression: "registerActive"
+                              }
+                            ],
+                            staticClass: "tab-content"
                           },
                           [
-                            _c("span", { staticClass: "tab-name" }, [
-                              _c(
-                                "a",
-                                {
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.registerActive = true
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(_vm.trans.get("__JSON__.register"))
-                                  )
-                                ]
-                              )
-                            ])
-                          ]
+                            _c("upload-register-form", {
+                              on: { userRegistered: _vm.completeAuth }
+                            })
+                          ],
+                          1
                         ),
                         _vm._v(" "),
                         _c(
                           "div",
                           {
-                            staticClass: "tab-pane",
-                            class: { "tab-pane--active": !_vm.registerActive }
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: !_vm.registerActive,
+                                expression: "!registerActive"
+                              }
+                            ],
+                            staticClass: "tab-content"
                           },
                           [
-                            _c("span", { staticClass: "tab-name" }, [
-                              _c(
-                                "a",
-                                {
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.registerActive = false
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(_vm.trans.get("__JSON__.login"))
-                                  )
-                                ]
-                              )
-                            ])
-                          ]
+                            _c("upload-login-form", {
+                              on: { userLoggedIn: _vm.completeAuth }
+                            })
+                          ],
+                          1
                         )
-                      ]),
-                      _vm._v(" "),
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ]
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.step === 2
+            ? _c(
+                "div",
+                { staticClass: "upload-section" },
+                [
+                  _c("uploader-file", {
+                    staticClass: "mb-12",
+                    attrs: { user: _vm.user, token: _vm.token },
+                    on: { fileUploaded: _vm.generateSettings }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "w-full lg:w-3/4 mx-auto flex flex-wrap items-start mb-12"
+                    },
+                    [
                       _c(
                         "div",
                         {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.registerActive,
-                              expression: "registerActive"
-                            }
-                          ],
-                          staticClass: "tab-content"
+                          staticClass:
+                            "mb-8 md:mb-0 w-2/3 md:w-2/5 service-title"
                         },
                         [
-                          _c("upload-register-form", {
-                            on: { userRegistered: _vm.completeAuth }
-                          })
-                        ],
-                        1
+                          _c(
+                            "h3",
+                            { staticClass: "w-full leading-normal pt-24" },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.trans.get(
+                                    "__JSON__.Choose a proper service for your need"
+                                  )
+                                )
+                              )
+                            ]
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
                         "div",
                         {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: !_vm.registerActive,
-                              expression: "!registerActive"
-                            }
-                          ],
-                          staticClass: "tab-content"
+                          staticClass:
+                            "w-full md:w-3/5 bg-white p-8 rounded shadow"
                         },
                         [
-                          _c("upload-login-form", {
-                            on: { userLoggedIn: _vm.completeAuth }
-                          })
-                        ],
-                        1
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(0)
-                ]
-              )
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.step === 2
-          ? _c(
-              "div",
-              { staticClass: "upload-section" },
-              [
-                _c("uploader-file", {
-                  staticClass: "mb-12",
-                  attrs: { user: _vm.user, token: _vm.token },
-                  on: { fileUploaded: _vm.generateSettings }
-                }),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "w-full lg:w-3/4 mx-auto flex flex-wrap items-start mb-12"
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "mb-8 md:mb-0 w-2/3 md:w-2/5 service-title"
-                      },
-                      [
-                        _c(
-                          "h3",
-                          { staticClass: "w-full leading-normal pt-24" },
-                          [
-                            _vm._v(
-                              _vm._s(
-                                _vm.trans.get(
-                                  "__JSON__.Choose a proper service for your need"
-                                )
-                              )
-                            )
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-full md:w-3/5 bg-white p-8 rounded shadow"
-                      },
-                      [
-                        _c("div", [
-                          _c("div", { staticClass: "select mb-1" }, [
-                            _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.selected,
-                                    expression: "selected"
-                                  }
-                                ],
-                                attrs: { name: "service", id: "service" },
-                                on: {
-                                  change: [
-                                    function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value
-                                          return val
-                                        })
-                                      _vm.selected = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0]
-                                    },
-                                    _vm.onSelect
-                                  ]
-                                }
-                              },
-                              [
-                                _c("option", { attrs: { value: "" } }, [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.trans.get("__JSON__.Select a service")
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _vm._l(_vm.options, function(service) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: service.id } },
-                                    [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(service.name) +
-                                          "\n                                "
-                                      )
-                                    ]
-                                  )
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "select__icon" }, [
+                          _c("div", [
+                            _c("div", { staticClass: "select mb-1" }, [
                               _c(
-                                "svg",
+                                "select",
                                 {
-                                  staticClass: "select__svg",
-                                  attrs: {
-                                    xmlns: "http://www.w3.org/2000/svg",
-                                    viewBox: "0 0 20 20"
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.selected,
+                                      expression: "selected"
+                                    }
+                                  ],
+                                  attrs: { name: "service", id: "service" },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.selected = $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      },
+                                      _vm.onSelect
+                                    ]
                                   }
                                 },
                                 [
-                                  _c("path", {
-                                    attrs: {
-                                      d:
-                                        "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                                    }
+                                  _c("option", { attrs: { value: "" } }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.trans.get(
+                                          "__JSON__.Select a service"
+                                        )
+                                      )
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.options, function(service) {
+                                    return _c(
+                                      "option",
+                                      { domProps: { value: service.id } },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(service.name) +
+                                            "\n                                "
+                                        )
+                                      ]
+                                    )
                                   })
-                                ]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "p",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.contract,
-                                  expression: "contract"
-                                }
-                              ],
-                              staticClass:
-                                "bg-yellow-lightest text-yellow-darker text-xs p-2 rounded leading-normal"
-                            },
-                            [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(
-                                    _vm.trans.get(
-                                      "__JSON__.For books, price and time calculation is adaptive. We will contact you ASA, for further communications. We are appreciate you."
-                                    )
-                                  ) +
-                                  "\n                        "
-                              )
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        !_vm.contract
-                          ? _c("hr", { staticClass: "my-6" })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: !_vm.contract,
-                                expression: "!contract"
-                              }
-                            ],
-                            staticClass: "flex items-center text-sm mb-3"
-                          },
-                          [
-                            _c(
-                              "span",
-                              {
-                                staticClass: "mb-0 flex items-center text-grey"
-                              },
-                              [
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass: "fill-current ml-2 h-5 w-5",
-                                    attrs: {
-                                      xmlns: "http://www.w3.org/2000/svg",
-                                      viewBox: "0 0 24 24",
-                                      width: "24",
-                                      height: "24"
-                                    }
-                                  },
-                                  [
-                                    _c("path", {
-                                      staticClass: "heroicon-ui",
-                                      attrs: {
-                                        d:
-                                          "M17 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6c0-1.1.9-2 2-2h2V3a1 1 0 1 1 2 0v1h6V3a1 1 0 0 1 2 0v1zm-2 2H9v1a1 1 0 1 1-2 0V6H5v4h14V6h-2v1a1 1 0 0 1-2 0V6zm4 6H5v8h14v-8z"
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  { staticClass: "text-grey-darker" },
-                                  [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm.trans.get(
-                                          "__JSON__.Delivery date: (Estimated)"
-                                        )
-                                      )
-                                    )
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm.deliverDate
-                              ? _c(
-                                  "span",
-                                  { staticClass: "mr-auto tag tag--info" },
-                                  [
-                                    _vm._v(
-                                      "\n                            " +
-                                        _vm._s(
-                                          _vm.persianNumber.toPersian(
-                                            _vm.deliverDate
-                                          )
-                                        ) +
-                                        "\n                        "
-                                    )
-                                  ]
-                                )
-                              : _vm._e()
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _vm.deliverDate
-                          ? _c(
-                              "p",
-                              {
-                                staticClass:
-                                  "bg-yellow-lightest text-yellow-darker text-xs p-2 rounded leading-normal"
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.trans.get(
-                                      "__JSON__.If the delivery date is further than what you had expected, please contact supports for help."
-                                    )
-                                  )
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !_vm.contract
-                          ? _c("hr", { staticClass: "my-6" })
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: !_vm.contract,
-                                expression: "!contract"
-                              }
-                            ],
-                            staticClass: "flex text-sm bg-white items-center"
-                          },
-                          [
-                            _c(
-                              "span",
-                              {
-                                staticClass: "mb-0 flex items-center text-grey"
-                              },
-                              [
-                                _c(
-                                  "svg",
-                                  {
-                                    staticClass: "fill-current h-5 w-5 ml-2",
-                                    attrs: {
-                                      xmlns: "http://www.w3.org/2000/svg",
-                                      viewBox: "0 0 24 24",
-                                      width: "24",
-                                      height: "24"
-                                    }
-                                  },
-                                  [
-                                    _c("path", {
-                                      staticClass: "heroicon-ui",
-                                      attrs: {
-                                        d:
-                                          "M7 5H5v14h14V5h-2v10a1 1 0 0 1-1.45.9L12 14.11l-3.55 1.77A1 1 0 0 1 7 15V5zM5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm4 2v8.38l2.55-1.27a1 1 0 0 1 .9 0L15 13.38V5H9z"
-                                      }
-                                    })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "span",
-                                  { staticClass: "text-grey-darker" },
-                                  [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm.trans.get(
-                                          "__JSON__.article(s) word count"
-                                        )
-                                      )
-                                    )
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "span",
-                              {
-                                directives: [
-                                  {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: _vm.words,
-                                    expression: "words"
-                                  }
                                 ],
-                                staticClass: "mr-auto tag tag--info"
-                              },
-                              [
-                                _vm._v(
-                                  "\n                            " +
-                                    _vm._s(
-                                      _vm.persianNumber.toPersian(_vm.words) +
-                                        " کلمه"
-                                    ) +
-                                    "\n                        "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _vm.priceIsAvailable
-                  ? _c(
-                      "div",
-                      {
-                        staticClass:
-                          "w-full lg:w-1/3 bg-white rounded shadow mx-auto p-6"
-                      },
-                      [
-                        _c(
-                          "p",
-                          {
-                            staticClass:
-                              "text-red border-b border-red pb-3 mb-12"
-                          },
-                          [_vm._v("مبلغ محاسبه شده")]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "text-center" }, [
-                          _c("h3", { staticClass: "text-3xl mb-6" }, [
-                            _c(
-                              "span",
-                              {
-                                directives: [
+                                2
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "select__icon" }, [
+                                _c(
+                                  "svg",
                                   {
-                                    name: "show",
-                                    rawName: "v-show",
-                                    value: !_vm.contract,
-                                    expression: "!contract"
-                                  }
-                                ]
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.persianNumber.toPersian(_vm.price)
-                                  ) + " تومان"
+                                    staticClass: "select__svg",
+                                    attrs: {
+                                      xmlns: "http://www.w3.org/2000/svg",
+                                      viewBox: "0 0 20 20"
+                                    }
+                                  },
+                                  [
+                                    _c("path", {
+                                      attrs: {
+                                        d:
+                                          "M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                                      }
+                                    })
+                                  ]
                                 )
-                              ]
-                            ),
+                              ])
+                            ]),
                             _vm._v(" "),
                             _c(
-                              "span",
+                              "p",
                               {
                                 directives: [
                                   {
@@ -56146,196 +56142,542 @@ var render = function() {
                                     value: _vm.contract,
                                     expression: "contract"
                                   }
-                                ]
-                              },
-                              [_vm._v("توافقی")]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "button button--primary mb-3",
-                              on: { click: _vm.saveSecondStep }
-                            },
-                            [_vm._v("مرحله بعد")]
-                          ),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "mb-6" }, [
-                            _c(
-                              "a",
-                              {
+                                ],
                                 staticClass:
-                                  "text-grey-dark text-sm no-underline",
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    return _vm.requestToCancel($event)
-                                  }
-                                }
+                                  "bg-yellow-lightest text-yellow-darker text-xs p-2 rounded leading-normal"
                               },
                               [
                                 _vm._v(
-                                  "\n                            انصراف\n                        "
+                                  "\n                            " +
+                                    _vm._s(
+                                      _vm.trans.get(
+                                        "__JSON__.For books, price and time calculation is adaptive. We will contact you ASA, for further communications. We are appreciate you."
+                                      )
+                                    ) +
+                                    "\n                        "
                                 )
                               ]
                             )
-                          ])
-                        ])
-                      ]
-                    )
-                  : _vm._e()
-              ],
-              1
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.step === 3
-          ? _c("div", { staticClass: "upload-section" }, [
-              _c(
-                "div",
-                { staticClass: "w-3/4 mx-auto bg-white pt-6 pb-3 mb-12" },
-                [
-                  _vm._m(1),
+                          ]),
+                          _vm._v(" "),
+                          !_vm.contract
+                            ? _c("hr", { staticClass: "my-6" })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: !_vm.contract,
+                                  expression: "!contract"
+                                }
+                              ],
+                              staticClass: "flex items-center text-sm mb-3"
+                            },
+                            [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "mb-0 flex items-center text-grey"
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "las la-calendar text-2xl"
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "text-grey-darker" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.trans.get(
+                                            "__JSON__.Delivery date: (Estimated)"
+                                          )
+                                        )
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _vm.deliverDate
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass: "tag tag--info",
+                                      class: [
+                                        _vm.locale === "fa"
+                                          ? "mr-auto"
+                                          : "ml-auto"
+                                      ]
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            " +
+                                          _vm._s(
+                                            _vm.locale === "fa"
+                                              ? _vm.persianNumber.toPersian(
+                                                  _vm.deliverDate
+                                                )
+                                              : _vm
+                                                  .moment(_vm.deliverDate)
+                                                  .format("MMMM Do YYYY")
+                                          ) +
+                                          "\n                        "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.deliverDate
+                            ? _c(
+                                "p",
+                                {
+                                  staticClass:
+                                    "bg-yellow-lightest text-yellow-darker text-xs p-2 rounded leading-normal"
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.trans.get(
+                                        "__JSON__.If the delivery date is further than what you had expected, please contact supports for help."
+                                      )
+                                    )
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          !_vm.contract
+                            ? _c("hr", { staticClass: "my-6" })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: !_vm.contract,
+                                  expression: "!contract"
+                                }
+                              ],
+                              staticClass: "flex text-sm bg-white items-center"
+                            },
+                            [
+                              _c(
+                                "span",
+                                {
+                                  staticClass:
+                                    "mb-0 flex items-center text-grey"
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "las la-calendar text-2xl"
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    { staticClass: "text-grey-darker" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.trans.get(
+                                            "__JSON__.article(s) word count"
+                                          )
+                                        )
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.words,
+                                      expression: "words"
+                                    }
+                                  ],
+                                  staticClass: "tag tag--info",
+                                  class: [
+                                    _vm.locale === "fa" ? "mr-auto" : "ml-auto"
+                                  ]
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(
+                                        _vm.locale === "fa"
+                                          ? _vm.persianNumber.toPersian(
+                                              _vm.words
+                                            )
+                                          : _vm.words +
+                                              " " +
+                                              _vm.trans.get("__JSON__.words")
+                                      ) +
+                                      "\n                        "
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "flex" }, [
-                    _c(
-                      "section",
-                      {
-                        staticClass:
-                          "px-6 w-1/3 text-center border-l border-grey-lighter"
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "mb-3 h-24",
-                          attrs: {
-                            src: "/images/uploaded-articles.svg",
-                            alt: "vector two people and monitor"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("h3", { staticClass: "text-grey-dark mb-3" }, [
-                          _vm._v("تعداد فایل‌های آپلود شده")
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "list" }, [
-                          _c("li", [
-                            _vm._v(
-                              _vm._s(
-                                _vm.persianNumber.toPersian(
-                                  this.order.details.length
+                  _vm.priceIsAvailable
+                    ? _c(
+                        "div",
+                        {
+                          staticClass:
+                            "w-full lg:w-1/3 bg-white rounded shadow mx-auto p-6"
+                        },
+                        [
+                          _c(
+                            "p",
+                            {
+                              staticClass:
+                                "text-red border-b border-red pb-3 mb-12"
+                            },
+                            [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(_vm.trans.get("__JSON__.total cost")) +
+                                  "\n                "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "text-center" }, [
+                            _c("h3", { staticClass: "text-3xl mb-6" }, [
+                              _c(
+                                "span",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: !_vm.contract,
+                                      expression: "!contract"
+                                    }
+                                  ]
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(
+                                        _vm.locale === "fa"
+                                          ? _vm.persianNumber.toPersian(
+                                              _vm.price
+                                            )
+                                          : _vm.price
+                                      ) +
+                                      "\n                            " +
+                                      _vm._s(_vm.trans.get("__JSON__.tomans")) +
+                                      "\n                        "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value: _vm.contract,
+                                      expression: "contract"
+                                    }
+                                  ]
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(
+                                        _vm.trans.get("__JSON__.agreement")
+                                      ) +
+                                      "\n                        "
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "button button--primary mb-3",
+                                on: { click: _vm.saveSecondStep }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(
+                                      _vm.trans.get("__JSON__.next step")
+                                    ) +
+                                    "\n                    "
                                 )
-                              ) + " فایل"
-                            )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "mb-6" }, [
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "text-grey-dark text-sm no-underline",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.requestToCancel($event)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                           " +
+                                      _vm._s(_vm.trans.get("__JSON__.cancel")) +
+                                      "\n                        "
+                                  )
+                                ]
+                              )
+                            ])
                           ])
-                        ])
-                      ]
-                    ),
+                        ]
+                      )
+                    : _vm._e()
+                ],
+                1
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.step === 3
+            ? _c("div", { staticClass: "upload-section" }, [
+                _c(
+                  "div",
+                  { staticClass: "w-3/4 mx-auto bg-white pt-6 pb-3 mb-12" },
+                  [
+                    _vm._m(1),
                     _vm._v(" "),
-                    _c(
-                      "section",
-                      {
-                        staticClass:
-                          "px-6 w-1/3 text-center border-l border-grey-lighter"
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "mb-3 h-24",
-                          attrs: {
-                            src: "/images/selected-services.svg",
-                            alt: "vector girl and rounded icons"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("h3", { staticClass: "text-grey-dark mb-3" }, [
-                          _vm._v("سرویس‌های انتخاب شده")
-                        ]),
-                        _vm._v(" "),
-                        _c("ul", { staticClass: "list" }, [
-                          _c("li", {
-                            domProps: {
-                              textContent: _vm._s(_vm.service(_vm.selected))
+                    _c("div", { staticClass: "flex" }, [
+                      _c(
+                        "section",
+                        {
+                          staticClass:
+                            "px-6 w-1/3 text-center border-l border-grey-lighter"
+                        },
+                        [
+                          _c("img", {
+                            staticClass: "mb-3 h-24",
+                            attrs: {
+                              src: "/images/uploaded-articles.svg",
+                              alt: "vector two people and monitor"
                             }
                           }),
                           _vm._v(" "),
-                          _c("li", [
+                          _c("h3", { staticClass: "text-grey-dark mb-3" }, [
                             _vm._v(
-                              "تاریخ تحویل: " +
-                                _vm._s(
-                                  _vm.persianNumber.toPersian(_vm.deliverDate)
-                                )
+                              _vm._s(_vm.trans.get("__JSON__.uploaded files"))
                             )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "list" }, [
+                            _c("li", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(
+                                    _vm.locale === "fa"
+                                      ? _vm.persianNumber.toPersian(
+                                          this.order.details.length
+                                        )
+                                      : _vm.order.details.length
+                                  ) +
+                                  "\n                                " +
+                                  _vm._s(_vm.trans.get("__JSON__.file(s)")) +
+                                  "\n                            "
+                              )
+                            ])
                           ])
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("section", { staticClass: "px-6 w-1/3 text-center" }, [
-                      _c("img", {
-                        staticClass: "mb-3 h-24",
-                        attrs: {
-                          src: "/images/price.svg",
-                          alt: "vector payment cart"
-                        }
-                      }),
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("h3", { staticClass: "text-grey-dark mb-3" }, [
-                        _vm._v("هزینه قابل پرداخت")
-                      ]),
+                      _c(
+                        "section",
+                        {
+                          staticClass:
+                            "px-6 w-1/3 text-center border-l border-grey-lighter"
+                        },
+                        [
+                          _c("img", {
+                            staticClass: "mb-3 h-24",
+                            attrs: {
+                              src: "/images/selected-services.svg",
+                              alt: "vector girl and rounded icons"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("h3", { staticClass: "text-grey-dark mb-3" }, [
+                            _vm._v(
+                              _vm._s(
+                                _vm.trans.get("__JSON__.selected services")
+                              )
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("ul", { staticClass: "list" }, [
+                            _c("li", {
+                              domProps: {
+                                textContent: _vm._s(_vm.service(_vm.selected))
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("li", [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(
+                                    _vm.trans.get("__JSON__.delivery date")
+                                  ) +
+                                  "\n                                " +
+                                  _vm._s(
+                                    _vm.locale === "fa"
+                                      ? _vm.persianNumber.toPersian(
+                                          _vm.deliverDate
+                                        )
+                                      : _vm.deliverDate
+                                  ) +
+                                  "\n                            "
+                              )
+                            ])
+                          ])
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("ul", { staticClass: "list" }, [
-                        _c("li", [
+                      _c("section", { staticClass: "px-6 w-1/3 text-center" }, [
+                        _c("img", {
+                          staticClass: "mb-3 h-24",
+                          attrs: {
+                            src: "/images/price.svg",
+                            alt: "vector payment cart"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("h3", { staticClass: "text-grey-dark mb-3" }, [
                           _vm._v(
-                            _vm._s(_vm.persianNumber.toPersian(_vm.words)) +
-                              " کلمه"
+                            _vm._s(_vm.trans.get("__JSON__.payable price"))
                           )
                         ]),
                         _vm._v(" "),
-                        _c("li", [
-                          _vm._v(
-                            _vm._s(_vm.persianNumber.toPersian(_vm.price)) +
-                              " تومان"
-                          )
+                        _c("ul", { staticClass: "list" }, [
+                          _c("li", [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(
+                                  _vm.locale === "fa"
+                                    ? _vm.persianNumber.toPersian(_vm.words)
+                                    : _vm.words
+                                ) +
+                                "\n                                " +
+                                _vm._s(_vm.trans.get("__JSON__.words")) +
+                                "\n                            "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("li", [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(
+                                  _vm.locale === "fa"
+                                    ? _vm.persianNumber.toPersian(_vm.price)
+                                    : _vm.words
+                                ) +
+                                "\n                                " +
+                                _vm._s(_vm.trans.get("__JSON__.tomans")) +
+                                "\n                            "
+                            )
+                          ])
                         ])
                       ])
                     ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "w-3/4 mx-auto flex mb-12",
-                  staticStyle: { "min-height": "240px" }
-                },
-                [
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "w-3/5 flex items-center justify-center" },
-                    [
-                      _c("div", { staticClass: "text-center w-1/2" }, [
-                        _vm._m(3),
-                        _vm._v(" "),
-                        _c(
-                          "a",
-                          {
-                            staticClass: "no-underline text-gery",
-                            attrs: { href: "#" },
-                            on: { click: _vm.requestToCancel }
-                          },
-                          [_vm._v("انصراف")]
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "w-3/4 mx-auto flex mb-12",
+                    staticStyle: { "min-height": "240px" }
+                  },
+                  [
+                    _c("div", { staticClass: "title-custom-bg w-2/5" }, [
+                      _c("h3", { staticClass: "w-1/2 leading-normal pt-24" }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm.trans.get("__JSON__.final review and payment")
+                          )
                         )
                       ])
-                    ]
-                  )
-                ]
-              )
-            ])
-          : _vm._e()
-      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "w-3/5 flex items-center justify-center" },
+                      [
+                        _c("div", { staticClass: "text-center w-1/2" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass:
+                                "button button--primary button--block mb-6",
+                              attrs: { href: "#" }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.trans.get("__JSON__.payment")) +
+                                  "\n                            "
+                              ),
+                              _c("i", { staticClass: "fas fa-arrow-left mr-3" })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "no-underline text-gery",
+                              attrs: { href: "#" },
+                              on: { click: _vm.requestToCancel }
+                            },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.trans.get("__JSON__.cancel")) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ])
+            : _vm._e()
+        ]
+      )
     ],
     1
   )
@@ -56362,34 +56704,6 @@ var staticRenderFns = [
         attrs: { src: "/images/checkmark.svg", alt: "checkmark icon" }
       })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "title-custom-bg w-2/5" }, [
-      _c("h3", { staticClass: "w-1/2 leading-normal pt-24" }, [
-        _vm._v("تایید نهایی و پرداخت")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "button button--primary button--block mb-6",
-        attrs: { href: "#" }
-      },
-      [
-        _vm._v(
-          "\n                            پرداخت\n                            "
-        ),
-        _c("i", { staticClass: "fas fa-arrow-left mr-3" })
-      ]
-    )
   }
 ]
 render._withStripped = true
@@ -68613,7 +68927,6 @@ var test = Vue.prototype.trans = new lang_js__WEBPACK_IMPORTED_MODULE_3__["defau
   locale: default_locale,
   fallback: fallback_locale
 });
-console.log(test.messages);
 
 Vue.prototype.authorize = function () {
   if (!window.Redpencilit.signed) return false;
@@ -70550,13 +70863,17 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************!*\
   !*** ./resources/js/settings/uppy-dashboard.js ***!
   \*************************************************/
-/*! exports provided: dashboard_settings */
+/*! exports provided: dashboard_settings, Persian, US */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dashboard_settings", function() { return dashboard_settings; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Persian", function() { return Persian; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "US", function() { return US; });
 var Persian = __webpack_require__(/*! @uppy/locales/lib/fa_IR */ "./node_modules/@uppy/locales/lib/fa_IR.js");
+
+var US = __webpack_require__(/*! @uppy/locales/lib/en_US */ "./node_modules/@uppy/locales/lib/en_US.js");
 
 Persian.strings.dropPaste = 'فایلها را اینجا رها کنید، یا  %{browse} بارگذاری کنید.';
 var dashboard_settings = {
@@ -70573,8 +70890,7 @@ var dashboard_settings = {
   hideCancelButton: true,
   hideProgressAfterFinish: false,
   proudlyDisplayPoweredByUppy: false,
-  replaceTargetContent: true,
-  locale: Persian
+  replaceTargetContent: true
 };
 
 

@@ -11,6 +11,23 @@
 
     <link rel="stylesheet" href="{{ asset('css/line-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <style>
+        @if (app()->getLocale() === 'fa')
+        body {
+            text-align: right;
+            direction: rtl;
+            font-family: Sahel;
+        }
+
+        @else
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            direction: ltr;
+            text-align: left;
+        }
+        @endif
+    </style>
+
 
     <script>
         window.Redpencilit = {!!
@@ -25,7 +42,7 @@
         window.messages = @json($messages);
     </script>
 </head>
-<body>
+<body class="@if (app()->getLocale() === 'fa') fa @else en @endif">
 <div id="app" class="overflow-hidden">
     @yield('content')
 

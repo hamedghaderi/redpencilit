@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Testimonial;
 
 class TestimonialsController extends Controller
 {
@@ -25,5 +26,21 @@ class TestimonialsController extends Controller
         $comment->testimonial()->create($attributes);
         
         return response('با موفقیت به صفحه اصلی اضافه شد.', 200);
+    }
+    
+    /**
+     * Delete a testimonial with the given id.
+     *
+     * @param               $locale
+     * @param  Testimonial  $testimonial
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function destroy($locale, Testimonial $testimonial)
+    {
+       $testimonial->delete();
+       
+       return back();
     }
 }

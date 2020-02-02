@@ -3,7 +3,7 @@ py-1">
     <div class="flex items-center justify-between px-4 py-3 sm:p-0 md:w-full">
         <div>
             <a href="{{ route('home', app()->getLocale()) }}">
-                <img class="h-8 md:h-12" src="{{ asset('images/logo.svg') }}" alt="Redpencilit">
+                <img class="h-8 md:h-12" src="{{ asset('images/logo-last.svg') }}" alt="Redpencilit">
             </a>
         </div>
 
@@ -18,33 +18,59 @@ py-1">
         </div>
 
         <div class="hidden md:block flex-grow">
-            <ul class="list-reset px-2 mb-2 flex justify-center w-full">
-                <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
-                rounded
-                hover:text-white md:hover:text-indigo"
-                       href="{{ route('home', app()->getLocale()) }}">{{ __('home') }}</a></li>
-                <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
-                rounded
-                hover:text-white md:hover:text-indigo"
-                       href="{{ route('about', app()->getLocale()) }}">{{ __('about') }}</a></li>
-                <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
-                rounded
-                hover:text-white md:hover:text-indigo"
-                       href="{{ route('contact', app()->getLocale()) }}">
-                        {{ strtolower(__('contact')) }}
-                    </a></li>
-                <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
-                rounded
-                hover:text-white md:hover:text-indigo"
-                       href="{{ route('pages.services', app()->getLocale()) }}">{{ __('services') }}</a></li>
-                <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
-                rounded
-                hover:text-white md:hover:text-indigo"
-                       href="{{ route('posts.index', app()->getLocale()) }}">{{ __('blog') }}</a></li>
-                <li><a class="px-2 md:px-4 text-grey-dark text-sm py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
-                rounded
-                hover:text-white md:hover:text-indigo"
-                       href="{{ route('new-order', app()->getLocale()) }}">{{ __('new order') }}</a></li>
+            <ul class="list-reset px-2 mb-2 flex justify-center w-full text-lg">
+                <li>
+                    <a class="px-2 md:px-4 text-grey-dark py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
+                        rounded hover:text-white md:hover:text-red"
+                       href="{{ route('home', app()->getLocale()) }}">{{ __('home') }}</a>
+                </li>
+                <li>
+                    <a class="px-2 md:px-4 text-grey-dark py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
+                            rounded hover:text-white md:hover:text-red"
+                       href="{{ route('about', app()->getLocale()) }}">{{ __('about') }}</a>
+                </li>
+                <li>
+                    <a class="px-2 md:px-4 text-grey-dark py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
+                            rounded hover:text-white md:hover:text-red" href="{{ route('contact', app()->getLocale())
+                            }}">
+                        {{ __('contact') }}
+                    </a>
+                </li>
+                <li>
+                    <a class="px-2 md:px-4 text-grey-dark py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
+                            rounded hover:text-white md:hover:text-red"
+                       href="{{ route('pages.services', app()->getLocale()) }}">{{ __('services') }}</a>
+                </li>
+                <li>
+                    <a class="px-2 md:px-4 text-grey-dark py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
+                            rounded hover:text-white md:hover:text-red"
+                       href="{{ route('posts.index', app()->getLocale()) }}">{{ __('blog') }}</a>
+                </li>
+                <li>
+                    <a class="px-2 md:px-4 text-grey-dark py-3 md:py-2 hover:bg-grey-dark md:hover:bg-transparent
+                            rounded hover:text-white md:hover:text-red"
+                       href="{{ route('new-order', app()->getLocale()) }}">{{ __('new order') }}</a>
+                </li>
+
+                @if (app()->getLocale() === "en")
+                    <li>
+                        <a class="px-2 md:px-4 text-grey text-xs py-3 md:py-2 hover:bg-grey-dark
+                        md:hover:bg-transparent
+                            rounded hover:text-white md:hover:text-red"
+                           href="{{ str_replace('/en/', '/fa/', \Illuminate\Support\Facades\Request::url()) }}">
+                            فارسی
+                        </a>
+                    </li>
+                @else
+                    <li>
+                        <a class="px-2 md:px-4 text-grey text-xs py-3 md:py-2 hover:bg-grey-dark
+                        md:hover:bg-transparent
+                            rounded hover:text-white md:hover:text-indigo"
+                           href="{{ str_replace('/fa/', '/en/', \Illuminate\Support\Facades\Request::url()) }}">
+                            En
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
 
@@ -87,8 +113,7 @@ py-1">
                         <a class="rounded text-grey-dark text-sm block hover:bg-green-lightest hover:text-green-dark
                         px-2
                         py-3"
-                           href="{{ route('dashboard', [app()->getLocale(), auth()->id()]) }}"
-                           >
+                           href="{{ route('dashboard', [app()->getLocale(), auth()->id()]) }}">
                             {{ mb_strtolower(__('dashboard')) }}
                         </a>
                     </li>

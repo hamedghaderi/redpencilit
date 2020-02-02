@@ -1,6 +1,6 @@
 <template>
     <div class="w-full lg:w-3/4 mx-auto md:flex items-center">
-        <h3 class="text-sm mb-8 w-48 md:mb-0">{{ trans.get('__JSON__.upload documents') }}</h3>
+        <h3 class="text-sm mb-8 w-48 md:mb-0">{{ trans.get('__JSON__.order register') }}</h3>
 
         <div class="flex justify-between w-full relative z-20 mb-16">
             <div class="w-48 md:w-24">

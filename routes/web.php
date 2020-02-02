@@ -2,10 +2,10 @@
 
 Route::redirect('/', '/fa');
 
-Route::group(
-    ['prefix' => '{locale}'], function ($locale) {
+Route::group(['prefix' => '{locale}'], function ($locale) {
     Route::middleware('auth')->group(
         function () {
+            Route::get('/locale/{lang}', 'RoutesController@show')->name('locale');
             // Services
             Route::get('dashboard/services', 'ServicesController@index')->name('services.index');
             Route::get('dashboard/services/{service}', 'ServicesController@show')->name('services.show');
@@ -83,9 +83,20 @@ Route::group(
             Route::post('/comments/{comment}/testimonials', 'TestimonialsController@store')
                  ->name('testimonials.store')
                  ->middleware('can:manage-posts');
+            Route::delete('/testimonials/{testimonial}', 'TestimonialsController@destroy')->name('testimonials.delete');
             Route::delete('/comments/{comment}', 'CommentsController@destroy')
                  ->name('comment.destroy')
                  ->middleware('can:edit-comments');
+            
+            /*
+            |--------------------------------------------------------------------------
+            | Pages
+            |--------------------------------------------------------------------------
+            */
+            Route::get('/admin/pages', 'AdminPagesController@index')->name('admin.pages.index')->middleware('admin');
+            Route::get('/admin/pages/home', 'AdminPagesController@home')->name('admin.pages.home')->middleware('admin');
+            Route::patch('/admin/pages/home', 'AdminPagesController@homeUpdate')->name('admin.home.store')->middleware
+            ('admin');
         });
     
     Route::get('orders/create', 'OrdersController@create')->name('new-order');
@@ -100,7 +111,7 @@ Route::group(
     Route::get('/contact', 'PagesController@contact')->name('contact');
     Route::post('/contacts', 'PagesController@store');
     Route::get('/services', 'PagesController@service')->name('pages.services');
-    Route::get('/', 'Pagescontroller@homepage')->name('home');
+    Route::get('/', 'PagesController@homepage')->name('home');
     
     /*
     |--------------------------------------------------------------------------

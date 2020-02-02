@@ -3,12 +3,13 @@
         <div class="flex mb-12">
             <div class="w-1/2">
                 <div class="p-6">
-                    <h3 class="dashboard-title">ایجاد سرویس جدید</h3>
+                    <h3 class="dashboard-title">
+                       {{ trans.get('__JSON__.create a new service') }}
+                    </h3>
 
-                    <p class="dashboard-text">این گونه سرویس‌ها روی نحوه‌ی محاسبه‌ی هزینه تاثیر می‌گذارند. مثلا کاربری که
-                        سرویس کتاب را
-                        انتخاب
-                        کند، قیمت نهایی و زمان، دیگر بستگی به تعداد کلمات ندارد و به صورت توافقی مشخص خواهد شد.</p>
+                    <p class="dashboard-text">
+                        {{ trans.get('__JSON__.These kinds of services, take effect on the final price. For example, a user who select the book service, neither price nor delivery date doesnt depend on words count and will be calculated in an agreement.')}}
+                    </p>
                 </div>
             </div>
 
@@ -17,7 +18,7 @@
                     <div class="bg-white shadow p-6 rounded">
                         <form method="POST" @submit.prevent="saveService">
                             <div class="form-group">
-                                <label for="name" class="label">نام سرویس جدید</label>
+                                <label for="name" class="label">{{ trans.get('__JSON__.new service name')}}</label>
                                 <input class="input" type="text" name="name" id="name" v-model="name">
 
 
@@ -36,7 +37,7 @@
                                            id="negotiable-update"
                                             v-model="negotiable">
 
-                                    قیمت به صورت مذاکره‌ای
+                                    {{ trans.get('__JSON__.agreement price')}}
                                 </label>
                             </div>
 
@@ -47,8 +48,9 @@
                             </div>
 
                             <div class="form-group mb-0">
-                                <button type="submit" class="button button--smooth--primary">ذخیره
-                                    سرویس</button>
+                                <button type="submit" class="button button--smooth--primary">
+                                    {{ trans.get('__JSON__.save service')}}
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -58,13 +60,15 @@
 
         <hr>
 
-        <div class="px-6">
-            <h3 class="dashboard-title mb-8">سرویس‌های موجود</h3>
+        <div class="px-6 mb-24">
+            <h3 class="dashboard-title mb-8">
+                {{ trans.get('__JSON__.current services')}}
+            </h3>
 
             <div class="row px-6 mb-2 flex">
-                <div class="w-1/5 text-sm text-grey-dark">نام سرویس</div>
-                <div class="w-1/5 text-sm text-grey-dark">تاریخ ایجاد سرویس</div>
-                <div class="w-1/5 text-sm text-grey-dark">تاریخ به روز رسانی</div>
+                <div class="w-1/5 text-sm text-grey-dark">{{ trans.get('__JSON__.service name')}}</div>
+                <div class="w-1/5 text-sm text-grey-dark">{{ trans.get('__JSON__.created at')}}</div>
+                <div class="w-1/5 text-sm text-grey-dark">{{ trans.get('__JSON__.updated at')}}</div>
             </div>
 
 
@@ -85,13 +89,16 @@
 
                     <div class="w-1/5">
                         <button type="button" class="button button--smooth--success button--sm"
-                                @click="openEdit(service.id)">ویرایش
-                            اطلاعات</button>
+                                @click="openEdit(service.id)">
+                            {{ trans.get('__JSON__.edit info') }}
+                        </button>
                     </div>
 
                     <div class="w-1/5">
                         <form method="POST" @submit.prevent="deleteService(service.id)">
-                            <button class="button button--smooth--danger button--sm">حذف سرویس</button>
+                            <button class="button button--smooth--danger button--sm">
+                                {{ trans.get('__JSON__.delete service') }}
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -102,7 +109,7 @@
                       @keydown="isDisabled=false">
                     <div class="form-group">
                         <div class="form-group">
-                            <label for="modal-name" class="label">نام سرویس جدید</label>
+                            <label for="modal-name" class="label">{{ trans.get('__JSON__.new service name') }}</label>
                             <input class="input"
                                    type="text"
                                    name="update-name"
@@ -124,7 +131,7 @@
                                        id="negotiable"
                                        v-model="updatedNegotiable">
 
-                                قیمت به صورت مذاکره‌ای
+                               {{ trans.get('__JSON__.negotiable price') }}
                             </label>
                         </div>
 
@@ -136,9 +143,9 @@
 
                             <div class="form-group mb-0">
                                 <button type="submit" :disabled="isDisabled" class="button button--smooth--primary"
-                                        @click>به روز
-                                    رسانی
-                                    سرویس</button>
+                                        @click>
+                                    {{ trans.get('__JSON__.update service') }}
+                                </button>
                             </div>
                         </div>
                     </form>

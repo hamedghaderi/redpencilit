@@ -7,7 +7,7 @@
             <div class="flex items-center mb-2">
                 <h1 class="mb text-2xl">{{ ucwords(__('blog')) }}</h1>
 
-                <p class="mr-auto text-grey-darker text-sm">
+                <p class="@if (app()->getLocale() === 'fa') mr-auto @else ml-auto @endif text-grey-darker text-sm">
                     {{ ucwords(__('total posts')) }}:
                     {{ $posts->total() }}
                     {{ __('post(s)') }}

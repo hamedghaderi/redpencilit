@@ -760,7 +760,8 @@ module.exports = {
     'inner': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
     'outline': '0 0 0 3px rgba(66, 153, 225, 0.5)',
     'none': 'none',
-    'outline-indigo': '0 0 0 4px #A9AAFF'
+    'outline-indigo': '0 0 0 4px #A9AAFF',
+    'card': '5px 20px 50px rgba(251, 172, 169, .2)'
   },
 
   /*

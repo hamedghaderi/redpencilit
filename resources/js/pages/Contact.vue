@@ -1,7 +1,7 @@
 <template>
-    <div class="w-full px-8 md:px-24 contact md:h-screen md:min-h-screen">
-        <div class="flex items-center justify-center">
-            <div class="w-full md:w-2/3 lg:w-1/3">
+    <div class="w-full px-8 md:px-24 contact md:h-screen md:min-h-screen relative">
+        <div class="flex flex-wrap items-center">
+            <div class="w-full md:w-2/3 lg:w-1/2">
                 <h3 class="title text-center">{{ trans.get('__JSON__.contact us')}}</h3>
 
                 <p class="text-grey-dark text-sm leading-loose mb-3">
@@ -62,6 +62,10 @@
                         {{ trans.get('__JSON__.send message') }}
                     </button>
                 </div>
+            </div>
+
+            <div class="w-full md:w-1/3 lg:w-1/2">
+                <img class="w-full" src="/images/8.svg" alt="a support girl" style="transform: rotateY(-180deg);">
             </div>
         </div>
     </div>

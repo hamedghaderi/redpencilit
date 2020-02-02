@@ -28,7 +28,8 @@ class UserDetailsTest extends TestCase
             'degree_id' => $userDetails->degree_id,
             'country_id' => $userDetails->country_id,
             'field' => $userDetails->field,
-            'college' => $userDetails->college
+            'college' => $userDetails->college,
+            'gender' => $userDetails->gender
         ]);
     }
     
@@ -46,7 +47,8 @@ class UserDetailsTest extends TestCase
            'address' => 'Baharan',
            'field' => 'Computer',
            'college' => 'Azad',
-           'degree_id' => 3
+           'degree_id' => 3,
+           'gender' => false,
        ]);
        
        $this->assertDatabaseHas('user_details', [
@@ -54,7 +56,8 @@ class UserDetailsTest extends TestCase
            'address' => 'Baharan',
            'field' => 'Computer',
            'college' => 'Azad',
-           'degree_id' => 3
+           'degree_id' => 3,
+           'gender' => false
        ]);
     }
 }

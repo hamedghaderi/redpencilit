@@ -9,6 +9,7 @@ $factory->define(App\UserDetail::class, function (Faker $faker) {
         'field' => 'Software Engineering',
         'degree_id' => factory(\App\CollegeDegree::class),
         'country_id' => factory(\App\Country::class),
-        'address' => $faker->address
+        'address' => $faker->address,
+        'gender' => true
     ];
 });

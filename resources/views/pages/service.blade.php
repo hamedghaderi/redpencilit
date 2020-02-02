@@ -1,69 +1,96 @@
 @extends('layouts.master')
 
+@section('style')
+    <link rel="stylesheet" href="{{ asset('css/vendor/tiny-slider.css') }}">
+    <style>
+        .tns-controls, .tns-nav, .tns-outer button, .tns-liveregion {
+           display: none !important;
+        }
+        .container {
+            max-width: 1200px !important;
+            overflow: hidden !important;
+        }
+    </style>
+@endsection
+
 @section('content')
-   <div class="px-32">
-      <h2 class="title mb-12">{{ ucwords(__('services')) }}</h2>
+    <div class="px-8 md:px-32">
+        <h2 class="title mb-12">{{ ucwords(__('services')) }}</h2>
 
-      <div class="flex flex-wrap -mx-12">
-         <div class="px-8 w-full mb-8 md:w-1/3">
-            <div class="bg-white rounded shadow p-8 text-center pb-12">
-               <img class="w-1/2" src="{{ asset('images/third-service.svg') }}" alt="pencil and board vector">
-
-               <h3 class="text-grey-dark mb-4">{{ ucwords(__('first service')) }}</h3>
-
-               <ul class="list-reset text-center mx-auto text-grey-dark">
-                  <li class="mb-4"><span class="inline-flex w-2 h-2 bg-teal-light ml-2 rounded-full"></span>
-                     {{ __ ('item 1') }}
-                  </li>
-                  <li class="mb-4"><span class="inline-flex w-2 h-2 bg-teal-light ml-2 rounded-full"></span>
-                     {{ __('item 2') }}
-                  </li>
-                  <li><span class="inline-flex w-2 h-2 bg-teal-light ml-2 rounded-full"></span>
-                     {{ __('item 3') }}
-                  </li>
-               </ul>
+        <div class="container" style="direction: ltr;">
+            <div class="slider">
+                <div>
+                    <h2 class="text-grey-darkest text-xl md:text-3xl text-center mb-3">
+                        {{ ucfirst(__('have a thesis expert improve your writing')) }}
+                    </h2>
+                    <p class="text-grey-dark leading-loose text-center mb-12">
+                        {{ __('Hand in your thesis or dissertation with confidence. We can help you with our academic Proofreading & Editing service, Structure Check and Clarity Check. We improve your language mistakes directly and you’ll receive feedback to help you become a better writer.') }}</p>
+                    <div class="text-center">
+                        <img class="w-1/2" src="{{ asset('images/9.svg') }}" alt="image">
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-grey-darkest text-xl md:text-3xl text-center mb-3">
+                        {{ ucfirst(__('Choose the best PhD dissertation editing service with Scribbr')) }}
+                    </h2>
+                    <p class="text-grey-dark leading-loose text-center mb-12">
+                        {{ __('Hand in your thesis or dissertation with confidence. We can help you with our academic Proofreading & Editing service, Structure Check and Clarity Check. We improve your language mistakes directly and you’ll receive feedback to help you become a better writer.') }}
+                    </p>
+                    <div class="text-center">
+                        <img class="w-1/2" src="{{ asset('images/10.svg') }}" alt="image">
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-grey-darkest text-xl md:text-3xl text-center mb-3">
+                        {{ ucfirst(__('Essay Editing Service')) }}
+                    </h2>
+                    <p class="text-grey-dark leading-loose text-center mb-12">
+                        {{ __('Hand in your thesis or dissertation with confidence. We can help you with our academic Proofreading & Editing service, Structure Check and Clarity Check. We improve your language mistakes directly and you’ll receive feedback to help you become a better writer.') }}
+                    </p>
+                    <div class="text-center">
+                        <img class="w-1/2" src="{{ asset('images/11.svg') }}" alt="image">
+                    </div>
+                </div>
             </div>
-         </div>
+        </div>
 
-         <div class="px-8 w-full mb-8 md:w-1/3">
-            <div class="bg-white rounded shadow p-8 text-center pb-12">
-               <img class="w-1/2" src="{{ asset('images/second-service.svg') }}" alt="pencil and board vector">
+    </div>
+@endsection
 
-               <h3 class="text-grey-dark mb-4">{{ ucwords(__('second service')) }}</h3>
+@section('script')
+    <!--[if (lt IE 9)]><script src="{{ asset('js/vendors/tiny-slider.helper.ie8.js') }}"></script><![endif]-->
+    <script src="{{ asset('js/vendors/tiny-slider.js') }}"></script>
+    <script>
+        let slider = tns({
+            container: '.slider',
+            accessibility: false,
+            centerMode: true,
+            infinite: true,
+            dots: true,
+            slick: 500,
+            autoplay: true,
+            arrows: false,
+            dots: true,
+            // axis: "vertical",
+            // rtl: true,
 
-               <ul class="list-reset text-center mx-auto text-grey-dark">
-                  <li class="mb-4"><span class="inline-flex w-2 h-2 bg-teal-light ml-2 rounded-full"></span>
-                     {{ __ ('item 1') }}
-                  </li>
-                  <li class="mb-4"><span class="inline-flex w-2 h-2 bg-teal-light ml-2 rounded-full"></span>
-                     {{ __ ('item 2') }}
-                  </li>
-                  <li><span class="inline-flex w-2 h-2 bg-teal-light ml-2 rounded-full"></span>
-                     {{ __('item 3') }}
-                  </li>
-               </ul>
-            </div>
-         </div>
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    infinite: true
+                }
+            }, {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    dots: true
+                }
 
-         <div class="px-8 w-full md:w-1/3">
-            <div class="bg-white rounded shadow p-8 text-center pb-12">
-               <img class="w-1/2" src="{{ asset('images/first-service.svg') }}" alt="pencil and board vector">
-
-               <h3 class="text-grey-dark mb-4">{{ ucwords(__('third service')) }}</h3>
-
-               <ul class="list-reset text-center mx-auto text-grey-dark">
-                  <li class="mb-4"><span class="inline-flex w-2 h-2 bg-teal-light ml-2 rounded-full"></span>
-                     {{ __('item 1') }}
-                  </li>
-                  <li class="mb-4"><span class="inline-flex w-2 h-2 bg-teal-light ml-2 rounded-full"></span>
-                     {{ __('item 2') }}
-                  </li>
-                  <li><span class="inline-flex w-2 h-2 bg-teal-light ml-2 rounded-full"></span>
-                     {{ __('item 3') }}
-                  </li>
-               </ul>
-            </div>
-         </div>
-      </div>
-   </div>
+            }, {
+                breakpoint: 300,
+                settings: "unslick" // destroys slick
+            }]
+        });
+    </script>
 @endsection

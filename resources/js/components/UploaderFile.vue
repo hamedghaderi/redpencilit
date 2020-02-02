@@ -13,7 +13,7 @@
 
 
 
-    import {dashboard_settings} from '../settings/uppy-dashboard';
+    import {dashboard_settings, Persian, US} from '../settings/uppy-dashboard';
     import {uppy_settings} from "../settings/uppy";
 
     export default {
@@ -34,6 +34,8 @@
             } else {
                 this.endpoint = `/${this.locale}/users/${this.user.id}/orders`;
             }
+
+            dashboard_settings.locale = this.locale === 'fa' ? Persian : US;
         },
 
 
