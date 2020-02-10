@@ -20,7 +20,7 @@
         <nav class="rtl h-16 pt-24 mb-24">
             <div class="flex justify-center">
                 <h1 class="flex content-center items-center font-normal text-2xl px-6 font-sans h-16">
-                    <a class="text-white no-underline" href="{{ url('/') }}">RedPencilIt</a>
+                    <a class="text-white no-underline" href="{{ '/'.app()->getLocale() }}">RedPencilIt</a>
                 </h1>
             </div>
         </nav>

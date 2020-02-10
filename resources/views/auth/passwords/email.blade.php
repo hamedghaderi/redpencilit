@@ -1,6 +1,8 @@
 @extends('layouts.auth')
 
 @section('content')
+    <flash message="{{ session('status') }}"></flash>
+
     <div class="container">
         <div class="mt-24 w-full sm:w-3/4 md:w-2/3 lg:w-2/5 mx-auto">
             <div class="card">
@@ -11,14 +13,7 @@
                 </p>
 
                 <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email', ['locale' => app()->getLocale()]) }}"
-                          novalidate>
+                    <form method="POST" action="{{ route('password.email', app()->getLocale()) }}" novalidate>
                         @csrf
 
                         <div class="form-group mb-6">

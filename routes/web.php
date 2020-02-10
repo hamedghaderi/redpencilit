@@ -34,7 +34,9 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
             |--------------------------------------------------------------------------
             */
             Route::get('/users', 'UsersController@index')->name('admin.users.index')->middleware('can:read-users');
-            Route::delete('/users/{user}', 'UsersController@destroy')->name('admin.users.destroy')->middleware('can:delete-users');
+            Route::delete('/users/{user}', 'UsersController@destroy')
+                 ->name('admin.users.destroy')
+                 ->middleware('can:delete-users');
             
             /*
             |--------------------------------------------------------------------------
@@ -49,7 +51,7 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                  ->name('orders.destroy')
                  ->middleware('must-be-confirmed');
             Route::post('/users/{user}/drafts', 'DraftsController@store')
-                ->name('drafts.store')
+                 ->name('drafts.store')
                  ->middleware('must-be-confirmed');
             
             /*
@@ -60,7 +62,9 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
             Route::get('/posts/create', 'PostsController@create')->name('posts.create')->middleware(
                 ['can:manage-posts']);
             Route::post('/posts', 'PostsController@store')->name('posts.store')->middleware('can:manage-posts');
-            Route::get('/posts/{post}/edit', 'PostsController@edit')->name('posts.edit')->middleware('can:manage-posts');
+            Route::get('/posts/{post}/edit', 'PostsController@edit')
+                 ->name('posts.edit')
+                 ->middleware('can:manage-posts');
             Route::patch('/posts/{post}', 'PostsController@update')->name('posts.update')->middleware(
                 'can:manage-posts');
             Route::delete('/posts/{post}', 'PostsController@destroy')->name('posts.destroy')->middleware(
@@ -129,7 +133,7 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
     Route::post('/comments', 'CommentsController@store')->name('comments.store')->middleware('throttle');
     
     Auth::routes();
-    
+   
     Route::namespace('Admin')->prefix('admin/users')->middleware('auth')->group(
         function () {
             Route::patch('{user}/roles', 'UsersController@update')->name('admin.users.patch');

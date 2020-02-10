@@ -11,11 +11,7 @@ class RegisterConfirmationController extends Controller
     public function index()
     {
         $user = User::where('confirmation_token', request('token'))
-            ->first();
-
-        if (!$user) {
-            abort(403);
-        }
+                    ->firstOrFail();
 
         $user->confirm();
 

@@ -43,10 +43,9 @@ class PagesController extends Controller
                                    ->take(5)
                                    ->get();
         
-        $home = Page::where('name', 'home')->firstOrFail();
-
+        $home = Page::where('name', 'home')->first();
         $admin = User::superAdmin()->first();
-
+        
         $authorAvatar = ($admin && $admin->avatar) ? $admin->avatar : asset('images/profile.png.jpg');
 
         return view('welcome', compact('testimonials', 'authorAvatar', 'home'));

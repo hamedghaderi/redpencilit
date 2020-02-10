@@ -72,14 +72,16 @@
                     <a class="px-2 md:px-4 text-grey text-xs py-3 md:py-2 hover:bg-grey-dark
                     md:hover:bg-transparent
                         rounded hover:text-white md:hover:text-indigo"
-                       href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), 'fa') }}">
+                       href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), ['locale' => 'fa',
+                       'token' => request('token')]) }}">
                         فارسی
                     </a>
                 @else
                     <a class="px-2 md:px-4 text-grey text-xs py-3 md:py-2 hover:bg-grey-dark
                     md:hover:bg-transparent
                         rounded hover:text-white md:hover:text-indigo"
-                       href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), 'en') }}">
+                       href="{{ route(\Illuminate\Support\Facades\Route::currentRouteName(), ['locale' => 'en',
+                       'token' => request('token')]) }}">
                         En
                     </a>
                 @endif

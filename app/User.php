@@ -2,16 +2,17 @@
 
 namespace App;
 
-use App\Permissions\HasPermission;
+use App\Notifications\ResetPassword;
+use Illuminate\Auth\Passwords\CanResetPassword as CanResetPasswordTrait;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements CanResetPassword
 {
-    
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, CanResetPasswordTrait;
     
     protected $fillable
         = [
@@ -42,6 +43,7 @@ class User extends Authenticatable
     public function confirm()
     {
         $this->confirmed = true;
+        $this->confirmation_token = null;
         
         $this->save();
     }
@@ -175,6 +177,16 @@ class User extends Authenticatable
        return $builder->whereHas('roles', function ($query) {
            $query->where('name', 'super-admin');
        });
+    }
+    
+    /**
+     * Override reset password notification.
+     *
+     * @param  string  $token
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
     }
 }
 

@@ -58,8 +58,6 @@ class RegisterController extends Controller
                 'user' => $user,
                 'token' => csrf_token()
             ]);
-//            return $this->registered($request, $user)
-//                ?: $user;
         }
     
         return $this->registered($request, $user)
@@ -98,15 +96,6 @@ class RegisterController extends Controller
             'confirmation_token' => Str::random(25)
         ]);
         
-        if ((int) User::all()->count() === 1)  {
-            if ($role = Role::where('name', 'super-admin')->first()) {
-            }   else {
-                $role = Role::create(['name' => 'super-admin', 'label' => 'Super Manger']);
-            }
-    
-            $user->addRole($role);
-        }
-    
         return $user;
     }
     

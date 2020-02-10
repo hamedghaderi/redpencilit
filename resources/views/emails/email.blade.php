@@ -1,12 +1,10 @@
 @component('mail::message')
-# آخرین مرحله‌ی تائید هویت
+{{ $user->name  }},
 
-جهت افزایش امنیت از شما خواهشمندیم که ایمیلتان را تائید کنید.
+{{ __('To activate your Redpencilit account, please verify your email address. You can not use the website until your email address is confirmed.') }}
 
-@component('mail::button', ['url' => url('/register/emails?token=' . $user->confirmation_token)])
-    تائید ایمیل
+@component('mail::button', ['url' => url(app()->getLocale() . '/register/emails?token=' . $user->confirmation_token)])
+   {{ __('Confirm Your Email') }}
 @endcomponent
 
-با تشکر<br>
-{{ config('app.name') }}
 @endcomponent

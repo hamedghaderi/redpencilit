@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
+    
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -17,16 +19,16 @@ class ResetPasswordController extends Controller
     | explore this trait and override any methods you wish to tweak.
     |
     */
-
+    
     use ResetsPasswords;
-
+    
     /**
      * Where to redirect users after resetting their password.
      *
      * @var string
      */
-//    protected $redirectTo = '/home';
-
+    //    protected $redirectTo = '/home';
+    
     /**
      * Create a new controller instance.
      *
@@ -37,8 +39,29 @@ class ResetPasswordController extends Controller
         $this->middleware('guest');
     }
     
+    /**
+     * Change redirect to method.
+     *
+     * @return string
+     */
     protected function redirectTo()
     {
-       return '/dashboard/'  . auth()->id();
+        return route('login', app()->getLocale());
+    }
+    
+    /**
+     * Override show reset form to cover token.
+     *
+     * @param $locale
+     * @param  Request  $request
+     * @param  null  $token
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showResetForm($locale, Request $request, $token = null)
+    {
+        return view('auth.passwords.reset')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
     }
 }
