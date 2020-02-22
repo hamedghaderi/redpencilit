@@ -4132,6 +4132,10 @@ trix-editor:focus {
   margin-left: 1rem !important;
 }
 
+.redpencil-attachment:hover__icon {
+  border-color: white !important;
+}
+
 .dashboard-title {
   margin-bottom: .75rem;
 }
@@ -4236,7 +4240,8 @@ trix-editor:focus {
 }
 
 .button--primary {
-  background-color: #5a5dff;
+  background-color: #ff5a5d;
+  box-shadow: 0px 10px 20px #fda8b8;
   color: #fff;
 }
 
@@ -4845,7 +4850,6 @@ trix-editor:focus {
   margin-left: auto;
   margin-right: auto;
   margin-bottom: .75rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -2px rgba(0, 0, 0, .05);
   position: relative;
   width: 100px;
   height: 100px;
@@ -5230,7 +5234,7 @@ trix-editor:focus {
 }
 
 .tab-pane--active {
-  border-color: #5a5dff;
+  border-color: #ff5a5d;
 }
 
 .tab-name a {
@@ -5436,6 +5440,11 @@ trix-editor:focus {
   position: absolute;
   right: 0;
   top: 0;
+}
+
+.search-input:focus {
+  border-width: 1px;
+  border-color: #8795a1;
 }
 
 .search-icon {
@@ -5812,7 +5821,7 @@ trix-editor:focus {
           transform: skewY(-12deg);
 }
 
-.en-contact-ways::before {
+.fa-contact-ways::before {
   -webkit-transform: skewY(12deg);
           transform: skewY(12deg);
 }
@@ -5901,16 +5910,6 @@ trix-editor:focus {
 .cloud-right {
   right: -200px;
   left: auto;
-}
-
-.pidgin {
-  top: 0;
-}
-
-@media screen and (min-width: 1024px) {
-  .pidgin {
-    top: -100px;
-  }
 }
 
 /** Animation **/
@@ -10280,6 +10279,10 @@ trix-editor:focus {
   box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
 }
 
+.shadow-button {
+  box-shadow: 0px 10px 20px #fda8b8;
+}
+
 .hover\:shadow:hover {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
 }
@@ -10320,6 +10323,10 @@ trix-editor:focus {
   box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
 }
 
+.hover\:shadow-button:hover {
+  box-shadow: 0px 10px 20px #fda8b8;
+}
+
 .focus\:shadow:focus {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
 }
@@ -10358,6 +10365,10 @@ trix-editor:focus {
 
 .focus\:shadow-card:focus {
   box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+}
+
+.focus\:shadow-button:focus {
+  box-shadow: 0px 10px 20px #fda8b8;
 }
 
 .fill-current {
@@ -11676,6 +11687,10 @@ trix-editor:focus {
 
 .z-50 {
   z-index: 50;
+}
+
+.z-60 {
+  z-index: 60;
 }
 
 .z-auto {
@@ -16025,6 +16040,10 @@ trix-editor:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
+  .sm\:shadow-button {
+    box-shadow: 0px 10px 20px #fda8b8;
+  }
+
   .sm\:hover\:shadow:hover {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -16065,6 +16084,10 @@ trix-editor:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
+  .sm\:hover\:shadow-button:hover {
+    box-shadow: 0px 10px 20px #fda8b8;
+  }
+
   .sm\:focus\:shadow:focus {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -16103,6 +16126,10 @@ trix-editor:focus {
 
   .sm\:focus\:shadow-card:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
+  .sm\:focus\:shadow-button:focus {
+    box-shadow: 0px 10px 20px #fda8b8;
   }
 
   .sm\:table-auto {
@@ -17413,6 +17440,10 @@ trix-editor:focus {
 
   .sm\:z-50 {
     z-index: 50;
+  }
+
+  .sm\:z-60 {
+    z-index: 60;
   }
 
   .sm\:z-auto {
@@ -21741,6 +21772,10 @@ trix-editor:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
+  .md\:shadow-button {
+    box-shadow: 0px 10px 20px #fda8b8;
+  }
+
   .md\:hover\:shadow:hover {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -21781,6 +21816,10 @@ trix-editor:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
+  .md\:hover\:shadow-button:hover {
+    box-shadow: 0px 10px 20px #fda8b8;
+  }
+
   .md\:focus\:shadow:focus {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -21819,6 +21858,10 @@ trix-editor:focus {
 
   .md\:focus\:shadow-card:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
+  .md\:focus\:shadow-button:focus {
+    box-shadow: 0px 10px 20px #fda8b8;
   }
 
   .md\:table-auto {
@@ -23129,6 +23172,10 @@ trix-editor:focus {
 
   .md\:z-50 {
     z-index: 50;
+  }
+
+  .md\:z-60 {
+    z-index: 60;
   }
 
   .md\:z-auto {
@@ -27457,6 +27504,10 @@ trix-editor:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
+  .lg\:shadow-button {
+    box-shadow: 0px 10px 20px #fda8b8;
+  }
+
   .lg\:hover\:shadow:hover {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -27497,6 +27548,10 @@ trix-editor:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
+  .lg\:hover\:shadow-button:hover {
+    box-shadow: 0px 10px 20px #fda8b8;
+  }
+
   .lg\:focus\:shadow:focus {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -27535,6 +27590,10 @@ trix-editor:focus {
 
   .lg\:focus\:shadow-card:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
+  .lg\:focus\:shadow-button:focus {
+    box-shadow: 0px 10px 20px #fda8b8;
   }
 
   .lg\:table-auto {
@@ -28845,6 +28904,10 @@ trix-editor:focus {
 
   .lg\:z-50 {
     z-index: 50;
+  }
+
+  .lg\:z-60 {
+    z-index: 60;
   }
 
   .lg\:z-auto {
@@ -33173,6 +33236,10 @@ trix-editor:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
+  .xl\:shadow-button {
+    box-shadow: 0px 10px 20px #fda8b8;
+  }
+
   .xl\:hover\:shadow:hover {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -33213,6 +33280,10 @@ trix-editor:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
   }
 
+  .xl\:hover\:shadow-button:hover {
+    box-shadow: 0px 10px 20px #fda8b8;
+  }
+
   .xl\:focus\:shadow:focus {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
   }
@@ -33251,6 +33322,10 @@ trix-editor:focus {
 
   .xl\:focus\:shadow-card:focus {
     box-shadow: 5px 20px 50px rgba(251, 172, 169, .2);
+  }
+
+  .xl\:focus\:shadow-button:focus {
+    box-shadow: 0px 10px 20px #fda8b8;
   }
 
   .xl\:table-auto {
@@ -34561,6 +34636,10 @@ trix-editor:focus {
 
   .xl\:z-50 {
     z-index: 50;
+  }
+
+  .xl\:z-60 {
+    z-index: 60;
   }
 
   .xl\:z-auto {

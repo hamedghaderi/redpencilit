@@ -19,6 +19,7 @@ class CommentsController extends Controller
     public function index()
     {
         $comments = Comment::latest()->paginate(5);
+        
         $testimonials = Testimonial::with('comment')->latest()->paginate(5);
         
         return view('comments.index', [

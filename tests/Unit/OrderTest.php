@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Order;
 use App\OrderDetail;
 use App\Service;
+use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -33,5 +34,13 @@ class OrderTest extends TestCase
         $order = create(Order::class, ['service_id' => $service->id]);
        
        $this->assertEquals($service->fresh(), $order->service);
+    }
+    
+    /** @test **/
+    public function it_has_an_owner()
+    {
+       $order = create(Order::class);
+       
+       $this->assertInstanceOf(User::class, $order->owner);
     }
 }

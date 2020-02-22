@@ -30,6 +30,34 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
             
             /*
             |--------------------------------------------------------------------------
+            | Files
+            |--------------------------------------------------------------------------
+             */
+            Route::get('/tickets/{ticket}/attachment', 'TicketAttachmentsController@show')->name('ticket.attachment');
+            
+            /*
+            |--------------------------------------------------------------------------
+            | Tickets
+            |--------------------------------------------------------------------------
+            */
+            Route::get('/tickets', 'TicketsController@index')->name('tickets.index');
+            Route::get('/tickets/create', 'TicketsController@create')->name('tickets.create');
+            Route::post('/tickets', 'TicketsController@store')->name('tickets.store');
+            Route::get('/tickets/{ticket}', 'TicketsController@show')->name('tickets.show');
+            
+            Route::get('/admin/tickets/{ticket}', 'Admin\\TicketsController@show')->name('admin.tickets.show')
+                ->middleware('admin');
+            
+            /*
+            |--------------------------------------------------------------------------
+            | Replies
+            |--------------------------------------------------------------------------
+            */
+            Route::post('/tickets/{ticket}/replies', 'RepliesController@store')->name('replies.store');
+            Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('replies.destroy');
+            
+            /*
+            |--------------------------------------------------------------------------
             | Users
             |--------------------------------------------------------------------------
             */
@@ -53,6 +81,9 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
             Route::post('/users/{user}/drafts', 'DraftsController@store')
                  ->name('drafts.store')
                  ->middleware('must-be-confirmed');
+            
+            Route::post('/orders/{order}', 'OrderDeliveryController@store')->name('orders.store');
+            Route::get('/orders/{order}/confirm', 'OrderDeliveryController@confirm')->name('orders.confirm');
             
             /*
             |--------------------------------------------------------------------------
@@ -101,6 +132,17 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
             Route::get('/admin/pages/home', 'AdminPagesController@home')->name('admin.pages.home')->middleware('admin');
             Route::patch('/admin/pages/home', 'AdminPagesController@homeUpdate')->name('admin.home.store')->middleware
             ('admin');
+            
+            /*
+            |--------------------------------------------------------------------------
+            | Notifications
+            |--------------------------------------------------------------------------
+            */
+            Route::get('/profile/{user}/notifications', 'UserNotificationsController@index')
+                 ->name('notifications.index');
+            Route::delete('/profile/{user}/notifications/{notification}', 'UserNotificationsController@destroy')
+                ->name('notifications.destroy');
+            Route::delete('/profile/{user}/notifications', 'UserNotificationsController@destroyAll')->name('notifications.destroy.all');
         });
     
     Route::get('orders/create', 'OrdersController@create')->name('new-order');
@@ -133,9 +175,10 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
     Route::post('/comments', 'CommentsController@store')->name('comments.store')->middleware('throttle');
     
     Auth::routes();
-   
+    
     Route::namespace('Admin')->prefix('admin/users')->middleware('auth')->group(
         function () {
             Route::patch('{user}/roles', 'UsersController@update')->name('admin.users.patch');
         });
 });
+

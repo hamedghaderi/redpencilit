@@ -34,13 +34,13 @@
             closeOpenedDropdown(event) {
                 if (!event.target.closest('.dropdown')) {
                     this.isOpen = false;
-                    window.events.$emit('dropdownToggled', this.isOpen);
+                    window.events.fire('dropdownToggled', this.isOpen);
                 }
             },
 
             toggleDropdown() {
                 this.isOpen = !this.isOpen;
-                window.events.$emit('dropdownToggled', this.isOpen);
+                window.events.fire('dropdownToggled', this.isOpen);
             }
         }
     }

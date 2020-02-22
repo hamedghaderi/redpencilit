@@ -207,3 +207,9 @@ trix-editor {
   margin-left: 1rem !important;
 }
 
+.redpencil-attachment:hover {
+  &__icon {
+    border-color: white !important;
+  }
+}
+

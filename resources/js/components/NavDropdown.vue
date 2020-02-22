@@ -3,7 +3,7 @@
         <dropdown :classes="[locale === 'fa' ? 'dropdown-left' : 'dropdown-right']">
             <template v-slot:toggler>
                 <button
-                        class="border py-3 px-4 focus:outline-none rounded text-sm shadow"
+                        class="border py-3 px-4 focus:outline-none rounded text-sm shadow hover:bg-red hover:text-white"
                         v-bind:class="classObj"
                         v-if="!user"
                     >
@@ -78,13 +78,13 @@
         },
 
         created() {
-            window.events.$on('userCreated', data => {
+            window.events.listen('userCreated', data => {
                 this.user = data.user;
 
                 return;
             });
 
-            window.events.$on('dropdownToggled', isOpen => {
+            window.events.listen('dropdownToggled', isOpen => {
                 this.rotate = isOpen;
             });
 
@@ -95,7 +95,7 @@
             return {
                 user: null,
                 rotate: false,
-                buttonColor: 'red',
+                buttonColor: 'white',
                 locale: Redpencilit.locale
             }
         },
@@ -115,15 +115,10 @@
 
             classObj() {
                 return {
-                    "bg-red": this.home,
-                    "text-white": this.home,
-                    "text-red": !this.home,
+                    "bg-white": this.home,
+                    "text-red": this.home || !this.home,
                     "border-transparent": this.home,
                     "border-red": !this.home,
-                    "hover:bg-white": this.home,
-                    "hover:bg-red": !this.home,
-                    "hover:text-red": this.home,
-                    "hover:text-white": !this.home
                 }
             },
 

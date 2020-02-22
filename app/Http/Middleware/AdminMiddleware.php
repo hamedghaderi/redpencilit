@@ -15,10 +15,10 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (! $request->user()->isSuperAdmin()) {
-            return abort(403);
+        if ($request->user()->isSuperAdmin() || $request->user()->isSupport()) {
+            return $next($request);
         }
         
-        return $next($request);
+        return abort(403);
     }
 }

@@ -1,5 +1,6 @@
 <header class="z-50 bg-transparent md:items-center mb-8 py-0" v-cloak>
     <div class="flex items-center lg:py-3 sm:p-0 lg:w-full">
+        {{--   Logo     --}}
         <div>
             <a href="{{ route('home', app()->getLocale()) }}">
                 <img class="h-8 md:h-12" src="{{ asset('images/logo-last.svg') }}" alt="Redpencilit">
@@ -15,6 +16,7 @@
             </button>
         </div>
 
+        {{--   Main Menu     --}}
         <div class="hidden lg:flex">
             <ul class="list-reset px-2 mb-2 flex justify-center w-full text-lg">
                 <li>

@@ -10,7 +10,7 @@
 
                 <div class="mb-4">
                     <input name="name" type="text" v-model="name" :placeholder="trans.get('__JSON__.full name')"
-                           class="text-sm bg-white rounded w-full px-4 py-3 border focus:outline-none focus:border-indigo">
+                           class="text-sm bg-white rounded w-full px-4 py-3 border focus:outline-none focus:border-grey">
 
                     <div class="feedback feedback--invalid" v-if="errors.has('name')">
                         {{ errors.get('name') }}
@@ -19,7 +19,7 @@
 
                 <div class="mb-4">
                     <input name="email" v-model="email" type="email" :placeholder="trans.get('__JSON__.email')"
-                           class="text-sm bg-white rounded w-full px-4 py-3 border focus:outline-none focus:border-indigo">
+                           class="text-sm bg-white rounded w-full px-4 py-3 border focus:outline-none focus:border-grey">
 
                     <div class="feedback feedback--invalid" v-if="errors.has('email')">
                         {{ errors.get('email') }}
@@ -29,7 +29,7 @@
                 <div class="mb-4">
                         <textarea name="message" v-model="message" id="message"
                                   class="text-sm h-32 bg-white rounded w-full px-4 py-3 border focus:outline-none
-                                  focus:border-indigo"
+                                  focus:border-grey"
                                   :placeholder="trans.get('__JSON__.message')"> </textarea>
 
                     <div class="feedback feedback--invalid" v-if="errors.has('message')">

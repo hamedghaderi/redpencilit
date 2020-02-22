@@ -287,6 +287,10 @@ trix-editor:focus {
   margin-left: 1rem !important;
 }
 
+.redpencil-attachment:hover__icon {
+  border-color: white !important;
+}
+
 .dashboard-title {
   @apply mb-3;
 }
@@ -353,7 +357,7 @@ trix-editor:focus {
   @apply w-full justify-center;
 }
 .button--primary {
-  @apply bg-indigo text-white;
+  @apply bg-red shadow-button text-white;
 }
 .button--primary:disabled {
   @apply border border-indigo-lighter bg-indigo-lightest text-indigo-lighter;
@@ -663,7 +667,7 @@ trix-editor:focus {
   @apply text-grey-dark text-xs;
 }
 .dashboard-nav__avatar {
-  @apply rounded-full mx-auto mb-3 shadow-lg relative;
+  @apply rounded-full mx-auto mb-3 relative;
   width: 100px;
   height: 100px;
   background-repeat: no-repeat;
@@ -899,7 +903,7 @@ trix-editor:focus {
   @apply border-b-2 border-transparent ml-6;
 }
 .tab-pane--active {
-  @apply border-indigo;
+  @apply border-red;
 }
 .tab-name a {
   @apply no-underline text-grey-dark;
@@ -1003,6 +1007,9 @@ trix-editor:focus {
 
 .search-input {
   @apply w-full bg-grey-lightest px-8 py-4 rounded absolute pin-r pin-t;
+}
+.search-input:focus {
+  @apply border border-grey-dark;
 }
 
 .search-icon {
@@ -1234,7 +1241,7 @@ trix-editor:focus {
   transform: skewY(-12deg);
 }
 
-.en-contact-ways::before {
+.fa-contact-ways::before {
   -webkit-transform: skewY(12deg);
   -moz-transform: skewY(12deg);
   -ms-transform: skewY(12deg);
@@ -1313,15 +1320,6 @@ trix-editor:focus {
 .cloud-right {
   right: -200px;
   left: auto;
-}
-
-.pidgin {
-  top: 0;
-}
-@media screen and (min-width: 1024px) {
-  .pidgin {
-    top: -100px;
-  }
 }
 
 /** Animation **/

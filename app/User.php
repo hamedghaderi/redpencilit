@@ -12,7 +12,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements CanResetPassword
 {
-    use Notifiable, SoftDeletes, CanResetPasswordTrait;
+   use Notifiable, SoftDeletes, CanResetPasswordTrait;
+    
+    protected $withCount = ['unreadNotifications'];
     
     protected $fillable
         = [
@@ -36,6 +38,8 @@ class User extends Authenticatable implements CanResetPassword
         ];
     
     protected $casts = ['confirmed' => 'boolean'];
+    
+    protected $appends = ['isAdmin'];
     
     /**
      * Confirm user email address.
@@ -128,7 +132,20 @@ class User extends Authenticatable implements CanResetPassword
         }
         
         // if role is a collection.
-        return !!$role->intersect($this->roles)->count();
+        return ! ! $role->intersect($this->roles)->count();
+    }
+    
+    /**
+     * Find admin user.
+     *
+     * @param $builder
+     * @return mixed
+     */
+    public function scopeAdmin($builder)
+    {
+        return $builder->whereHas('roles', function ($query) {
+            $query->where('name', 'super-admin');
+        });
     }
     
     /**
@@ -142,6 +159,16 @@ class User extends Authenticatable implements CanResetPassword
     }
     
     /**
+     * Check if a user has role support.
+     *
+     * @return mixed
+     */
+    public function isSupport()
+    {
+        return $this->roles->contains('name', 'support');
+    }
+    
+    /**
      * A user may have many posts.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -151,6 +178,11 @@ class User extends Authenticatable implements CanResetPassword
         return $this->hasMany(Post::class, 'owner_id');
     }
     
+    /**
+     * A post may have many favorites.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function favorites()
     {
         return $this->belongsToMany(Post::class, 'favoritable');
@@ -170,13 +202,14 @@ class User extends Authenticatable implements CanResetPassword
      * Find superAdmin user.
      *
      * @param $builder
+     *
      * @return mixed
      */
     public function scopeSuperAdmin($builder)
     {
-       return $builder->whereHas('roles', function ($query) {
-           $query->where('name', 'super-admin');
-       });
+        return $builder->whereHas('roles', function ($query) {
+            $query->where('name', 'super-admin');
+        });
     }
     
     /**
@@ -187,6 +220,26 @@ class User extends Authenticatable implements CanResetPassword
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+    
+    /**
+     * Each users may have many tickets.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class, 'owner_id')->orderBy('created_at', 'DESC');
+    }
+    
+    /**
+     * Append an isAdmin attribute
+     *
+     * @return mixed
+     */
+    public function getIsAdminAttribute()
+    {
+        return $this->isSuperAdmin();
     }
 }
 

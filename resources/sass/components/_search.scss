@@ -4,6 +4,10 @@
 
 .search-input {
   @apply w-full bg-grey-lightest px-8 py-4 rounded absolute pin-r pin-t;
+
+    &:focus {
+      @apply border border-grey-dark;
+    }
 }
 
 .search-icon {

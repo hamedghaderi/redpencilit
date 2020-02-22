@@ -1,7 +1,7 @@
 <template>
     <transition name="slide">
         <div class="alert alert--flash fade show"
-             :class="['alert--'+level, {'active': show}]"
+             :class="['alert--'+level, {'active': show}, {'text-left': locale === 'fa'}]"
              role="alert"
              v-if="show"
         >
@@ -19,7 +19,8 @@
                 body: this.message,
                 level: 'success',
                 show: false,
-                speed: 5000
+                speed: 5000,
+                locale: window.Redpencilit.locale
             }
         },
 
@@ -28,7 +29,7 @@
                 this.flash();
             }
 
-            window.events.$on('flash', data => this.flash(data));
+            window.events.listen('flash', data => this.flash(data));
         },
 
         methods: {

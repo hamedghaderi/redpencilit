@@ -318,7 +318,7 @@ var Dropzone = (function (_Emitter) {
          *
          * You can also pass an HTML element, a CSS selector (for multiple elements)
          * or an array of those. In that case, all of those elements will trigger an
-         * upload when clicked.
+         * upload when markAsRead.
          */
         clickable: true,
 

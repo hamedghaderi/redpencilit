@@ -3,9 +3,8 @@
 namespace Tests\Feature;
 
 use App\User;
-use Illuminate\Support\Facades\Mail;
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UserRegisterTest extends TestCase
 {
@@ -33,29 +32,6 @@ class UserRegisterTest extends TestCase
     }
     
     /** @test * */
-    public function the_first_user_who_register_has_the_role_of_admin()
-    {
-        $this->withoutExceptionHandling();
-        
-        Mail::fake();
-        
-        $user = make(User::class);
-        
-        $user->password_confirmation = $user->password;
-        
-        $response = $this->postJson(
-            route('register', app()->getLocale()),
-            $user->makeVisible('password')->makeVisible('email')->toArray()
-        );
-        
-        $user = User::first();
-        $this->assertCount(1, $user->roles);
-        $this->assertDatabaseHas('users', ['name' => $user->name]);
-        
-        $this->assertTrue($user->isSuperAdmin());
-    }
-    
-    /** @test * */
     public function the_second_user_has_not_any_roles()
     {
         /*
@@ -73,7 +49,7 @@ class UserRegisterTest extends TestCase
         $user = make(User::class, ['name' => 'John']);
         $user->password_confirmation = $user->password;
         
-        $response = $this->json('post', '/register', $user->makeVisible('password')->makeVisible('email')->toArray());
+        $this->json('post', '/register', $user->makeVisible('password')->makeVisible('email')->toArray());
         $user = User::first();
         $this->assertCount(0, $user->roles);
         

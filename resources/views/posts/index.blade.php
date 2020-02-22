@@ -18,7 +18,8 @@
 
             <div class="search-box">
                 <form action="{{ route('posts.index', app()->getLocale()) }}" method="get">
-                    <input type="search" class="search-input" name="q" placeholder="{{ __('I am searching for') }}...">
+                    <input type="search" class="search-input focus:bg-white focus:border-grey" name="q"
+                           placeholder="{{ __('I am searching for') }}...">
 
                     <span class="search-icon">
                         <i class="fas fa-search"></i>
@@ -31,10 +32,10 @@
             @forelse($posts as $post)
                 @include('posts._post', $post)
             @empty
-                <h4>{{ __('Posts List') }}</h4>
+                <h4 class="mb-4">{{ __('Posts List') }}</h4>
 
                 <div class="article">
-                    <p>{{ __('There is\'nt any post yet!') }}</p>
+                    <p>{{ __("There is not any post yet!") }}</p>
                 </div>
             @endforelse
 

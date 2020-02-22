@@ -108,4 +108,12 @@ class UserTest extends TestCase
        
        $this->assertEquals($user->email, User::superAdmin()->first()->email);
     }
+    
+    /** @test **/
+    public function it_can_have_tickets()
+    {
+       $user = create(User::class);
+       
+       $this->assertInstanceOf(Collection::class, $user->tickets);
+    }
 }

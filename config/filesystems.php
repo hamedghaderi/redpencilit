@@ -68,7 +68,13 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
         ],
-
+        
+        'ticket' => [
+            'driver' => 'local',
+            'root' => storage_path('app/tickets'),
+            'url' => env('APP_URL') . '/storage/tickets/',
+            'visibility' => 'public'
+        ]
     ],
 
 ];

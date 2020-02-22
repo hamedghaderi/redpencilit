@@ -9,6 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ServicesTest extends TestCase
 {
+    
     use RefreshDatabase;
     
     /** @test * */
@@ -111,7 +112,7 @@ class ServicesTest extends TestCase
         $this->delete(
             route(
                 'services.delete',
-                ['user' => $user->id, 'service' => $service->id]))
+                ['locale' => app()->getLocale(), 'user' => $user->id, 'service' => $service->id]))
              ->assertStatus(403);
     }
     
@@ -125,7 +126,6 @@ class ServicesTest extends TestCase
         
         $service = create(Service::class, ['user_id' => $user->id]);
         
-        
         $this->patch(route('services.update', [app()->getLocale(), $service]), [
             'name' => 'Blabla'
         ])->assertRedirect(route('services.index', app()->getLocale()));
@@ -134,7 +134,7 @@ class ServicesTest extends TestCase
     }
     
     /** @test * */
-    public function updating_a_serivce_requires_a_valid_name()
+    public function updating_a_service_requires_a_valid_name()
     {
         $user = $this->signIn();
         
@@ -147,6 +147,7 @@ class ServicesTest extends TestCase
         $this->patch(
             route(
                 'services.update', [
+                'locale' => app()->getLocale(),
                 'user' => $user->id,
                 'service' => $service->id
             ]),
@@ -168,6 +169,7 @@ class ServicesTest extends TestCase
         $this->patch(
             route(
                 'services.update', [
+                'locale' => app()->getLocale(),
                 'user' => $user->id,
                 'service' => $service->id
             ]),

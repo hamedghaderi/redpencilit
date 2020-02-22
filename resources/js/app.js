@@ -6,14 +6,18 @@ window.Vue = require('vue');
 let authorizations = require('./authorizations');
 
 import sal from 'sal.js';
+import Event from "./Event";
+
+window.events = new Event(new Vue());
 
 window.sal = sal;
-window.events = new Vue();
+// window.events = new Vue();
 window.PersianNumber = new PersianNumber();
 
 window.flash = function (message, level = 'success') {
-    window.events.$emit('flash', {message, level});
-}
+    // window.events.$emit('flash', {message, level});
+    window.events.fire('flash', {message, level});
+};
 
 import Lang from "lang.js";
 
@@ -54,6 +58,8 @@ Vue.component('avatar', require('./components/Avatar.vue').default);
 Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('flex-table', require('./components/FlexTable.vue').default);
 Vue.component('inner-modal', require('./components/InnerModal.vue').default);
+Vue.component('attachment', require('./components/Attachment.vue').default);
+// Vue.component('attachment', require('./components/Attachment').default);
 
 Vue.component('edit-role', require('./pages/EditRole.vue').default);
 Vue.component('upload-view', require('./pages/UploadView.vue').default);
@@ -66,6 +72,10 @@ Vue.component('favorite', require('./components/Favorite.vue').default);
 Vue.component('faq', require('./components/Faq.vue').default);
 Vue.component('contact', require('./pages/Contact.vue').default);
 Vue.component('comments', require('./pages/Comments.vue').default);
+Vue.component('notifications', require('./components/Notifications.vue').default);
+Vue.component('admin-ticket', require('./pages/AdminTicket.vue').default);
+Vue.component('ticket', require('./pages/Ticket.vue').default);
+Vue.component('ticket-list', require('./pages/TicketList.vue').default);
 
 Vue.config.ignoredElements = ['trix-editor'];
 
@@ -134,6 +144,7 @@ const app = new Vue({
         sanitizeNumber(e) {
             e.target.value = this.persianReplace(e.target.value);
         },
+
     },
 
 

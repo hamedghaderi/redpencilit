@@ -761,7 +761,8 @@ module.exports = {
     'outline': '0 0 0 3px rgba(66, 153, 225, 0.5)',
     'none': 'none',
     'outline-indigo': '0 0 0 4px #A9AAFF',
-    'card': '5px 20px 50px rgba(251, 172, 169, .2)'
+    'card': '5px 20px 50px rgba(251, 172, 169, .2)',
+    'button': '0px 10px 20px #FDA8B8',
   },
 
   /*
@@ -785,7 +786,9 @@ module.exports = {
     '20': 20,
     '30': 30,
     '40': 40,
-    '50': 50
+    '50': 50,
+    '60': 60
+
   },
 
   /*

@@ -34,4 +34,14 @@ class Order extends Model
     {
        return $this->belongsTo(Service::class);
     }
+    
+    /**
+     * Each order belongs to a user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function owner()
+    {
+       return $this->belongsTo(User::class, 'owner_id');
+    }
 }

@@ -81,7 +81,7 @@
   transform: skewY(-12deg);
 }
 
-.en-contact-ways::before {
+.fa-contact-ways::before {
   -webkit-transform: skewY(+12deg);
   -moz-transform: skewY(+12deg);
   -ms-transform: skewY(+12deg);
@@ -160,10 +160,3 @@
   left: auto;
 }
 
-.pidgin {
-  top: 0;
-
-  @media screen and (min-width: 1024px) {
-    top: -100px;
-  }
-}

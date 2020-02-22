@@ -16,7 +16,7 @@
   }
 
   &--primary {
-    @apply bg-indigo text-white;
+    @apply bg-red shadow-button text-white;
 
     &:disabled {
       @apply border border-indigo-lighter bg-indigo-lightest text-indigo-lighter;

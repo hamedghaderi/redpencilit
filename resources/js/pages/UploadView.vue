@@ -232,7 +232,8 @@
 
                     <div class="w-3/5 flex items-center justify-center">
                         <div class="text-center w-1/2">
-                            <a href="#" class="button button--primary button--block mb-6">
+                            <a href="#" class="button button--primary button--block mb-6"
+                               @click.prevent="finish">
                                 {{ trans.get('__JSON__.payment')}}
                                 <i class="fas fa-arrow-left mr-3"></i>
                             </a>
@@ -385,6 +386,23 @@
                     flash('متاسفانه مشکلی در ذخیره سازی اطلاعات پیش‌ آمد. لطفا مجددا سعی کنید.', 'danger');
                     return;
                 });
+            },
+
+            finish() {
+                let url = `/${this.locale}/orders/${this.order.id}`;
+
+                axios.post(url, {}).then(response => {
+                    if(response.data.status === 0) {
+                        flash(this.trans.get('__JSON__.A problem occurred unfortunately. Please try again.', 'danger'))
+                        return;
+                    }
+
+                    if(response.data.status === 1) {
+                        url = `https://pay.ir/pg/${response.data.token}`;
+                        console.log(url);
+                        window.location = url;
+                    }
+                })
             }
         },
     }
