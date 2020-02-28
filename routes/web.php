@@ -83,7 +83,6 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                  ->middleware('must-be-confirmed');
             
             Route::post('/orders/{order}', 'OrderDeliveryController@store')->name('orders.store');
-            Route::get('/orders/{order}/confirm', 'OrderDeliveryController@confirm')->name('orders.confirm');
             
             /*
             |--------------------------------------------------------------------------
@@ -181,4 +180,8 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
             Route::patch('{user}/roles', 'UsersController@update')->name('admin.users.patch');
         });
 });
+
+
+
+Route::get('/order/confirm', 'OrderDeliveryController@confirm')->name('orders.confirm')->middleware('auth');
 

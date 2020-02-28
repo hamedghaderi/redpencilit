@@ -3,49 +3,60 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use GuzzleHttp\Client;
-use Illuminate\Http\Request;
-use Zttp\Zttp;
+use App\Redpencilit\Payment;
 
 class OrderDeliveryController extends Controller
 {
     
     /**
-     * Guzzle HTTP Client
+     * Add a new Payment.
      *
-     * @var Client
+     * @var Payment
      */
-    protected $client;
+    private $payment;
     
-    public function __construct(Client $client)
+    public function __construct(Payment $payment)
     {
-        $this->client = $client;
+        $this->payment = $payment;
     }
     
+    /**
+     * Request for a new payment.
+     *
+     * @param $locale
+     * @param  Order  $order
+     *
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function store($locale, Order $order)
     {
         if ( ! auth()->user()->is($order->owner)) {
             abort(403);
         }
         
-        $response = Zttp::post('https://pay.ir/pg/send', [
-            'api' => "test",
-            'amount' => $order->price * 10,
-            'redirect' => route('orders.confirm', [app()->getLocale(), $order->id])
-        ]);
+        $response = $this->payment->order($order)
+            ->amount($order->price)
+            ->send();
         
-        return $response;
+        if (app()->environment() === 'testing') {
+            return $response;
+        }
+        
+        return redirect(env('PAYIR_URL') . $response['token']);
     }
     
+    /**
+     * Confirm and verify the order.
+     *
+     * @param $locale
+     * @param  Order  $order
+     */
     public function confirm($locale, Order $order)
     {
         if ((int) request('status') === 1) {
-            $response = Zttp::post('https://pay.ir/pg/verify', [
-                'api' => 'test',
-                'token' => request('token')
-            ]);
+            $response = $this->payment->verify(require('token'));
             
-           dd($response->json());
+            dd($response);
          }
     }
 }

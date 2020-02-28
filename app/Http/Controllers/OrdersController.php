@@ -10,7 +10,6 @@ use App\Setting;
 use App\User;
 use Carbon\Carbon;
 use Dotenv\Exception\ValidationException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class OrdersController extends Controller
@@ -49,7 +48,8 @@ class OrdersController extends Controller
      *
      * @param        $locale
      * @param  User  $user
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response|void
+     *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response|void
      */
     public function store($locale, User $user)
     {
@@ -99,50 +99,13 @@ class OrdersController extends Controller
     }
     
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-    
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-    
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int                       $id
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-    
-    /**
      * Remove the specified resource from storage.
      *
      * @param         $locale
      * @param  User   $user
      * @param  Order  $order
-     * @return void
      *
+     * @return \Illuminate\Http\JsonResponse|void
      * @throws \Exception
      */
     public function destroy($locale, User $user, Order $order)
@@ -224,12 +187,13 @@ class OrdersController extends Controller
     /**
      * Calculate each file words count.
      *
-     * @return array
+     * @return array|\Illuminate\Support\Collection|\Tightenco\Collect\Support\Collection
      */
     protected function appendFileWordCountsPerDocument()
     {
         $documents = [];
-        
+    
+    
         foreach (request()->documents as $key => $document) {
             $documents[$key]['document'] = $document;
             $documents[$key]['words'] = DocumentWordCount::file($document)->countWords();

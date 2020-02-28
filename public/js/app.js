@@ -12180,6 +12180,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -12189,7 +12192,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['services'],
+  props: ['services', 'csrf'],
   components: {
     UploaderFile: _components_UploaderFile_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Tab: _components_Tab_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -12206,6 +12209,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     priceIsAvailable: function priceIsAvailable() {
       return this.selected && this.words;
+    },
+    finishUrl: function finishUrl() {
+      return "/".concat(this.locale, "/orders/").concat(this.order.id);
     }
   },
   mounted: function mounted() {
@@ -12324,23 +12330,6 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (error) {
         flash('متاسفانه مشکلی در ذخیره سازی اطلاعات پیش‌ آمد. لطفا مجددا سعی کنید.', 'danger');
         return;
-      });
-    },
-    finish: function finish() {
-      var _this3 = this;
-
-      var url = "/".concat(this.locale, "/orders/").concat(this.order.id);
-      axios.post(url, {}).then(function (response) {
-        if (response.data.status === 0) {
-          flash(_this3.trans.get('__JSON__.A problem occurred unfortunately. Please try again.', 'danger'));
-          return;
-        }
-
-        if (response.data.status === 1) {
-          url = "https://pay.ir/pg/".concat(response.data.token);
-          console.log(url);
-          window.location = url;
-        }
       });
     }
   }
@@ -58074,25 +58063,36 @@ var render = function() {
                       [
                         _c("div", { staticClass: "text-center w-1/2" }, [
                           _c(
-                            "a",
+                            "form",
                             {
-                              staticClass:
-                                "button button--primary button--block mb-6",
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.finish($event)
-                                }
-                              }
+                              attrs: { action: _vm.finishUrl, method: "POST" }
                             },
                             [
-                              _vm._v(
-                                "\n                            " +
-                                  _vm._s(_vm.trans.get("__JSON__.payment")) +
-                                  "\n                            "
-                              ),
-                              _c("i", { staticClass: "fas fa-arrow-left mr-3" })
+                              _c("input", {
+                                attrs: { type: "hidden", name: "_token" },
+                                domProps: { value: _vm.csrf }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "button button--primary button--block mb-6",
+                                  attrs: { type: "submit" }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(
+                                        _vm.trans.get("__JSON__.payment")
+                                      ) +
+                                      "\n                                "
+                                  ),
+                                  _c("i", {
+                                    staticClass: "fas fa-arrow-left mr-3"
+                                  })
+                                ]
+                              )
                             ]
                           ),
                           _vm._v(" "),

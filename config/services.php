@@ -39,5 +39,11 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
+    
+    'payir' => [
+        'key' => env('PAYIR_API_KEY', ''),
+        'redirect' => env('PAYIR_REDIRECT', ''),
+        'url' => env('PAYIR_URL', '')
+    ]
 
 ];

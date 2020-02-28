@@ -232,11 +232,14 @@
 
                     <div class="w-3/5 flex items-center justify-center">
                         <div class="text-center w-1/2">
-                            <a href="#" class="button button--primary button--block mb-6"
-                               @click.prevent="finish">
-                                {{ trans.get('__JSON__.payment')}}
-                                <i class="fas fa-arrow-left mr-3"></i>
-                            </a>
+                            <form :action="finishUrl" method="POST">
+                                <input type="hidden" name="_token" :value="csrf">
+                                <button type="submit" class="button button--primary button--block mb-6">
+                                    {{ trans.get('__JSON__.payment')}}
+                                    <i class="fas fa-arrow-left mr-3"></i>
+                                </button>
+                            </form>
+
 
                             <a href="#" @click="requestToCancel" class="no-underline text-gery">
                                 {{ trans.get('__JSON__.cancel') }}
@@ -260,7 +263,7 @@
     import ProgressLevel from "../components/ProgressLevel";
 
     export default {
-        props: ['services'],
+        props: ['services', 'csrf'],
 
         components: {
             UploaderFile,
@@ -281,6 +284,10 @@
             priceIsAvailable() {
                 return this.selected && this.words;
             },
+
+            finishUrl() {
+                return `/${this.locale}/orders/${this.order.id}`;
+            }
         },
 
         mounted() {
@@ -387,23 +394,6 @@
                     return;
                 });
             },
-
-            finish() {
-                let url = `/${this.locale}/orders/${this.order.id}`;
-
-                axios.post(url, {}).then(response => {
-                    if(response.data.status === 0) {
-                        flash(this.trans.get('__JSON__.A problem occurred unfortunately. Please try again.', 'danger'))
-                        return;
-                    }
-
-                    if(response.data.status === 1) {
-                        url = `https://pay.ir/pg/${response.data.token}`;
-                        console.log(url);
-                        window.location = url;
-                    }
-                })
-            }
         },
     }
 </script>
