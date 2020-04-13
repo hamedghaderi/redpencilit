@@ -5,12 +5,14 @@
 @endsection
 
 @section('content')
-    <div class="bg-white px-12 py-8 shadow rounded">
+    <div class="bg-white px-12 py-8 shadow rounded mb-8">
         <div class="flex">
             <div class="w-1/2">
                 <h3 class="dashboard-title py-4 inline-flex items-center">
-                    <i class="la la-newspaper text-indigo-dark ml-2 text-2xl"></i>
-                    <span>ویرایش پست</span>
+                    <i class="la la-newspaper text-indigo-dark text-2xl {{ app()->getLocale() === 'fa' ? 'ml-2' :
+                    'mr-2'
+                    }}"></i>
+                    <span>{{ __('Edit post') }}</span>
                 </h3>
             </div>
         </div>
@@ -24,7 +26,7 @@
             @method('PATCH')
 
             <div class="form-group">
-                <label for="title">عنوان پست</label>
+                <label for="title">{{ __('post title') }}</label>
                 <input type="text" class="input mb-2" name="title" value="{{ $post->title }}">
 
                 @if ($errors->has('title'))
@@ -33,7 +35,9 @@
             </div>
 
             <div class="form-group">
-                <label for="title">چکیده پست (در یک پاراگراف کوتاه)</label>
+                <label for="title">
+                    {{ __('summary (in one paragraph)') }}
+                </label>
                 <input type="text" class="input mb-2" name="excerpt" value="{{ old('excerpt') ?: $post->excerpt }}">
 
                 @if ($errors->has('excerpt'))
@@ -42,7 +46,9 @@
             </div>
 
             <div class="form-group">
-                <label for="body">محتوای پست</label>
+                <label for="body">
+                    {{ __('post body') }}
+                </label>
                 <wysiwyg name="body" class="mb-2" host="{{ asset('/') }}" value="{{ $post->body  }}"></wysiwyg>
 
                 @if ($errors->has('body'))
@@ -51,7 +57,9 @@
             </div>
 
             <div class="form-group">
-                <label for="thumbnail">آپلود عکس پیش‌فرض برای پست</label>
+                <label for="thumbnail">
+                    {{ __('default picture for post') }}
+                </label>
                 <input type="file" name="thumbnail">
 
                 @if ($errors->has('thumbnail'))
@@ -59,7 +67,9 @@
                 @endif
             </div>
 
-            <button class="button button--primary">انتشار پست</button>
+            <button class="button button--primary">
+                {{ __('publish post') }}
+            </button>
         </form>
     </div>
 @endsection

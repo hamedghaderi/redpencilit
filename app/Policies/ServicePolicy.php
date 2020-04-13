@@ -42,7 +42,7 @@ class ServicePolicy
      */
     public function update(User $user, Service $service)
     {
-       return $user->hasRole('super-admin') ;
+       return $user->isSuperAdmin() || $user->isSupport();
     }
 
     /**

@@ -4,7 +4,7 @@
            <span class="relative cursor-pointer" :class="{'mr-auto': locale === 'fa', 'ml-auto': locale === 'en'}">
                <i class="las la-bell text-2xl text-grey"></i>
 
-                <span v-if="notifications.length != 0"
+                <span v-if="notifications.length !== 0"
                       class="absolute pin-l pin-t bg-pink text-white rounded-full w-4 h-4 flex items-center justify-center"
                       style="font-size:9px; transform: translate(-30%, -30%);">
                    {{ notifications.length }}
@@ -34,13 +34,13 @@
             </div>
 
             <ul class="bg-white text-grey-dark px-2 py-8 block text-xs relative">
-                <li v-if="notifications.length !== 0" v-for="notification in notifications">
+                <li v-if="hasNotification" v-for="notification in notifications">
                     <a :href="notification.data.link" @click.prevent="markAsRead(notification)">
                         {{ notification.data.message[locale] }}
                     </a>
                 </li>
 
-                <li v-if="notifications.length === 0">
+                <li v-if="notifications.length=== 0">
                     {{ trans.get("__JSON__.You don't have any notifications at this time") }}
                 </li>
             </ul>
@@ -72,6 +72,10 @@
                 axios.delete(url);
 
                 window.location = notification.data.link;
+            },
+
+            hasNotification() {
+                return this.notifications.length > 0;
             },
 
             clearAll() {

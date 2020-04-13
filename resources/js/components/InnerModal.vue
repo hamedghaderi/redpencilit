@@ -1,11 +1,14 @@
 <template>
     <div :id="name" class="overlay">
         <a href="#" class="pin-l pin-r pin-t pin-b absolute"></a>
+        <a href="#" class="modal-close text-white absolute pin-r pin-top mr-4 mt-4">
+            <i class="las la-times text-4xl"></i>
+        </a>
 
         <div class="modal-content relative">
             <slot></slot>
 
-            <a href="#" class="modal-close text-grey absolute"><i class="fas fa-times"></i></a>
+
         </div>
     </div>
 </template>
@@ -26,7 +29,7 @@
         bottom: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0,0,0,.7);
+        background-color: rgba(0, 0, 0, .7);
         z-index: 1001;
         display: flex;
         align-items: center;
@@ -52,5 +55,4 @@
         top: 10px;
         left: 10px;
     }
-
 </style>

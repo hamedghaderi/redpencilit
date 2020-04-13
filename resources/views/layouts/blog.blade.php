@@ -42,6 +42,8 @@
         window.fallback_locale = "{{ config('app.fallback_locale') }}";
         window.messages = @json($messages);
     </script>
+
+    @yield('style')
 </head>
 <body class="blog-posts bg-white">
 <div id="app">

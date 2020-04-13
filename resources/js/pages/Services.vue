@@ -29,18 +29,6 @@
                                 </div>
                             </div>
 
-                            <div class="form-group flex items-center">
-                                <label for="negotiable-update" class="dashboard-label mb-0 label-check">
-                                    <input type="checkbox"
-                                           class="form-checkbox d-inline ml-2"
-                                           name="negotiable"
-                                           id="negotiable-update"
-                                            v-model="negotiable">
-
-                                    {{ trans.get('__JSON__.agreement price')}}
-                                </label>
-                            </div>
-
                             <div class="feedback feedback--invalid my-2" v-if="errors.has('negotiable')">
                                 <p>
                                     {{ errors.get('negotiable') }}

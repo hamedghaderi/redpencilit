@@ -13,6 +13,10 @@
     @apply bg-green-lightest border-green text-green-darker;
   }
 
+  &--warning {
+    @apply bg-yellow-lightest border-yellow text-yellow-darker;
+  }
+
   &--primary {
     @apply bg-indigo-lightest border-indigo text-indigo-darker;
   }

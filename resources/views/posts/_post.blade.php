@@ -1,19 +1,26 @@
 <div class="post">
-    <span class="post__date"> {{ $post->created_at->diffForHumans() }}</span>
+    <span class="post__date">
+        {{ $post->created_at->diffForHumans() }}
+    </span>
 
     <a href="{{route('posts.show', [app()->getLocale(), $post])}}">
         @if ($post->thumbnail)
-            <div class="post__thumb" style="background-image: url('{{ asset($post->thumbnail) }}');
-                    "></div>
+            <div
+                    class="post__thumb"
+                    style="background-image: url('{{ asset($post->thumbnail) }}');"
+            ></div>
         @else
-            <div class="post__thumb"
-                 style="background-image: url({{ asset('images/blog_post_default.svg') }});">
-            </div>
+            <div
+                    class="post__thumb"
+                    style="background-image: url({{ asset('images/blog_post_default.svg') }});"
+            ></div>
         @endif
     </a>
 
     <div class="post__body w-1/2">
-        <span class="post__author text-sm">{{ $post->owner->name }}</span>
+        <span class="post__author text-sm">
+            {{ $post->owner->name }}
+        </span>
 
         <h3 class="post__title">
             <a href="{{ route('posts.show', ['locale' => app()->getLocale(), 'post' => $post->id]) }}">
@@ -27,9 +34,10 @@
 
         @can('create-posts')
             <div class="flex">
-                <a class="button button--smooth--primary button--sm ml-3" href="{{ route('posts.edit', [app()
-                ->getLocale(), $post])
-                }}">
+                <a
+                        class="button button--smooth--primary button--sm mr-3"
+                        href="{{ route ('posts.edit', [app() ->getLocale(), $post]) }}"
+                >
                     {{ __('Edit Post') }}
                 </a>
 

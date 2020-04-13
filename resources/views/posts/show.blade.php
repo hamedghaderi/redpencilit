@@ -2,7 +2,7 @@
 
 @section('content')
     @if ($post->thumbnail)
-        <div class="hero" style="background-image: url('{{ asset($post->thumbnail) }}')">
+        <div class="hero mb-8" style="background-image: url('{{ asset($post->thumbnail) }}')">
             <div class="relative z-10 w-full text-center flex items-center flex-wrap flex-col">
                 <h2 class="hero__title text-lg md:text-3xl">{{ $post->title }}</h2>
 
@@ -21,8 +21,8 @@
                     <a class="bg-black text-white p-1 rounded text-xs mt-4 hover:bg-white hover:text-black
                     inline-flex items-center"
                        href="{{ route('posts.edit', [app() ->getLocale(), $post]) }}">
-                        <i class="la la-edit ml-1"></i>
-                        <span>ویرایش پست</span>
+                        <i class="la la-edit @if (app()->getLocale() === 'fa') ml-1 @else mr-1 @endif"></i>
+                        <span>{{ __('Edit post') }}</span>
                     </a>
                 @endcan
             </div>
@@ -36,7 +36,7 @@
     <div class="container mb-12">
         <div class="w-1/2 mx-auto">
             <div class="article">
-                {!! $post->body !!}
+                {!! customizePostBody($post->body)  !!}
             </div>
 
             <hr>
@@ -45,4 +45,8 @@
         </div>
     </div>
 
+@endsection
+
+@section('script')
+    <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
 @endsection

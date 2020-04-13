@@ -57,7 +57,7 @@
         </div>
     </main>
 
-    <flash message="{{ __(session('flash')) }}"></flash>
+    <flash message="{{ __(session('flash')) }}" status="{{ __(session('status')) }}"></flash>
 </div>
 
 <script src="/js/app.js"></script>

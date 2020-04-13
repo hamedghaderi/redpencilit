@@ -74,6 +74,15 @@
                                 {{ ucfirst(__('pages')) }}
                             </a>
                         </li>
+
+                        <li>
+                            <a href="{{ route('admin.orders.index', app()->getLocale()) }}" class="flex items-center
+                            text-grey">
+                                <i class="las la-cart-arrow-down text-2xl @if (app()->getLocale() === 'fa') ml-3 @else
+                                        mr-3 @endif"></i>
+                                {{ ucfirst(__('orders')) }}
+                            </a>
+                        </li>
                     </ul>
                 </dropdown>
             </li>

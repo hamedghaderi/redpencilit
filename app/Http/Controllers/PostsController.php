@@ -33,6 +33,7 @@ class PostsController extends Controller
      *
      * @param        $locale
      * @param  Post  $post
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function show($locale, Post $post)
@@ -63,12 +64,14 @@ class PostsController extends Controller
         ]);
         
         if (request()->has('thumbnail')) {
-            $attributes['thumbnail'] = request()->file('thumbnail')->store('blog', 'public');
+            $attributes['thumbnail'] = request()
+                ->file('thumbnail')
+                ->store('blog', 'public');
         }
         
         auth()->user()->posts()->create($attributes);
         
-        return back();
+        return back()->with('flash', __('Post has been successfully created'));
     }
     
     /**
@@ -88,6 +91,7 @@ class PostsController extends Controller
      *
      * @param        $locale
      * @param  Post  $post
+     *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function update($locale, Post $post)
@@ -98,14 +102,15 @@ class PostsController extends Controller
             'body' => 'required|min:5',
             'thumbnail' => 'sometimes|file|image|max:1024'
         ]);
-    
+        
         if (request()->has('thumbnail')) {
             $attributes['thumbnail'] = request()->file('thumbnail')->store('blog', 'public');
         }
         
         $post->update($attributes);
         
-        return redirect(route('posts.show', [app()->getLocale(), $post]));
+        return redirect(route('posts.show', [app()->getLocale(), $post]))
+            ->with('flash', __('Post has been successfully updated'));
     }
     
     /**
@@ -113,8 +118,8 @@ class PostsController extends Controller
      *
      * @param        $locale
      * @param  Post  $post
-     * @return \Illuminate\Http\RedirectResponse
      *
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
     public function destroy($locale, Post $post)

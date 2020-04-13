@@ -7,6 +7,7 @@ use Stevebauman\Purify\Facades\Purify;
 
 class Post extends Model
 {
+    
     protected $guarded = [];
     
     protected $appends = ['isFavorited'];
@@ -21,18 +22,6 @@ class Post extends Model
     public function path()
     {
         return "/posts/".$this->id;
-    }
-    
-    /**
-     * Sanitize body attribute.
-     *
-     * @param $body
-     *
-     * @return mixed
-     */
-    public function getBodyAttribute($body)
-    {
-        return Purify::clean($body);
     }
     
     /**
@@ -53,7 +42,7 @@ class Post extends Model
     public function scopeSearch($query, $q)
     {
         return $query->where('title', 'like', "%{$q}%")
-            ->orWhere('body', 'like', "%{$q}%");
+                     ->orWhere('body', 'like', "%{$q}%");
     }
     
     /**
@@ -73,7 +62,7 @@ class Post extends Model
      */
     public function isFavorited()
     {
-        return !! $this->favorites()->where('user_id', auth()->id())->count();
+        return ! ! $this->favorites()->where('user_id', auth()->id())->count();
     }
     
     /**

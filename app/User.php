@@ -89,7 +89,7 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function orders()
     {
-        return $this->hasMany(Order::class, 'owner_id');
+        return $this->hasMany(Order::class, 'owner_id')->latest();
     }
     
     /**
@@ -240,6 +240,16 @@ class User extends Authenticatable implements CanResetPassword
     public function getIsAdminAttribute()
     {
         return $this->isSuperAdmin();
+    }
+    
+    /**
+     * Admin may create many page services
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pageServices()
+    {
+       return $this->hasMany(PageService::class);
     }
 }
 

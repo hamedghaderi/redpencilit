@@ -11,6 +11,10 @@ class Service extends Model
 
     protected $guarded = [];
     
+    protected $casts = [
+        'name' => 'array'
+    ];
+    
 
     /**
      * Each service may exists in many drafts.

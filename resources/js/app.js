@@ -59,6 +59,9 @@ Vue.component('flash', require('./components/Flash.vue').default);
 Vue.component('flex-table', require('./components/FlexTable.vue').default);
 Vue.component('inner-modal', require('./components/InnerModal.vue').default);
 Vue.component('attachment', require('./components/Attachment.vue').default);
+Vue.component('modal', require('./components/Modal').default);
+Vue.component('select-tag', require('./components/SelectTag.vue').default);
+
 // Vue.component('attachment', require('./components/Attachment').default);
 
 Vue.component('edit-role', require('./pages/EditRole.vue').default);
@@ -144,7 +147,6 @@ const app = new Vue({
         sanitizeNumber(e) {
             e.target.value = this.persianReplace(e.target.value);
         },
-
     },
 
 

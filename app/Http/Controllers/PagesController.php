@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Page;
+use App\PageService;
 use App\Testimonial;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 
 class PagesController extends Controller
@@ -18,7 +20,9 @@ class PagesController extends Controller
      */
     public function about()
     {
-        return view('pages.about');
+        $about = Page::where('name', 'about')->first();
+        
+        return view('pages.about', ['about' => $about]);
     }
     
     /**
@@ -28,7 +32,9 @@ class PagesController extends Controller
      */
     public function contact()
     {
-        return view('pages.contact');
+        $contact = Page::where('name', 'contact')->first();
+        
+        return view('pages.contact', compact('contact'));
     }
     
     /**
@@ -38,16 +44,14 @@ class PagesController extends Controller
      */
     public function homepage()
     {
+        $home = Page::where('name', 'home')->first();
+        $authorAvatar = User::select('avatar')->superAdmin()->first()
+            ?: asset('images/profile.png.jpg');
         $testimonials = Testimonial::with('comment')
                                    ->latest()
                                    ->take(5)
                                    ->get();
         
-        $home = Page::where('name', 'home')->first();
-        $admin = User::superAdmin()->first();
-        
-        $authorAvatar = ($admin && $admin->avatar) ? $admin->avatar : asset('images/profile.png.jpg');
-
         return view('welcome', compact('testimonials', 'authorAvatar', 'home'));
     }
     
@@ -78,6 +82,8 @@ class PagesController extends Controller
     
     public function service()
     {
-       return view('pages.service');
+        $services = PageService::all();
+        
+        return view('pages.service', ['services' => $services]);
     }
 }

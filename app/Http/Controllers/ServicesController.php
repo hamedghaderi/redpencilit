@@ -7,6 +7,7 @@ use App\User;
 
 class ServicesController extends Controller
 {
+    
     /**
      * Get all services
      *
@@ -31,42 +32,24 @@ class ServicesController extends Controller
     }
     
     /**
-     * show a form for creating a user
-     *
-     * @param  User  $user
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
-    public function create($locale, User $user)
-    {
-        $this->authorize('update', new Service());
-        
-        return view('services.create');
-    }
-    
-    /**
      * Persist new service into DB.
      *
      * @param        $locale
      * @param  User  $user
-     * @return array|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      *
+     * @return array|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function store($locale, User $user)
     {
         $this->authorize('update', new Service());
         
-        $attributes = request()->validate(
-            [
-                'name' => 'required|min:3',
-            ]);
+        $attributes = $this->validateRequestMethod();
         
-        $attributes['negotiable'] = request()->has('negotiable')
-                                    && request('negotiable');
-        
-        $service = auth()->user()->services()->create($attributes);
+        $service = auth()->user()->services()->create([
+            'name->fa' => $attributes['fa-name'],
+            'name->en' => $attributes['en-name'],
+        ]);
         
         if (request()->wantsJson()) {
             return [
@@ -82,10 +65,10 @@ class ServicesController extends Controller
      * Show a single service to admin.
      *
      * @param           $locale
-     * @param  User     $user
+     * @param  User  $user
      * @param  Service  $service
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      *
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($locale, User $user, Service $service)
@@ -103,31 +86,27 @@ class ServicesController extends Controller
      * Update a service with the given id.
      *
      * @param           $locale
-     * @param  User     $user
+     * @param  User  $user
      * @param  Service  $service
-     * @return \Illuminate\Http\RedirectResponse
      *
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update($locale, User $user, Service $service)
     {
         $this->authorize('update', $service);
         
-        $attributes = request()->validate(
-            [
-                'name' => 'required|min:3',
-            ]);
+        $attributes = $this->validateRequestMethod();
         
-        $attributes['negotiable'] = request()->has('negotiable')
-                                    && request('negotiable');
-        
-        $service->update($attributes);
+        $service->update([
+            'name->fa' => request('fa-name'),
+            'name->en' => request('en-name')
+        ]);
         
         if (request()->wantsJson()) {
-            return response()->json(
-                [
-                    'status' => 200,
-                ]);
+            return response()->json([
+                'status' => 200,
+            ]);
         }
         
         return redirect(route('services.index', $locale));
@@ -138,8 +117,8 @@ class ServicesController extends Controller
      *
      * @param           $locale
      * @param  Service  $service
-     * @return \Illuminate\Http\RedirectResponse
      *
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy($locale, Service $service)
@@ -153,5 +132,18 @@ class ServicesController extends Controller
         }
         
         return redirect(route('services.index', $locale));
+    }
+    
+    /**
+     * Validate request for creating a service .
+     *
+     * @return array
+     */
+    protected function validateRequestMethod(): array
+    {
+        return request()->validate([
+            'fa-name' => 'required|min:3|max:255|string',
+            'en-name' => 'required|min:3|max:255|string'
+        ]);
     }
 }

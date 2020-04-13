@@ -5,7 +5,7 @@
                 <h3 class="title text-center">{{ trans.get('__JSON__.contact us')}}</h3>
 
                 <p class="text-grey-dark text-sm leading-loose mb-3">
-                    {{ trans.get(`__JSON__.Returns a string with the first character of str capitalized, if that character is alphabetic. Note that 'alphabetic' is determined by the current locale.`) }}
+                    {{ contact[locale]['Body'] ? contact[locale]['Body'] : '' }}
                 </p>
 
                 <div class="mb-4">
@@ -52,7 +52,7 @@
                     </ul>
 
                     <span class="text-grey-dark text-sm mr-2">
-                          {{ trans.get('__JSON__.your score')}} {{this.rate}}
+                          {{ contact[locale]['Satisfaction'] ? contact[locale]['Satisfaction'] : '' }} {{this.rate}}
                         <em v-if="rate">{{ trans.get('__JSON__.from')}} 5</em></span>
                         <input type="hidden" name="rate" v-model="rate">
                 </div>
@@ -77,6 +77,14 @@
     export default {
         name: "Contact",
 
+        props: ['page'],
+
+        created() {
+            if (this.page.length !== 0) {
+                this.contact = this.page.data;
+            }
+        },
+
         data() {
             return {
                 name: '',
@@ -92,7 +100,11 @@
                     {key: 3, value: false, hover: false},
                     {key: 4, value: false, hover: false},
                     {key: 5, value: false, hover:false}
-                ]
+                ],
+                contact:{
+                    'fa': {'Body': '', 'Satisfaction': ''},
+                    'en': {'Body': '', 'Satisfaction': ''},
+                },
             }
         },
 

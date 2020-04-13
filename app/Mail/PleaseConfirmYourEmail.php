@@ -30,6 +30,6 @@ class PleaseConfirmYourEmail extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->markdown('emails.email');
+        return $this->markdown('emails.complete');
     }
 }
