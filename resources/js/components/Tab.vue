@@ -1,15 +1,21 @@
 <template>
-
+   <div role="tabpanel" v-show="show">
+       <slot></slot>
+   </div>
 </template>
 
 <script>
     export default {
-        props: ['name'],
-
-        methods: {
-            onClick() {
-                this.$emit('clicking', this.target.name);
-            }
-        }
+        props: ['title'],
+        name: "Tab",
+        data() {
+           return {
+               show: false
+           }
+        },
     }
 </script>
+
+<style scoped>
+
+</style>

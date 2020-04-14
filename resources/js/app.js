@@ -61,7 +61,8 @@ Vue.component('inner-modal', require('./components/InnerModal.vue').default);
 Vue.component('attachment', require('./components/Attachment.vue').default);
 Vue.component('modal', require('./components/Modal').default);
 Vue.component('select-tag', require('./components/SelectTag.vue').default);
-
+Vue.component('tabs', require('./components/Tabs.vue').default);
+Vue.component('tab', require('./components/Tab.vue').default);
 // Vue.component('attachment', require('./components/Attachment').default);
 
 Vue.component('edit-role', require('./pages/EditRole.vue').default);

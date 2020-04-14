@@ -2,120 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b36ddba-05a9-4468-b24a-714051e3f2d5" name="Default Changelist" comment="kk">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/redpencilit.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/redpencilit.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/AdminPagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/AdminPagesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/LoginController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/RegisterController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderDeliveryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderDeliveryController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PagesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PostsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PostsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ServicesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ServicesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/LocaleMiddleware.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/LocaleMiddleware.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/RedirectIfAuthenticated.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Mail/PleaseConfirmYourEmail.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Mail/PleaseConfirmYourEmail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/DocumentUploaded.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/DocumentUploaded.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/TicketCreatedNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/TicketCreatedNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Notifications/TicketHasRepliesNotification.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Notifications/TicketHasRepliesNotification.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Policies/ServicePolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Policies/ServicePolicy.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Providers/EventServiceProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Redpencilit/Payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Redpencilit/Payment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Service.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Service.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/mail.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/mail.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/orders-status.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/orders-status.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/session.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/session.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/OrderFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/OrderFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/ServiceFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ServiceFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_03_26_132150_create_services_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_03_26_132150_create_services_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_09_200321_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_08_09_200321_create_orders_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/assets/js/ll_messages.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/assets/js/ll_messages.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Avatar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Avatar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Favorite.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Favorite.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Flash.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Flash.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/InnerModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/InnerModal.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/NavDropdown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/NavDropdown.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Notifications.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Notifications.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Wysiwyg.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Wysiwyg.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/Contact.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Contact.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Tab.vue" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/pages/Services.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/Services.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/passwords.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/passwords.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/en/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/fa.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/fa.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/lang/fa/validation.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/fa/validation.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/app.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_modal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_modal.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/components/_tag.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_tag.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/sass/global/_overrides.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/global/_overrides.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/pages/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/pages/home.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/pages/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/pages/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/emails/comment.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/comment.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/emails/contact.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/emails/contact.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/emails/email.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/blog.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/blog.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/orders/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/orders/index.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/about.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/about.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/contact.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/contact.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/pages/service.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/pages/service.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/posts/_post.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/_post.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/posts/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/create.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/posts/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/edit.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/posts/show.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/posts/show.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/button.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/footer.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/header.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/layout.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/message.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/panel.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/promotion.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/promotion/button.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/subcopy.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/table.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/html/themes/default.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/markdown/button.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/markdown/footer.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/markdown/header.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/markdown/layout.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/markdown/message.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/markdown/panel.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/markdown/promotion.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/markdown/promotion/button.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/markdown/subcopy.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/markdown/table.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/text/button.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/text/footer.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/text/header.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/text/layout.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/text/message.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/text/panel.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/text/promotion.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/text/promotion/button.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/text/subcopy.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/vendor/mail/text/table.blade.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/storage/purify/URI/4.11.0,3478238e680361cd87bf880f5b3cc50a1e7abc6c,1.ser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/PayOrderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/PayOrderTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/RegisterationTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/RegistrationTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/ServicesTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ServicesTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/OrderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/OrderTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Unit/PostTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/PostTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -512,7 +403,8 @@
       <workItem from="1583862516634" duration="232000" />
       <workItem from="1584108005121" duration="855000" />
       <workItem from="1586425543773" duration="32831000" />
-      <workItem from="1586620844969" duration="17206000" />
+      <workItem from="1586620844969" duration="20645000" />
+      <workItem from="1586831320897" duration="3030000" />
     </task>
     <servers />
   </component>
@@ -553,10 +445,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="250" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1280.800@0.0.1280.800" timestamp="1586504916430" />
-    <state x="378" y="153" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1578696921517">
+    <state x="378" y="153" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586768776989">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="378" y="153" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.800@0.0.1280.800" timestamp="1578696921517" />
+    <state x="378" y="153" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.800@0.0.1280.800" timestamp="1586768776989" />
     <state x="378" y="162" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1586495614671">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
@@ -581,25 +473,25 @@
       <screen x="0" y="23" width="1280" height="722" />
     </state>
     <state x="190" y="23" key="CommitChangelistDialog2/0.23.1280.722@0.23.1280.722" timestamp="1586505313445" />
-    <state width="1280" height="525" key="GridCell.Tab.0.bottom" timestamp="1586744326606">
+    <state width="1280" height="525" key="GridCell.Tab.0.bottom" timestamp="1586800539040">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1280" height="525" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1586744326606" />
+    <state width="1280" height="525" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1586800539040" />
     <state width="1280" height="451" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1586505257236" />
-    <state width="1280" height="525" key="GridCell.Tab.0.center" timestamp="1586744326605">
+    <state width="1280" height="525" key="GridCell.Tab.0.center" timestamp="1586800539038">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1280" height="525" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1586744326605" />
+    <state width="1280" height="525" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1586800539038" />
     <state width="1280" height="451" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1586505257235" />
-    <state width="1280" height="525" key="GridCell.Tab.0.left" timestamp="1586744326604">
+    <state width="1280" height="525" key="GridCell.Tab.0.left" timestamp="1586800539037">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1280" height="525" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1586744326604" />
+    <state width="1280" height="525" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1586800539037" />
     <state width="1280" height="451" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1586505257235" />
-    <state width="1280" height="525" key="GridCell.Tab.0.right" timestamp="1586744326605">
+    <state width="1280" height="525" key="GridCell.Tab.0.right" timestamp="1586800539039">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1280" height="525" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1586744326605" />
+    <state width="1280" height="525" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1586800539039" />
     <state width="1280" height="451" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1586505257236" />
     <state x="448" y="415" key="NewPhpClassDialog" timestamp="1582572810473">
       <screen x="0" y="0" width="1280" height="800" />
@@ -609,24 +501,24 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="166" y="37" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1586659381570" />
-    <state x="370" y="150" width="540" height="540" key="StructurePopup" timestamp="1586743468854">
+    <state x="370" y="150" width="540" height="540" key="StructurePopup" timestamp="1586746295861">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="370" y="150" width="540" height="540" key="StructurePopup/0.0.1280.800@0.0.1280.800" timestamp="1586743468854" />
+    <state x="370" y="150" width="540" height="540" key="StructurePopup/0.0.1280.800@0.0.1280.800" timestamp="1586746295861" />
     <state x="370" y="158" width="540" height="488" key="StructurePopup/0.23.1280.722@0.23.1280.722" timestamp="1586506009316" />
-    <state width="500" height="445" key="SwitcherDM" timestamp="1586744011986">
+    <state width="500" height="402" key="SwitcherDM" timestamp="1586853298146">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="500" height="445" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1586744011986" />
+    <state width="500" height="402" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1586853298146" />
     <state width="500" height="402" key="SwitcherDM/0.23.1280.722@0.23.1280.722" timestamp="1586505952448" />
     <state width="600" height="440" key="javadoc.popup" timestamp="1582318665254">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state width="600" height="440" key="javadoc.popup/0.0.1280.800@0.0.1280.800" timestamp="1582318665254" />
-    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1586743466372">
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1586831420705">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1586743466372" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1586831420705" />
     <state x="305" y="135" width="670" height="611" key="search.everywhere.popup/0.23.1280.722@0.23.1280.722" timestamp="1586506084400" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
