@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DocumentWordCount;
 use App\Order;
+use Facades\App\Redpencilit\DocumentService;
 use App\Rules\MaxWord;
 use App\Service;
 use App\Setting;
@@ -22,12 +23,13 @@ class OrdersController extends Controller
      */
     public function index($locale, User $user)
     {
-        $orders = $user->orders->each(
-            function ($order) {
-                $order->load('details');
-            });
+        $user = auth()->user()->load([
+            'orders' => function ($order) {
+                $order->filterBy(request('type'))->with('details');
+            }
+        ]);
         
-        return view('orders.index', compact('orders'));
+        return view('orders.index', compact('user'));
     }
     
     /**
@@ -53,18 +55,18 @@ class OrdersController extends Controller
      */
     public function store($locale, User $user)
     {
-        if (auth()->user()->isNot($user)) {
-            return abort(403);
-        }
-        
         $setting = Setting::first();
         
         try {
-            \request()->validate(
-                [
-                    'documents' => ['required', 'array', new MaxWord, 'max:'.$setting->upload_articles_per_day],
-                    'documents.*' => 'required|file|mimes:docx|distinct'
-                ]);
+            request()->validate([
+                'documents' => [
+                    'required',
+                    'array',
+                    new MaxWord,
+                    'max:'.$setting->upload_articles_per_day
+                ],
+                'documents.*' => 'required|file|mimes:docx|distinct'
+            ]);
         } catch (ValidationException $e) {
             return response('بارگذاری فایل انجام نشد!', 400);
         }
@@ -73,14 +75,13 @@ class OrdersController extends Controller
         
         $delivery_date = $this->estimateDeliveryDate($documents->sum('words'), $setting);
         
-        $order = auth()->user()->orders()->create(
-            [
-                'total_words' => $documents->sum('words'),
-                'status' => config('orders-status.in-progress'),
-                'delivery_date' => $delivery_date,
-                'orders_count' => count(request()->documents),
-                'price' => $this->calculatePrice($documents, $setting)
-            ]);
+        $order = auth()->user()->orders()->create([
+            'total_words' => $documents->sum('words'),
+            'status' => config('orders-status.unfulfilled'),
+            'delivery_date' => $delivery_date,
+            'orders_count' => count(request()->documents),
+            'price' => $this->calculatePrice($documents, $setting),
+        ]);
         
         foreach (request()->documents as $document) {
             $path = $document->store(auth()->user()->id, 'documents');
@@ -102,7 +103,7 @@ class OrdersController extends Controller
      * Remove the specified resource from storage.
      *
      * @param         $locale
-     * @param  User   $user
+     * @param  User  $user
      * @param  Order  $order
      *
      * @return \Illuminate\Http\JsonResponse|void
@@ -192,8 +193,7 @@ class OrdersController extends Controller
     protected function appendFileWordCountsPerDocument()
     {
         $documents = [];
-    
-    
+        
         foreach (request()->documents as $key => $document) {
             $documents[$key]['document'] = $document;
             $documents[$key]['words'] = DocumentWordCount::file($document)->countWords();

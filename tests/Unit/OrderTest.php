@@ -7,9 +7,8 @@ use App\OrderDetail;
 use App\Service;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class OrderTest extends TestCase
 {

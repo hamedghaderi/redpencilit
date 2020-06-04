@@ -60,7 +60,8 @@ class Payment
         $response = Zttp::post('https://pay.ir/pg/send', [
             'api' => config('services.payir.key'),
             'amount' => $this->amount,
-            'redirect' => route('orders.confirm')
+            'redirect' => route('orders.confirm'),
+            'factorNumber' => $this->order->id,
         ]);
         
         if ($response->json()['status'] == 0) {
@@ -79,9 +80,16 @@ class Payment
      */
     public function verify($token)
     {
-        return Zttp::post('https://pay.ir/pg/verify', [
+        $response = Zttp::post('https://pay.ir/pg/verify', [
             'api' => config('services.payir.key'),
             'token' => $token
         ]);
+        
+        
+        if ($response->json()['status'] === 0) {
+            abort(500, __('Server Error. Verification failed'));
+        }
+        
+        return $response->json();
     }
 }

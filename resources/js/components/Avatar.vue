@@ -2,7 +2,6 @@
     <div class="dashboard-nav__avatar" :style="imageUrl">
         <span class="dashboard-nav__avatar-gear" @click="openUploader">
             <i class="las la-plus text-lg"></i>
-<!--            <i class="la la-cog text-lg"></i>-->
         </span>
 
         <input type="file" id="uploader" name="avatar" style="display: none;" @change="uploadAvatar">
@@ -13,10 +12,18 @@
     export default {
         props: ['image', 'user'],
 
+        created() {
+            if (this.user && this.user.avatar) {
+                this.path = '/storage/' + this.image;
+            } else {
+                this.path = this.image;
+            }
+        },
+
         data() {
             return {
                 avatarFormInput: null,
-                path: this.image
+                path: ''
             }
         },
 
@@ -42,7 +49,6 @@
 
                 axios.post(`/${Redpencilit.locale}/api/users/${this.user}/avatar`, form)
                     .then(response => {
-                        console.log(this.imageUrl);
                         this.path = '/storage/' + response.data.path;
                     });
             }

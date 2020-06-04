@@ -89,7 +89,7 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function orders()
     {
-        return $this->hasMany(Order::class, 'owner_id');
+        return $this->hasMany(Order::class, 'owner_id')->latest();
     }
     
     /**

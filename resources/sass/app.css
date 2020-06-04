@@ -875,6 +875,9 @@ trix-editor:focus {
 .tag--success {
   @apply bg-green-lightest border-green text-green-darker;
 }
+.tag--warning {
+  @apply bg-yellow-lightest border-yellow text-yellow-darker;
+}
 .tag--primary {
   @apply bg-indigo-lightest border-indigo text-indigo-darker;
 }

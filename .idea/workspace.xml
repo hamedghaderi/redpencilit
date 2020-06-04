@@ -3,14 +3,39 @@
   <component name="ChangeListManager">
     <list default="true" id="1b36ddba-05a9-4468-b24a-714051e3f2d5" name="Default Changelist" comment="kk">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Exceptions/Handler.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Exceptions/Handler.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrderDeliveryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrderDeliveryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/OrdersController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PagesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PagesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Order.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Order.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Policies/ServicePolicy.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Policies/ServicePolicy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Redpencilit/Payment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Redpencilit/Payment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/orders-status.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/orders-status.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/factories/OrderFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/OrderFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2019_08_09_200321_create_orders_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2019_08_09_200321_create_orders_table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/pages/UploadView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/pages/UploadView.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/orders/create.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/orders/create.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Avatar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Avatar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Flash.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Flash.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/InnerModal.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/InnerModal.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/NavDropdown.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/NavDropdown.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Notifications.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Notifications.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/lang/fa.json" beforeDir="false" afterPath="$PROJECT_DIR$/resources/lang/fa.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/app.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/app.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/components/_modal.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_modal.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/sass/components/_tag.scss" beforeDir="false" afterPath="$PROJECT_DIR$/resources/sass/components/_tag.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/app.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/dashboard.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/orders/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/orders/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/right-nav.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/PayOrderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/PayOrderTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Unit/OrderTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Unit/OrderTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,6 +191,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/resources/lang" />
@@ -198,6 +224,14 @@
     </key>
   </component>
   <component name="RunManager" selected="PHPUnit.PayOrderTest">
+    <configuration name="OrderTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\OrderTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/OrderTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
+    <configuration name="OrderTest.a_user_can_delete_his_orders" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\OrderTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/OrderTest.php" method="a_user_can_delete_his_orders" scope="Method" />
+      <method v="2" />
+    </configuration>
     <configuration name="PayOrderTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\PayOrderTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/PayOrderTest.php" scope="Class" />
       <method v="2" />
@@ -210,14 +244,6 @@
       <TestRunner class="Tests\Feature\PayOrderTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/PayOrderTest.php" method="a_wrong_order_will_can_not_paid" scope="Method" />
       <method v="2" />
     </configuration>
-    <configuration name="PayOrderTest.authenticated_users_can_not_pay_orders_of_other_users" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\PayOrderTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/PayOrderTest.php" method="authenticated_users_can_not_pay_orders_of_other_users" scope="Method" />
-      <method v="2" />
-    </configuration>
-    <configuration name="PayOrderTest.guests_can_not_pay_orders" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
-      <TestRunner class="Tests\Feature\PayOrderTest" configuration_file="$PROJECT_DIR$/phpunit.xml" file="$PROJECT_DIR$/tests/Feature/PayOrderTest.php" method="guests_can_not_pay_orders" scope="Method" />
-      <method v="2" />
-    </configuration>
     <configuration name="phpunit.xml" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
       <TestRunner scope="XML" />
       <method v="2" />
@@ -225,10 +251,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="PHPUnit.PayOrderTest" />
-        <item itemvalue="PHPUnit.PayOrderTest.a_wrong_order_will_can_not_paid" />
-        <item itemvalue="PHPUnit.PayOrderTest.authenticated_users_can_not_pay_orders_of_other_users" />
-        <item itemvalue="PHPUnit.PayOrderTest.guests_can_not_pay_orders" />
         <item itemvalue="PHPUnit.PayOrderTest.a_completed_order_can_get_paid" />
+        <item itemvalue="PHPUnit.PayOrderTest.a_wrong_order_will_can_not_paid" />
+        <item itemvalue="PHPUnit.OrderTest" />
+        <item itemvalue="PHPUnit.OrderTest.a_user_can_delete_his_orders" />
       </list>
     </recent_temporary>
   </component>
@@ -397,7 +423,14 @@
       <workItem from="1582566024898" duration="9037000" />
       <workItem from="1582708271531" duration="2108000" />
       <workItem from="1582886358756" duration="681000" />
-      <workItem from="1582905398386" duration="5409000" />
+      <workItem from="1582905398386" duration="5495000" />
+      <workItem from="1582994171513" duration="9527000" />
+      <workItem from="1583339992848" duration="985000" />
+      <workItem from="1583482608860" duration="42912000" />
+      <workItem from="1583862516634" duration="232000" />
+      <workItem from="1584108005121" duration="855000" />
+      <workItem from="1586425543773" duration="12317000" />
+      <workItem from="1591253241745" duration="80000" />
     </task>
     <servers />
   </component>
@@ -418,86 +451,50 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="99" y="68" key="#CLI_Interpreters" timestamp="1581536447823">
+    <state x="240" y="65" key="#Scopes" timestamp="1586426066562">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="99" y="68" key="#CLI_Interpreters/0.0.1280.800@0.0.1280.800" timestamp="1581536447823" />
-    <state x="316" y="0" width="673" height="800" key="#PHP" timestamp="1581536450040">
+    <state x="240" y="65" key="#Scopes/0.0.1280.800@0.0.1280.800" timestamp="1586426066562" />
+    <state x="378" y="162" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1586495614671">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="316" y="0" width="673" height="800" key="#PHP/0.0.1280.800@0.0.1280.800" timestamp="1581536450040" />
-    <state x="328" y="135" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1580665593210">
+    <state x="378" y="162" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.800@0.0.1280.800" timestamp="1586495614671" />
+    <state width="1280" height="356" key="GridCell.Tab.0.bottom" timestamp="1586498337602">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="328" y="135" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.800@0.0.1280.800" timestamp="1580665593209" />
-    <state x="305" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1582327482514">
+    <state width="1280" height="356" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1586498337602" />
+    <state width="1280" height="356" key="GridCell.Tab.0.center" timestamp="1586498337599">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="305" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1280.800@0.0.1280.800" timestamp="1582327482514" />
-    <state x="378" y="153" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1578696921517">
+    <state width="1280" height="356" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1586498337599" />
+    <state width="1280" height="356" key="GridCell.Tab.0.left" timestamp="1586498337597">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="378" y="153" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.800@0.0.1280.800" timestamp="1578696921517" />
-    <state x="378" y="162" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1581275312667">
+    <state width="1280" height="356" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1586498337597" />
+    <state width="1280" height="356" key="GridCell.Tab.0.right" timestamp="1586498337601">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="378" y="162" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1280.800@0.0.1280.800" timestamp="1581275312667" />
-    <state x="428" y="335" key="#com.jetbrains.php.lang.intentions.PhpImportClassDialog#" timestamp="1581269998191">
+    <state width="1280" height="356" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1586498337601" />
+    <state x="166" y="37" key="SettingsEditor" timestamp="1591253354036">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="428" y="335" key="#com.jetbrains.php.lang.intentions.PhpImportClassDialog#/0.0.1280.800@0.0.1280.800" timestamp="1581269998191" />
-    <state x="261" y="42" key="#tests" timestamp="1581536451636">
+    <state x="166" y="37" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1591253354036" />
+    <state x="370" y="150" width="540" height="540" key="StructurePopup" timestamp="1586498613281">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="261" y="42" key="#tests/0.0.1280.800@0.0.1280.800" timestamp="1581536451636" />
-    <state width="1280" height="371" key="GridCell.Tab.0.bottom" timestamp="1582926574165">
+    <state x="370" y="150" width="540" height="540" key="StructurePopup/0.0.1280.800@0.0.1280.800" timestamp="1586498613281" />
+    <state width="500" height="445" key="SwitcherDM" timestamp="1586500773709">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1280" height="371" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1582926574165" />
-    <state width="1280" height="516" key="GridCell.Tab.0.bottom/0.23.1280.722@0.23.1280.722" timestamp="1581548263730" />
-    <state width="1280" height="371" key="GridCell.Tab.0.center" timestamp="1582926574161">
+    <state width="500" height="445" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1586500773709" />
+    <state x="305" y="185" key="run.anything.popup" timestamp="1591253296719">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1280" height="371" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1582926574161" />
-    <state width="1280" height="516" key="GridCell.Tab.0.center/0.23.1280.722@0.23.1280.722" timestamp="1581548263725" />
-    <state width="1280" height="371" key="GridCell.Tab.0.left" timestamp="1582926574160">
+    <state x="305" y="185" key="run.anything.popup/0.0.1280.800@0.0.1280.800" timestamp="1591253296719" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1591253333283">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1280" height="371" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1582926574160" />
-    <state width="1280" height="516" key="GridCell.Tab.0.left/0.23.1280.722@0.23.1280.722" timestamp="1581548263724" />
-    <state width="1280" height="371" key="GridCell.Tab.0.right" timestamp="1582926574163">
-      <screen x="0" y="0" width="1280" height="800" />
-    </state>
-    <state width="1280" height="371" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1582926574163" />
-    <state width="1280" height="516" key="GridCell.Tab.0.right/0.23.1280.722@0.23.1280.722" timestamp="1581548263728" />
-    <state x="448" y="415" key="NewPhpClassDialog" timestamp="1582572810473">
-      <screen x="0" y="0" width="1280" height="800" />
-    </state>
-    <state x="448" y="415" key="NewPhpClassDialog/0.0.1280.800@0.0.1280.800" timestamp="1582572810473" />
-    <state x="198" y="57" key="SettingsEditor" timestamp="1582905419394">
-      <screen x="0" y="0" width="1280" height="800" />
-    </state>
-    <state x="198" y="57" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1582905419394" />
-    <state x="370" y="150" width="540" height="540" key="StructurePopup" timestamp="1582918799268">
-      <screen x="0" y="0" width="1280" height="800" />
-    </state>
-    <state x="370" y="150" width="540" height="540" key="StructurePopup/0.0.1280.800@0.0.1280.800" timestamp="1582918799268" />
-    <state width="500" height="445" key="SwitcherDM" timestamp="1582924960746">
-      <screen x="0" y="0" width="1280" height="800" />
-    </state>
-    <state width="500" height="445" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1582924960746" />
-    <state width="600" height="440" key="javadoc.popup" timestamp="1582318665254">
-      <screen x="0" y="0" width="1280" height="800" />
-    </state>
-    <state width="600" height="440" key="javadoc.popup/0.0.1280.800@0.0.1280.800" timestamp="1582318665254" />
-    <state x="305" y="185" key="run.anything.popup" timestamp="1575685696351">
-      <screen x="0" y="0" width="1280" height="800" />
-    </state>
-    <state x="305" y="185" key="run.anything.popup/0.0.1280.800@0.0.1280.800" timestamp="1575685696351" />
-    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1582917910564">
-      <screen x="0" y="0" width="1280" height="800" />
-    </state>
-    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1582917910564" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1591253333283" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/redpencilit@LikePostsTest_an_authenticated_user_can_like_a_post.xml" NAME="LikePostsTest.an_authenticated_user_can_like_a_post Coverage Results" MODIFIED="1567857983161" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="PhpCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

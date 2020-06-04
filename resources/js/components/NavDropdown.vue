@@ -103,7 +103,7 @@
         computed: {
             avatar() {
                 if (this.user && this.user.avatar != null && this.user.avatar.length) {
-                    return '/' + this.user.avatar;
+                    return '/storage/' + this.user.avatar;
                 }
 
                 return '/images/avatar.svg';

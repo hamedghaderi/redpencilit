@@ -5171,6 +5171,12 @@ trix-editor:focus {
   color: #1a4731;
 }
 
+.tag--warning {
+  background-color: #fcfbeb;
+  border-color: #fdd426;
+  color: #684f1d;
+}
+
 .tag--primary {
   background-color: #e6e8ff;
   border-color: #5a5dff;

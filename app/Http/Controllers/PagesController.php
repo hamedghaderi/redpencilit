@@ -38,16 +38,14 @@ class PagesController extends Controller
      */
     public function homepage()
     {
+        $home = Page::where('name', 'home')->first();
+        $authorAvatar = User::select('avatar')->superAdmin()->first()
+            ?: asset('images/profile.png.jpg');
         $testimonials = Testimonial::with('comment')
                                    ->latest()
                                    ->take(5)
                                    ->get();
         
-        $home = Page::where('name', 'home')->first();
-        $admin = User::superAdmin()->first();
-        
-        $authorAvatar = ($admin && $admin->avatar) ? $admin->avatar : asset('images/profile.png.jpg');
-
         return view('welcome', compact('testimonials', 'authorAvatar', 'home'));
     }
     

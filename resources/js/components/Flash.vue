@@ -12,7 +12,7 @@
 
 <script>
     export default {
-        props: ['message'],
+        props: ['message', 'status'],
 
         data() {
             return {
@@ -25,6 +25,10 @@
         },
 
         created() {
+            if (this.status) {
+                this.level = this.status;
+            }
+
             if (this.message) {
                 this.flash();
             }
@@ -35,7 +39,7 @@
         methods: {
             flash(data) {
                 if (data) {
-                        this.body = data.message;
+                    this.body = data.message;
                     this.level = data.level ? data.level : this.level;
                 }
 
@@ -81,14 +85,19 @@
         transition: all .5s;
         transform: translateY(0);
     }
+
     .slide-enter, .slide-leave-to {
         opacity: 0;
         transform: translateY(7px);
     }
 
     @keyframes slide {
-        from {width: 0;}
-        to {width: 100%;}
+        from {
+            width: 0;
+        }
+        to {
+            width: 100%;
+        }
     }
 </style>
 
