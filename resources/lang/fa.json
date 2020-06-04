@@ -267,5 +267,22 @@
   "Unfortunately, order compilation failed. Please try to pay again to accomplishing order.": "متاسفانه تراکنش با موفقیت انجام نشد. لطفا مجددا عملیات پرداخت را جهت تکمیل سفارش انجام دهید.",
   "Server Error. Verification failed": "خطا. عدم شناسایی",
   "Orders": "سفارشات",
-  "All": "همه"
+  "All": "همه",
+  "Edit pages": "ویرایش صفحات",
+  "update about content": "به روز رسانی صفحه درباره",
+  "update contact content": "به روز رسانی صفحه تماس",
+  "update services content": "به روز رسانی صفحه سرویس‌ها",
+  "service icon": "آیکن سرویس",
+  "Service created successfully.": "سرویس با موفقیت ایجاد شد.",
+  "Service updated successfully.": "سرویس با موفقیت به روز رسانی شد.",
+  "Edit": "ویرایش",
+  "Edit post": "ویرایش پست",
+  "If you've liked the post, please make us happy by clicking on favorite icon.": "در صورتیکه از این پست خوشتان آمده لطفا آن را لایک کنید",
+  "You've liked this post": "شما این پست را پسندیده اید.",
+  "\uD83D\uDE0D I liked the post": "پست را پسندیدم \uD83D\uDE0D",
+  "Liking process failed. Please try again": "لایک شما ثبت نشد. لطفا مجددا سعی کنید!",
+  "I get back my decision. ☹️": "☹️ پشیمون شدم",
+  "Unfortunately, the unliking process failed. Please try again": "متاسفانه عملیات با موفقیت ثبت نشد. لطفا مجددا سعی کنید.",
+  "Post has been successfully created": "پست با موفقیت ایجاد شد.",
+  "Post has been successfully updated": "پست با موفقیت به روزرسانی شد"
 }

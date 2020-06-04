@@ -27,12 +27,4 @@ class PostTest extends TestCase
         
         $this->assertInstanceOf(User::class, $post->owner);
     }
-    
-    /** @test * */
-    public function a_post_body_is_sanitized_automatically()
-    {
-        $post = make(Post::class, ['body' => '<script>alert("bad");</script>']);
-        
-        $this->assertEmpty($post->body);
-    }
 }

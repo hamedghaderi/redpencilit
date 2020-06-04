@@ -241,5 +241,15 @@ class User extends Authenticatable implements CanResetPassword
     {
         return $this->isSuperAdmin();
     }
+    
+    /**
+     * Admin may create many page services
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pageServices()
+    {
+       return $this->hasMany(PageService::class);
+    }
 }
 

@@ -1,7 +1,7 @@
 <template>
     <transition name="slide">
         <div class="alert alert--flash fade show"
-             :class="['alert--'+level, {'active': show}, {'text-left': locale === 'fa'}]"
+             :class="['alert--'+level, {'active': show}, {'text-left': locale === 'en'}]"
              role="alert"
              v-if="show"
         >

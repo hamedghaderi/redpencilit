@@ -17,15 +17,17 @@ class CreateServicesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->boolean('negotiable')->default(false);
-            $table->string('name', 50);
+            $table->json('name');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete
-            ('cascade');
+            
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *

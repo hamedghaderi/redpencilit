@@ -184,7 +184,12 @@ return [
         'upload_words_per_day' => 'حداکثر کلمات',
         'price_per_word' => 'قیمت کلمات',
         'base_price_for_docs' => 'قیمت پایه',
-        'message' => 'پیام'
+        'message' => 'پیام',
+        'faTitle' => 'عنوان',
+        'faDescription' => 'توضیحات',
+        'enTitle' => 'عنوان',
+        'enDescription' => 'توضیحات',
+        'service-icon' => 'آیکن سرویس'
     ],
 
 ];

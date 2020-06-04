@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="bg-white px-12 py-8 shadow rounded">
+    <div class="bg-white px-12 py-8 shadow rounded mb-8">
         <div class="flex">
             <div class="w-1/2">
                 <h3 class="dashboard-title py-4 inline-flex items-center">

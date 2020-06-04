@@ -4,54 +4,74 @@
             <div class="w-1/2">
                 <div class="p-6">
                     <h3 class="dashboard-title">
-                       {{ trans.get('__JSON__.create a new service') }}
+                        {{ trans.get('__JSON__.create a new service') }}
                     </h3>
 
                     <p class="dashboard-text">
-                        {{ trans.get('__JSON__.These kinds of services, take effect on the final price. For example, a user who select the book service, neither price nor delivery date doesnt depend on words count and will be calculated in an agreement.')}}
-                    </p>
+                        {{ trans.get('__JSON__.These kinds of services, take effect on the final price. For example, a user who select the book service, neither price nor delivery date doesnt depend on words count and will be calculated in an agreement.')}}</p>
                 </div>
             </div>
 
             <div class="w-1/2">
                 <div class="p-6">
-                    <div class="bg-white shadow p-6 rounded">
+                    <div>
                         <form method="POST" @submit.prevent="saveService">
-                            <div class="form-group">
-                                <label for="name" class="label">{{ trans.get('__JSON__.new service name')}}</label>
-                                <input class="input" type="text" name="name" id="name" v-model="name">
+                            <tabs>
+                                <tab title="فارسی">
+                                    <div class="form-group">
+                                        <label for="fa-name" class="label">{{ trans.get('__JSON__.new service name')
+                                            }}</label>
+                                        <input class="input" type="text" name="fa-name" id="fa-name" v-model="name.fa">
 
 
-                                <div class="feedback feedback--invalid my-2" v-if="errors.has('name')">
-                                    <p>
-                                        {{ errors.get('name') }}
-                                    </p>
+                                        <div class="feedback feedback--invalid my-2" v-if="errors.has('fa-name')">
+                                            <p>
+                                                {{ errors.get('fa-name') }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="feedback feedback--invalid my-2" v-if="errors.has('negotiable')">
+                                        <p>
+                                            {{ errors.get('negotiable') }}
+                                        </p>
+                                    </div>
+                                </tab>
+
+                                <tab title="English">
+                                    <div class="form-group text-left">
+                                        <label for="en-name" class="label">New Service Name</label>
+                                        <input
+                                                class="input text-left"
+                                                type="text"
+                                                name="en-name"
+                                                id="en-name"
+                                                v-model="name"
+                                        >
+
+
+                                        <div class="feedback feedback--invalid my-2" v-if="errors.has('en-name')">
+                                            <p>
+                                                {{ errors.get('en-name') }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="feedback feedback--invalid my-2" v-if="errors.has('negotiable')">
+                                        <p>
+                                            {{ errors.get('negotiable') }}
+                                        </p>
+                                    </div>
+
+
+                                </tab>
+
+                                <div class="form-group mb-0">
+                                    <button type="submit" class="button button--smooth--primary">
+                                        {{ trans.get('__JSON__.save service')}}
+                                    </button>
                                 </div>
-                            </div>
-
-                            <div class="form-group flex items-center">
-                                <label for="negotiable-update" class="dashboard-label mb-0 label-check">
-                                    <input type="checkbox"
-                                           class="form-checkbox d-inline ml-2"
-                                           name="negotiable"
-                                           id="negotiable-update"
-                                            v-model="negotiable">
-
-                                    {{ trans.get('__JSON__.agreement price')}}
-                                </label>
-                            </div>
-
-                            <div class="feedback feedback--invalid my-2" v-if="errors.has('negotiable')">
-                                <p>
-                                    {{ errors.get('negotiable') }}
-                                </p>
-                            </div>
-
-                            <div class="form-group mb-0">
-                                <button type="submit" class="button button--smooth--primary">
-                                    {{ trans.get('__JSON__.save service')}}
-                                </button>
-                            </div>
+                            </tabs>
                         </form>
                     </div>
                 </div>  <!-- .p-6 -->
@@ -114,7 +134,7 @@
                                    type="text"
                                    name="update-name"
                                    id="modal-name"
-                                  v-model="updatedName">
+                                   v-model="updatedName">
 
                             <div class="feedback feedback--invalid my-2" v-if="errors.has('name')">
                                 <p>
@@ -131,7 +151,7 @@
                                        id="negotiable"
                                        v-model="updatedNegotiable">
 
-                               {{ trans.get('__JSON__.negotiable price') }}
+                                {{ trans.get('__JSON__.negotiable price') }}
                             </label>
                         </div>
 
@@ -141,17 +161,17 @@
                             </p>
                         </div>
 
-                            <div class="form-group mb-0">
-                                <button type="submit" :disabled="isDisabled" class="button button--smooth--primary"
-                                        @click>
-                                    {{ trans.get('__JSON__.update service') }}
-                                </button>
-                            </div>
+                        <div class="form-group mb-0">
+                            <button type="submit" :disabled="isDisabled" class="button button--smooth--primary"
+                                    @click>
+                                {{ trans.get('__JSON__.update service') }}
+                            </button>
                         </div>
-                    </form>
-                </modal>
-            </div>
+                    </div>
+                </form>
+            </modal>
         </div>
+    </div>
     </div>
 </template>
 
@@ -164,7 +184,7 @@
     export default {
         props: ['user'],
 
-        components: { Modal },
+        components: {Modal},
 
         data() {
             return {
@@ -208,11 +228,11 @@
             },
 
             deleteService(id) {
-              axios.delete(`/${this.locale}/dashboard/services/${id}`)
-                  .then(response => {
-                      this.services = response.data
-                      flash('سرویس با موفقیت حذف شد.');
-                  });
+                axios.delete(`/${this.locale}/dashboard/services/${id}`)
+                    .then(response => {
+                        this.services = response.data
+                        flash('سرویس با موفقیت حذف شد.');
+                    });
             },
 
             openEdit(id) {
@@ -227,7 +247,7 @@
                     })
             },
 
-            updateService(service){
+            updateService(service) {
                 axios.patch(`/${Redpencilit.locale}/dashboard/services/${service.id}`, {
                     name: this.updatedName,
                     negotiable: this.updatedNegotiable

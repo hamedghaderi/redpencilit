@@ -18,17 +18,19 @@ class ServicesTest extends TestCase
         $this->withoutExceptionHandling();
         
         $user = $this->signIn();
-        
         $role = create(Role::class, ['name' => 'super-admin']);
-        
         $user->addRole($role);
         
-        $service = make(Service::class);
+        $service = [
+            'fa-name' => 'Farsi Book',
+            'en-name' => 'Book'
+        ];
         
-        $this->post(route('services.store', app()->getLocale()), $service->toArray())
+        $this->post(route('services.store', app()->getLocale()), $service)
              ->assertRedirect(route('services.index', app()->getLocale()));
         
-        $this->assertDatabaseHas('services', ['name' => $service->name]);
+        $this->assertCount(1, Service::where('name->fa', 'Farsi Book')->get());
+        $this->assertCount(1, Service::where('name->en', 'Book')->get());
         
         $this->assertCount(1, $user->services);
     }
@@ -42,10 +44,16 @@ class ServicesTest extends TestCase
         
         $user->addRole($role);
         
-        $service = make(Service::class, ['name' => null]);
+        $service = [
+            'fa-name' => null,
+            'en-name' => null
+        ];
         
-        $this->post(route('services.index', app()->getLocale()),
-            $service->toArray())->assertSessionHasErrors('name');
+        $this->post(
+            route('services.index', app()->getLocale()),
+            $service
+        )->assertSessionHasErrors('fa-name')
+             ->assertSessionHasErrors('en-name');
     }
     
     /** @test * */
@@ -95,7 +103,9 @@ class ServicesTest extends TestCase
         $this->delete(route('services.delete', [app()->getLocale(), $service]))
              ->assertRedirect(route('services.index', app()->getLocale()));
         
-        $this->assertSoftDeleted('services', ['name' => $service->name]);
+        $this->assertCount(0, Service::where(['name->fa', $service->name['fa']])->get());
+        $this->assertCount(0, Service::where(['en->fa', $service->name['en']])->get());
+        $this->assertCount(1, Service::onlyTrashed()->get());
     }
     
     /** @test * */
@@ -127,19 +137,29 @@ class ServicesTest extends TestCase
         $service = create(Service::class, ['user_id' => $user->id]);
         
         $this->patch(route('services.update', [app()->getLocale(), $service]), [
-            'name' => 'Blabla'
+            'fa-name' => 'Persian Business Card',
+            'en-name' => 'English Business Card'
         ])->assertRedirect(route('services.index', app()->getLocale()));
         
-        $this->assertDatabaseHas('services', ['name' => 'Blabla']);
+        $this->assertCount(
+            1,
+            Service::where('name->fa', 'Persian Business Card')
+                   ->where('id', $service->id)
+                   ->get()
+        );
+        $this->assertCount(
+            1,
+            Service::where('name->en', 'English Business Card')
+                   ->where('id', $service->id)
+                   ->get()
+        );
     }
     
     /** @test * */
     public function updating_a_service_requires_a_valid_name()
     {
         $user = $this->signIn();
-        
         $role = create(Role::class, ['name' => 'super-admin']);
-        
         $user->addRole($role);
         
         $service = create(Service::class, ['user_id' => $user->id]);
@@ -151,17 +171,16 @@ class ServicesTest extends TestCase
                 'user' => $user->id,
                 'service' => $service->id
             ]),
-            ['name' => null]
-        )->assertSessionHasErrors('name');
+            ['fa-name' => null, 'en-name' => null]
+        )->assertSessionHasErrors('fa-name')
+            ->assertSessionHasErrors('en-name');
     }
     
     /** @test * */
     public function only_admin_can_update_a_service()
     {
         $user = $this->signIn();
-        
         $role = create(Role::class, ['name' => 'creator']);
-        
         $user->addRole($role);
         
         $service = create(Service::class, ['user_id' => $user->id]);
@@ -173,7 +192,7 @@ class ServicesTest extends TestCase
                 'user' => $user->id,
                 'service' => $service->id
             ]),
-            ['name' => 'Blabla']
+            ['fa-name' => 'Blabla', 'en-name' => 'blabla']
         )->assertStatus(403);
     }
     
@@ -184,6 +203,7 @@ class ServicesTest extends TestCase
         $service = create(Service::class);
         
         $this->get(route('new-order', app()->getLocale()))
-             ->assertSee($service->name);
+             ->assertSee($service->name['fa'])
+            ->assertSee($service->name['en']);
     }
 }

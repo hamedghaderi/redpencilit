@@ -89,5 +89,11 @@
   "Fulfilled": "Fulfilled",
   "Pending": "Pending",
   "Unfulfilled": "Unfulfilled",
-  "Unfortunately, order compilation failed. Please try to pay again to accomplishing order.": "Unfortunately, order compilation failed. Please try to pay again to accomplishing order."
+  "Unfortunately, order compilation failed. Please try to pay again to accomplishing order.": "Unfortunately, order compilation failed. Please try to pay again to accomplishing order.",
+  "If you've liked the post, please make us happy by clicking on favorite icon.": "If you've liked the post, please make us happy by clicking on favorite icon.",
+  "You've liked this post": "You've liked this post",
+  "\uD83D\uDE0D I liked the post": "\uD83D\uDE0D I liked the post",
+  "Liking process failed. Please try again": "Liking process failed. Please try again",
+  "I get back my decision. ☹️": "I get back my decision. ☹️",
+  "Unfortunately, the unliking process failed. Please try again": "Unfortunately, the unliking process failed. Please try again"
 }

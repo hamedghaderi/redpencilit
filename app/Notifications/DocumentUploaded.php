@@ -29,11 +29,11 @@ class DocumentUploaded extends Notification
      */
     public function via($notifiable)
     {
-        return ['mail'];
+        return ['emails'];
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Get the emails representation of the notification.
      *
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage

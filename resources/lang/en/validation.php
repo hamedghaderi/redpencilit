@@ -144,6 +144,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'enTitle' => 'Title',
+        'enDescription' => 'Description',
+        'faTitle' => 'Title',
+        'faDescription' => 'Description',
+        'service-icon' => 'Service Icon'
+    ],
 
 ];

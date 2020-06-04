@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Whoops\Handler\HandlerInterface;
 
 class Handler extends ExceptionHandler
 {
@@ -25,16 +27,16 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
-
+    
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param  \Throwable  $exception
      *
      * @return void
      * @throws Exception
      */
-    public function report(Exception $exception)
+    public function report(\Throwable $exception)
     {
         if ($exception instanceof PaymentException) {
             abort('4');
@@ -47,13 +49,27 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param  \Throwable  $exception
      *
      * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
-     * @throws Exception
+     * @throws \Throwable
      */
-    public function render($request, Exception $exception)
+    public function render($request, \Throwable $exception)
     {
         return parent::render($request, $exception);
+    }
+    
+    /**
+     * Load ignition
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|mixed|\Whoops\Handler\Handler
+     */
+    protected function whoopsHandler()
+    {
+        try {
+            return app(HandlerInterface::class);
+        } catch (BindingResolutionException $e) {
+            return parent::whoopsHandler();
+        }
     }
 }

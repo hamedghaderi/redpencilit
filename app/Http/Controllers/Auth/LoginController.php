@@ -40,7 +40,7 @@ class LoginController extends Controller
     
     protected function redirectTo()
     {
-        return route('dashboard', [app()->getLocale(), auth()->id()]);
+        return route('dashboard', [app()->getLocale(), auth()->user()]);
     }
     
     public function showLoginForm($lang)

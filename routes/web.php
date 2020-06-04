@@ -25,7 +25,7 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
             | Dashboard
             |--------------------------------------------------------------------------
             */
-            Route::group(['prefix' => 'dashboard'], function () {
+            Route::group(['prefix' => '/dashboard'], function () {
                 Route::get('/{user}', 'DashboardController@index')->name('dashboard');
                 Route::patch('/{user}', 'UsersController@update')->name('dashboard.user.update');
             });
@@ -124,6 +124,27 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                 
                 Route::get('pages', 'AdminPagesController@index')->name('admin.pages.index')->middleware('admin');
                 Route::get('pages/home', 'AdminPagesController@home')->name('admin.pages.home')->middleware('admin');
+                Route::patch('pages/about', 'AdminPagesController@aboutUpdate')
+                     ->name('admin.about.store')
+                     ->middleware('admin');
+                Route::get('pages/contact', 'AdminPagesController@contact')
+                     ->name('admin.pages.contact')
+                     ->middleware('admin');
+                Route::patch('pages/contact', 'AdminPagesController@contactUpdate')
+                     ->name('admin.contact.store')
+                     ->middleware('admin');
+                Route::get('pages/services', 'AdminPagesController@services')
+                     ->name('admin.pages.services')
+                     ->middleware('admin');
+                Route::get('page-service/{pageService}', 'Admin\\PageServicesController@edit')
+                    ->name('admin.page-service.edit')
+                    ->middleware('admin');
+                Route::patch('page-service/{pageService}', 'Admin\\PageServicesController@update')
+                     ->name('admin.page-service.update')
+                     ->middleware('admin');
+                Route::post('page-services', 'Admin\\PageServicesController@store')
+                     ->name('admin.page-service.store')
+                     ->middleware('admin');
                 Route::patch('pages/home', 'AdminPagesController@homeUpdate')
                      ->name('admin.home.store')
                      ->middleware('admin');

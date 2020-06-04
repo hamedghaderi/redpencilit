@@ -36,7 +36,7 @@ class TicketCreatedNotification extends Notification
     }
 
     /**
-     * Get the mail representation of the notification.
+     * Get the emails representation of the notification.
      *
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage

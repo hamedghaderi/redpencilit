@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Order;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -65,7 +66,11 @@ class PayOrderTest extends TestCase
         
         $order = create(Order::class);
         
-        $this->be($order->owner)->post(
+        $this->expectException(ModelNotFoundException::class);
+        
+        $order = create(Order::class);
+        
+        $response = $this->be($order->owner)->post(
             route(
                 'orders.store',
                 [app()->getLocale(), 4])
