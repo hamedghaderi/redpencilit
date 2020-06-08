@@ -4177,6 +4177,14 @@ trix-editor:focus {
   background-position: center center;
 }
 
+.title-custom-bg--en {
+  background-position: left center;
+}
+
+.title-custom-bg--en > h3 {
+  margin-left: 6rem;
+}
+
 .title {
   color: #ff5a5d;
   position: relative;
@@ -4225,6 +4233,17 @@ trix-editor:focus {
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
+}
+
+.list--en li {
+  text-align: left;
+  padding-right: 0;
+  padding-left: 1.5rem;
+}
+
+.list--en li::before {
+  left: 0;
+  right: auto;
 }
 
 /* Components */

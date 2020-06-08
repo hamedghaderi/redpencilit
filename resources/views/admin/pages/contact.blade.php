@@ -8,8 +8,8 @@
         @method('PATCH')
 
         <div class="card mb-4">
-            <div class="flex -mx-3">
-                <div class="md:w-1/3 mx-3">
+            <div class="flex flex-wrap mb-4 -mx-3">
+                <div class="md:w-1/3 mx-3 mb-4">
                     <label class="label mb-3" for="homeHeroTitle">خلاصه متن</label>
                     <textarea
                             class="input w-full h-48 whitespace-pre-wrap"
@@ -30,8 +30,8 @@
 
             <hr>
 
-            <div class="flex -mx-3">
-                <div class="md:w-1/3 mx-3">
+            <div class="flex flex-wrap -mx-3">
+                <div class="md:w-1/3 mx-3 mb-4">
                     <label class="label mb-3" for="homeHeroTitle">Summary Content</label>
                     <textarea
                             class="input w-full h-48 whitespace-pre-wrap"
@@ -52,6 +52,6 @@
         </div>
 
 
-        <button class="button button--primary">{{ __('save') }}</button>
+        <button class="button button--primary mb-12">{{ __('save') }}</button>
     </form>
 @endsection

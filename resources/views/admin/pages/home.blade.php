@@ -19,6 +19,6 @@
 
         @include('admin.pages._team')
 
-        <button class="button button--primary">{{ __('save') }}</button>
+        <button class="button button--primary mb-12">{{ __('save') }}</button>
     </form>
 @endsection

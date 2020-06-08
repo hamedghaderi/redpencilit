@@ -7,21 +7,21 @@ use Zttp\Zttp;
 
 class Payment
 {
-    
+
     /**
      * The amount of order
      *
      * @var Int
      */
     protected $amount;
-    
+
     /**
      * An order to apy
      *
      * @var Order
      */
     protected $order;
-    
+
     /**
      * Get the current order.
      *
@@ -32,10 +32,10 @@ class Payment
     public function order(Order $order)
     {
         $this->order = $order;
-        
+
         return $this;
     }
-    
+
     /**
      * Get the amount of order
      *
@@ -46,10 +46,10 @@ class Payment
     public function amount($amount)
     {
         $this->amount = $amount * 10;
-        
+
         return $this;
     }
-    
+
     /**
      * Send the payment data to the third party service.
      *
@@ -63,14 +63,14 @@ class Payment
             'redirect' => route('orders.confirm'),
             'factorNumber' => $this->order->id,
         ]);
-        
+
         if ($response->json()['status'] == 0) {
             abort(500);
         }
-        
+
         return $response->json();
     }
-    
+
     /**
      * Verify the order.
      *
@@ -84,12 +84,12 @@ class Payment
             'api' => config('services.payir.key'),
             'token' => $token
         ]);
-        
-        
+
+
         if ($response->json()['status'] === 0) {
             abort(500, __('Server Error. Verification failed'));
         }
-        
+
         return $response->json();
     }
 }

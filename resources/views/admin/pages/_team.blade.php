@@ -3,7 +3,7 @@
 
     <hr>
 
-    <div class="flex -mx-3">
+    <div class="flex flex-wrap -mx-3">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="teamJob" class="mb-3">{{ __('job title') }}</label>
             <input class="input" type="text" name="faTeamTitle" value="{{ $page->data['fa']['TeamTitle']
@@ -20,7 +20,7 @@
 
     <hr>
 
-    <div class="flex -mx-3">
+    <div class="flex flex-wrap -mx-3">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="teamJob" class="mb-3">Job Title</label>
             <input class="input" type="text" name="enTeamTitle" value="{{ $page->data['en']['TeamTitle']

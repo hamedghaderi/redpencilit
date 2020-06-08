@@ -2,40 +2,38 @@
 
 namespace App;
 
+use App\Filters\OrderFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 
 class Order extends Model
 {
-    
+
     use SoftDeletes;
-    
+
     protected $guarded = [];
-    
-    protected $dates
-        = [
-            'delivery_date'
-        ];
-    
-    protected $casts
-        = [
-            'payed' => 'boolean'
-        ];
-    
-    protected $hidden
-        = [
-            'transaction_id',
-        ];
-    
+
+    protected $dates = ['delivery_date'];
+
+    protected $casts = ['payed' => 'boolean'];
+
+    protected $hidden = ['transaction_id'];
+
     public function scopeFilterBy($builder, $type)
     {
         if (in_array($type, config('orders-status'))) {
             return $builder->where('status', $type);
         }
-        
+
         return $builder;
     }
-    
+
+    public function scopeFilter($builder, $filter)
+    {
+       return $filter->filterBy($builder);
+    }
+
     /**
      * Each order may have many details.
      *
@@ -45,7 +43,7 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
-    
+
     /**
      * Each order belongs to a service.
      *
@@ -55,7 +53,7 @@ class Order extends Model
     {
         return $this->belongsTo(Service::class);
     }
-    
+
     /**
      * Each order belongs to a user.
      *
@@ -65,7 +63,7 @@ class Order extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
-    
+
     /**
      * Add a new token to an order.
      *
@@ -76,12 +74,12 @@ class Order extends Model
         if ($this->tokenAlreadyExist($token)) {
             abort(500, 'Data is not valid');
         }
-        
+
         $this->token = $token;
-        
+
         $this->save();
     }
-    
+
     /**
      * Check if token already exists.
      *
@@ -93,7 +91,7 @@ class Order extends Model
     {
         return ! ! $this->where('token', $token)->first();
     }
-    
+
     /**
      * Settle a payed order
      *
@@ -105,16 +103,16 @@ class Order extends Model
     {
         $order = static::where('token', $token)
                        ->where('payed', false)->firstOrFail();
-        
+
         $order->payed = true;
         $order->transaction_id = $data['transId'];
         $order->card_number = $data['cardNumber'];
         $order->trace_number = $data['traceNumber'];
         $order->save();
-        
+
         return $order->fresh();
     }
-    
+
     /**
      * Change an order status.
      *
@@ -125,5 +123,10 @@ class Order extends Model
         $this->update([
             'status' => (int) $status
         ]);
+    }
+
+    public function replies()
+    {
+       return $this->hasMany(OrderReply::class);
     }
 }

@@ -7,7 +7,7 @@ use App\User;
 
 class ServicesController extends Controller
 {
-    
+
     /**
      * Get all services
      *
@@ -20,17 +20,17 @@ class ServicesController extends Controller
     public function index($locale, User $user)
     {
         $this->authorize('update', new Service());
-        
+
         if (request()->wantsJson()) {
             return Service::latest()->get();
         }
-        
+
         return view(
             'services.index', [
             'services' => Service::latest()->get()
         ]);
     }
-    
+
     /**
      * Persist new service into DB.
      *
@@ -43,24 +43,24 @@ class ServicesController extends Controller
     public function store($locale, User $user)
     {
         $this->authorize('update', new Service());
-        
+
         $attributes = $this->validateRequestMethod();
-        
+
         $service = auth()->user()->services()->create([
             'name->fa' => $attributes['fa-name'],
             'name->en' => $attributes['en-name'],
         ]);
-        
+
         if (request()->wantsJson()) {
             return [
                 'service' => $service,
                 'status' => 200
             ];
         }
-        
+
         return redirect(route('services.index', $locale));
     }
-    
+
     /**
      * Show a single service to admin.
      *
@@ -74,14 +74,14 @@ class ServicesController extends Controller
     public function show($locale, User $user, Service $service)
     {
         $this->authorize('update', $service);
-        
+
         return response(
             [
                 'status' => 200,
                 'service' => $service
             ]);
     }
-    
+
     /**
      * Update a service with the given id.
      *
@@ -95,23 +95,23 @@ class ServicesController extends Controller
     public function update($locale, User $user, Service $service)
     {
         $this->authorize('update', $service);
-        
+
         $attributes = $this->validateRequestMethod();
-        
+
         $service->update([
             'name->fa' => request('fa-name'),
             'name->en' => request('en-name')
         ]);
-        
+
         if (request()->wantsJson()) {
             return response()->json([
                 'status' => 200,
             ]);
         }
-        
+
         return redirect(route('services.index', $locale));
     }
-    
+
     /**
      * Delete a specific service
      *
@@ -124,16 +124,16 @@ class ServicesController extends Controller
     public function destroy($locale, Service $service)
     {
         $this->authorize('update', $service);
-        
+
         $service->delete();
-        
+
         if (request()->wantsJson()) {
             return Service::latest()->get();
         }
-        
+
         return redirect(route('services.index', $locale));
     }
-    
+
     /**
      * Validate request for creating a service .
      *

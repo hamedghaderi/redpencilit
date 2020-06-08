@@ -82,7 +82,7 @@
                                     <option value="">{{ trans.get('__JSON__.Select a service')}}</option>
 
                                     <option v-for="service in options" v-bind:value="service.id">
-                                        {{ service.name }}
+                                        {{ service.name[locale] }}
                                     </option>
                                 </select>
 
@@ -180,7 +180,7 @@
 
                             <h3 class="text-grey-dark mb-3">{{ trans.get('__JSON__.uploaded files')}}</h3>
 
-                            <div class="list">
+                            <ul class="list" :class="{'list--en': locale === 'en'}">
                                 <li>
                                     {{ locale === 'fa'
                                         ? persianNumber.toPersian(this.order.details.length)
@@ -188,7 +188,7 @@
                                     }}
                                     {{ trans.get('__JSON__.file(s)') }}
                                 </li>
-                            </div>
+                            </ul>
                         </section>
 
                         <section class="px-6 w-1/3 text-center border-l border-grey-lighter">
@@ -197,8 +197,8 @@
 
                             <h3 class="text-grey-dark mb-3">{{ trans.get("__JSON__.selected services")}}</h3>
 
-                            <ul class="list">
-                                <li v-text="service(selected)"></li>
+                            <ul class="list" :class="{'list--en': locale === 'en'}">
+                                <li v-text="service(selected)[locale]"></li>
                                 <li>
                                     {{ trans.get('__JSON__.delivery date') }}
                                     {{ locale === 'fa' ? persianNumber.toPersian(deliverDate) : deliverDate }}
@@ -211,7 +211,7 @@
 
                             <h3 class="text-grey-dark mb-3">{{ trans.get('__JSON__.payable price')}}</h3>
 
-                            <ul class="list">
+                            <ul class="list" :class="{'list--en': locale === 'en'}">
                                 <li>
                                     {{ locale === 'fa' ? persianNumber.toPersian(words) : words }}
                                     {{ trans.get('__JSON__.words')}}
@@ -226,8 +226,11 @@
                 </div>
 
                 <div class="w-3/4 mx-auto flex mb-12" style="min-height: 240px;">
-                    <div class="title-custom-bg w-2/5">
-                        <h3 class="w-1/2 leading-normal pt-24">{{ trans.get('__JSON__.final review and payment')}}</h3>
+                    <div class="title-custom-bg w-2/5"
+                         :class="{'title-custom-bg--en' : locale === 'en'}">
+                        <h3 class="w-1/2 leading-normal pt-24">
+                            {{ trans.get('__JSON__.final review and payment')}}
+                        </h3>
                     </div>
 
                     <div class="w-3/5 flex items-center justify-center">
@@ -363,8 +366,8 @@
                             window.location.reload();
                         }
                     }).catch(error => {
-                    flash('با عرض پوزش سیستم با خطا مواجه شد. لطفا دوباره سعی کنید.', 'danger');
-                });
+                        flash(this.trans.get('Unfortunately, an error has been occurred. Please try again!'), 'danger');
+                    });
             },
 
             service(selected) {
@@ -386,11 +389,11 @@
                     'order_id': this.order.id
                 }).then(res => {
                     if (res.status === 200) {
-                        flash('مرحله دوم با موفقیت به اتمام رسید.ِ')
+                        flash(this.trans.get('__JSON__.Second level has completed successfully.'))
                     }
                     this.step++;
                 }).catch(error => {
-                    flash('متاسفانه مشکلی در ذخیره سازی اطلاعات پیش‌ آمد. لطفا مجددا سعی کنید.', 'danger');
+                    flash(this.trans.get('Unfortunately, an error has been occurred. Please try again!'), 'danger')
                     return;
                 });
             },

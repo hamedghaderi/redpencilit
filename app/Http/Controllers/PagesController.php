@@ -6,13 +6,11 @@ use App\Page;
 use App\PageService;
 use App\Testimonial;
 use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
 
 class PagesController extends Controller
 {
-    
+
     /**
      * About Us Page
      *
@@ -21,10 +19,10 @@ class PagesController extends Controller
     public function about()
     {
         $about = Page::where('name', 'about')->first();
-        
+
         return view('pages.about', ['about' => $about]);
     }
-    
+
     /**
      *  Contact Us Page
      *
@@ -33,10 +31,10 @@ class PagesController extends Controller
     public function contact()
     {
         $contact = Page::where('name', 'contact')->first();
-        
+
         return view('pages.contact', compact('contact'));
     }
-    
+
     /**
      * Show homepage view.
      *
@@ -48,13 +46,13 @@ class PagesController extends Controller
         $authorAvatar = User::select('avatar')->superAdmin()->first()
             ?: asset('images/profile.png.jpg');
         $testimonials = Testimonial::with('comment')
-                                   ->latest()
-                                   ->take(5)
-                                   ->get();
-        
+            ->latest()
+            ->take(5)
+            ->get();
+
         return view('welcome', compact('testimonials', 'authorAvatar', 'home'));
     }
-    
+
     /**
      * Store a new comment into DB.
      */
@@ -66,7 +64,7 @@ class PagesController extends Controller
                 'email' => 'required|email',
                 'message' => 'required|min:3'
             ]);
-        
+
         Mail::send(
             'email', [
             'name' => \request('name'),
@@ -75,15 +73,15 @@ class PagesController extends Controller
         ], function ($message) {
             $message->from(request('name'));
             $message->to('hamedghaderii@gmail.com', 'Super Admin')->subject('Contact Email');
-            
+
             return back()->with('flash', 'از پیام شما متشکریم.');
         });
     }
-    
+
     public function service()
     {
         $services = PageService::all();
-        
+
         return view('pages.service', ['services' => $services]);
     }
 }

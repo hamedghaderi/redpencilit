@@ -40,9 +40,12 @@
                         <a
                                 class="text-sm text-indigo"
                                 href="{{ route('orders.attachment', [app()->getLocale(), $order, $detail]) }}">
-                            دانلود
+                           {{ __('download') }}
                         </a>
-                        <p class="tag tag--info mr-2">{{ $detail->name }}</p>
+                        <p class="tag tag--info @if (app()->getLocale() === 'fa') mr-2 @else
+                                ml-2 @endif">{{
+                        $detail->name
+                        }}</p>
                     </div>
                 @endforeach
             </div>

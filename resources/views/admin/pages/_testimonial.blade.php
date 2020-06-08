@@ -3,7 +3,7 @@
 
     <hr>
 
-    <div class="flex -mx-3">
+    <div class="flex flex-wrap -mx-3">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="testimonial" class="mb-3">{{ __('title') }}</label>
             <input class="input" type="text" name="faTestimonial" value="{{ $page->data['fa']['Testimonial']
@@ -14,7 +14,7 @@
 
     <hr>
 
-    <div class="flex -mx-3">
+    <div class="flex flex-wrap -mx-3">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="testimonial" class="mb-3">Title</label>
             <input class="input" type="text" name="enTestimonial" value="{{ $page->data['en']['Testimonial']

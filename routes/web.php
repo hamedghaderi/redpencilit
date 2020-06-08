@@ -6,7 +6,7 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
     Route::middleware('auth')->group(
         function () {
             Route::get('/locale/{lang}', 'RoutesController@show')->name('locale');
-            
+
             /*
             |--------------------------------------------------------------------------
             | Services
@@ -19,7 +19,7 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                 Route::patch('/{service}', 'ServicesController@update')->name('services.update');
                 Route::delete('/{service}', 'ServicesController@destroy')->name('services.delete');
             });
-            
+
             /*
             |--------------------------------------------------------------------------
             | Dashboard
@@ -29,7 +29,7 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                 Route::get('/{user}', 'DashboardController@index')->name('dashboard');
                 Route::patch('/{user}', 'UsersController@update')->name('dashboard.user.update');
             });
-            
+
             /*
             |--------------------------------------------------------------------------
             | Settings
@@ -42,7 +42,7 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                      ->name('settings.update')
                      ->middleware('can:manage-setting');
             });
-            
+
             /*
             |--------------------------------------------------------------------------
             | Tickets
@@ -54,28 +54,28 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                 Route::post('/', 'TicketsController@store')->name('tickets.store');
                 Route::get('/{ticket}', 'TicketsController@show')->name('tickets.show');
                 Route::get('/{ticket}/attachment', 'TicketAttachmentsController@show')->name('ticket.attachment');
-                
+
                 Route::post('/{ticket}/replies', 'RepliesController@store')->name('replies.store');
             });
-            
+
             Route::post('/details', 'UserDetailsController@store')->name('details.store');
-            
+
             Route::post('/api/users/{user}/avatar', 'AvatarsController@store')->name('avatar.store');
-            
+
             Route::delete('/replies/{reply}', 'RepliesController@destroy')->name('replies.destroy');
-            
+
             Route::group(['prefix' => 'users'], function () {
                 Route::get('/', 'UsersController@index')->name('admin.users.index')->middleware('can:read-users');
                 Route::delete('/{user}', 'UsersController@destroy')
                      ->name('admin.users.destroy')
                      ->middleware('can:delete-users');
-                
+
                 Route::post('/{user}/roles', 'UserRolesController@store')->name('users.roles.store');
                 Route::patch('/{user}/details', 'UserDetailsController@update')->name('details.update');
-                
+
                 Route::patch('/{user}/update-services', 'DocumentServiceController@update');
                 Route::delete('{user}/documents', 'DocumentsController@destroy')->middleware('must-be-confirmed');
-               
+
                 /*
                 |--------------------------------------------------------------------------
                 | Orders
@@ -83,27 +83,29 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                 */
                 Route::group(['prefix' => '{user}/orders'], function () {
                     Route::get('/', 'OrdersController@index')->name('users.orders.index');
-                    Route::get('/', 'OrdersController@index')->name('users.orders.index');
+                    Route::get('/{order}/show', 'OrdersController@show')->name('users.orders.show');
                     Route::post('/', 'OrdersController@store')->name('orders.create')->middleware('must-be-confirmed');
                     Route::delete('/{order}', 'OrdersController@destroy')
                          ->name('orders.destroy')
                          ->middleware('must-be-confirmed');
                 });
-                
+
                 Route::post('{user}/drafts', 'DraftsController@store')
                      ->name('drafts.store')
                      ->middleware('must-be-confirmed');
             });
-            
+
             Route::group(['prefix' => 'orders/{order}'], function () {
                 Route::post('/', 'OrderDeliveryController@store')->name('orders.store');
                 Route::get('/settled', 'OrderSettleController@show')->name('orders.settled.show');
-                
+
                 Route::get('/details/{detail}/attachment', 'OrderAttachmentsController@show')->name('orders.attachment');
             });
-            
-            
-            
+
+            Route::get('/order/reply/{reply}/attachments', 'OrderRepliesController@show')->name('order.reply.attachments');
+
+
+
             /*
             |--------------------------------------------------------------------------
             | Admin
@@ -113,7 +115,7 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                 Route::get('tickets/{ticket}', 'Admin\\TicketsController@show')
                      ->name('admin.tickets.show')
                      ->middleware('admin');
-                
+
                 Route::get('/orders', 'Admin\\OrdersController@index')->middleware('admin')->name('admin.orders.index');
                 Route::get('/orders/{order}', 'Admin\\OrdersController@show')
                      ->middleware('admin')
@@ -121,9 +123,26 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                 Route::post('/orders/{orders}/statuses', 'Admin\\OrderStatusesController@update')
                      ->middleware('admin')
                      ->name('admin.orders.state');
-                
+
+                Route::get('/orders/{order}/upload-completed-articles', 'Admin\\UploadOrderReplyController@create')
+                    ->middleware('admin')
+                    ->name('admin.orders.reply');
+                Route::post('/orders/{order}/upload-completed-articles', 'Admin\\UploadOrderReplyController@store')
+                    ->middleware('admin')
+                    ->name('admin.orders.reply.persist');
+                Route::get('/order-replies/{reply}/attachments', 'Admin\\OrderReplyAttachmentsController@show')
+                    ->middleware('admin')
+                    ->name('admin.orders.attachments');
+                /*
+                |--------------------------------------------------------------------------
+                |  Admin Pages
+                |--------------------------------------------------------------------------
+                */
                 Route::get('pages', 'AdminPagesController@index')->name('admin.pages.index')->middleware('admin');
                 Route::get('pages/home', 'AdminPagesController@home')->name('admin.pages.home')->middleware('admin');
+                Route::get('pages/about', 'AdminPagesController@about')
+                    ->name('admin.pages.about')
+                    ->middleware('admin');
                 Route::patch('pages/about', 'AdminPagesController@aboutUpdate')
                      ->name('admin.about.store')
                      ->middleware('admin');
@@ -149,7 +168,7 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                      ->name('admin.home.store')
                      ->middleware('admin');
             });
-            
+
             /*
             |--------------------------------------------------------------------------
             | Posts
@@ -163,13 +182,13 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                 Route::delete('{post}', 'PostsController@destroy')
                      ->name('posts.destroy')
                      ->middleware('can:manage-posts');
-                
+
                 Route::post('{post}/favorite', 'FavoritePostsController@store')->name('favorite.store');
                 Route::delete('{post}/disfavor', 'FavoritePostsController@destroy')->name('favorite.destroy');
             });
-            
+
             Route::post("/post-attachments", 'PostAttachmentsController@store')->name('attachments.store');
-            
+
             /*
             |--------------------------------------------------------------------------
             | Comments
@@ -186,9 +205,9 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                      ->name('comment.destroy')
                      ->middleware('can:edit-comments');
             });
-            
+
             Route::delete('/testimonials/{testimonial}', 'TestimonialsController@destroy')->name('testimonials.delete');
-            
+
             /*
             |--------------------------------------------------------------------------
             | Notifications
@@ -200,10 +219,10 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
                 Route::delete('/', 'UserNotificationsController@destroyAll')->name('notifications.destroy.all');
             });
         });
-    
+
     Route::get('orders/create', 'OrdersController@create')->name('new-order');
     Route::get('/register/emails', 'RegisterConfirmationController@index')->name('register.email.token');
-    
+
     /*
     |--------------------------------------------------------------------------
     | Pages
@@ -214,7 +233,7 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
     Route::post('/contacts', 'PagesController@store');
     Route::get('/services', 'PagesController@service')->name('pages.services');
     Route::get('/', 'PagesController@homepage')->name('home');
-    
+
     /*
     |--------------------------------------------------------------------------
     | Posts
@@ -222,16 +241,16 @@ Route::group(['prefix' => '{locale}'], function ($locale) {
     */
     Route::get('/posts', 'PostsController@index')->name('posts.index');
     Route::get('/posts/{post}', 'PostsController@show')->name('posts.show');
-    
+
     /*
     |--------------------------------------------------------------------------
     | Comments
     |--------------------------------------------------------------------------
     */
     Route::post('/comments', 'CommentsController@store')->name('comments.store')->middleware('throttle');
-    
+
     Auth::routes();
-    
+
     Route::namespace('Admin')->prefix('admin/users')->middleware('auth')->group(
         function () {
             Route::patch('{user}/roles', 'UsersController@update')->name('admin.users.patch');

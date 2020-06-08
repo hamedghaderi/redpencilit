@@ -23,10 +23,13 @@
 
             <div class="w-full lg:w-1/5 mb-4 lg:mb-0 text-grey-darker text-sm flex">
                 <span class="text-yellow-dark mr-1" v-for="i in 5">
-                    <i class="fa-star" :class="{'fas': comment.rate >= i, 'far': comment.rate < i}"></i>
+                    <i class="la"
+                       :class="{'la-star': comment.rate >= i, 'la-star-o': comment.rate < i}"
+                    >
+                    </i>
                 </span>
 
-                <div class="mr-auto">
+                <div :class="{'mr-auto': locale === 'fa', 'ml-auto': locale === 'en'}">
                     <span class="bg-red-lightest text-red-dark text-xs px-2 py-1 rounded hover:bg-red-dark hover:text-white hover:cursor-pointer"
                           @click="deleteComment(comment)">{{ trans.get('__JSON__.delete') }} </span>
                 </div>

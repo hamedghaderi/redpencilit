@@ -59,7 +59,7 @@ return [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
-    
+
 
     /*
     |--------------------------------------------------------------------------
@@ -117,7 +117,7 @@ return [
         'theme' => 'default',
 
         'paths' => [
-            resource_path('views/vendor/emails'),
+            resource_path('views/vendor/mail'),
         ],
     ],
 

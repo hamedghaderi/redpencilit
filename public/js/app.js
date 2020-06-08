@@ -9982,11 +9982,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
-    close: function close() {
-      this.$emit('closeModal');
+    close: function close(event) {
+      if (!event.target.closest('.modal__wrapper')) {
+        this.$emit('closeModal');
+      }
     }
   }
 });
@@ -10352,6 +10353,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['status', 'order_id'],
   created: function created() {
@@ -10369,9 +10371,9 @@ __webpack_require__.r(__webpack_exports__);
       },
       locale: window.Redpencilit.locale,
       classObject: {
-        "bg-yellow text-yellow-darker": this.currentStatus === 1,
-        "bg-indigo text-indigo-darker": this.currentStatus === 2,
-        "bg-green text-green-darker": this.currentStatus === 3
+        "bg-orange-lightest text-orange": this.currentStatus === 1,
+        "bg-indigo-lightest text-indigo": this.currentStatus === 2,
+        "bg-green-lightest text-green": this.currentStatus === 3
       }
     };
   },
@@ -10393,6 +10395,60 @@ __webpack_require__.r(__webpack_exports__);
       if (!event.target.closest('#select-tag')) {
         this.active = false;
       }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Status.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Status.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Status",
+  props: {
+    status: {
+      type: Number
+    }
+  },
+  data: function data() {
+    return {
+      statusClasses: {
+        1: {
+          text: this.trans.get('__JSON__.Unfulfilled'),
+          class: 'bg-orange-lightest text-orange'
+        },
+        2: {
+          text: this.trans.get('__JSON__.Pending'),
+          class: 'bg-indigo-lightest text-indigo'
+        },
+        3: {
+          text: this.trans.get('__JSON__.Fulfilled'),
+          class: "bg-green-lightest text-green"
+        }
+      }
+    };
+  },
+  computed: {
+    state: function state() {
+      return this.statusClasses[this.status].class;
+    },
+    text: function text() {
+      return this.statusClasses[this.status].text;
     }
   }
 });
@@ -10436,6 +10492,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Tab__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Tab */ "./resources/js/components/Tab.vue");
+//
 //
 //
 //
@@ -11193,6 +11250,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -11688,91 +11748,108 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user'],
+  props: ['user', 'allServices'],
   components: {
     Modal: _components_Modal__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  created: function created() {
+    this.services = this.allServices;
+    this.moment = jalali_moment__WEBPACK_IMPORTED_MODULE_1___default.a;
   },
   data: function data() {
     return {
       services: [],
       serviceForUpdate: null,
       errors: new _Errors__WEBPACK_IMPORTED_MODULE_0__["default"](),
-      name: '',
+      updateErrors: new _Errors__WEBPACK_IMPORTED_MODULE_0__["default"](),
+      name: {
+        fa: '',
+        en: ''
+      },
       negotiable: false,
       moment: '',
       modal: false,
-      updatedName: '',
+      updateName: {
+        fa: '',
+        en: ''
+      },
       updatedNegotiable: false,
       isDisabled: true,
       locale: Redpencilit.locale
     };
   },
-  mounted: function mounted() {
-    var _this = this;
-
-    axios.get("/".concat(Redpencilit.locale, "/dashboard/services")).then(function (response) {
-      _this.services = response.data;
-    });
-    this.moment = jalali_moment__WEBPACK_IMPORTED_MODULE_1___default.a;
-  },
   methods: {
     saveService: function saveService() {
-      var _this2 = this;
+      var _this = this;
 
       axios.post("/".concat(Redpencilit.locale, "/dashboard/services"), {
-        name: this.name,
+        "fa-name": this.name.fa,
+        "en-name": this.name.en,
         negotiable: this.negotiable
       }).then(function (response) {
         if (response.data.status === 200) {
-          _this2.services.unshift(response.data.service);
+          _this.services.unshift(response.data.service);
 
-          _this2.name = '';
-          _this2.negotiable = false;
+          _this.name.fa = "";
+          _this.name.en = "";
+          _this.negotiable = false;
           flash('سرویس جدید با موفقیت ایجاد شد.');
         }
       }).catch(function (error) {
-        _this2.errors.record(error.response.data.errors);
+        _this.errors.record(error.response.data.errors);
       });
     },
     deleteService: function deleteService(id) {
-      var _this3 = this;
+      var _this2 = this;
 
       axios.delete("/".concat(this.locale, "/dashboard/services/").concat(id)).then(function (response) {
-        _this3.services = response.data;
+        _this2.services = _this2.services.filter(function (service) {
+          return service.id !== id;
+        });
         flash('سرویس با موفقیت حذف شد.');
       });
     },
     openEdit: function openEdit(id) {
-      var _this4 = this;
-
-      axios.get("/".concat(this.locale, "/dashboard/services/").concat(id)).then(function (response) {
-        if (response.data.status === 200) {
-          _this4.serviceForUpdate = response.data.service;
-          _this4.modal = true;
-          _this4.updatedName = response.data.service.name;
-          _this4.updatedNegotiable = response.data.service.negotiable;
-        }
+      this.serviceForUpdate = this.services.find(function (service) {
+        return service.id === id;
       });
+      this.modal = true;
+      this.updateName = this.serviceForUpdate.name;
     },
     updateService: function updateService(service) {
-      var _this5 = this;
+      var _this3 = this;
 
       axios.patch("/".concat(Redpencilit.locale, "/dashboard/services/").concat(service.id), {
-        name: this.updatedName,
-        negotiable: this.updatedNegotiable
+        "fa-name": this.updateName.fa,
+        "en-name": this.updateName.en
       }).then(function (response) {
         if (response.data.status === 200) {
-          _this5.modal = false;
-          axios.get("/".concat(Redpencilit.locale, "/dashboard/services")).then(function (response) {
-            _this5.services = response.data;
-          });
-          _this5.isDisabled = true;
+          _this3.modal = false;
+          _this3.isDisabled = true;
           flash('سرویس مورد نظر با موفقیت به روز رسانی شد.');
         }
+      }).catch(function (error) {
+        _this3.updateErrors.record(error.response.data.errors);
       });
     }
   }
@@ -12380,6 +12457,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -12473,12 +12553,14 @@ __webpack_require__.r(__webpack_exports__);
       this.modal = true;
     },
     cancelIt: function cancelIt() {
+      var _this2 = this;
+
       axios.delete("/users/".concat(this.user.id, "/orders/").concat(this.order.id)).then(function (response) {
         if (response.data.status === 200) {
           window.location.reload();
         }
       }).catch(function (error) {
-        flash('با عرض پوزش سیستم با خطا مواجه شد. لطفا دوباره سعی کنید.', 'danger');
+        flash(_this2.trans.get('Unfortunately, an error has been occurred. Please try again!'), 'danger');
       });
     },
     service: function service(selected) {
@@ -12510,7 +12592,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     saveSecondStep: function saveSecondStep() {
-      var _this2 = this;
+      var _this3 = this;
 
       var formData = new FormData();
       formData.append('service', this.service);
@@ -12520,12 +12602,12 @@ __webpack_require__.r(__webpack_exports__);
         'order_id': this.order.id
       }).then(function (res) {
         if (res.status === 200) {
-          flash('مرحله دوم با موفقیت به اتمام رسید.ِ');
+          flash(_this3.trans.get('__JSON__.Second level has completed successfully.'));
         }
 
-        _this2.step++;
+        _this3.step++;
       }).catch(function (error) {
-        flash('متاسفانه مشکلی در ذخیره سازی اطلاعات پیش‌ آمد. لطفا مجددا سعی کنید.', 'danger');
+        flash(_this3.trans.get('Unfortunately, an error has been occurred. Please try again!'), 'danger');
         return;
       });
     }
@@ -54352,7 +54434,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "modal z-50" }, [
+  return _c("div", { staticClass: "modal z-50", on: { click: _vm.close } }, [
     _c("span", { staticClass: "modal__close" }, [
       _c("i", { staticClass: "la la-times text-3xl", on: { click: _vm.close } })
     ]),
@@ -54915,7 +54997,6 @@ render._withStripped = true
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SelectTag.vue?vue&type=template&id=06f3c7ba& ***!
   \************************************************************************************************************************************************************************************************************/
-<<<<<<< HEAD
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -54934,11 +55015,11 @@ var render = function() {
       _c(
         "span",
         {
-          staticClass: "rounded-full px-4 py-2 cursor-pointer block w-full",
+          staticClass: "rounded px-4 py-2 cursor-pointer block w-full",
           class: {
-            "bg-yellow text-yellow-darker": _vm.currentStatus === 1,
-            "bg-indigo text-white": this.currentStatus === 2,
-            "bg-green text-white": this.currentStatus === 3
+            "bg-orange-lightest text-orange-dark": _vm.currentStatus === 1,
+            "bg-indigo-lightest text-indigo": this.currentStatus === 2,
+            "bg-green-lightest text-green": this.currentStatus === 3
           },
           on: {
             click: function($event) {
@@ -54959,7 +55040,7 @@ var render = function() {
             "div",
             {
               staticClass:
-                "absolute bg-white rounded px-4 pt-6 pb-2 w-full shadow mt-2 z-10",
+                "absolute bg-white rounde\n    d px-4 pt-6 pb-2 w-full shadow mt-2 z-10",
               staticStyle: { left: "0" }
             },
             [
@@ -54999,12 +55080,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Tab.vue?vue&type=template&id=8dbef60c&":
-/*!******************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Tab.vue?vue&type=template&id=8dbef60c& ***!
-  \******************************************************************************************************************************************************************************************************/
-=======
->>>>>>> 7e2b0d9a97d7414101eb206ddac1b80685ba1cd7
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Status.vue?vue&type=template&id=ed6f95c6&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Status.vue?vue&type=template&id=ed6f95c6&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -55017,68 +55096,13 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "relative mr-1 w-32", attrs: { id: "select-tag" } },
-    [
-      _c(
-        "span",
-        {
-          staticClass: "rounded-full px-4 py-2 cursor-pointer block w-full",
-          class: {
-            "bg-yellow text-yellow-darker": _vm.currentStatus === 1,
-            "bg-indigo text-white": this.currentStatus === 2,
-            "bg-green text-white": this.currentStatus === 3
-          },
-          on: {
-            click: function($event) {
-              _vm.active = !_vm.active
-            }
-          }
-        },
-        [
-          _c("i", { staticClass: "las la-angle-down" }),
-          _vm._v(
-            "\n        " + _vm._s(_vm.statuses[_vm.currentStatus]) + "\n    "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _vm.active
-        ? _c(
-            "div",
-            {
-              staticClass:
-                "absolute bg-white rounded px-4 pt-6 pb-2 w-full shadow mt-2 z-10",
-              staticStyle: { left: "0" }
-            },
-            [
-              _c(
-                "div",
-                _vm._l(_vm.statuses, function(item, key, index) {
-                  return _c(
-                    "span",
-                    {
-                      staticClass:
-                        "block mb-2 pb-2 cursor-pointer hover:text-indigo",
-                      on: {
-                        click: function($event) {
-                          return _vm.changeStatus(key)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                " + _vm._s(item) + "\n           "
-                      )
-                    ]
-                  )
-                }),
-                0
-              )
-            ]
-          )
-        : _vm._e()
-    ]
+    "span",
+    {
+      staticClass:
+        "text-center py-1 rounded-full w-24 inline-flex items-center justify-center text-xs",
+      class: _vm.state
+    },
+    [_vm._v("\n    " + _vm._s(_vm.text) + "\n")]
   )
 }
 var staticRenderFns = []
@@ -55147,7 +55171,7 @@ var render = function() {
             staticClass:
               "text-grey-dark px-4 py-2 border-b border-transparent py-4 text-sm",
             class: { "border-red": tab === _vm.activeTab },
-            attrs: { role: "tab" },
+            attrs: { role: "tab", type: "button" },
             domProps: { textContent: _vm._s(tab.title) },
             on: {
               click: function($event) {
@@ -56187,27 +56211,39 @@ var render = function() {
                 _vm._l(5, function(i) {
                   return _c("span", { staticClass: "text-yellow-dark mr-1" }, [
                     _c("i", {
-                      staticClass: "fa-star",
-                      class: { fas: comment.rate >= i, far: comment.rate < i }
+                      staticClass: "la",
+                      class: {
+                        "la-star": comment.rate >= i,
+                        "la-star-o": comment.rate < i
+                      }
                     })
                   ])
                 }),
                 _vm._v(" "),
-                _c("div", { staticClass: "mr-auto" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "bg-red-lightest text-red-dark text-xs px-2 py-1 rounded hover:bg-red-dark hover:text-white hover:cursor-pointer",
-                      on: {
-                        click: function($event) {
-                          return _vm.deleteComment(comment)
+                _c(
+                  "div",
+                  {
+                    class: {
+                      "mr-auto": _vm.locale === "fa",
+                      "ml-auto": _vm.locale === "en"
+                    }
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "bg-red-lightest text-red-dark text-xs px-2 py-1 rounded hover:bg-red-dark hover:text-white hover:cursor-pointer",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteComment(comment)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v(_vm._s(_vm.trans.get("__JSON__.delete")) + " ")]
-                  )
-                ])
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("__JSON__.delete")) + " ")]
+                    )
+                  ]
+                )
               ],
               2
             ),
@@ -56630,20 +56666,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "flex mb-12" }, [
-      _c("div", { staticClass: "w-1/2" }, [
+    _c("div", { staticClass: "lg:flex mb-12" }, [
+      _c("div", { staticClass: "lg:w-1/2" }, [
         _c("div", { staticClass: "p-6" }, [
           _c("h3", { staticClass: "dashboard-title" }, [
             _vm._v(
-              "\n                    " +
+              "\n                        " +
                 _vm._s(_vm.trans.get("__JSON__.create a new service")) +
-                "\n                "
+                "\n                    "
             )
           ]),
           _vm._v(" "),
           _c("p", { staticClass: "dashboard-text" }, [
             _vm._v(
-              "\n                    " +
+              "\n                        " +
                 _vm._s(
                   _vm.trans.get(
                     "__JSON__.These kinds of services, take effect on the final price. For example, a user who select the book service, neither price nor delivery date doesnt depend on words count and will be calculated in an agreement."
@@ -56654,7 +56690,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "w-1/2" }, [
+      _c("div", { staticClass: "lg:w-1/2" }, [
         _c("div", { staticClass: "p-6" }, [
           _c("div", [
             _c(
@@ -56679,7 +56715,11 @@ var render = function() {
                           { staticClass: "label", attrs: { for: "fa-name" } },
                           [
                             _vm._v(
-                              _vm._s(_vm.trans.get("__JSON__.new service name"))
+                              "\n                                            " +
+                                _vm._s(
+                                  _vm.trans.get("__JSON__.new service name")
+                                ) +
+                                "\n                                        "
                             )
                           ]
                         ),
@@ -56694,11 +56734,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "input",
-                          attrs: {
-                            type: "text",
-                            name: "fa-name",
-                            id: "fa-name"
-                          },
+                          attrs: { type: "text", id: "fa-name" },
                           domProps: { value: _vm.name.fa },
                           on: {
                             input: function($event) {
@@ -56719,9 +56755,9 @@ var render = function() {
                               [
                                 _c("p", [
                                   _vm._v(
-                                    "\n                                            " +
+                                    "\n                                                " +
                                       _vm._s(_vm.errors.get("fa-name")) +
-                                      "\n                                        "
+                                      "\n                                            "
                                   )
                                 ])
                               ]
@@ -56736,9 +56772,9 @@ var render = function() {
                             [
                               _c("p", [
                                 _vm._v(
-                                  "\n                                        " +
+                                  "\n                                            " +
                                     _vm._s(_vm.errors.get("negotiable")) +
-                                    "\n                                    "
+                                    "\n                                        "
                                 )
                               ])
                             ]
@@ -56759,23 +56795,19 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.name,
-                              expression: "name"
+                              value: _vm.name.en,
+                              expression: "name.en"
                             }
                           ],
                           staticClass: "input text-left",
-                          attrs: {
-                            type: "text",
-                            name: "en-name",
-                            id: "en-name"
-                          },
-                          domProps: { value: _vm.name },
+                          attrs: { type: "text", id: "en-name" },
+                          domProps: { value: _vm.name.en },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.name = $event.target.value
+                              _vm.$set(_vm.name, "en", $event.target.value)
                             }
                           }
                         }),
@@ -56789,9 +56821,9 @@ var render = function() {
                               [
                                 _c("p", [
                                   _vm._v(
-                                    "\n                                            " +
+                                    "\n                                                " +
                                       _vm._s(_vm.errors.get("en-name")) +
-                                      "\n                                        "
+                                      "\n                                            "
                                   )
                                 ])
                               ]
@@ -56806,9 +56838,9 @@ var render = function() {
                             [
                               _c("p", [
                                 _vm._v(
-                                  "\n                                        " +
+                                  "\n                                            " +
                                     _vm._s(_vm.errors.get("negotiable")) +
-                                    "\n                                    "
+                                    "\n                                        "
                                 )
                               ])
                             ]
@@ -56825,9 +56857,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                                    " +
+                            "\n                                        " +
                               _vm._s(_vm.trans.get("__JSON__.save service")) +
-                              "\n                                "
+                              "\n                                    "
                           )
                         ]
                       )
@@ -56851,125 +56883,146 @@ var render = function() {
       [
         _c("h3", { staticClass: "dashboard-title mb-8" }, [
           _vm._v(
-            "\n            " +
+            "\n                " +
               _vm._s(_vm.trans.get("__JSON__.current services")) +
-              "\n        "
+              "\n            "
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "row px-6 mb-2 flex" }, [
-          _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
-            _vm._v(_vm._s(_vm.trans.get("__JSON__.service name")))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
-            _vm._v(_vm._s(_vm.trans.get("__JSON__.created at")))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
-            _vm._v(_vm._s(_vm.trans.get("__JSON__.updated at")))
-          ])
-        ]),
-        _vm._v(" "),
-        _vm._l(_vm.services, function(service) {
-          return _c("div", { key: service.id, staticClass: "row mb-3" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "bg-white px-6 py-3 shadow flex items-center relative"
-              },
-              [
-                _c("div", { staticClass: "w-1/5 text-grey-darker" }, [
+        _c("div", { staticClass: "overflow-x-scroll lg:overflow-visible" }, [
+          _c(
+            "div",
+            { staticStyle: { "min-width": "768px" } },
+            [
+              _c("div", { staticClass: "row px-6 mb-2 flex" }, [
+                _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
                   _vm._v(
-                    "\n                    " +
-                      _vm._s(service.name) +
-                      "\n                "
+                    _vm._s(_vm.trans.get("__JSON__.service name")) +
+                      "\n                        "
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "w-1/5 text-grey-darker" }, [
+                _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
                   _vm._v(
-                    "\n                    " +
-                      _vm._s(
-                        _vm
-                          .moment(service.created_at)
-                          .locale(_vm.locale)
-                          .fromNow()
-                      ) +
-                      "\n                "
+                    _vm._s(_vm.trans.get("__JSON__.created at")) +
+                      "\n                        "
                   )
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "w-1/5 text-grey-darker" }, [
+                _c("div", { staticClass: "w-1/5 text-sm text-grey-dark" }, [
                   _vm._v(
-                    "\n                    " +
-                      _vm._s(
-                        _vm
-                          .moment(service.updated_at)
-                          .locale(_vm.locale)
-                          .fromNow()
-                      ) +
-                      "\n                "
+                    _vm._s(_vm.trans.get("__JSON__.updated at")) +
+                      "\n                        "
                   )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "w-1/5" }, [
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.services, function(service) {
+                return _c("div", { key: service.id, staticClass: "row mb-3" }, [
                   _c(
-                    "button",
+                    "div",
                     {
-                      staticClass: "button button--smooth--success button--sm",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.openEdit(service.id)
-                        }
-                      }
+                      staticClass:
+                        "bg-white px-6 py-3 shadow flex items-center relative"
                     },
                     [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(_vm.trans.get("__JSON__.edit info")) +
-                          "\n                    "
-                      )
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "w-1/5" }, [
-                  _c(
-                    "form",
-                    {
-                      attrs: { method: "POST" },
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.deleteService(service.id)
-                        }
-                      }
-                    },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "button button--smooth--danger button--sm"
-                        },
-                        [
-                          _vm._v(
-                            "\n                            " +
-                              _vm._s(_vm.trans.get("__JSON__.delete service")) +
-                              "\n                        "
-                          )
-                        ]
-                      )
+                      _c("div", { staticClass: "w-1/5 text-grey-darker" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(service.name[_vm.locale]) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "w-1/5 text-grey-darker" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(
+                              _vm
+                                .moment(service.created_at)
+                                .locale(_vm.locale)
+                                .fromNow()
+                            ) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "w-1/5 text-grey-darker" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(
+                              _vm
+                                .moment(service.updated_at)
+                                .locale(_vm.locale)
+                                .fromNow()
+                            ) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "w-1/5" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "button button--smooth--success button--sm",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.openEdit(service.id)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(_vm.trans.get("__JSON__.edit info")) +
+                                "\n                                "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "w-1/5" }, [
+                        _c(
+                          "form",
+                          {
+                            attrs: { method: "POST" },
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.deleteService(service.id)
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "button button--smooth--danger button--sm"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(
+                                      _vm.trans.get("__JSON__.delete service")
+                                    ) +
+                                    "\n                                    "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ])
                     ]
                   )
                 ])
-              ]
-            )
-          ])
-        }),
+              })
+            ],
+            2
+          )
+        ]),
         _vm._v(" "),
         _vm.modal
           ? _c(
@@ -56985,7 +57038,7 @@ var render = function() {
                 _c(
                   "form",
                   {
-                    attrs: { method: "post" },
+                    attrs: { method: "POST" },
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
@@ -57000,177 +57053,166 @@ var render = function() {
                     }
                   },
                   [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "label",
-                            attrs: { for: "modal-name" }
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(_vm.trans.get("__JSON__.new service name"))
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.updatedName,
-                              expression: "updatedName"
-                            }
-                          ],
-                          staticClass: "input",
-                          attrs: {
-                            type: "text",
-                            name: "update-name",
-                            id: "modal-name"
-                          },
-                          domProps: { value: _vm.updatedName },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.updatedName = $event.target.value
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.has("name")
-                          ? _c(
-                              "div",
+                    _c(
+                      "tabs",
+                      [
+                        _c("tab", { attrs: { title: "فارسی" } }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
                               {
-                                staticClass: "feedback feedback--invalid my-2"
+                                staticClass: "label",
+                                attrs: { for: "fa-name" }
                               },
                               [
-                                _c("p", [
-                                  _vm._v(
-                                    "\n                                " +
-                                      _vm._s(_vm.errors.get("name")) +
-                                      "\n                            "
-                                  )
-                                ])
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(
+                                      _vm.trans.get("__JSON__.new service name")
+                                    ) +
+                                    "\n                                "
+                                )
                               ]
-                            )
-                          : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "form-group flex items-center" },
-                        [
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.updateName.fa,
+                                  expression: "updateName.fa"
+                                }
+                              ],
+                              staticClass: "input",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.updateName.fa },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.updateName,
+                                    "fa",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.updateErrors.has("fa-name")
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "feedback feedback--invalid my-2"
+                                  },
+                                  [
+                                    _c("p", [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(
+                                            _vm.updateErrors.get("fa-name")
+                                          ) +
+                                          "\n                                    "
+                                      )
+                                    ])
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("tab", { attrs: { title: "English" } }, [
+                          _c("div", { staticClass: "form-group text-left" }, [
+                            _c(
+                              "label",
+                              {
+                                staticClass: "label",
+                                attrs: { for: "en-name" }
+                              },
+                              [_vm._v("New Service Name")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.updateName.en,
+                                  expression: "updateName.en"
+                                }
+                              ],
+                              staticClass: "input text-left",
+                              attrs: { type: "text" },
+                              domProps: { value: _vm.updateName.en },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.updateName,
+                                    "en",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.updateErrors.has("en-name")
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "feedback feedback--invalid my-2"
+                                  },
+                                  [
+                                    _c("p", [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(
+                                            _vm.updateErrors.get("en-name")
+                                          ) +
+                                          "\n                                    "
+                                      )
+                                    ])
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group mb-0" }, [
                           _c(
-                            "label",
+                            "button",
                             {
-                              staticClass: "dashboard-label mb-0 label-check",
-                              attrs: { for: "negotiable" }
+                              staticClass: "button button--smooth--primary",
+                              attrs: { type: "submit" }
                             },
                             [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.updatedNegotiable,
-                                    expression: "updatedNegotiable"
-                                  }
-                                ],
-                                staticClass: "form-checkbox d-inline ml-2",
-                                attrs: {
-                                  type: "checkbox",
-                                  name: "update-negotiable",
-                                  id: "negotiable"
-                                },
-                                domProps: {
-                                  checked: Array.isArray(_vm.updatedNegotiable)
-                                    ? _vm._i(_vm.updatedNegotiable, null) > -1
-                                    : _vm.updatedNegotiable
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$a = _vm.updatedNegotiable,
-                                      $$el = $event.target,
-                                      $$c = $$el.checked ? true : false
-                                    if (Array.isArray($$a)) {
-                                      var $$v = null,
-                                        $$i = _vm._i($$a, $$v)
-                                      if ($$el.checked) {
-                                        $$i < 0 &&
-                                          (_vm.updatedNegotiable = $$a.concat([
-                                            $$v
-                                          ]))
-                                      } else {
-                                        $$i > -1 &&
-                                          (_vm.updatedNegotiable = $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1)))
-                                      }
-                                    } else {
-                                      _vm.updatedNegotiable = $$c
-                                    }
-                                  }
-                                }
-                              }),
                               _vm._v(
-                                "\n\n                            " +
+                                "\n                                " +
                                   _vm._s(
-                                    _vm.trans.get("__JSON__.negotiable price")
+                                    _vm.trans.get("__JSON__.save service")
                                   ) +
-                                  "\n                        "
+                                  "\n                            "
                               )
                             ]
                           )
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.errors.has("negotiable")
-                        ? _c(
-                            "div",
-                            { staticClass: "feedback feedback--invalid my-2" },
-                            [
-                              _c("p", [
-                                _vm._v(
-                                  "\n                            " +
-                                    _vm._s(_vm.errors.get("negotiable")) +
-                                    "\n                        "
-                                )
-                              ])
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "form-group mb-0" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "button button--smooth--primary",
-                            attrs: { type: "submit", disabled: _vm.isDisabled },
-                            on: { click: function($event) {} }
-                          },
-                          [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(
-                                  _vm.trans.get("__JSON__.update service")
-                                ) +
-                                "\n                        "
-                            )
-                          ]
-                        )
-                      ])
-                    ])
-                  ]
+                        ])
+                      ],
+                      1
+                    )
+                  ],
+                  1
                 )
               ]
             )
           : _vm._e()
       ],
-      2
+      1
     )
   ])
 }
@@ -58006,7 +58048,7 @@ var render = function() {
                                       [
                                         _vm._v(
                                           "\n                                    " +
-                                            _vm._s(service.name) +
+                                            _vm._s(service.name[_vm.locale]) +
                                             "\n                                "
                                         )
                                       ]
@@ -58401,23 +58443,30 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("div", { staticClass: "list" }, [
-                            _c("li", [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(
-                                    _vm.locale === "fa"
-                                      ? _vm.persianNumber.toPersian(
-                                          this.order.details.length
-                                        )
-                                      : _vm.order.details.length
-                                  ) +
+                          _c(
+                            "ul",
+                            {
+                              staticClass: "list",
+                              class: { "list--en": _vm.locale === "en" }
+                            },
+                            [
+                              _c("li", [
+                                _vm._v(
                                   "\n                                " +
-                                  _vm._s(_vm.trans.get("__JSON__.file(s)")) +
-                                  "\n                            "
-                              )
-                            ])
-                          ])
+                                    _vm._s(
+                                      _vm.locale === "fa"
+                                        ? _vm.persianNumber.toPersian(
+                                            this.order.details.length
+                                          )
+                                        : _vm.order.details.length
+                                    ) +
+                                    "\n                                " +
+                                    _vm._s(_vm.trans.get("__JSON__.file(s)")) +
+                                    "\n                            "
+                                )
+                              ])
+                            ]
+                          )
                         ]
                       ),
                       _vm._v(" "),
@@ -58444,31 +58493,40 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("ul", { staticClass: "list" }, [
-                            _c("li", {
-                              domProps: {
-                                textContent: _vm._s(_vm.service(_vm.selected))
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("li", [
-                              _vm._v(
-                                "\n                                " +
-                                  _vm._s(
-                                    _vm.trans.get("__JSON__.delivery date")
-                                  ) +
+                          _c(
+                            "ul",
+                            {
+                              staticClass: "list",
+                              class: { "list--en": _vm.locale === "en" }
+                            },
+                            [
+                              _c("li", {
+                                domProps: {
+                                  textContent: _vm._s(
+                                    _vm.service(_vm.selected)[_vm.locale]
+                                  )
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("li", [
+                                _vm._v(
                                   "\n                                " +
-                                  _vm._s(
-                                    _vm.locale === "fa"
-                                      ? _vm.persianNumber.toPersian(
-                                          _vm.deliverDate
-                                        )
-                                      : _vm.deliverDate
-                                  ) +
-                                  "\n                            "
-                              )
-                            ])
-                          ])
+                                    _vm._s(
+                                      _vm.trans.get("__JSON__.delivery date")
+                                    ) +
+                                    "\n                                " +
+                                    _vm._s(
+                                      _vm.locale === "fa"
+                                        ? _vm.persianNumber.toPersian(
+                                            _vm.deliverDate
+                                          )
+                                        : _vm.deliverDate
+                                    ) +
+                                    "\n                            "
+                                )
+                              ])
+                            ]
+                          )
                         ]
                       ),
                       _vm._v(" "),
@@ -58487,35 +58545,42 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _c("ul", { staticClass: "list" }, [
-                          _c("li", [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(
-                                  _vm.locale === "fa"
-                                    ? _vm.persianNumber.toPersian(_vm.words)
-                                    : _vm.words
-                                ) +
+                        _c(
+                          "ul",
+                          {
+                            staticClass: "list",
+                            class: { "list--en": _vm.locale === "en" }
+                          },
+                          [
+                            _c("li", [
+                              _vm._v(
                                 "\n                                " +
-                                _vm._s(_vm.trans.get("__JSON__.words")) +
-                                "\n                            "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("li", [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(
-                                  _vm.locale === "fa"
-                                    ? _vm.persianNumber.toPersian(_vm.price)
-                                    : _vm.words
-                                ) +
+                                  _vm._s(
+                                    _vm.locale === "fa"
+                                      ? _vm.persianNumber.toPersian(_vm.words)
+                                      : _vm.words
+                                  ) +
+                                  "\n                                " +
+                                  _vm._s(_vm.trans.get("__JSON__.words")) +
+                                  "\n                            "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", [
+                              _vm._v(
                                 "\n                                " +
-                                _vm._s(_vm.trans.get("__JSON__.tomans")) +
-                                "\n                            "
-                            )
-                          ])
-                        ])
+                                  _vm._s(
+                                    _vm.locale === "fa"
+                                      ? _vm.persianNumber.toPersian(_vm.price)
+                                      : _vm.words
+                                  ) +
+                                  "\n                                " +
+                                  _vm._s(_vm.trans.get("__JSON__.tomans")) +
+                                  "\n                            "
+                              )
+                            ])
+                          ]
+                        )
                       ])
                     ])
                   ]
@@ -58528,15 +58593,30 @@ var render = function() {
                     staticStyle: { "min-height": "240px" }
                   },
                   [
-                    _c("div", { staticClass: "title-custom-bg w-2/5" }, [
-                      _c("h3", { staticClass: "w-1/2 leading-normal pt-24" }, [
-                        _vm._v(
-                          _vm._s(
-                            _vm.trans.get("__JSON__.final review and payment")
-                          )
+                    _c(
+                      "div",
+                      {
+                        staticClass: "title-custom-bg w-2/5",
+                        class: { "title-custom-bg--en": _vm.locale === "en" }
+                      },
+                      [
+                        _c(
+                          "h3",
+                          { staticClass: "w-1/2 leading-normal pt-24" },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(
+                                  _vm.trans.get(
+                                    "__JSON__.final review and payment"
+                                  )
+                                ) +
+                                "\n                    "
+                            )
+                          ]
                         )
-                      ])
-                    ]),
+                      ]
+                    ),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -70933,13 +71013,10 @@ Vue.component('flex-table', __webpack_require__(/*! ./components/FlexTable.vue *
 Vue.component('inner-modal', __webpack_require__(/*! ./components/InnerModal.vue */ "./resources/js/components/InnerModal.vue").default);
 Vue.component('attachment', __webpack_require__(/*! ./components/Attachment.vue */ "./resources/js/components/Attachment.vue").default);
 Vue.component('modal', __webpack_require__(/*! ./components/Modal */ "./resources/js/components/Modal.vue").default);
-<<<<<<< HEAD
-Vue.component('select-tag', __webpack_require__(/*! ./components/SelectTag.vue */ "./resources/js/components/SelectTag.vue").default); // Vue.component('attachment', require('./components/Attachment').default);
-=======
 Vue.component('select-tag', __webpack_require__(/*! ./components/SelectTag.vue */ "./resources/js/components/SelectTag.vue").default);
 Vue.component('tabs', __webpack_require__(/*! ./components/Tabs.vue */ "./resources/js/components/Tabs.vue").default);
-Vue.component('tab', __webpack_require__(/*! ./components/Tab.vue */ "./resources/js/components/Tab.vue").default); // Vue.component('attachment', require('./components/Attachment').default);
->>>>>>> 7e2b0d9a97d7414101eb206ddac1b80685ba1cd7
+Vue.component('tab', __webpack_require__(/*! ./components/Tab.vue */ "./resources/js/components/Tab.vue").default);
+Vue.component('status', __webpack_require__(/*! ./components/Status.vue */ "./resources/js/components/Status.vue").default); // Vue.component('attachment', require('./components/Attachment').default);
 
 Vue.component('edit-role', __webpack_require__(/*! ./pages/EditRole.vue */ "./resources/js/pages/EditRole.vue").default);
 Vue.component('upload-view', __webpack_require__(/*! ./pages/UploadView.vue */ "./resources/js/pages/UploadView.vue").default);
@@ -72062,6 +72139,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectTag_vue_vue_type_template_id_06f3c7ba___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectTag_vue_vue_type_template_id_06f3c7ba___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Status.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/Status.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Status_vue_vue_type_template_id_ed6f95c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Status.vue?vue&type=template&id=ed6f95c6&scoped=true& */ "./resources/js/components/Status.vue?vue&type=template&id=ed6f95c6&scoped=true&");
+/* harmony import */ var _Status_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Status.vue?vue&type=script&lang=js& */ "./resources/js/components/Status.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Status_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Status_vue_vue_type_template_id_ed6f95c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Status_vue_vue_type_template_id_ed6f95c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "ed6f95c6",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Status.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Status.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/Status.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Status_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Status.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Status.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Status_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Status.vue?vue&type=template&id=ed6f95c6&scoped=true&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/Status.vue?vue&type=template&id=ed6f95c6&scoped=true& ***!
+  \***************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Status_vue_vue_type_template_id_ed6f95c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Status.vue?vue&type=template&id=ed6f95c6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Status.vue?vue&type=template&id=ed6f95c6&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Status_vue_vue_type_template_id_ed6f95c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Status_vue_vue_type_template_id_ed6f95c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -73409,8 +73555,8 @@ var uppy_settings = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/laravel/projects/redpencilit2/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/laravel/projects/redpencilit2/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/kubak/projects/redpencilit/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/kubak/projects/redpencilit/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

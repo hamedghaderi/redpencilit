@@ -15,6 +15,14 @@
   background-size: 250px 250px;
   background-repeat: no-repeat;
   background-position: center center;
+
+  &--en {
+    background-position: left center;
+
+    & > h3 {
+      @apply ml-24;
+    }
+  }
 }
 
 .title {

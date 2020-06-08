@@ -1,4 +1,4 @@
-@component('emails::message')
+@component('vendor.mail.html.message')
 {{-- Greeting --}}
 @if (! empty($greeting))
 # {{ $greeting }}
@@ -13,7 +13,6 @@
 {{-- Intro Lines --}}
 @foreach ($introLines as $line)
 {{ $line }}
-
 @endforeach
 
 {{-- Action Button --}}
@@ -28,7 +27,7 @@
             $color = 'primary';
     }
 ?>
-@component('emails::button', ['url' => $actionUrl, 'color' => $color])
+@component('vendor.mail.html.button', ['url' => $actionUrl, 'color' => $color])
 {{ $actionText }}
 @endcomponent
 @endisset
@@ -36,7 +35,6 @@
 {{-- Outro Lines --}}
 @foreach ($outroLines as $line)
 {{ $line }}
-
 @endforeach
 
 {{-- Salutation --}}

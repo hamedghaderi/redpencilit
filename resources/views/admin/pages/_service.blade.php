@@ -3,7 +3,7 @@
 
     <hr>
 
-    <div class="flex -mx-3 mb-4">
+    <div class="flex flex-wrap -mx-3 mb-4">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="servicesTitle" class="mb-3">{{ __('title') }}</label>
             <input class="input" type="text" name="faServicesTitle" value="{{
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="flex -mr-3 mb-4">
+    <div class="flex flex-wrap -mr-3 mb-4">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="firstServiceBody" class="mb-3">{{ __('first service body') }}</label>
             <textarea class="input" type="text" name="faFirstServiceBody">{{
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <div class="flex -mr-3">
+    <div class="flex flex-wrap -mr-3">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="thirdServiceTitle" class="mb-3">{{ __('third service title') }}</label>
             <input class="input" type="text" name="faThirdServiceTitle" value="{{
@@ -65,7 +65,7 @@
 
     <hr>
 
-    <div class="flex -mx-3 mb-4">
+    <div class="flex flex-wrap -mx-3 mb-4">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="servicesTitle" class="mb-3">Title</label>
             <input class="input" type="text" name="enServicesTitle" value="{{
@@ -87,7 +87,7 @@
         </div>
     </div>
 
-    <div class="flex -mr-3 mb-4">
+    <div class="flex flex-wrap -mr-3 mb-4">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="firstServiceBody" class="mb-3">First Service Body</label>
             <textarea class="input" type="text" name="enFirstServiceBody">{{
@@ -110,7 +110,7 @@
         </div>
     </div>
 
-    <div class="flex -mr-3">
+    <div class="flex flex-wrap -mr-3">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="thirdServiceTitle" class="mb-3">Third Service Title</label>
             <input class="input" type="text" name="enThirdServiceTitle" value="{{

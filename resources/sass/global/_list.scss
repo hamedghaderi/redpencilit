@@ -17,4 +17,16 @@
       transform: translateY(-50%);
     }
   }
+
+  &--en {
+    li {
+      @apply text-left pr-0 pl-6;
+
+      &::before {
+        @apply pin-l;
+        right: auto;
+      }
+    }
+  }
 }
+

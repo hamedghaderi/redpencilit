@@ -3,7 +3,7 @@
 
     <hr>
 
-    <div class="flex -mx-3 mb-4">
+    <div class="flex flex-wrap -mx-3 mb-4">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="connectionTitle" class="mb-3">{{ __('title') }}</label>
             <input class="input" type="text" name="faConnectionTitle" value="{{
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="flex -mx-3">
+    <div class="flex flex-wrap -mx-3">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="faConnectionInsta" class="mb-3">{{ __('instagram') }}</label>
             <input class="input" type="text" name="faConnectionInsta" value="{{ $page->data['fa']
@@ -53,7 +53,7 @@
 
     <hr>
 
-    <div class="flex -mx-3 mb-4">
+    <div class="flex flex-wrap -mx-3 mb-4">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="connectionTitle" class="mb-3">Title</label>
             <input class="input" type="text" name="enConnectionTitle" value="{{
@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <div class="flex -mx-3">
+    <div class="flex flex-wrap -mx-3">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="connectionInsta" class="mb-3">Instagram</label>
             <input class="input" type="text" name="enConnectionInsta" value="{{

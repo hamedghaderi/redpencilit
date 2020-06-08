@@ -3,7 +3,7 @@
 
     <hr>
 
-    <div class="flex -mx-3">
+    <div class="flex flex-wrap -mx-3">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="requestInsta" class="mb-3">{{ __('title') }}</label>
             <input class="input" type="text" name="faRequestTitle" value="{{
@@ -22,7 +22,7 @@
 
     <hr>
 
-    <div class="flex -mx-3">
+    <div class="flex flex-wrap -mx-3">
         <div class="md:w-1/3 mx-3">
             <label class="label" for="requestInsta" class="mb-3">Title</label>
             <input class="input" type="text" name="enRequestTitle" value="{{ $page->data['en']['RequestTitle']

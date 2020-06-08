@@ -18,8 +18,8 @@
         >
             @csrf
 
-            <div class="flex -mx-3">
-                <div class="md:w-1/2 mx-3">
+            <div class="flex flex-wrap mb-8 -mx-3">
+                <div class="md:w-1/2 mb-4 mx-3">
                     <label class="label mb-3" for="faTitle">عنوان</label>
                     <input
                             id="faTitle"
@@ -51,8 +51,8 @@
 
             <hr>
 
-            <div class="flex -mx-3">
-                <div class="md:w-1/2 mx-3">
+            <div class="flex flex-wrap -mx-3">
+                <div class="md:w-1/2 mx-3 mb-4">
                     <label class="label mb-3" for="enTitle">Title</label>
                     <input
                             id="enTitle"
@@ -94,18 +94,20 @@
         </form>
     </div>
 
-    <div class="card mb-8 pb-8">
+    <div class="card mb-24 pb-8">
         @foreach($services as $service)
-            <div class="flex items-center text-sm text-grey-dark {{ !$loop->last ? 'mb-8 border-b pb-8' : '' }}">
+            <div class="md:flex items-center text-sm text-grey-dark {{ !$loop->last ? 'mb-8
+            border-b pb-8' : '' }}">
                 <div class="pl-4">
                     <div class="w-12 h-12 rounded-full"
-                         style="background-image: url('{{asset('storage/' . $service->path)}}'); background-position:
-                                 center center; background-size: cover; background-repeat: no-repeat;">
-
+                         style="background-image: url('{{asset('storage/' . $service->path)}}');
+                                 background-position:center center;
+                                 background-size: cover;
+                                 background-repeat: no-repeat;">
                     </div>
                 </div>
 
-                <div class="flex-1">
+                <div class="flex-1 py-2">
                     {{ $service->title[app()->getLocale()] }}
                 </div>
 
@@ -120,6 +122,4 @@
             </div>
         @endforeach
     </div>
-
-
 @endsection

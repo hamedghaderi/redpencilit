@@ -4,28 +4,27 @@ namespace App\Notifications;
 
 use App\Order;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewOrderPaid extends Notification
+class OrderReplyCompleted extends Notification
 {
     use Queueable;
 
-    protected $order;
-
-    public $locale;
+    /**
+     * @var Order
+     */
+    private $order;
 
     /**
      * Create a new notification instance.
      *
      * @param  Order  $order
-     * @param $locale
      */
-    public function __construct(Order $order, $locale)
+    public function __construct(Order $order)
     {
         $this->order = $order;
-
-        $this->locale = $locale;
     }
 
     /**
@@ -50,12 +49,12 @@ class NewOrderPaid extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->from(auth()->user()->email)
-            ->line(auth()->user()->name.__(' paid a new order.'))
-            ->action(
-                'Show order',
-                route('admin.orders.show', [app()->getLocale(), $this->order])
-            );
+            ->greeting(__('Hello, ').$this->order->owner->name)
+            ->subject(__('You Have Some New Attachment About Your Order'))
+            ->line(__('For order number #').$this->order->id.__(' some new attachments has been uploaded recently.'))
+            ->line(__('You can check the link below to see your files'))
+            ->action(__('See attachments'), route('users.orders.show', [app()->getLocale(),
+                $this->order->owner, $this->order]));
     }
 
     /**
@@ -69,10 +68,10 @@ class NewOrderPaid extends Notification
     {
         return [
             'message' => [
-                'fa' => auth()->user()->name.' سفارش جدیدی را پرداخت کرد.',
-                'en' => auth()->user()->name.' paid a new order',
+                'fa' => 'برای سفارش شماره #'.$this->order->id.' فایل جدیدی آپلود شد.',
+                'en' => 'For order number #'.$this->order->id.' some new file has been uploaded.'
             ],
-            'link' => route('admin.orders.show', [$this->locale, $this->order])
+            'link' => route('users.orders.show', [app()->getLocale(), $this->order->owner, $this->order])
         ];
     }
 }

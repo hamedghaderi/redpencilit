@@ -16,8 +16,7 @@
                    data-sal="slide-left"
                    data-sal-delay="300"
                    data-sal-easing="ease-out-back"
-                   data-sal-duration="400"
-                >
+                   data-sal-duration="400">
                     {{ $home ? $home->data[app()->getLocale()]['ServicesBody'] : '' }}
                 </p>
             </div>

@@ -8,6 +8,7 @@
                         @click="activeTab = tab"
                         class="text-grey-dark px-4 py-2 border-b border-transparent py-4 text-sm"
                         :class="{'border-red': tab === activeTab}"
+                        type="button"
                 >
                 </button>
             </li>

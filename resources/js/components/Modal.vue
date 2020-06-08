@@ -1,8 +1,7 @@
 <template>
-    <div class="modal z-50">
+    <div class="modal z-50" @click="close">
         <span class="modal__close">
             <i class="la la-times text-3xl" @click="close"></i>
-<!--            <img src="/images/cross-out.svg" alt="cross out icon" @click="close">-->
         </span>
 
         <div class="modal__wrapper">
@@ -20,8 +19,10 @@
 <script>
     export default {
         methods: {
-            close() {
-                this.$emit('closeModal')
+            close(event) {
+                if (! event.target.closest('.modal__wrapper')) {
+                    this.$emit('closeModal')
+                }
             },
         }
     }

@@ -8,7 +8,7 @@
         @method('PATCH')
 
         <div class="card mb-4">
-            <div class="flex -mx-3">
+            <div class="flex w-full -mx-3">
                 <div class="md:w-full mx-3">
                     <label class="label mb-3" for="homeHeroTitle">متن</label>
                     <textarea
