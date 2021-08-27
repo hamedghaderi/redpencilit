@@ -1,9 +1,28 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Country::class, function (Faker $faker) {
-    return [
-        'name' => json_encode(['fa' => 'هورامان', 'en' => 'Hawraman'])
-    ];
-});
+use App\Country;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class CountryFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Country::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+          'name' => json_encode(['fa' => 'هورامان', 'en' => 'Hawraman'])
+        ];
+    }
+}

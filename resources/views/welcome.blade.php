@@ -16,7 +16,7 @@
     </section>
 
 
-    @include('home-services');
+    @include('home-services')
 
     @include('contact-ways')
 

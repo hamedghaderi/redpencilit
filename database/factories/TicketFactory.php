@@ -1,17 +1,32 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Ticket;
-use Faker\Generator as Faker;
+use App\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Ticket::class, function (Faker $faker) {
-    \Illuminate\Support\Facades\Storage::fake('ticket');
-    
-    return [
-        'title' => 'My Ticket Title',
-        'body' => 'I have some issues.',
-        'owner_id' => factory(\App\User::class),
-        'attachment' => $file = \Illuminate\Http\UploadedFile::fake()->create('test.jpg')->hashName()
-    ];
-});
+class TicketFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Ticket::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+          'title' => $this->faker->words(5),
+          'body' => $this->faker->paragraph(2),
+          'owner_id' => User::factory()->create()->id,
+          'attachment' => $file = \Illuminate\Http\UploadedFile::fake()->create('test.jpg')->hashName()
+        ];
+    }
+}

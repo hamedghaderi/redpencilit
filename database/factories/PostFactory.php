@@ -1,16 +1,32 @@
 <?php
 
+namespace Database\Factories;
+
 use App\Post;
 use App\User;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Post::class, function (Faker $faker) {
-    return [
-        'owner_id' => function () {
-            return factory(User::class)->create()->id;
-        },
-        'excerpt' => "This is an excerpt.",
-        'title' => 'Learning Laravel in 30 Days',
-        'body' => 'Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in most web projects.'
-    ];
-});
+class PostFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Post::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+          'owner_id' => User::factory()->create()->id,
+          'excerpt' => $this->faker->paragraph(1),
+          'title' => $this->faker->words(5),
+          'body' => $this->faker->paragraphs(4)
+        ];
+    }
+}

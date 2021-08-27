@@ -2,15 +2,16 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket extends Model
 {
-    use SoftDeletes;
-    
+    use SoftDeletes, HasFactory;
+
     protected $fillable = ['title', 'body', 'attachment'];
-    
+
     /**
      * Each ticket belongs to a user.
      *
@@ -20,7 +21,7 @@ class Ticket extends Model
     {
        return $this->belongsTo(User::class, 'owner_id');
     }
-    
+
     public function replies()
     {
        return $this->hasMany(Reply::class)->orderBy('created_at', 'DESC');

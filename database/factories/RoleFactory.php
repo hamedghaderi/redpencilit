@@ -1,10 +1,30 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Role::class, function (Faker $faker) {
-    return [
-        'name' => $faker->unique()->lexify('???????'),
-        'label' => $faker->lexify('???')
-    ];
-});
+use App\Role;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class RoleFactory extends Factory
+{
+
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Role::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+          'name' => $this->faker->unique()->lexify('???????'),
+          'label' => $this->faker->lexify('???')
+        ];
+    }
+}

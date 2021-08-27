@@ -1,14 +1,32 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Reply;
-use Faker\Generator as Faker;
+use App\Ticket;
+use App\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-$factory->define(Reply::class, function (Faker $faker) {
-    return [
-        'ticket_id' => factory(\App\Ticket::class),
-        'owner_id' => factory(\App\User::class),
-        'body' => 'Lorem ipsum'
-    ];
-});
+class ReplyFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Reply::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+          'ticket_id' => Ticket::factory()->create()->id,
+          'owner_id' => User::factory()->create()->id,
+          'body' => $this->faker->paragraph(2)
+        ];
+    }
+}

@@ -1,9 +1,29 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\CollegeDegree::class, function (Faker $faker) {
-    return [
-        'name' => json_encode(['fa' => 'کارشناسی', 'en' => 'Bachelors'])
-    ];
-});
+use App\CollegeDegree;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class CollegeDegreeFactory extends Factory
+{
+
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = CollegeDegree::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+          'name' => json_encode(['fa' => 'کارشناسی', 'en' => 'Bachelors'])
+        ];
+    }
+}

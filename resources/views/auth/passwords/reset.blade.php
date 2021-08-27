@@ -25,11 +25,7 @@
                                     <i class="la la-envelope text-2xl"></i>
                                 </span>
 
-                                @if ($errors->has('email'))
-                                    <div class="feedback feedback--invalid my-2" role="alert">
-                                        <p>{{ $errors->first('email') }}</p>
-                                    </div>
-                                @endif
+                                <x-error name="email" />
                             </div>
                         </div>
 
@@ -47,11 +43,7 @@
                                     <i class="la la-key text-2xl"></i>
                                 </span>
 
-                                @if ($errors->has('password'))
-                                    <div class="feedback feedback--invalid my-2" role="alert">
-                                        <p>{{ $errors->first('password') }}</p>
-                                    </div>
-                                @endif
+                                <x-error name="password" />
                             </div>
                         </div>
 

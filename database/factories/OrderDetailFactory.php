@@ -1,14 +1,32 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(\App\OrderDetail::class, function (Faker $faker) {
-    return [
-        'order_id' => function () {
-            return factory(\App\Order::class)->create()->id;
-        },
-        'path' => $faker->name,
-        'name' => $faker->name,
-        'words' => $faker->numberBetween(0, 20000)
-    ];
-});
+use App\Order;
+use App\OrderDetail;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class OrderDetailFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = OrderDetail::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+          'order_id' => Order::factory()->create()->id,
+          'path' => $this->faker->name,
+          'name' => $this->faker->name,
+          'words' => $this->faker->numberBetween(0, 20000)
+        ];
+    }
+}

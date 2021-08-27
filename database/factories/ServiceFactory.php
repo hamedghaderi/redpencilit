@@ -1,19 +1,34 @@
 <?php
 
-use Faker\Generator as Faker;
+namespace Database\Factories;
 
-$factory->define(App\Service::class, function (Faker $faker) {
-    return [
-        'name' => [
+use App\Service;
+use App\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class ServiceFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Service::class;
+
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+        return [
+          'name' => [
             'fa'  => 'Farsi Resume',
             'en' => 'Resume'
-        ],
-        'negotiable' => false,
-        'user_id' => function () {
-            return factory(\App\User::class)->create()->id;
-        }
-    ];
-});
-
-$factory->state(\App\Service::class, '', function (Faker $faker) {
-});
+          ],
+          'negotiable' => false,
+          'user_id' => User::factory()->create()->id
+        ];
+    }
+}

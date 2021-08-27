@@ -16,7 +16,7 @@
                 sm:mb-0
                 text-lg
                 @if (app()->getLocale() === 'fa') sm:mr-2 @else sm:ml-2 @endif
-                px-4">
+            px-4">
         {{ __('register') }}
     </a>
 @endsection
@@ -37,13 +37,15 @@
                     <div class="mb-4">
                         <div>
                             <div class="flex relative">
-                                <input id="email" type="email" class="input rounded block{{
-                            $errors->has('email') ? ' is-invalid' : '' }}
-                                        @if (app()->getLocale() === 'fa') pl-12 field-rtl @else pr-12 @endif"
+                                <input id="email"
+                                       type="email"
+                                       class="input rounded block{{ $errors->has('email') ? ' is-invalid' : '' }}
+                                       @if (app()->getLocale() === 'fa') pl-12 field-rtl @else pr-12 @endif"
                                        name="email"
-                                       value="{{ old
-                                        ('email') }}"
-                                       required autofocus placeholder="{{ __('email address') }}">
+                                       value="{{ old ('email') }}"
+                                       required
+                                       autofocus
+                                       placeholder="{{ __('email address') }}">
 
                                 <span class="absolute text-grey-dark flex items-center h-full
                                     @if (app()->getLocale() === 'fa') pin-l ml-6 @else pin-r mr-6 @endif">
@@ -51,13 +53,7 @@
                                 </span>
                             </div>
 
-                            @if ($errors->has('email'))
-                                <div class="feedback feedback--invalid my-2">
-                                    <p>
-                                        {{ $errors->first('email') }}
-                                    </p>
-                                </div>
-                            @endif
+                            <x-error name="email"/>
                         </div>
                     </div>
 
@@ -67,7 +63,8 @@
                             <div class="flex relative">
                                 <input id="password" type="password" class="input rounded block{{
                             $errors->has('password') ? ' is-invalid' : '' }}
-                                @if (app()->getLocale() === 'fa') pl-12 field-rtl @else pr-12 @endif" name="password" required
+                                @if (app()->getLocale() === 'fa') pl-12 field-rtl @else pr-12 @endif" name="password"
+                                       required
                                        placeholder="{{ __('password') }}">
 
                                 <span class="absolute text-grey-dark flex items-center h-full
@@ -76,13 +73,7 @@
                                 </span>
                             </div>
 
-                            @if ($errors->has('password'))
-                                <div class="feedback feedback--invalid my-2">
-                                    <p>
-                                        {{ $errors->first('password') }}
-                                    </p>
-                                </div>
-                            @endif
+                            <x-error name="password"/>
                         </div>
                     </div>
 
@@ -90,9 +81,9 @@
                         <div class="w-full p-2 flex items-center">
                             <label class="mb-0 flex">
                                 <input
-                                       type="checkbox"
-                                       name="remember"
-                                       id="remember" {{ old
+                                        type="checkbox"
+                                        name="remember"
+                                        id="remember" {{ old
                             ('remember') ? 'checked' : '' }}>
                                 <span class="check-toggle ml-2"></span>
 
@@ -123,7 +114,7 @@
                 </form>
             </div>
         </div>
-    </divcl>
+        </divcl>
 
 @endsection
 
