@@ -17,13 +17,14 @@
 </template>
 
 <script>
-    export default {
-        methods: {
-            close(event) {
-                if (! event.target.closest('.modal__wrapper')) {
-                    this.$emit('closeModal')
-                }
-            },
-        }
-    }
+export default {
+    name: "Modal",
+    methods: {
+        close(event) {
+            if (!event.target.closest(".modal__wrapper")) {
+                this.$emit("closeModal");
+            }
+        },
+    },
+};
 </script>

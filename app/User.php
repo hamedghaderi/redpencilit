@@ -12,34 +12,32 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements CanResetPassword
 {
-   use Notifiable, SoftDeletes, CanResetPasswordTrait, HasFactory;
+    use Notifiable, SoftDeletes, CanResetPasswordTrait, HasFactory;
 
-    protected $withCount = ['unreadNotifications'];
+    protected $withCount = ["unreadNotifications"];
 
-    protected $fillable
-        = [
-            'name',
-            'email',
-            'password',
-            'avatar',
-            'phone',
-            'username',
-            'confirmed'
-        ];
+    protected $fillable = [
+        "name",
+        "email",
+        "password",
+        "avatar",
+        "phone_number",
+        "username",
+        "confirmed",
+    ];
 
-    protected $hidden
-        = [
-            'password',
-            'remember_token',
-            'email',
-            'email_verified_at',
-            'created_at',
-            'updated_at'
-        ];
+    protected $hidden = [
+        "password",
+        "remember_token",
+        "email",
+        "email_verified_at",
+        "created_at",
+        "updated_at",
+    ];
 
-    protected $casts = ['confirmed' => 'boolean'];
+    protected $casts = ["confirmed" => "boolean"];
 
-    protected $appends = ['isAdmin'];
+    protected $appends = ["isAdmin"];
 
     /**
      * Confirm user email address.
@@ -59,7 +57,7 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function setting()
     {
-        return $this->hasOne(Setting::class, 'owner_id');
+        return $this->hasOne(Setting::class, "owner_id");
     }
 
     /**
@@ -79,7 +77,7 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function documents()
     {
-        return $this->hasMany(Document::class, 'owner_id');
+        return $this->hasMany(Document::class, "owner_id");
     }
 
     /**
@@ -89,7 +87,7 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function orders()
     {
-        return $this->hasMany(Order::class, 'owner_id')->latest();
+        return $this->hasMany(Order::class, "owner_id")->latest();
     }
 
     /**
@@ -102,16 +100,13 @@ class User extends Authenticatable implements CanResetPassword
         return $this->belongsToMany(Role::class);
     }
 
-    /**
-     * Add a role to the current user.
-     *
-     * @param $roles
-     *
-     * @return mixed
-     */
-    public function addRole($roles)
+    public function addRole($roles): mixed
     {
-        return $this->roles()->sync($roles);
+        if ($this->hasRole($roles)) {
+            return null;
+        }
+
+        return $this->roles()->save($roles);
     }
 
     /**
@@ -124,7 +119,7 @@ class User extends Authenticatable implements CanResetPassword
     public function hasRole($role)
     {
         if (is_string($role)) {
-            return $this->roles->contains('name', $role);
+            return $this->roles->contains("name", $role);
         }
 
         if (is_a($role, Role::class)) {
@@ -132,7 +127,7 @@ class User extends Authenticatable implements CanResetPassword
         }
 
         // if role is a collection.
-        return ! ! $role->intersect($this->roles)->count();
+        return !!$role->intersect($this->roles)->count();
     }
 
     /**
@@ -143,8 +138,8 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function scopeAdmin($builder)
     {
-        return $builder->whereHas('roles', function ($query) {
-            $query->where('name', 'super-admin');
+        return $builder->whereHas("roles", function ($query) {
+            $query->where("name", "super-admin");
         });
     }
 
@@ -155,7 +150,7 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function isSuperAdmin()
     {
-        return $this->roles->contains('name', 'super-admin');
+        return $this->roles->contains("name", "super-admin");
     }
 
     /**
@@ -165,7 +160,7 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function isSupport()
     {
-        return $this->roles->contains('name', 'support');
+        return $this->roles->contains("name", "support");
     }
 
     /**
@@ -175,7 +170,7 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function posts()
     {
-        return $this->hasMany(Post::class, 'owner_id');
+        return $this->hasMany(Post::class, "owner_id");
     }
 
     /**
@@ -185,7 +180,7 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function favorites()
     {
-        return $this->belongsToMany(Post::class, 'favoritable');
+        return $this->belongsToMany(Post::class, "favoritable");
     }
 
     /**
@@ -207,15 +202,15 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function scopeSuperAdmin($builder)
     {
-        return $builder->whereHas('roles', function ($query) {
-            $query->where('name', 'super-admin');
+        return $builder->whereHas("roles", function ($query) {
+            $query->where("name", "super-admin");
         });
     }
 
     /**
      * Override reset password notification.
      *
-     * @param  string  $token
+     * @param string $token
      */
     public function sendPasswordResetNotification($token)
     {
@@ -229,7 +224,10 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function tickets()
     {
-        return $this->hasMany(Ticket::class, 'owner_id')->orderBy('created_at', 'DESC');
+        return $this->hasMany(Ticket::class, "owner_id")->orderBy(
+            "created_at",
+            "DESC"
+        );
     }
 
     /**
@@ -249,7 +247,6 @@ class User extends Authenticatable implements CanResetPassword
      */
     public function pageServices()
     {
-       return $this->hasMany(PageService::class);
+        return $this->hasMany(PageService::class);
     }
 }
-

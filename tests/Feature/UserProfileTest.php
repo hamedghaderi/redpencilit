@@ -16,7 +16,11 @@ class UserProfileTest extends TestCase
        $this->withoutExceptionHandling();
 
       $user = $this->signIn(
-          factory(User::class)->create(['name' => 'Jane', 'email' => 'jane@doe.com', 'phone' => '09369396387'])
+          User::factory()->create([
+              'name' => 'Jane',
+              'email' => 'jane@doe.com',
+              'phone' => '09369396387'
+          ])
       );
 
        $attributes = [
@@ -45,7 +49,7 @@ class UserProfileTest extends TestCase
         $this->patch(route('dashboard.user.update', ['fa', $user]), ['phone' => ''])
             ->assertSessionHasErrors('phone');
     }
-   
+
     /** @test **/
     public function update_user_account_requires_valid_email_address()
     {
@@ -54,21 +58,21 @@ class UserProfileTest extends TestCase
         $this->patch(route('dashboard.user.update', ['fa', $user]), ['email' => ''])
             ->assertSessionHasErrors('email');
     }
-    
+
     /** @test **/
     public function email_should_be_a_valid_email_for_update()
     {
        $user = $this->signIn();
-    
+
         $this->patch(route('dashboard.user.update', ['fa', $user]), ['email' => 'johasdfasdf'])
              ->assertSessionHasErrors('email');
     }
-    
+
     /** @test **/
     public function updating_a_user_requires_a_name()
     {
         $user = $this->signIn();
-        
+
         $this->patch(route('dashboard.user.update', ['fa', $user]), [
             'name' => '',
             'email' => 'hamedghaderii@gmail.com',

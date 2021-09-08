@@ -44,9 +44,9 @@
 </head>
 <body class="@if (app()->getLocale() === 'fa') fa @else en @endif">
 <div id="app" class="overflow-hidden">
-    @yield('content')
+    {{ $slot }}
 
-    @include('partials.footer')
+    <x-footer/>
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>

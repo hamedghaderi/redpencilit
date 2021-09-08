@@ -32,7 +32,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-//    protected $redirectTo = '/dashboard/' . auth()->id();
+    //    protected $redirectTo = '/dashboard/' . auth()->id();
 
     /**
      * Create a new controller instance.
@@ -41,64 +41,71 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware("guest");
     }
-    
+
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-        
-        event(new Registered($user = $this->create($request->all())));
-    
+
+        event(new Registered(($user = $this->create($request->all()))));
+
         $this->guard()->login($user);
-        
+
         if ($request->wantsJson()) {
             return response()->json([
-                'status' => 200,
-                'user' => $user,
-                'token' => csrf_token()
+                "status" => 200,
+                "user" => $user,
+                "token" => csrf_token(),
             ]);
         }
-    
-        return $this->registered($request, $user)
-            ?: redirect($this->redirectPath());
+
+        return $this->registered($request, $user) ?:
+            redirect($this->redirectPath());
     }
-    
+
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['bail', 'required', 'string', 'max:255', 'min:3'],
-            'email' => ['bail', 'required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'phone' => ['bail', 'required'],
-            'password' => ['bail', 'required', 'string', 'min:6', 'confirmed'],
+            "name" => ["bail", "required", "string", "max:255", "min:3"],
+            "email" => [
+                "bail",
+                "required",
+                "string",
+                "email",
+                "max:255",
+                "unique:users,email",
+            ],
+            "phone_number" => ["bail", "required"],
+            "password" => ["bail", "required", "string", "min:6", "confirmed"],
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\User
      */
     protected function create(array $data)
     {
-        $user =  User::forceCreate([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'password' => Hash::make($data['password']),
-            'confirmation_token' => Str::random(25)
+        $user = User::forceCreate([
+            "name" => $data["name"],
+            "email" => $data["email"],
+            "phone_number" => $data["phone_number"],
+            "password" => Hash::make($data["password"]),
+            "confirmation_token" => Str::random(25),
         ]);
-        
+
         return $user;
     }
-    
+
     /**
      * Redirect to dashboard after registration.
      *
@@ -106,6 +113,6 @@ class RegisterController extends Controller
      */
     public function redirectPath()
     {
-        return route('dashboard', [app()->getLocale(), auth()->id()]);
+        return route("dashboard", [app()->getLocale(), auth()->id()]);
     }
 }

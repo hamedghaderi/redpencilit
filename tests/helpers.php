@@ -10,7 +10,7 @@
  * @return mixed
  */
 function make($model, $attributes = [], $count = null) {
-    return factory($model, $count)->make($attributes);
+    return (new $model)->factory()->count($count)->make($attributes);
 }
 
 /**
@@ -23,5 +23,5 @@ function make($model, $attributes = [], $count = null) {
  * @return mixed
  */
 function create($model, $attributes = [], $count = null) {
-    return factory($model, $count)->create($attributes);
+    return (new $model)->factory()->count($count)->create($attributes);
 }

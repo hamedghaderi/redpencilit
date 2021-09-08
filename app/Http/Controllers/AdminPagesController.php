@@ -8,7 +8,6 @@ use Illuminate\Support\Str;
 
 class AdminPagesController extends Controller
 {
-    
     /**
      * Show link of all updateable pages
      *
@@ -16,9 +15,9 @@ class AdminPagesController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.index');
+        return view("admin.pages.index");
     }
-    
+
     /**
      * Show a form to set home page data.
      *
@@ -26,11 +25,11 @@ class AdminPagesController extends Controller
      */
     public function home()
     {
-        $page = Page::where('name', 'home')->first();
-        
-        return view('admin.pages.home', compact('page'));
+        $page = Page::where("name", "home")->first();
+
+        return view("admin.pages.home", compact("page"));
     }
-    
+
     /**
      *  Show a form to set home page data.
      *
@@ -38,11 +37,11 @@ class AdminPagesController extends Controller
      */
     public function about()
     {
-        $page = Page::where('name', 'about')->first();
-        
-        return view('admin.pages.about', compact('page'));
+        $page = Page::where("name", "about")->first();
+
+        return view("admin.pages.about", compact("page"));
     }
-    
+
     /**
      * show a form to set contact page data.
      *
@@ -50,18 +49,18 @@ class AdminPagesController extends Controller
      */
     public function contact()
     {
-        $page = Page::where('name', 'contact')->first();
-        
-        return view('admin.pages.contact', compact('page'));
+        $page = Page::where("name", "contact")->first();
+
+        return view("admin.pages.contact", compact("page"));
     }
-    
+
     public function services()
     {
         $services = PageService::all();
-        
-        return view('admin.pages.services', compact('services'));
+
+        return view("admin.pages.services", compact("services"));
     }
-    
+
     /**
      * Update home page data.
      *
@@ -69,11 +68,11 @@ class AdminPagesController extends Controller
      */
     public function homeUpdate()
     {
-        $this->updatePage('home');
-        
+        $this->updatePage("home");
+
         return back();
     }
-    
+
     /**
      * Update about page data.
      *
@@ -81,11 +80,11 @@ class AdminPagesController extends Controller
      */
     public function aboutUpdate()
     {
-        $this->updatePage('about');
-        
+        $this->updatePage("about");
+
         return back();
     }
-    
+
     /**
      * Update contact page data.
      *
@@ -93,12 +92,11 @@ class AdminPagesController extends Controller
      */
     public function contactUpdate()
     {
-        $this->updatePage('contact');
-        
+        $this->updatePage("contact");
+
         return back();
     }
-    
-    
+
     /**
      * Save updated data into DB.
      *
@@ -106,21 +104,21 @@ class AdminPagesController extends Controller
      */
     protected function updatePage($pageName): void
     {
-        $page = Page::firstOrCreate(['name' => $pageName]);
-        
+        $page = Page::firstOrCreate(["name" => $pageName]);
+
         $data = [
-            'fa' => [],
-            'en' => []
+            "fa" => [],
+            "en" => [],
         ];
-        
+
         foreach (request()->all() as $key => $value) {
             $slicedKey = substr($key, 2, strlen($key));
-            
-            Str::startsWith($key, 'fa')
-                ? $data['fa'][$slicedKey] = $value
-                : $data['en'][$slicedKey] = $value;
+
+            Str::startsWith($key, "fa")
+                ? ($data["fa"][$slicedKey] = $value)
+                : ($data["en"][$slicedKey] = $value);
         }
-        
+
         $page->data = $data;
         $page->save();
     }

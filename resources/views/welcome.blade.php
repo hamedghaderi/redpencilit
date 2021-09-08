@@ -1,15 +1,13 @@
-@extends('layouts.home')
-
-@section('content')
-    <section class="relative bg-contain bg-no-repeat home-hero" id="intro">
+<x-layouts.home>
+    <section class="relative h-96 lg:h-160 bg-gray-100">
         <img
                 src="{{ asset('images/1.svg') }}"
                 alt="a girl with a computer"
-                class="home-hero-bg @if (app()->getLocale () === 'en') en-home-hero-bg @endif"
+                class="absolute h-full z-0 top-0 opacity-40 md:opacity-100  @if(LaravelLocalization::getCurrentLocale() === 'fa') left-0 -left-40 @else -right-40 transform rotate-y-180 @endif"
         >
 
-        <div class="px-8 md:px-24 pt-8 md:pb-0">
-            @include('partials.nav-home')
+        <div class="px-8 md:px-24 pt-8 md:pb-0 relative z-10">
+            <x-nav/>
         </div>
 
         @include('hero')
@@ -24,8 +22,8 @@
 
     @include('testimonial')
 
-   @include('team')
-@endsection
+    @include('team')
+</x-layouts.home>
 
 @section('script')
     <script>

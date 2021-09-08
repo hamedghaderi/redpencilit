@@ -1,124 +1,64 @@
-@extends('layouts.auth')
+<x-layouts.auth banner="{{ asset('images/login.jpg') }}">
+    <div class="w-full -mt-12">
+        <x-logo/>
+    </div>
 
-@section('nav-link')
-    <a href="{{ route('register', app()->getLocale()) }}" class="block text-grey-darker text-sm rounded py-1 mb-1 sm:mb-0
-                sm:mr-2 px-2
-                hover:bg-grey-light sm:hidden">
-        {{ __('register') }}
-    </a>
+    <form action="{{ route('login') }}" method="POST" class="w-full">
+        @csrf
 
-    <a href="{{ route('register', app()->getLocale()) }}" class="hidden
-                button
-                button--success
-                sm:block
-                py-1
-                mb-1
-                sm:mb-0
-                text-lg
-                @if (app()->getLocale() === 'fa') sm:mr-2 @else sm:ml-2 @endif
-            px-4">
-        {{ __('register') }}
-    </a>
-@endsection
+        <h1 class="text-3xl font-bold mb-8 text-gray-700">{{ __('login') }}</h1>
 
-@section('content')
-    <div class="container">
-        <div class="w-full sm:w-3/4 md:w-2/3 lg:w-2/5 mx-auto">
+        <x-input name="email" type="email">
+            <x-input-icon class="las la-envelope"/>
+        </x-input>
 
-            <div class="mt-24 card">
-                <h2 class="text-lg md:text-2xl font-bold text-grey-darker mb-4 text-center font-normal">
-                    {{ __('login') }}
-                </h2>
+        <x-input name="password" type="password">
+            <x-input-icon class="las la-lock-open"/>
+        </x-input>
 
-                <p class="text-grey text-center mb-8">{{ __('welcome') }}</p>
-                <form method="POST" action="{{ route('login', app()->getLocale()) }}" class="text-md w-full" novalidate>
-                    @csrf
-
-                    <div class="mb-4">
-                        <div>
-                            <div class="flex relative">
-                                <input id="email"
-                                       type="email"
-                                       class="input rounded block{{ $errors->has('email') ? ' is-invalid' : '' }}
-                                       @if (app()->getLocale() === 'fa') pl-12 field-rtl @else pr-12 @endif"
-                                       name="email"
-                                       value="{{ old ('email') }}"
-                                       required
-                                       autofocus
-                                       placeholder="{{ __('email address') }}">
-
-                                <span class="absolute text-grey-dark flex items-center h-full
-                                    @if (app()->getLocale() === 'fa') pin-l ml-6 @else pin-r mr-6 @endif">
-                                    <i class="la la-envelope text-2xl"></i>
-                                </span>
-                            </div>
-
-                            <x-error name="email"/>
-                        </div>
-                    </div>
-
-
-                    <div class="mb-4">
-                        <div>
-                            <div class="flex relative">
-                                <input id="password" type="password" class="input rounded block{{
-                            $errors->has('password') ? ' is-invalid' : '' }}
-                                @if (app()->getLocale() === 'fa') pl-12 field-rtl @else pr-12 @endif" name="password"
-                                       required
-                                       placeholder="{{ __('password') }}">
-
-                                <span class="absolute text-grey-dark flex items-center h-full
-                                    @if (app()->getLocale() === 'fa') pin-l ml-6 @else pin-r mr-6 @endif">
-                                    <i class="la la-key text-2xl"></i>
-                                </span>
-                            </div>
-
-                            <x-error name="password"/>
-                        </div>
-                    </div>
-
-                    <div class="mb-6">
-                        <div class="w-full p-2 flex items-center">
-                            <label class="mb-0 flex">
-                                <input
-                                        type="checkbox"
-                                        name="remember"
-                                        id="remember" {{ old
-                            ('remember') ? 'checked' : '' }}>
-                                <span class="check-toggle ml-2"></span>
-
-                                <label class="text-grey-darker text-sm" for="remember">
-                                    {{ __('Remember my choice') }}
-                                </label>
-                            </label>
-
-                            @if (Route::has('password.request'))
-                                <p class="@if (app()->getLocale() === 'fa')mr-auto text-left @else ml-auto text-right
-                                 @endif">
-                                    <a href="{{ route('password.request', app()->getLocale()) }}"
-                                       class="text-blue text-xs no-underline hover:text-blue-dark">
-                                        {{ __('Forgot your password?') }}
-                                    </a>
-                                </p>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-8 text-center offset-md-4">
-                            <button type="submit" class="button button--primary">
-                                {{ __("Log me in") }}
-                            </button>
-                        </div>
-                    </div>
-                </form>
+        <div class="relative text-sm space-x-3 xl:flex justify-between items-center">
+            <div class="mb-4 xl:mb-0">
+                <a class="text-gray-500 hover:text-gray-700 hover:underline @if (app()->getLocale() === 'fa') ml-4 @else mr-4 @endif"
+                   href="{{ route('register') }}">{{ __('register') }}</a>
+                <a class="text-gray-500 hover:text-gray-700 hover:underline" href="{{ route('password.request') }}">
+                    {{ __('Forget password') }}{{ __('?') }}
+                </a>
             </div>
+
+            <x-button>
+                {{__('login')}}
+            </x-button>
         </div>
-        </divcl>
+    </form>
 
-@endsection
+    <div class="self-end w-full md:flex justify-between">
+        <p class="text-gray-500 text-sm mb-4 md:mb-0">{{ __('login_with') }}</p>
 
-@section('script')
-    @include('partials.rtl-input')
-    @include('partials.form')
-@endsection
+        <ul class="flex text-sm">
+            <li>
+                <div id="g_id_onload"
+                     data-client_id="406128393293-bo1fvqpl9j9g2rb122g145s3gvgpkrd9.apps.googleusercontent.com"
+                     data-context="signin"
+                     data-ux_mode="popup"
+                     data-login_uri="https://127.0.0.1:8000"
+                     data-auto_prompt="false">
+                </div>
+
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-shape="rectangular"
+                     data-theme="outline"
+                     data-text="signin_with"
+                     data-size="large"
+                     data-logo_alignment="left">
+                </div>
+            </li>
+            <li><a class="text-blue-500 hover:text-blue-700 mx-2" href="/login/google">{{ __('google') }}</a></li>
+            <li><a class="text-blue-500 hover:text-blue-700 mx-2" href="#">{{ __('twitter') }}</a></li>
+            <li><a class="text-blue-500 hover:text-blue-700 mx-2" href="#">{{ __('instagram') }}</a></li>
+        </ul>
+    </div>
+
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</x-layouts.auth>

@@ -13,7 +13,7 @@ class RegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test **/
+    /** @test * */
     public function a_confirmation_email_is_sent_upon_confirmation()
     {
         $this->withoutExceptionHandling();
@@ -24,8 +24,8 @@ class RegistrationTest extends TestCase
 
         Mail::assertQueued(PleaseConfirmYourEmail::class);
     }
-    
-    /** @test **/
+
+    /** @test * */
     public function users_can_fully_confirm_their_email_address()
     {
         $this->withoutExceptionHandling();
@@ -35,7 +35,7 @@ class RegistrationTest extends TestCase
             'email' => 'john@example.com',
             'password' => 'foobar',
             'password_confirmation' => 'foobar',
-            'phone' => '09369396387',
+            'phone_number' => '09369396387',
             'username' => 'john'
         ]);
 
@@ -44,7 +44,7 @@ class RegistrationTest extends TestCase
         $this->assertFalse($user->confirmed);
         $this->assertNotNull($user->confirmation_token);
 
-        $response = $this->get(route('register.email.token', app()->getLocale()) . '?token=' .$user->confirmation_token);
+        $response = $this->get(route('register.email.token', app()->getLocale()) . '?token=' . $user->confirmation_token);
 
         $this->assertTrue($user->fresh()->confirmed);
 

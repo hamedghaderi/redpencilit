@@ -16,29 +16,29 @@ class UserTableSeeder extends Seeder
     public function run()
     {
         $adminRole = Role::factory()->create([
-            'name' => 'super-admin',
-            'label' => 'Super Admin',
+            "name" => "super-admin",
+            "label" => "Super Admin",
         ]);
 
         $supportRole = Role::factory()->create([
-            'name' => 'support',
-            'label' => 'Support',
+            "name" => "support",
+            "label" => "Support",
         ]);
 
         $adminUser = User::factory()->create([
-            'name' => 'لامعه هاشمی',
-            'email' => 'admin@redpencilit.com',
-            'phone' => '0912345566',
-            'password' => bcrypt('london123london'),
-            'confirmed' => true
+            "name" => "لامعه هاشمی",
+            "email" => "admin@redpencilit.com",
+            "phone_number" => "0912345566",
+            "password" => bcrypt("london123london"),
+            "confirmed" => true,
         ]);
 
         $supportUser = User::factory()->create([
-            'name' => 'حامد قادری',
-            'email' => 'hamedghaderii@gmail.com',
-            'phone' => '09369396387',
-            'confirmed' => true,
-            'password' => bcrypt('40Minutes!!!!!!')
+            "name" => "حامد قادری",
+            "email" => "hamedghaderii@gmail.com",
+            "phone_number" => "09369396387",
+            "confirmed" => true,
+            "password" => bcrypt("40Minutes!!!!!!"),
         ]);
 
         $adminUser->addRole($adminRole);

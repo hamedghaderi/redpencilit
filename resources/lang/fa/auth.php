@@ -11,9 +11,11 @@ return [
     | messages that we need to display to the user. You are free to modify
     | these language lines according to your application's requirements.
     |
-     */
+    */
 
-    'failed' => 'هیچ رکوردی با اطلاعات وارد شده یافت نشد.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    // 'failed' => 'These credentials do not match our records.',
+    'failed' => 'اطلاعات نامعتبر است',
+    // 'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'throttle' => 'خطا. لطفا بعد از :seconds دوباره امتحان کنید.',
 
 ];

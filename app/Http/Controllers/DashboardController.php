@@ -9,21 +9,19 @@ use App\User;
 
 class DashboardController extends Controller
 {
-    public function index($locale, User $user)
+    public function index()
     {
-        if (! auth()->user()->isSuperAdmin() && auth()->user()->id != $user->id) {
-            abort(403);
-        }
-        
         $countries = Country::all();
-        
+
         $roles = Role::all();
-        
-        return view('dashboards.index')->with([
-            'degrees' => CollegeDegree::all(),
-            'countries' => $countries,
-            'user' => $user->load('details'),
-            'roles' => $roles,
+
+        return view("dashboards.index")->with([
+            "degrees" => CollegeDegree::all(),
+            "countries" => $countries,
+            "user" => auth()
+                ->user()
+                ->load("details"),
+            "roles" => $roles,
         ]);
     }
 }

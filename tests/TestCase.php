@@ -13,13 +13,13 @@ abstract class TestCase extends BaseTestCase
 
     public function signIn($user = null)
     {
-       $user = $user ?: factory(User::class)->create();
+       $user = $user ?: User::factory()->create();
 
        $this->actingAs($user);
 
        return $user;
     }
-    
+
     /**
      * Generate a super admin user.
      *
@@ -28,14 +28,14 @@ abstract class TestCase extends BaseTestCase
     public function makeAdmin()
     {
         $user = $this->signIn();
-    
+
         $role = create(Role::class, ['name' => 'super-admin']);
-    
+
         $user->addRole($role);
-        
+
         return $user;
     }
-    
+
     /**
      * Make a test file form a given file.
      *

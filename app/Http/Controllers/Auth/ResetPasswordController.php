@@ -5,10 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class ResetPasswordController extends Controller
 {
-    
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -19,16 +20,16 @@ class ResetPasswordController extends Controller
     | explore this trait and override any methods you wish to tweak.
     |
     */
-    
+
     use ResetsPasswords;
-    
+
     /**
      * Where to redirect users after resetting their password.
      *
      * @var string
      */
     //    protected $redirectTo = '/home';
-    
+
     /**
      * Create a new controller instance.
      *
@@ -36,9 +37,9 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware("guest");
     }
-    
+
     /**
      * Change redirect to method.
      *
@@ -46,22 +47,34 @@ class ResetPasswordController extends Controller
      */
     protected function redirectTo()
     {
-        return route('login', app()->getLocale());
+        return route("login", app()->getLocale());
     }
-    
-    /**
-     * Override show reset form to cover token.
-     *
-     * @param $locale
-     * @param  Request  $request
-     * @param  null  $token
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showResetForm($locale, Request $request, $token = null)
+
+    public function showResetForm(Request $request, $token = null)
     {
-        return view('auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
+        if (!$token) {
+            abort(403);
+        }
+
+        $found = DB::table("password_resets")
+            ->where("email", $request->email)
+            ->first();
+
+        if (!$found) {
+            return redirect(route("password.request"))
+                ->with("message", __("password_reset_failed"))
+                ->with("flash_type", "danger");
+        }
+
+        if (!Hash::check($token, $found->token)) {
+            return redirect(route("password.request"))
+                ->with("message", __("password_reset_failed"))
+                ->with("flash_type", "danger");
+        }
+
+        return view("auth.passwords.reset")->with([
+            "token" => $token,
+            "email" => $request->get("email"),
+        ]);
     }
 }
