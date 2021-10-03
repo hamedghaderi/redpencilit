@@ -27,7 +27,8 @@
                     <li>
                         <a class="w-full inline-block hover:bg-gray-200 py-2 rounded-lg px-2 inline-flex items-center"
                            href="{{ route('dashboard.user.update') }}">
-                            <x-icon icon="profile" size="16" class="mr-2 text-gray-400"/>
+                            <x-icon icon="profile" size="16"
+                                    class="text-gray-400 @if (app()->getLocale() === 'en') mr-2 @else ml-2 @endif"/>
                             {{ __('profile') }}
                         </a>
                     </li>
@@ -36,10 +37,11 @@
                             @csrf
 
                             <button
-                                class="w-full text-left hover:bg-gray-200 p-2 rounded-lg inline-flex items-center"
+                                class="w-full hover:bg-gray-200 p-2 rounded-lg inline-flex items-center @if(app()->getLocale() === 'en') text-left @else text-right @endif"
                                 onclick="this.form.sumbit()"
                                 href="{{ route('logout') }}">
-                                <x-icon icon="log-out" size="16" class="relative top-0.5 mr-2 text-gray-400"/>
+                                <x-icon icon="log-out" size="16"
+                                        class="relative top-0.5 text-gray-400 @if (app()->getLocale() === 'en') mr-2 @else ml-2 @endif"/>
                                 {{ __('logout') }}
                             </button>
                         </form>
@@ -49,8 +51,9 @@
         </x-dropdown>
 
 
-        <div class="ml-auto flex items-center space-x-4 text-gray-500">
-            <a href="#">
+        <div
+            class="flex items-center text-gray-500 @if(app()->getLocale() === 'en') ml-auto @else mr-auto @endif">
+            <a href="#" @class(app()->getLocale() === 'fa' ? 'ml-4' : 'mr-4')>
                 <i class="gg-options"></i>
             </a>
             <a href="#" class="relative">
