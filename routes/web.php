@@ -74,10 +74,9 @@ Route::prefix(\LaravelLocalization::setLocale())
                 Route::get("/", [DashboardController::class, "index"])->name(
                     "dashboard"
                 );
-                Route::patch("/{user}", [
-                    UsersController::class,
-                    "update",
-                ])->name("dashboard.user.update");
+                Route::patch("/", [UsersController::class, "update"])->name(
+                    "dashboard.user.update"
+                );
             });
 
             /*
@@ -177,14 +176,13 @@ Route::prefix(\LaravelLocalization::setLocale())
                 | Orders
                 |--------------------------------------------------------------------------
                 */
-                Route::group(["prefix" => "{user}/orders"], function () {
+                Route::group(["prefix" => "orders"], function () {
                     Route::get("/", [OrdersController::class, "index"])->name(
-                        "users.orders.index"
+                        "orders.index"
                     );
-                    Route::get("/{order}/show", [
-                        OrdersController::class,
-                        "show",
-                    ])->name("users.orders.show");
+                    Route::get("show", [OrdersController::class, "show"])->name(
+                        "orders.show"
+                    );
                     Route::post("/", [OrdersController::class, "store"])
                         ->name("orders.create")
                         ->middleware("must-be-confirmed");
@@ -482,8 +480,6 @@ Route::prefix(\LaravelLocalization::setLocale())
                 ])->name("admin.users.patch");
             });
     });
-
-});
 
 Route::get("/order/confirm", [OrderDeliveryController::class, "confirm"])
     ->name("orders.confirm")

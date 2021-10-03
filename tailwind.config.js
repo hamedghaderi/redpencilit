@@ -1,5 +1,4 @@
 const plugin = require("tailwindcss/plugin");
-
 const rotate = plugin(function ({ addUtilities }) {
     addUtilities({
         ".rotate-x-180": {

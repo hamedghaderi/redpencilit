@@ -32,33 +32,5 @@
     </form>
 
     <div class="self-end w-full md:flex justify-between">
-        <p class="text-gray-500 text-sm mb-4 md:mb-0">{{ __('login_with') }}</p>
-
-        <ul class="flex text-sm">
-            <li>
-                <div id="g_id_onload"
-                     data-client_id="406128393293-bo1fvqpl9j9g2rb122g145s3gvgpkrd9.apps.googleusercontent.com"
-                     data-context="signin"
-                     data-ux_mode="popup"
-                     data-login_uri="https://127.0.0.1:8000"
-                     data-auto_prompt="false">
-                </div>
-
-                <div class="g_id_signin"
-                     data-type="standard"
-                     data-shape="rectangular"
-                     data-theme="outline"
-                     data-text="signin_with"
-                     data-size="large"
-                     data-logo_alignment="left">
-                </div>
-            </li>
-            <li><a class="text-blue-500 hover:text-blue-700 mx-2" href="/login/google">{{ __('google') }}</a></li>
-            <li><a class="text-blue-500 hover:text-blue-700 mx-2" href="#">{{ __('twitter') }}</a></li>
-            <li><a class="text-blue-500 hover:text-blue-700 mx-2" href="#">{{ __('instagram') }}</a></li>
-        </ul>
     </div>
-
-
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </x-layouts.auth>

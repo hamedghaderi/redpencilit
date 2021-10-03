@@ -10,7 +10,7 @@
 
     <title>{{ config('app.name', 'RedPencilIt') }}</title>
 
-    <link rel="stylesheet" href="{{ asset('css/line-awesome.min.css') }}">
+    {{--    <link rel="stylesheet" href="{{ asset('css/line-awesome.min.css') }}">--}}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         @if (app()->getLocale() === 'fa')
@@ -54,6 +54,7 @@
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>
+@yield('script')
 </body>
 </html>
 

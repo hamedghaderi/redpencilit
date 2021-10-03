@@ -1,11 +1,16 @@
 import "./bootstrap.js";
 import PersianNumber from "./PersianNumber";
-
+import "css.gg/icons/all.css";
 import Alpine from "alpinejs";
+import { createPopper } from "@popperjs/core";
+
+// Setting Up Popper.JS
+window.Popper = createPopper;
 
 window.Alpine = Alpine;
-
 Alpine.start();
+
+import "./components/Dropdown";
 
 window.Vue = require("vue");
 
@@ -31,25 +36,25 @@ const default_locale = window.default_locale;
 const fallback_locale = window.fallback_locale;
 const messages = window.messages;
 
-let test = (Vue.prototype.trans = new Lang({
-    messages,
-    locale: default_locale,
-    fallback: fallback_locale,
-}));
+// let test = (Vue.prototype.trans = new Lang({
+//     messages,
+//     locale: default_locale,
+//     fallback: fallback_locale,
+// }));
+//
+// Vue.prototype.authorize = function (...params) {
+//     if (!window.Redpencilit.signed) return false;
+//
+//     if (typeof params[0] === "string") {
+//         return authorizations[params[0]](params[1]);
+//     }
+//
+//     return params[0](window.Redpencilit.user);
+// };
 
-Vue.prototype.authorize = function (...params) {
-    if (!window.Redpencilit.signed) return false;
-
-    if (typeof params[0] === "string") {
-        return authorizations[params[0]](params[1]);
-    }
-
-    return params[0](window.Redpencilit.user);
-};
-
-if (process.env.NODE_ENV === "production") {
-    Vue.config.devtools = false;
-}
+// if (process.env.NODE_ENV === "production") {
+//     Vue.config.devtools = false;
+// }
 
 /**
  * The following block of code may be used to automatically register your
@@ -123,92 +128,92 @@ if (process.env.NODE_ENV === "production") {
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-const app = new Vue({
-    el: "#app",
-
-    data: {
-        isOpen: false,
-    },
-
-    watch: {
-        isOpen(isOpen) {
-            if (isOpen) {
-                document.addEventListener("click", this.closeMenu);
-            }
-        },
-    },
-
-    methods: {
-        closeMenu(event) {
-            if (!event.target.closest("header")) {
-                this.isOpen = false;
-            }
-        },
-
-        persianReplace(str = "") {
-            let persianNumberArr = [
-                /۰/g,
-                /۱/g,
-                /۲/g,
-                /۳/g,
-                /۴/g,
-                /۵/g,
-                /۶/g,
-                /۷/g,
-                /۸/g,
-                /۹/g,
-            ];
-            let arabicNumberArr = [
-                /٠/g,
-                /١/g,
-                /٢/g,
-                /٣/g,
-                /٤/g,
-                /٥/g,
-                /٦/g,
-                /٧/g,
-                /٨/g,
-                /٩/g,
-            ];
-
-            let englishNumberArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-
-            if (str.length === 0) {
-                return str;
-            }
-
-            for (let i = 0; i < 10; i++) {
-                str = str
-                    .replace(persianNumberArr[i], englishNumberArr[i])
-                    .replace(arabicNumberArr[i], englishNumberArr[i]);
-            }
-
-            return str;
-        },
-
-        sanitizeNumber(e) {
-            e.target.value = this.persianReplace(e.target.value);
-        },
-    },
-
-    // changeToEnglish(e) {
-    //     let str = e.target.value;
-    //
-    //     let persianNumberArr = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
-    //     let arabicNumberArr = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
-    //
-    //     let englishNumberArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    //
-    //     if (str.length === 0) {
-    //         return str;
-    //     }
-    //
-    //     for (let i = 0; i < 10; i++) {
-    //         str = str.replace(persianNumberArr[i], englishNumberArr[i])
-    //             .replace(arabicNumberArr[i], englishNumberArr[i]);
-    //     }
-    //
-    //     e.target.value = str;
-    // }
-});
+//
+// const app = new Vue({
+//     el: "#app",
+//
+//     data: {
+//         isOpen: false,
+//     },
+//
+//     watch: {
+//         isOpen(isOpen) {
+//             if (isOpen) {
+//                 document.addEventListener("click", this.closeMenu);
+//             }
+//         },
+//     },
+//
+//     methods: {
+//         closeMenu(event) {
+//             if (!event.target.closest("header")) {
+//                 this.isOpen = false;
+//             }
+//         },
+//
+//         persianReplace(str = "") {
+//             let persianNumberArr = [
+//                 /۰/g,
+//                 /۱/g,
+//                 /۲/g,
+//                 /۳/g,
+//                 /۴/g,
+//                 /۵/g,
+//                 /۶/g,
+//                 /۷/g,
+//                 /۸/g,
+//                 /۹/g,
+//             ];
+//             let arabicNumberArr = [
+//                 /٠/g,
+//                 /١/g,
+//                 /٢/g,
+//                 /٣/g,
+//                 /٤/g,
+//                 /٥/g,
+//                 /٦/g,
+//                 /٧/g,
+//                 /٨/g,
+//                 /٩/g,
+//             ];
+//
+//             let englishNumberArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+//
+//             if (str.length === 0) {
+//                 return str;
+//             }
+//
+//             for (let i = 0; i < 10; i++) {
+//                 str = str
+//                     .replace(persianNumberArr[i], englishNumberArr[i])
+//                     .replace(arabicNumberArr[i], englishNumberArr[i]);
+//             }
+//
+//             return str;
+//         },
+//
+//         sanitizeNumber(e) {
+//             e.target.value = this.persianReplace(e.target.value);
+//         },
+//     },
+//
+//     // changeToEnglish(e) {
+//     //     let str = e.target.value;
+//     //
+//     //     let persianNumberArr = [/۰/g, /۱/g, /۲/g, /۳/g, /۴/g, /۵/g, /۶/g, /۷/g, /۸/g, /۹/g];
+//     //     let arabicNumberArr = [/٠/g, /١/g, /٢/g, /٣/g, /٤/g, /٥/g, /٦/g, /٧/g, /٨/g, /٩/g];
+//     //
+//     //     let englishNumberArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+//     //
+//     //     if (str.length === 0) {
+//     //         return str;
+//     //     }
+//     //
+//     //     for (let i = 0; i < 10; i++) {
+//     //         str = str.replace(persianNumberArr[i], englishNumberArr[i])
+//     //             .replace(arabicNumberArr[i], englishNumberArr[i]);
+//     //     }
+//     //
+//     //     e.target.value = str;
+//     // }
+// });

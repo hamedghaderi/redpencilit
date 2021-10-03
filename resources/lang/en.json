@@ -64,7 +64,7 @@
     "sent at": "sent at",
     "score": "score",
     "add to home page": "add to home page",
-    "home": "home",
+    "home": "Home",
     "message body": "message body",
     "save message": "Save message",
     "delete": "delete",
@@ -114,5 +114,6 @@
     "Second level has completed successfully.": "Second level has completed successfully",
     "Unfortunately, an error has been occurred. Please try again!": "Unfortunately, an error has been occurred. Please try again!",
     "profile": "Profile",
-    "new-order": "new order"
+    "new-order": "new order",
+    "orders": "Orders"
 }

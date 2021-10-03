@@ -22,7 +22,7 @@
         "mcamara/laravel-localization": "^1.6",
         "morilog/jalali": "^3.1",
         "phpoffice/phpword": "^0.18.0",
-        "stevebauman/purify": "^3.0",
+        "stevebauman/purify": "^3.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
